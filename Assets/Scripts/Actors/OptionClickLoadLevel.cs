@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionClickLoadLevel : InputTouchListenerAbs {
+public class OptionClickLoadLevel : TouchListenerAbs {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;

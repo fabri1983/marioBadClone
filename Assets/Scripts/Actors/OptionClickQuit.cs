@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionClickQuit : InputTouchListenerAbs {
+public class OptionClickQuit : TouchListenerAbs {
 	
 	void Awake () {
 		// keep this game object alive between scenes
