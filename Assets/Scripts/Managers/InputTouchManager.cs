@@ -226,8 +226,8 @@ public class InputTouchManager : MonoBehaviour {
 				// check for game object
 				else {
 					// option 1:
-					/*Ray vRay = Camera.main.ScreenPointToRay (t.position);
-					RaycastHit vHit;
+					Ray vRay = Camera.main.ScreenPointToRay (t.position);
+					/*RaycastHit vHit;
 					if (Physics.Raycast(vRay, out vHit, 50)) {
 						if (vHit.collider != null && vHit.collider.name.Equals(go.collider.name))
 							hitten = true;
