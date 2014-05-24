@@ -225,12 +225,19 @@ public class InputTouchManager : MonoBehaviour {
 					hitten = true;
 				// check for game object
 				else {
+					// option 1:
 					/*Ray vRay = Camera.main.ScreenPointToRay (t.position);
 					RaycastHit vHit;
 					if (Physics.Raycast(vRay, out vHit, 50)) {
 						if (vHit.collider != null && vHit.collider.name.Equals(go.collider.name))
 							hitten = true;
 					}*/
+					// option 2:
+					Vector3 origin = listener.getGameObject().transform.InverseTransformPoint(vRay.origin);
+					Vector3 direction = listener.getGameObject().transform.InverseTransformDirection(vRay.direction);
+					
+					Vector3 zeroCross = origin - direction*(origin.z/direction.z);
+					hitten = zeroCross.magnitude < 0.5f;
 				}
 				
 				// hitten? then invoke callback
