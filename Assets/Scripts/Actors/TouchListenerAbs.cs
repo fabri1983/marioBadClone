@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public abstract class InputTouchListenerAbs : MonoBehaviour, ITouchListener {
+public abstract class TouchListenerAbs : MonoBehaviour, ITouchListener {
 
 	private bool _doPropagation = true;
 	private bool _consumed = false;
 	
 	public bool stopPropagation() {
 		/// only stop propagation if flag was set to false on listener's registration 
-		/// and  if listener has consumed the touch event
+		/// and if listener has consumed the touch event
 		
 		if (_doPropagation || !_consumed)
 			return false;
