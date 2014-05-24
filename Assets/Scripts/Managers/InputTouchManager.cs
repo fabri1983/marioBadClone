@@ -9,10 +9,9 @@ using System.Collections.Generic;
 /// There are two types of registration: scene only and eternal. Scene only is when the listener lives only in the scene. 
 /// Once the scene is destroyed its game ojects also are destroyed, thus the Input Manager needs to remove those listeners when 
 /// scene is destroyed.
-/// 
 /// </summary>
 public class InputTouchManager : MonoBehaviour {
-
+	
 	private static List<ITouchListener> beganEternalListeners = new List<ITouchListener>(5);
 	private static List<ITouchListener> beganSceneOnlyListeners = new List<ITouchListener>(5);
 	private static List<ITouchListener> stationaryEternalListeners = new List<ITouchListener>(5);
@@ -131,15 +130,6 @@ public class InputTouchManager : MonoBehaviour {
 		instance = null;
 	}
 	
-	/**
-	 * Put here the touch phases this manager doesn't support yet.
-	 */
-	private static bool notSupported (TouchPhase phase) {
-		if (TouchPhase.Canceled.Equals(phase))
-			return true;
-		return false;
-	}
-	
 	void Update () {
 		processEvents();
 	}
@@ -166,8 +156,9 @@ public class InputTouchManager : MonoBehaviour {
 			phasesFired[(int)touch.phase] = true;
 		}
 		
-		// reset the processed flag of every listener
-		resetProcessedFlags();
+		// reset the processed flag of every listener only for pahses fired
+		// NOTE: now the reset happens right after the stopPropagation() is consumed. See explanation inside sendEvent()
+		//resetProcessedFlags();
 		
 		// send events to listeners
 		for (int i=0; i < Input.touchCount; ++i)
@@ -216,8 +207,12 @@ public class InputTouchManager : MonoBehaviour {
 					continue;
 				
 				// does the listener want to stop its propagation on next touch phases?
-				if (listener.stopPropagation())
+				if (listener.stopPropagation()) {
+					/// reset here instead of calling resetProcessedFlags(). Only valid for two list (eternal and sceneOnly) 
+					/// per touch phase. If adding a new list, then this reset 
+					listener.setConsumed(false);
 					continue;
+				}
 				
 				GameObject go = listener.getGameObject();
 				bool hitten = false;
@@ -255,7 +250,7 @@ public class InputTouchManager : MonoBehaviour {
 		}
 	}
 	
-	private static void resetProcessedFlags () {
+	/*private static void resetProcessedFlags () {
 		
 		// only reset the listeners for current fired touch phases
 		for (int k = 0; k < phasesFired.Length; ++k) {
@@ -296,5 +291,5 @@ public class InputTouchManager : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 }
