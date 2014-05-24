@@ -121,7 +121,7 @@ public class InputTouchManager : MonoBehaviour {
 		// add here if else for other traverses for different touch phases
 	}
 	
-	void OnApplicationQuit () {
+	void OnDestroy () {
 		beganEternalListeners.Clear();
 		beganSceneOnlyListeners.Clear();
 		stationaryEternalListeners.Clear();
