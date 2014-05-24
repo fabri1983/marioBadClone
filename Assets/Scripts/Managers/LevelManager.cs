@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour {
 	
     private static LevelManager instance;
     private int activeLevel;
-    private PlayerController player;
+    private ControllerPlayer player;
 	
 	// used for Mario's die animation
 	private GameObject mainCam, camInFront;
@@ -82,7 +82,7 @@ public class LevelManager : MonoBehaviour {
 			lastSpawnPos[i] = null;
 		
 		// get Mario's game object reference.
-		player = PlayerController.Instance;
+		player = ControllerPlayer.Instance;
 		
 		// NOTE: here is the place where able to load a stored saved game: get latest level and spawn position, stats, powerups, etc
 	}
@@ -141,7 +141,7 @@ public class LevelManager : MonoBehaviour {
 		InputTouchManager.warm();
 	}
 	
-	public PlayerController getPlayer () {
+	public ControllerPlayer getPlayer () {
 		return player;
 	}
 	

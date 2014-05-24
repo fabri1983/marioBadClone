@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IPowerUpAble {
+public class ControllerPlayer : MonoBehaviour, IPowerUpAble {
 	
 	public float movementPow = 10f;
 	public float lightJumpPow = 12f;
@@ -24,9 +24,9 @@ public class PlayerController : MonoBehaviour, IPowerUpAble {
 	private Transform firePivot;
 	private Vector3 rightFireDir, leftFireDir, fireDir;
 	
-	private static PlayerController instance = null;
+	private static ControllerPlayer instance = null;
 	
-	public static PlayerController Instance {
+	public static ControllerPlayer Instance {
         get {
             if (instance == null) {
 				// instantiate the entire prefab. Don't assign to the instance variable because it is then assigned in Awake()

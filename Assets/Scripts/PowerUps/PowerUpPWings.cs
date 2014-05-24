@@ -47,7 +47,7 @@ public class PowerUpPWings : PowerUp {
 	}
 	
 	public override void assignToCharacter (MonoBehaviour element) {
-		PlayerController pc = (PlayerController) element;
+		ControllerPlayer pc = (ControllerPlayer) element;
 		pc.setPowerUp(this);
 		
 		// get rigidbody to disable/enable gravity

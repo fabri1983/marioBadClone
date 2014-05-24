@@ -7,7 +7,7 @@ using UnityEngine;
 public class PowerUpFireBall : PowerUp {
 	
 	public float rateOfFire = 0.3f;
-	private PlayerController player;
+	private ControllerPlayer player;
 	private float timingFire; // rate of fire
 	
 	protected override void ownStart () {
@@ -26,7 +26,7 @@ public class PowerUpFireBall : PowerUp {
 	}
 	
 	public override void assignToCharacter (MonoBehaviour element) {
-		player = ((PlayerController) element);
+		player = ((ControllerPlayer) element);
 		player.setPowerUp(this);
 		
 		// init usage left

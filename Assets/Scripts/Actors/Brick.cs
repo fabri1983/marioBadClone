@@ -35,7 +35,7 @@ public class Brick : MonoBehaviour {
 		if (GetComponent<PowerUp>() != null) {
 			
 			PowerUp powUp = (PowerUp)GetComponent<PowerUp>();
-			powUp.assignToCharacter(collider.gameObject.GetComponent<PlayerController>());
+			powUp.assignToCharacter(collider.gameObject.GetComponent<ControllerPlayer>());
 			// perform a little animation to show what power up the player has got
 			vec3aux.x = transform.position.x;
 			vec3aux.y = transform.position.y + brickHalfSizeY;
