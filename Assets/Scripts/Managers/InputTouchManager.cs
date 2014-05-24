@@ -155,11 +155,14 @@ public class InputTouchManager : MonoBehaviour {
 		
 		for (int i=0; i < Input.touchCount; ++i) {
 			Touch touch = Input.touches[i];
+#if UNITY_EDITOR
 			if (Debug.isDebugBuild)
 				Debug.Log(Input.touchCount + ": " + touch.phase + " -> finger " + touch.fingerId);
+#endif
 			// not supported yet
-			if (notSupported(touch.phase))
+			if (TouchPhase.Canceled.Equals(touch.phase))
 				continue;
+			
 			phasesFired[(int)touch.phase] = true;
 		}
 		

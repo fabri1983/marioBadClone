@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GamepadCross : InputTouchListenerAbs {
+public class GamepadCross : TouchListenerAbs {
 	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
 	/// relative to the GUI texture with size 64x64. Scale adjustments are apply once the 
@@ -77,26 +77,34 @@ public class GamepadCross : InputTouchListenerAbs {
 		
 		// up?
 		if (arrowRects[0].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
 			if (Debug.isDebugBuild)
 				Debug.Log("up");
+#endif
 			Gamepad.fireButton(Gamepad.BUTTONS.UP);
 		}
 		// right?
 		if (arrowRects[1].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
 			if (Debug.isDebugBuild)
 				Debug.Log("right");
+#endif
 			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
 		}
 		// down?
 		if (arrowRects[2].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
 			if (Debug.isDebugBuild)
 				Debug.Log("down");
+#endif
 			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
 		}
 		// left?
 		if (arrowRects[3].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
 			if (Debug.isDebugBuild)
 				Debug.Log("left");
+#endif
 			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
 		}
 	}

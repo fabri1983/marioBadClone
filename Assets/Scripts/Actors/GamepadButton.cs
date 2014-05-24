@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamepadButton : InputTouchListenerAbs {
+public class GamepadButton : TouchListenerAbs {
 	
 	// this modified in inspector window
 	public string buttonLabel = "A";
@@ -47,8 +47,10 @@ public class GamepadButton : InputTouchListenerAbs {
 	}
 	
 	private void optionSelected() {
+#if UNITY_EDITOR
 		if (Debug.isDebugBuild)
 			Debug.Log(buttonLabel);
+#endif
 		
 		// set the pressed button on GamepadInput manager
 		if ("A".Equals(buttonLabel))

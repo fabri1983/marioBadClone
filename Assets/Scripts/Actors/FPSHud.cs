@@ -24,18 +24,20 @@ public class FPSHud : MonoBehaviour
 	private Color	color = Color.white; // The color of the GUI, depending of the FPS ( R < 10, Y < 30, G >= 30 )
 	private string	sFPS = ""; // The fps formatted into a string.
  
-	void Start()
+	void Awake () {
+		if (Debug.isDebugBuild == false)
+			Destroy(gameObject);
+	}
+	
+	void Start ()
 	{
-		if (Debug.isDebugBuild)
-	    	StartCoroutine( FPS() );
+	    StartCoroutine( FPS() );
 	}
  
 	void Update()
 	{
-		if (Debug.isDebugBuild) {
-	    	accum += Time.timeScale/ Time.deltaTime;
-	    	++frames;
-		}
+    	accum += Time.timeScale/ Time.deltaTime;
+    	++frames;
 	}
  
 	IEnumerator FPS()
@@ -59,7 +61,7 @@ public class FPSHud : MonoBehaviour
  
 	void OnGUI()
 	{
-		if (Debug.isDebugBuild && EventType.Repaint == Event.current.type) {
+		if (EventType.Repaint == Event.current.type) {
 			GUI.color = updateColor ? color : Color.white;
 			GUI.Label(startRect, sFPS + " FPS");
 		}
