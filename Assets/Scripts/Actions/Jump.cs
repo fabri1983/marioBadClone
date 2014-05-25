@@ -42,6 +42,9 @@ public class Jump : AnimateTiledConfig {
 	
 	void OnCollisionEnter (Collision collision) {
 		
+		if (!testNormalY(collision.contacts[0]))
+			return;
+		
 		if (collision.transform.tag.Equals("Floor")) {
 			if (foreverJump) {
 				jump(foreverJumpVel, foreverFallSpeed);
@@ -62,13 +65,17 @@ public class Jump : AnimateTiledConfig {
 	
 	void OnCollisionStay (Collision collision) {
 		
+		// when hitting something then cancel jumping velocity
+		if (collision.gameObject.layer != LevelManager.FOR_ENEMY_LAYER)
+			jumpingVel = 0f;
+		
+		if (!testNormalY(collision.contacts[0]))
+			return;
+		
 		if (collision.transform.tag.Equals("Floor")) {
 			isJumping = false;
 			factorApplied = false;
 		}
-		// this to avoid enemies that use this jump script to abruptly stop jumping when hitting something special for enemies
-		if (collision.gameObject.layer != LevelManager.FOR_ENEMY_LAYER)
-			jumpingVel = 0f;
 	}
 	
 	void OnCollisionExit (Collision collision) {
@@ -131,5 +138,13 @@ public class Jump : AnimateTiledConfig {
 	public void setForeverValues (float pJumpSpeed, float pFallSpeed) {
 		foreverJumpVel = pJumpSpeed;
 		foreverFallSpeed = pFallSpeed;
+	}
+	
+	private static bool testNormalY (ContactPoint contactp) {
+		// if normal.y is near to 1 it means it is a hit against floor
+		float absY = Mathf.Abs(contactp.normal.y);
+		if (absY > 0.8f)
+			return true;
+		return false;
 	}
 }
