@@ -120,14 +120,16 @@ public class InputTouchManager : MonoBehaviour {
 		// add here if else for other traverses for different touch phases
 	}
 	
-	void OnDestroy () {
+	void OnApplicationQuit () {
 		beganEternalListeners.Clear();
 		beganSceneOnlyListeners.Clear();
 		stationaryEternalListeners.Clear();
 		stationarySceneOnlyListeners.Clear();
 		endedEternalListeners.Clear();
 		endedSceneOnlyListeners.Clear();
-		instance = null;
+		
+		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
+		//instance = null;
 	}
 	
 	void Update () {
@@ -157,8 +159,7 @@ public class InputTouchManager : MonoBehaviour {
 		}
 		
 		// reset the processed flag of every listener only for pahses fired
-		// NOTE: now the reset happens right after the stopPropagation() is consumed. See explanation inside sendEvent()
-		//resetProcessedFlags();
+		resetProcessedFlags();
 		
 		// send events to listeners
 		for (int i=0; i < Input.touchCount; ++i)
@@ -207,12 +208,8 @@ public class InputTouchManager : MonoBehaviour {
 					continue;
 				
 				// does the listener want to stop its propagation on next touch phases?
-				if (listener.stopPropagation()) {
-					/// reset here instead of calling resetProcessedFlags(). Only valid for two list (eternal and sceneOnly) 
-					/// per touch phase. If adding a new list, then this reset 
-					listener.setConsumed(false);
+				if (listener.stopPropagation())
 					continue;
-				}
 				
 				GameObject go = listener.getGameObject();
 				bool hitten = false;
@@ -226,18 +223,13 @@ public class InputTouchManager : MonoBehaviour {
 				// check for game object
 				else {
 					// option 1:
-					Ray vRay = Camera.main.ScreenPointToRay (t.position);
-					/*RaycastHit vHit;
+					/*Ray vRay = Camera.main.ScreenPointToRay(t.position);
+					RaycastHit vHit;
 					if (Physics.Raycast(vRay, out vHit, 50)) {
 						if (vHit.collider != null && vHit.collider.name.Equals(go.collider.name))
 							hitten = true;
 					}*/
-					// option 2:
-					Vector3 origin = listener.getGameObject().transform.InverseTransformPoint(vRay.origin);
-					Vector3 direction = listener.getGameObject().transform.InverseTransformDirection(vRay.direction);
-					
-					Vector3 zeroCross = origin - direction*(origin.z/direction.z);
-					hitten = zeroCross.magnitude < 0.5f;
+					// option 2: search the web for unity touch fast hit detection
 				}
 				
 				// hitten? then invoke callback
@@ -257,7 +249,7 @@ public class InputTouchManager : MonoBehaviour {
 		}
 	}
 	
-	/*private static void resetProcessedFlags () {
+	private static void resetProcessedFlags () {
 		
 		// only reset the listeners for current fired touch phases
 		for (int k = 0; k < phasesFired.Length; ++k) {
@@ -298,5 +290,5 @@ public class InputTouchManager : MonoBehaviour {
 				}
 			}
 		}
-	}*/
+	}
 }
