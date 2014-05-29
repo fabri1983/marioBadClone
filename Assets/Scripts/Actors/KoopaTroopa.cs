@@ -23,7 +23,7 @@ public class KoopaTroopa : MonoBehaviour {
 			Jump jump = GetComponent<Jump>();
 			if (jump) {
 				jump.setForeverJump(true);
-				jump.setForeverValues(17f, 35f);
+				jump.setForeverJumpSpeed(17f);
 			}
 		}
 		
@@ -74,7 +74,7 @@ public class KoopaTroopa : MonoBehaviour {
 			// makes Mario jump a little upwards
 			Jump jump = collision.transform.GetComponent<Jump>();
 			if (jump)
-				jump.jump(10f, 45f);
+				jump.jump(10f);
 		}
 		// koopa die
 		else if ((koopaDie.isHide() || koopaDie.isBouncing()) && isMario && collisionFromAbove) {
@@ -82,7 +82,7 @@ public class KoopaTroopa : MonoBehaviour {
 			// makes Mario jump a little upwards
 			Jump jump = collision.transform.GetComponent<Jump>();
 			if (jump)
-				jump.jump(10f, 45f);
+				jump.jump(10f);
 		}
 		// if koopa is hide and somebody touches it on its sides then change to bouncing like crazy state in opposite direction of collision
 		else if (koopaDie.isHide() && !collisionFromAbove) {

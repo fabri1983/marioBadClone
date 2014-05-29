@@ -47,7 +47,7 @@ public class PowerUpPWings : PowerUp {
 	}
 	
 	public override void assignToCharacter (MonoBehaviour element) {
-		ControllerPlayer pc = (ControllerPlayer) element;
+		Player pc = (Player) element;
 		pc.setPowerUp(this);
 		
 		// get rigidbody to disable/enable gravity
@@ -92,6 +92,10 @@ public class PowerUpPWings : PowerUp {
 	
 	public override bool isAllowedInput () {
 		return Input.GetKey(KeyCode.Space);
+	}
+	
+	public override bool isLethal () {
+		return false;
 	}
 }
 

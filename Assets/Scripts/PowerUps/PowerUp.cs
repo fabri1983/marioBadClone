@@ -2,8 +2,7 @@ using UnityEngine;
 
 public abstract class PowerUp : MonoBehaviour {
 	
-	// Game Object that will be used as bullet/gunfire
-	public GameObject artifact;
+	public GameObject artifact; // Game Object that will be used as bullet/gunfire
 	
 	protected int usageLeft;
 	protected float firePow; 
@@ -64,6 +63,11 @@ public abstract class PowerUp : MonoBehaviour {
 	 * Returns true if the curretn Input is the expected to be operable with this power up
 	 */
 	public abstract bool isAllowedInput ();
+	
+	/**
+	 * True if power up can kill when hitting something. Final decision is taken by the hitten game object.
+	 */
+	public abstract bool isLethal ();
 	
 	public void action (GameObject go) {
 		// checks first if input key is correct and if the power up is still usable

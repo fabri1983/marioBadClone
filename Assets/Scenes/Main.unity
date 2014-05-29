@@ -377,8 +377,6 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 335493302}
-  - 65: {fileID: 335493306}
-  - 54: {fileID: 335493305}
   - 114: {fileID: 335493311}
   - 114: {fileID: 335493310}
   - 114: {fileID: 335493309}
@@ -387,6 +385,8 @@ GameObject:
   - 114: {fileID: 335493313}
   - 114: {fileID: 335493314}
   - 114: {fileID: 335493303}
+  - 114: {fileID: 335493304}
+  - 114: {fileID: 335493305}
   m_Layer: 10
   m_Name: Mario
   m_TagString: Mario
@@ -418,35 +418,43 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c863e104e20e73540bf935f040ea2cb8, type: 1}
   m_Name: 
---- !u!54 &335493305
-Rigidbody:
+--- !u!114 &335493304
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5400000, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+  m_PrefabParentObject: {fileID: 11400030, guid: c962b9c1f9528d14ea03cd06fefbcf87,
     type: 2}
   m_PrefabInternal: {fileID: 1800799199}
   m_GameObject: {fileID: 335493301}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 0
---- !u!65 &335493306
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6500000, guid: c962b9c1f9528d14ea03cd06fefbcf87,
-    type: 2}
-  m_PrefabInternal: {fileID: 1800799199}
-  m_GameObject: {fileID: 335493301}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a802c6274fba49c2a40f1d099e8f507, type: 1}
+  m_Name: 
+  _mass: 1
+  momentCalculationMode: 1
+  _customMoment: 0
+  _isKinematic: 0
+  _interpolationMode: 1
+  _transform: {fileID: 0}
+  _savedZ: 0
+--- !u!114 &335493305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400028, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 335493301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
+  m_Name: 
+  _friction: .699999988
+  _elasticity: 0
+  _isSensor: 0
+  _collisionType: Player
+  _collisionGroup: 
+  _center: {x: 0, y: 0}
+  _size: {x: 1, y: 1}
+  _radius: .00999999978
 --- !u!114 &335493308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,14 +466,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ce509fca44b49b439117e064103bca4, type: 1}
   m_Name: 
-  animComponent: {fileID: 1814345865}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 6
-  colLengthAnim: 1
 --- !u!114 &335493309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,11 +477,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e256cb14adccd1548b6340e5f2564188, type: 1}
   m_Name: 
-  movementPow: 10
-  lightJumpPow: 25
-  gainJumpFactor: 1.60000002
-  fallPow: 45
-  diePosY: -20
+  moveVelocity: 10
+  lightJumpVelocity: 40
+  gainJumpFactor: 1.39999998
 --- !u!114 &335493310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,14 +502,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b8d9f0aaaf35d43be4ea9990003d4c, type: 1}
   m_Name: 
-  animComponent: {fileID: 1814345865}
-  animFPS: 7
-  pingPongAnim: 1
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 3
   animFPSBoost: 11
   speedUpFactor: 1.89999998
 --- !u!114 &335493312
@@ -525,14 +515,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 510b64af11eb55a4ab54dcbf4e1ae6f9, type: 1}
   m_Name: 
-  animComponent: {fileID: 1814345865}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 7
-  colLengthAnim: 1
   crouchProportion: .75
 --- !u!114 &335493313
 MonoBehaviour:
@@ -545,14 +527,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b57106e2fe475143a88e41f68ffbcb1, type: 1}
   m_Name: 
-  animComponent: {fileID: 1814345865}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
 --- !u!114 &335493314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,14 +538,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e95dc2a9910d674ca26ddf6321149da, type: 1}
   m_Name: 
-  animComponent: {fileID: 1814345865}
-  animFPS: 7
-  pingPongAnim: 1
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 8
-  colLengthAnim: 2
 --- !u!1001 &351409349
 Prefab:
   m_ObjectHideFlags: 0
@@ -1240,6 +1206,11 @@ GameObject:
   - 114: {fileID: 1814345865}
   - 33: {fileID: 1814345864}
   - 23: {fileID: 1814345863}
+  - 114: {fileID: 1814345870}
+  - 114: {fileID: 1814345869}
+  - 114: {fileID: 1814345868}
+  - 114: {fileID: 1814345867}
+  - 114: {fileID: 1814345866}
   m_Layer: 0
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
@@ -1299,7 +1270,7 @@ MonoBehaviour:
   _useCoroutine: 0
   _framesPerSecond: 2
   _pingPongAnim: 0
-  _rowsTotal: 2
+  _rowsTotalInSprite: 2
   _maxColsInRows: 10
   _playOnce: 0
   _disableUponCompletion: 0
@@ -1311,6 +1282,101 @@ MonoBehaviour:
   _buffer: {x: 0, y: 0}
   _rowLimits: 0000000002000000
   _colLimits: 0000000014000000
+--- !u!114 &1814345866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400018, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 1814345861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f431a08bc09044aa84afe94a8781d6, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 7
+  pingPongAnim: 1
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 8
+  colLengthAnim: 2
+--- !u!114 &1814345867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400020, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 1814345861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513cfbdb60f73ef4ab41b9d99e7df12d, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 7
+  colLengthAnim: 1
+--- !u!114 &1814345868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400022, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 1814345861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a737f5d074dc924aa841bd632f12c6f, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 0
+  colLengthAnim: 1
+--- !u!114 &1814345869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400024, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 1814345861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d34eb3178cb2b3408c94725c6d95ea5, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 6
+  colLengthAnim: 1
+--- !u!114 &1814345870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400026, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 1814345861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b1edc4db3e46a49bfdc1d8398b87f5, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 7
+  pingPongAnim: 1
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 1
+  colLengthAnim: 3
 --- !u!1 &1947964902
 GameObject:
   m_ObjectHideFlags: 0

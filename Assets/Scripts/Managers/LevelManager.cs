@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour {
 	
     private static LevelManager instance;
     private int activeLevel;
-    private ControllerPlayer player;
+    private Player player;
 	
 	// used for Mario's die animation
 	private GameObject mainCam, camInFront;
@@ -82,7 +82,7 @@ public class LevelManager : MonoBehaviour {
 			lastSpawnPos[i] = null;
 		
 		// get Mario's game object reference.
-		player = ControllerPlayer.Instance;
+		player = Player.Instance;
 		
 		// NOTE: here is the place where able to load a stored saved game: get latest level and spawn position, stats, powerups, etc
 	}
@@ -118,14 +118,14 @@ public class LevelManager : MonoBehaviour {
 	
 	/**
 	 * This invoked from StartLevel object which has the number of the level.
-	 * It enables the player's game object, load the spawn positions, set the player's position.
+	 * It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
 	 */
-	public void startLevel (int level) {
+	public void startLevel (int level, bool playerEnabled) {
 		
 		activeLevel = level;
 		
 		// activate the player's game object
-		player.gameObject.active = true;
+		player.gameObject.active = playerEnabled;
 		
 		// load spawn positions for current level. This is invoked everytime a level is loaded but 
 		// the method considers if spawn positions were already loaded.
@@ -141,7 +141,7 @@ public class LevelManager : MonoBehaviour {
 		InputTouchManager.warm();
 	}
 	
-	public ControllerPlayer getPlayer () {
+	public Player getPlayer () {
 		return player;
 	}
 	
@@ -150,7 +150,7 @@ public class LevelManager : MonoBehaviour {
 		if (spawnPosList[level].Count > 0) {
 			if (lastSpawnPos[level] == null)
 				resetLastSpawnPos(level);
-			player.transform.position = lastSpawnPos[level].getPosition();
+			player.GetComponent<ChipmunkBody>().position = lastSpawnPos[level].getPosition();
 			if (player.rigidbody != null)
 				player.rigidbody.velocity = Vector3.zero;
 		}

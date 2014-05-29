@@ -8,7 +8,6 @@ public class PowerUpCoin : PowerUp {
 	//private PlayerController player;
 	
 	protected override void ownStart () {
-		
 		base.usageLeft = 0;
 		base.destroyTime = 1f;
 		base.firePow = 0f;
@@ -35,8 +34,7 @@ public class PowerUpCoin : PowerUp {
 	}
 	
 	public override bool ableToUse () {
-		// a coin isn't used
-		return false;
+		return false; // a coin isn't used
 	}
 	
 	public override void use () {
@@ -44,7 +42,10 @@ public class PowerUpCoin : PowerUp {
 	}
 	
 	public override bool isAllowedInput () {
-		// a coin isn't reactive to Input
+		return false; // a coin isn't reactive to Input
+	}
+	
+	public override bool isLethal () {
 		return false;
 	}
 }

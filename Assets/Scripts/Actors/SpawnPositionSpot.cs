@@ -5,15 +5,15 @@ using UnityEngine;
  */
 public class SpawnPositionSpot {
 
-	private Vector3 position;
+	private Vector2 position;
 	private int priority;
 	
-	public SpawnPositionSpot (int pPriotity, Vector3 pPos) {
+	public SpawnPositionSpot (int pPriotity, Vector2 pPos) {
 		position = pPos;
 		priority = pPriotity;
 	}
 	
-	public Vector3 getPosition () {
+	public Vector2 getPosition () {
 		return position;
 	}
 	

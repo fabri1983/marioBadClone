@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Patrol : MonoBehaviour {
 	
-	public float movePower = 6f;
+	public float speed = 6f;
 	
 	private MoveAbs move;
-	private Vector3 dir;
+	private Vector3 dir; // only for direction, must be normalized
 	private bool stop;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		dir = Vector3.right; // initial normalized direction 
 		move = GetComponent<MoveAbs>();
 		stop = false;
@@ -20,17 +20,7 @@ public class Patrol : MonoBehaviour {
 		if (stop)
 			return;
 		// always in movement. The only opportunity to stop is when chase action takes place
-		move.move(dir * movePower);
-	}
-	
-	void OnCollisionEnter (Collision collision) {
-		// change direction of movement whenever hit something
-		if (!collision.transform.tag.Equals("Mario")) {
-			// if normal.x is near to 1 it means it is a hit against something perpendicular to floor (a wall)
-			float absX = Mathf.Abs(collision.contacts[0].normal.x);
-			if (absX > 0.8f)
-				dir.x *= -1f;
-		}
+		move.move(dir * speed);
 	}
 	
 	/**
@@ -40,8 +30,12 @@ public class Patrol : MonoBehaviour {
 		dir = pDir;
 	}
 	
+	public void toogleDir () {
+		dir *= -1f;
+	}
+	
 	public void setMovePower (float val) {
-		movePower = val;
+		speed = val;
 	}
 	
 	public void stopPatrol () {
@@ -51,5 +45,24 @@ public class Patrol : MonoBehaviour {
 	
 	public void enablePatrol () {
 		stop = false;
+	}
+	
+	public static bool beginCollision (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
+
+		// change direction of movement whenever hit something
+		// if other's normal.x is near to 1 it means it is a hit against something perpendicular to floor (eg:Z a wall)
+		if (Mathf.Abs(arbiter.GetNormal(0).x) > 0.7f) {
+			Patrol p1 = shape1.GetComponent<Patrol>();
+			if (p1 != null) p1.toogleDir();
+			Patrol p2 = shape2.GetComponent<Patrol>();
+			if (p2 != null) p2.toogleDir();
+		}
+		
+		// Returning false from a begin callback means to ignore the collision
+	    // response for these two colliding shapes until they separate.
+		return true;
 	}
 }

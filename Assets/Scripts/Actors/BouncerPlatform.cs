@@ -3,7 +3,6 @@ using UnityEngine;
 public class BouncerPlatform : MonoBehaviour {
 	
 	public float bounceSpeed = 55f;
-	public float fallSpeed = 55f;
 
 	void OnCollisionEnter (Collision collision) {
 	
@@ -11,7 +10,7 @@ public class BouncerPlatform : MonoBehaviour {
 
 			Jump jump = collision.transform.GetComponent<Jump>();
 			if (jump != null)
-				jump.jump(bounceSpeed, fallSpeed);
+				jump.jump(bounceSpeed);
 		}
 	}
 }

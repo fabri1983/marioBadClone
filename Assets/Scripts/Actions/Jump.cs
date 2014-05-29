@@ -4,127 +4,75 @@ using UnityEngine;
 /// This class has a built in gravity simulator. So when player isn't in any pltaform with tag Floor the gravity pulls down.
 /// It works with rigidbodies, so is possible some sort of bugs appear.
 /// </summary>
-public class Jump : AnimateTiledConfig {
+public class Jump : MonoBehaviour {
 	
 	private bool isJumping = false;
-	private float fallSpeed;
-	private float jumpingVel;
 	private bool foreverJump = false;
 	private float foreverJumpVel = 0f;
-	private float foreverFallSpeed = 0f;
-	private bool factorApplied = false; // whether a jump factor was or wasn't applied in current jump loop
+	private bool gainApplied = false; // whether a jump gain was or wasn't applied in current jump loop
 	
 	private Crouch crouch;
 	private Idle idle; // when stop jumping we need to set the player to idle behavior
+	private AnimateTiledConfig jumpAC;
+	private ChipmunkBody body;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		idle = GetComponent<Idle>();
 		crouch = GetComponent<Crouch>();
+		jumpAC = GetComponentInChildren<JumpAnimConfig>();
+		body = GetComponent<ChipmunkBody>();
 		reset();
 	}
 	
-	void Update () {
-		// this Update() method for physic's simulation
-		
-		if (!isJumping)
+	void Update(){
+		////////////////////////////////////
+		//IMPORTANT: this fixes the crash when assigning the modified velocity to the body
+		if (isJumping)
 			return;
-		
-		// while not touching the ground, reduce the vertical speed a little bit every frame
-		jumpingVel -= fallSpeed * Time.deltaTime;
-		
-		// stop falling speed at certain threshold
-		if (jumpingVel < -fallSpeed)
-			jumpingVel = -fallSpeed;
-
-		transform.Translate(0f, jumpingVel * Time.deltaTime, 0f);
+		Vector2 v = body.velocity;
+		body.velocity = v;
+		////////////////////////////////////
 	}
 	
-	void OnCollisionEnter (Collision collision) {
-		
-		if (!testNormalY(collision.contacts[0]))
-			return;
-		
-		if (collision.transform.tag.Equals("Floor")) {
-			if (foreverJump) {
-				jump(foreverJumpVel, foreverFallSpeed);
-				return;
-			}
-			else {
-				isJumping = false;
-				factorApplied = false;
-				// if it was jumping then set player behavior to idle
-				if (idle != null && crouch != null && !crouch.isCrouching())
-					idle.setIdle(false);
-			}
-		}
-		// this to avoid enemies that use this jump script to abruptly stop jumping when hitting something special for enemies
-		if (!gameObject.tag.Equals("Mario") && (collision.gameObject.layer != LevelManager.FOR_ENEMY_LAYER))
-			jumpingVel = 0f;
-	}
-	
-	void OnCollisionStay (Collision collision) {
-		
-		// when hitting something then cancel jumping velocity
-		if (collision.gameObject.layer != LevelManager.FOR_ENEMY_LAYER)
-			jumpingVel = 0f;
-		
-		if (!testNormalY(collision.contacts[0]))
-			return;
-		
-		if (collision.transform.tag.Equals("Floor")) {
-			isJumping = false;
-			factorApplied = false;
-		}
-	}
-	
-	void OnCollisionExit (Collision collision) {
-		
-		// if player is taking off of the floor set jumping to true to simulate gravity pulls down
-		if (collision.transform.tag.Equals("Floor") && gameObject.layer != LevelManager.TELEPORT_LAYER)
-			isJumping = true;
-	}
-	
-	public void jump (float pJumpVel, float pFallSpeed) {
+	public void jump (float pJumpVel) {
 		
 		if (isJumping)
 			return;
 		
 		// set the correct sprite animation
-		if (animComponent != null && crouch != null && !crouch.isCrouching()) {
-			animComponent.setFPS(animFPS);
-			animComponent.setRowLimits(rowStartAnim, rowLengthAnim);
-			animComponent.setColLimits(maxColsAnimInRow, colStartAnim, colLengthAnim);
-			animComponent.setPingPongAnim(pingPongAnim);
-			animComponent.Play();
+		if (crouch != null && !crouch.isCrouching()) {
+			jumpAC.animComp.setFPS(jumpAC.animFPS);
+			jumpAC.animComp.setRowLimits(jumpAC.rowStartAnim, jumpAC.rowLengthAnim);
+			jumpAC.animComp.setColLimits(jumpAC.maxColsAnimInRow, jumpAC.colStartAnim, jumpAC.colLengthAnim);
+			jumpAC.animComp.setPingPongAnim(jumpAC.pingPongAnim);
+			jumpAC.animComp.Play();
 		}
 		
 		isJumping = true;
-		jumpingVel = pJumpVel;
-		fallSpeed = pFallSpeed;
-		
-		// give an initial jump to take off from floor
-		transform.Translate(0f, jumpingVel * Time.deltaTime, 0f);
+		Vector2 v = body.velocity;
+		v.y += pJumpVel;
+		body.velocity = v;
 	}
 	
 	/// <summary>
-	/// Applies a factor to current jump velocity. Only once per jump loop.
+	/// Applies a gain factor to current jump velocity. Only once per jump.
 	/// </summary>
 	/// <param name='factor'>
 	/// Factor.
 	/// </param>
-	public void applyFactor (float factor) {
-		if (!factorApplied) {
-			jumpingVel *= factor;
-			factorApplied = true;
+	public void applyGain (float factor) {
+		if (!gainApplied) {
+			Vector2 v = body.velocity;
+			v.y *= factor;
+			body.velocity = v;
+			gainApplied = true;
 		}
 	}
 	
 	public void reset () {
-		isJumping = true; // initialized as true for gravity's simulation 
-		factorApplied = false;
-		jumpingVel = 0f;
-		fallSpeed = 25f;
+		isJumping = true; // initialized as true in case the player is spawned in the air
+		gainApplied = true;
 	}
 	
 	public bool IsJumping () {
@@ -135,16 +83,37 @@ public class Jump : AnimateTiledConfig {
 		foreverJump = val;
 	}
 	
-	public void setForeverValues (float pJumpSpeed, float pFallSpeed) {
+	public void setForeverJumpSpeed (float pJumpSpeed) {
 		foreverJumpVel = pJumpSpeed;
-		foreverFallSpeed = pFallSpeed;
 	}
 	
-	private static bool testNormalY (ContactPoint contactp) {
-		// if normal.y is near to 1 it means it is a hit against floor
-		float absY = Mathf.Abs(contactp.normal.y);
-		if (absY > 0.8f)
-			return true;
-		return false;
+	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		Jump jump = shape1.GetComponent<Jump>();
+		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
+			if (jump.foreverJump) {
+				jump.jump(jump.foreverJumpVel);
+			}
+			else {
+				jump.isJumping = false;
+				jump.gainApplied = false;
+				// if it was jumping then set player behavior to idle
+				if (jump.idle != null && jump.crouch != null && !jump.crouch.isCrouching())
+					jump.idle.setIdle(false);
+			}
+		}
+		
+		// Returning false from a begin callback means to ignore the collision
+	    // response for these two colliding shapes until they separate.
+		return true;
+	}
+
+	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
 	}
 }

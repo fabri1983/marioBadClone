@@ -7,7 +7,7 @@ using UnityEngine;
 public class PowerUpFireBall : PowerUp {
 	
 	public float rateOfFire = 0.3f;
-	private ControllerPlayer player;
+	private Player player;
 	private float timingFire; // rate of fire
 	
 	protected override void ownStart () {
@@ -26,7 +26,7 @@ public class PowerUpFireBall : PowerUp {
 	}
 	
 	public override void assignToCharacter (MonoBehaviour element) {
-		player = ((ControllerPlayer) element);
+		player = ((Player) element);
 		player.setPowerUp(this);
 		
 		// init usage left
@@ -72,6 +72,10 @@ public class PowerUpFireBall : PowerUp {
 	
 	public override bool isAllowedInput () {
 		return Gamepad.isB() || Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl);
+	}
+	
+	public override bool isLethal () {
+		return true;
 	}
 }
 

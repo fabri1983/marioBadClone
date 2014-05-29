@@ -4,6 +4,7 @@ public class StartLevel : MonoBehaviour {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;
+	public bool enablePlayer = true;
 	public GameObject mainCam;
 	public GameObject camInFront;
 	
@@ -11,6 +12,6 @@ public class StartLevel : MonoBehaviour {
 		
 		LevelManager.Instance.setMainCamera(mainCam);
 		LevelManager.Instance.setCamerainFront(camInFront);
-		LevelManager.Instance.startLevel(sceneIndex);
+		LevelManager.Instance.startLevel(sceneIndex, enablePlayer);
 	}
 }

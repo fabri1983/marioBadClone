@@ -8,7 +8,6 @@ public class PowerUpLife : PowerUp {
 	//private PlayerController player;
 	
 	protected override void ownStart () {
-		
 		base.usageLeft = 0;
 		base.destroyTime = 1f;
 		base.firePow = 0f;
@@ -18,7 +17,6 @@ public class PowerUpLife : PowerUp {
 	}
 	
 	protected override void animOnGotcha () {
-		
 		// moves the transform upwards showing the power up just gained
 		if (objectToAnim != null)
 			objectToAnim.transform.Translate(0f, 4f * Time.deltaTime, 0f, Space.World);
@@ -35,8 +33,7 @@ public class PowerUpLife : PowerUp {
 	}
 	
 	public override bool ableToUse () {
-		// a 1up isn't used
-		return false;
+		return false; // a 1up isn't used
 	}
 	
 	public override void use () {
@@ -44,7 +41,10 @@ public class PowerUpLife : PowerUp {
 	}
 	
 	public override bool isAllowedInput () {
-		// a 1up isn't reactive to Input
+		return false; // a 1up isn't reactive to Input
+	}
+	
+	public override bool isLethal () {
 		return false;
 	}
 }

@@ -8,8 +8,6 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 400000}
-  - 65: {fileID: 6500000}
-  - 54: {fileID: 5400000}
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
@@ -18,6 +16,8 @@ GameObject:
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400030}
+  - 114: {fileID: 11400028}
   m_Layer: 10
   m_Name: Mario
   m_TagString: Mario
@@ -51,6 +51,11 @@ GameObject:
   - 114: {fileID: 11400016}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
+  - 114: {fileID: 11400026}
+  - 114: {fileID: 11400024}
+  - 114: {fileID: 11400022}
+  - 114: {fileID: 11400020}
+  - 114: {fileID: 11400018}
   m_Layer: 0
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
@@ -65,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -228.485031, y: 6.45910931, z: 0}
   m_LocalScale: {x: 2, y: 5, z: 1}
   m_Children:
   - {fileID: 400004}
@@ -118,33 +123,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
---- !u!54 &5400000
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 0
---- !u!65 &6500000
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,14 +143,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ce509fca44b49b439117e064103bca4, type: 1}
   m_Name: 
-  animComponent: {fileID: 11400016}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 6
-  colLengthAnim: 1
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,11 +153,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e256cb14adccd1548b6340e5f2564188, type: 1}
   m_Name: 
-  movementPow: 10
-  lightJumpPow: 25
-  gainJumpFactor: 1.60000002
-  fallPow: 45
-  diePosY: -20
+  moveVelocity: 10
+  lightJumpVelocity: 40
+  gainJumpFactor: 1.39999998
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,14 +176,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b8d9f0aaaf35d43be4ea9990003d4c, type: 1}
   m_Name: 
-  animComponent: {fileID: 11400016}
-  animFPS: 7
-  pingPongAnim: 1
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 3
   animFPSBoost: 11
   speedUpFactor: 1.89999998
 --- !u!114 &11400010
@@ -228,14 +188,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 510b64af11eb55a4ab54dcbf4e1ae6f9, type: 1}
   m_Name: 
-  animComponent: {fileID: 11400016}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 7
-  colLengthAnim: 1
   crouchProportion: .75
 --- !u!114 &11400012
 MonoBehaviour:
@@ -247,14 +199,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b57106e2fe475143a88e41f68ffbcb1, type: 1}
   m_Name: 
-  animComponent: {fileID: 11400016}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -265,14 +209,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e95dc2a9910d674ca26ddf6321149da, type: 1}
   m_Name: 
-  animComponent: {fileID: 11400016}
-  animFPS: 7
-  pingPongAnim: 1
-  maxColsAnimInRow: 10
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 8
-  colLengthAnim: 2
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,7 +222,7 @@ MonoBehaviour:
   _useCoroutine: 0
   _framesPerSecond: 2
   _pingPongAnim: 0
-  _rowsTotal: 2
+  _rowsTotalInSprite: 2
   _maxColsInRows: 10
   _playOnce: 0
   _disableUponCompletion: 0
@@ -298,6 +234,131 @@ MonoBehaviour:
   _buffer: {x: 0, y: 0}
   _rowLimits: 0000000002000000
   _colLimits: 0000000014000000
+--- !u!114 &11400018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f431a08bc09044aa84afe94a8781d6, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 7
+  pingPongAnim: 1
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 8
+  colLengthAnim: 2
+--- !u!114 &11400020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513cfbdb60f73ef4ab41b9d99e7df12d, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 7
+  colLengthAnim: 1
+--- !u!114 &11400022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a737f5d074dc924aa841bd632f12c6f, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 0
+  colLengthAnim: 1
+--- !u!114 &11400024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d34eb3178cb2b3408c94725c6d95ea5, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 6
+  colLengthAnim: 1
+--- !u!114 &11400026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b1edc4db3e46a49bfdc1d8398b87f5, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 7
+  pingPongAnim: 1
+  maxColsAnimInRow: 10
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 1
+  colLengthAnim: 3
+--- !u!114 &11400028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
+  m_Name: 
+  _friction: .699999988
+  _elasticity: 0
+  _isSensor: 0
+  _collisionType: Player
+  _collisionGroup: 
+  _center: {x: 0, y: 0}
+  _size: {x: 1, y: 1}
+  _radius: .00999999978
+--- !u!114 &11400030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a802c6274fba49c2a40f1d099e8f507, type: 1}
+  m_Name: 
+  _mass: 1
+  momentCalculationMode: 1
+  _customMoment: 0
+  _isKinematic: 0
+  _interpolationMode: 1
+  _transform: {fileID: 0}
+  _savedZ: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

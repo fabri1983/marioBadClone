@@ -1,54 +1,59 @@
 using UnityEngine;
 
-public class Crouch : AnimateTiledConfig {
+public class Crouch : MonoBehaviour {
 	
-	public float crouchProportion = 0.5f;
+	public float crouchProportion = 0.75f;
 	
 	private bool crouching;
-	private float colliderHeightHalf, colliderCenterY, crouchHeight;
-	private BoxCollider box;
+	private float colliderCenterY, centerOffsetY;
+	private ChipmunkBoxShape box;
 	private Jump jump;
 	private Sneak sneak;
 	private MoveAbs move;
+	private AnimateTiledConfig crouchAC;
 	
 	void Awake () {
 		crouching = false;
 		
 		// take the collider and some useful values
-		box = (BoxCollider)collider;
-		colliderHeightHalf = box.size.y * 0.5f;
+		box = GetComponent<ChipmunkBoxShape>();
 		colliderCenterY = box.center.y;
-		crouchHeight = -0.5f * (colliderHeightHalf - (1f - crouchProportion)*0.5f);
+		centerOffsetY = ((1f - crouchProportion)*0.5f) * box.size.y;
 		
 		jump = GetComponent<Jump>();
 		sneak = GetComponent<Sneak>();
 		move = GetComponent<MoveAbs>();
+		crouchAC = GetComponentInChildren<CrouchAnimConfig>();
 	}
 	
 	// Update is called once per frame
 	public void crouch () {
-		
+		// is it jumping?
 		bool jumping = false;
 		if (jump != null && jump.IsJumping())
 			jumping = true;
-		
+		// is it moving?
 		bool moving = false;
 		if (move != null && move.isMoving())
 			moving = true;
 		
+		// if crouching then update accordingly
 		if (sneak != null && crouching) {
+			// if jumping and sneaking: stop sneaking and crouch
 			if (jumping) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
 					startAnim();
 				}
 			}
+			// if not jumping and not moving and sneaking: stop sneaking and crouch
 			else if (!moving) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
 					startAnim();
 				}
 			}
+			// if not jumping and moving: sneak
 			else
 				sneak.sneak();
 		}
@@ -65,7 +70,7 @@ public class Crouch : AnimateTiledConfig {
 		box.size = theSize;
 		// transform the collider
 		Vector3 theCenter = box.center;
-		theCenter.y = crouchHeight;
+		theCenter.y -= centerOffsetY;
 		box.center = theCenter;
 		
 		// set the correct sprite animation
@@ -73,13 +78,11 @@ public class Crouch : AnimateTiledConfig {
 	}
 	
 	private void startAnim () {
-		if (animComponent != null) {
-			animComponent.setFPS(animFPS);
-			animComponent.setRowLimits(rowStartAnim, rowLengthAnim);
-			animComponent.setColLimits(maxColsAnimInRow, colStartAnim, colLengthAnim);
-			animComponent.setPingPongAnim(pingPongAnim);
-			animComponent.Play();
-		}
+		crouchAC.animComp.setFPS(crouchAC.animFPS);
+		crouchAC.animComp.setRowLimits(crouchAC.rowStartAnim, crouchAC.rowLengthAnim);
+		crouchAC.animComp.setColLimits(crouchAC.maxColsAnimInRow, crouchAC.colStartAnim, crouchAC.colLengthAnim);
+		crouchAC.animComp.setPingPongAnim(crouchAC.pingPongAnim);
+		crouchAC.animComp.Play();
 	}
 	
 	public void noCrouch () {

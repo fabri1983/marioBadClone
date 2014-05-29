@@ -3,13 +3,16 @@ using UnityEngine;
 /// <summary>
 /// Sneak. Is controled from a MoveAbs type of script.
 /// </summary>
-public class Sneak : AnimateTiledConfig {
+public class Sneak : MonoBehaviour {
 	
 	// NOTE: no animFPSBoost variable since this script uses is handled from the move component and it has such a variable (if any)
 	
 	private bool sneaking = false;
+	private AnimateTiledConfig sneakAC;
 	
-	private Crouch crouch;
+	void Awake () {
+		sneakAC = GetComponentInChildren<SneakAnimConfig>();
+	}
 	
 	public void sneak () {
 		if (sneaking)
@@ -17,12 +20,10 @@ public class Sneak : AnimateTiledConfig {
 		
 		sneaking = true;
 		
-		if (animComponent != null) {
-			animComponent.setRowLimits(rowStartAnim, rowLengthAnim);
-			animComponent.setColLimits(maxColsAnimInRow, colStartAnim, colLengthAnim);
-			animComponent.setPingPongAnim(pingPongAnim);
-			animComponent.Play();
-		}
+		sneakAC.animComp.setRowLimits(sneakAC.rowStartAnim, sneakAC.rowLengthAnim);
+		sneakAC.animComp.setColLimits(sneakAC.maxColsAnimInRow, sneakAC.colStartAnim, sneakAC.colLengthAnim);
+		sneakAC.animComp.setPingPongAnim(sneakAC.pingPongAnim);
+		sneakAC.animComp.Play();
 	}
 	
 	public bool isSneaking () {
