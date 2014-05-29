@@ -52,17 +52,16 @@ public class Patrol : MonoBehaviour {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 
-		// change direction of movement whenever hit something
-		// if other's normal.x is near to 1 it means it is a hit against something perpendicular to floor (eg:Z a wall)
-		if (Mathf.Abs(arbiter.GetNormal(0).x) > 0.7f) {
+		// change direction of movement whenever hit something like a wall
+		if (GameObjectTools.isWallHit(arbiter)) {
 			Patrol p1 = shape1.GetComponent<Patrol>();
 			if (p1 != null) p1.toogleDir();
 			Patrol p2 = shape2.GetComponent<Patrol>();
 			if (p2 != null) p2.toogleDir();
 		}
 		
-		// Returning false from a begin callback means to ignore the collision
-	    // response for these two colliding shapes until they separate.
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore does the same but next frame.
 		return true;
 	}
 }

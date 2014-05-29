@@ -32,14 +32,14 @@ public class Goomba : MonoBehaviour {
 		PowerUp powerUp = shape2.GetComponent<PowerUp>();
 		
 		if (goomba.goombaDie.isDying() || !powerUp.isLethal())
-			return false; // avoid the collision to continue
+			return false; // avoid the collision to continue since this frame
 		else {
 			Destroy(powerUp.gameObject);
 			goomba.goombaDie.die();
 		}
 		
-		// Returning false from a begin callback means to ignore the collision
-	    // response for these two colliding shapes until they separate.
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore does the same but next frame.
 		return false;
 	}
 	
@@ -51,7 +51,7 @@ public class Goomba : MonoBehaviour {
 		Player player = shape2.GetComponent<Player>();
 		
 		if (goomba.goombaDie.isDying() || player.isDying())
-			return false; // avoid the collision to continue
+			return false; // avoid the collision to continue since this frame
 		
 		// if collides from top then kill the goomba
 		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y + goomba.heightHalf, shape2, arbiter)) {
@@ -69,8 +69,8 @@ public class Goomba : MonoBehaviour {
 			LevelManager.Instance.loseGame(true); // force die animation
 		}
 		
-		// Returning false from a begin callback means to ignore the collision
-	    // response for these two colliding shapes until they separate.
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore does the same but next frame.
 		return true;
 	}
 }

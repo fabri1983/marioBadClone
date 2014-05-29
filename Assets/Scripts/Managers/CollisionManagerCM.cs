@@ -35,7 +35,7 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 	}
 	
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter){
-		Jump.endCollisionWithScenery(arbiter);
 		Player.endCollisionWithScenery(arbiter);
+		Jump.endCollisionWithScenery(arbiter);
 	}
 }

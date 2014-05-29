@@ -67,27 +67,23 @@ public class PlayerMove : MoveAbs {
 		}
 
 		// horizontal move
-		if (velocity != 0f) {
-			bool oldLookingRight = lookingRight;
-			// moving right
-			if (velocity > 0f)
-				lookingRight = true;
-			// moving left
-			else if (velocity < 0f)
-				lookingRight = false;
-			
-			Vector2 v = shape.body.velocity;
-			v.x = gain * velocity;
-			shape.body.velocity = v;
-			
-			// did Mario turn around?
-			if (oldLookingRight != lookingRight) {
-				Vector3 theScale = transform.localScale;
-				theScale.x *= -1f;
-				transform.localScale = theScale;
-			}
-			
-			
+		bool oldLookingRight = lookingRight;
+		// moving right
+		if (velocity > 0f)
+			lookingRight = true;
+		// moving left
+		else if (velocity < 0f)
+			lookingRight = false;
+		
+		Vector2 v = shape.body.velocity;
+		v.x = gain * velocity;
+		shape.body.velocity = v;
+		
+		// did Mario turn around?
+		if (oldLookingRight != lookingRight) {
+			Vector3 theScale = transform.localScale;
+			theScale.x *= -1f;
+			transform.localScale = theScale;
 		}
 	}
 	

@@ -93,6 +93,11 @@ public class Jump : MonoBehaviour {
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		Jump jump = shape1.GetComponent<Jump>();
+		
+		// if is jumping and hits a wall the player can't jump again
+		if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
+			return true;
+		
 		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump) {
 				jump.jump(jump.foreverJumpVel);
@@ -106,8 +111,8 @@ public class Jump : MonoBehaviour {
 			}
 		}
 		
-		// Returning false from a begin callback means to ignore the collision
-	    // response for these two colliding shapes until they separate.
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore does the same but next frame.
 		return true;
 	}
 

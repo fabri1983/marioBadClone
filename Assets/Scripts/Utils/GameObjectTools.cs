@@ -64,6 +64,15 @@ static public class GameObjectTools
 		}
 		return true;
 	}
+
+	public static bool isWallHit (ChipmunkArbiter arbiter) {
+		// if normal.x is near to 1 it means it's a plane that can be considered as a wall
+		for (int i=0; i < arbiter.contactCount; ++i) {
+			if (Mathf.Abs(arbiter.GetNormal(i).x) <= 0.7)
+				return false;
+		}
+		return true;
+	}
 	
 	public static void ChipmunkBodyDestroy (GameObject go) {
 		ChipmunkBody body = go.GetComponent<ChipmunkBody>();

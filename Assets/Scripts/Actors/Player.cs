@@ -18,6 +18,9 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	/// the position where the bullets start firing
 	private Transform firePivot;
 	private Vector3 rightFireDir, leftFireDir, fireDir;
+	private ChipmunkBody body;
+	
+	private float moveVelBackup;
 	
 	private static Player instance = null;
 	
@@ -49,7 +52,9 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		dieAnim = GetComponent<PlayerDieAnim>();
 		crouch = GetComponent<Crouch>();
 		idle = GetComponent<Idle>();
+		body = GetComponent<ChipmunkBody>();
 		
+		moveVelBackup = moveVelocity;
 		rightFireDir = new Vector3(1f, -0.5f, 0f);
 		leftFireDir = new Vector3(-1f, -0.5f, 0f);
 		fireDir = rightFireDir;
@@ -129,7 +134,6 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		setPowerUp(null);
 		jump.reset();
 		idle.setIdle(true);
-		ChipmunkBody body = GetComponent<ChipmunkBody>();
 		body.ResetForces();
 		body.velocity = Vector2.zero;
 	}
@@ -153,12 +157,26 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		
 		Player player = shape1.GetComponent<Player>();
 		if (player.isDying())
-			return false; // stop collision with scenery
+			return false; // stop collision with scenery since this frame
 		
-		// if isn't a grounded surface then stop velocity
+		// if isn't a grounded surface then stop velocity and avoid getting inside the object
+		if (GameObjectTools.isWallHit(arbiter)) {
+			// get sign direction to know what offset apply to body
+			float dirSign = 1f;
+			if (player.transform.position.x > shape2.transform.position.x)
+				dirSign = -1f;
+			// stop the player
+			player.body.velocity = Vector2.zero;
+			Vector2 thePos = player.body.position;
+			// move back to the contact point and a little more away
+			thePos.x += dirSign * (arbiter.GetDepth(0) - 0.1f);
+			player.body.position = thePos;
+			// set moving velocity to 0 so it can advance anymore while collisioning
+			player.moveVelocity = 0f;
+		}
 		
-		// Returning false from a begin callback means to ignore the collision
-	    // response for these two colliding shapes until they separate.
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore does the same but next frame.
 		return true;
 	}
 	
@@ -166,5 +184,9 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
+		
+		// restore moving velocity
+		Player player = shape1.GetComponent<Player>();
+		player.moveVelocity = player.moveVelBackup;
 	}
 }
