@@ -49,7 +49,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -213.252319, y: 1.73558903, z: 0}
+  m_LocalPosition: {x: -43.1307106, y: 1.73558903, z: 0}
   m_LocalScale: {x: 2.13896298, y: 2.13896298, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32f6c6199a815bb4fbe846d6d6ee8fc2, type: 1}
   m_Name: 
+  animFPSBoost: 8
+  speedUpFactor: 1.89999998
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

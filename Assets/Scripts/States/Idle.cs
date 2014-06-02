@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class Idle : MonoBehaviour {
 	
-	private MoveAbs move;
+	private WalkAbs move;
 	private Jump jump;
 	private Crouch crouch;
 	private AnimateTiledConfig idleAC;
 	
-	void Awake () {
-		move = GetComponent<MoveAbs>();
+	void Start () {
+		// Use Awake because of some weird issue with idleAC isn't correctly referenced
+		move = GetComponent<WalkAbs>();
 		jump = GetComponent<Jump>();
 		crouch = GetComponent<Crouch>();
 		idleAC = GetComponentInChildren<IdleAnimConfig>();
@@ -21,7 +22,7 @@ public class Idle : MonoBehaviour {
 			return;
 		
 		if (move != null)
-			move.stopMoving();
+			move.stopWalking();
 		
 		if (crouch != null)
 			crouch.noCrouch();

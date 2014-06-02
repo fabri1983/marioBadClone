@@ -16,9 +16,8 @@ public class BrickExplodeAnim : MonoBehaviour {
 	}
 	
 	private void explode () {
-		
-		// IMPROVEMENT: since there are only 8 bricks then you can manually unroll the loop. Is likely compiler already does it.
-		// Note: I disabled back child bricks in the prefab
+
+		// Note: the game object is compound of 4 blocks
 
 		for (int i=0; i < transform.childCount; ++i)
 		{	

@@ -5,15 +5,15 @@ public class Chase : MonoBehaviour {
 	public bool allowChasing = false;
 	public float movePower = 6f;
 	
-	private MoveAbs move;
+	private WalkAbs walk;
 	private Patrol patrol;
 	Transform target;
-	private Vector3 lastDir;
+	private float lastDir;
 	private bool wasChasing, stop;
 	
 	// Use this for initialization
 	void Start () {
-		move = GetComponent<MoveAbs>();
+		walk = GetComponent<WalkAbs>();
 		patrol = GetComponent<Patrol>();
 		wasChasing = false;
 		stop = false;
@@ -21,7 +21,6 @@ public class Chase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 		if (stop)
 			return;
 		
@@ -30,9 +29,8 @@ public class Chase : MonoBehaviour {
 			if (patrol != null)
 				patrol.stopPatrol();
 			// calculate vector direction
-			lastDir = target.position - transform.position;
-			lastDir.Normalize();
-			move.move(lastDir * movePower);
+			lastDir = Mathf.Sign(target.position.x - transform.position.x);
+			walk.walk(lastDir * movePower);
 		}
 		// restore last direction of movement for patrolling
 		else if (wasChasing) {
@@ -62,10 +60,12 @@ public class Chase : MonoBehaviour {
 	
 	public void stopChasing () {
 		stop = true;
+		walk.stopWalking();
 	}
 	
 	public void enableChasing () {
 		stop = false;
+		walk.enableWalking();
 	}
 	
 	public Transform getTarget () {

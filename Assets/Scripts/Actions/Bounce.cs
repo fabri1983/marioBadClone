@@ -33,18 +33,17 @@ public class Bounce : MonoBehaviour {
         Vector3 pos = transform.position;
         pos.y = py;
         transform.position = pos;
-		
 	}
 	
 	public void collision (Collision collision) {
 		
 		if (canBounce && !collision.transform.tag.Equals("Mario")) {
 			firstCollision = true;
-			// set spring force only if collision's normal is vector up (floor)
-			if (collision.contacts[0].normal.y > 0.8f)
+			// set spring force only if collision's normal is vector up (floor hit)
+			if (collision.contacts[0].normal.y > 0.75f)
 				vel = spring * Time.fixedDeltaTime * timescale;
-			// damp velocity if collision's normal is down vector (ceiling)
-			else if (collision.contacts[0].normal.y > -1f && collision.contacts[0].normal.y < -0.8f)
+			// damp velocity if collision's normal is down vector (ceiling hit)
+			else if (collision.contacts[0].normal.y < -0.75f)
 				vel = 0f;
 			// restart bounce
 			py = transform.position.y;

@@ -6,7 +6,7 @@ public class KoopaTroopa : MonoBehaviour {
 	
 	private KoopaTroopaDieAnim koopaDie;
 	private float heightHalf;
-	private Move move;
+	private Walk move;
 	private bool goingRight;
 	
 	void Start () {
@@ -16,7 +16,7 @@ public class KoopaTroopa : MonoBehaviour {
 		// half the height of the goomba's renderer
 		heightHalf = transform.GetChild(0).renderer.bounds.size.y / 2f;
 		
-		move = transform.GetComponent<Move>();
+		move = transform.GetComponent<Walk>();
 		
 		// set forever jumping
 		if (jumpInLoop) {
@@ -34,13 +34,13 @@ public class KoopaTroopa : MonoBehaviour {
 	void Update () {
 		
 		// unique behavior: when change direction then scale by -1 in X to simulate rotation
-		if (goingRight && move.getDir().x < 0f) {
+		if (goingRight && !move.isLookingRight()) {
 			Vector3 theScale = transform.localScale;
 			theScale.x = transform.localScale.x * -1f;
 			transform.localScale = theScale;
 			goingRight = false;
 		}
-		else if (!goingRight && move.getDir().x > 0f) {
+		else if (!goingRight && move.isLookingRight()) {
 			Vector3 theScale = transform.localScale;
 			theScale.x = transform.localScale.x * -1f;
 			transform.localScale = theScale;
@@ -86,11 +86,11 @@ public class KoopaTroopa : MonoBehaviour {
 		}
 		// if koopa is hide and somebody touches it on its sides then change to bouncing like crazy state in opposite direction of collision
 		else if (koopaDie.isHide() && !collisionFromAbove) {
-			koopaDie.changeToBouncing(transform.position - collision.transform.position);
+			koopaDie.changeToBouncing(Mathf.Sign(transform.position.x - collision.transform.position.x));
 		}
 		// kills Mario
 		else if (isMario && !collisionFromAbove) {
-			move.stopMoving();
+			move.stopWalking();
 			LevelManager.Instance.loseGame(true);
 		}
 	}

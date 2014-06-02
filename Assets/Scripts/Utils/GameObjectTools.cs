@@ -42,7 +42,7 @@ static public class GameObjectTools
 		bool cameFromAbove = false;
 
 		// ask for body's velocity
-		if (hitShape.body != null && hitShape.body.velocity.normalized.y < -0.7f)
+		if (hitShape.body != null && hitShape.body.velocity.normalized.y < -0.75f)
 			cameFromAbove = true;
 		
 		// if came from above then check collision points to be all above goomba's height
@@ -59,7 +59,7 @@ static public class GameObjectTools
 	public static bool isGrounded (ChipmunkArbiter arbiter) {
 		// if normal.y is near to 1 it means it's a grounded plane
 		for (int i=0; i < arbiter.contactCount; ++i) {
-			if (Mathf.Abs(arbiter.GetNormal(i).y) <= 0.7)
+			if (Mathf.Abs(arbiter.GetNormal(i).y) <= 0.75f)
 				return false;
 		}
 		return true;
@@ -68,10 +68,17 @@ static public class GameObjectTools
 	public static bool isWallHit (ChipmunkArbiter arbiter) {
 		// if normal.x is near to 1 it means it's a plane that can be considered as a wall
 		for (int i=0; i < arbiter.contactCount; ++i) {
-			if (Mathf.Abs(arbiter.GetNormal(i).x) <= 0.7)
+			if (Mathf.Abs(arbiter.GetNormal(i).x) <= 0.75f)
 				return false;
 		}
 		return true;
+	}
+	
+	public static void setLayerAndChildren (GameObject go, int layer) {
+		go.layer = layer;
+		Component[] children = go.GetComponentsInChildren<Component>();
+		for (int i=0; i < children.Length; ++i)
+			children[i].gameObject.layer = layer;
 	}
 	
 	public static void ChipmunkBodyDestroy (GameObject go) {

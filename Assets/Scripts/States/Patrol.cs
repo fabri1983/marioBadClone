@@ -4,14 +4,14 @@ public class Patrol : MonoBehaviour {
 	
 	public float speed = 6f;
 	
-	private MoveAbs move;
-	private Vector3 dir; // only for direction, must be normalized
+	private WalkAbs walk;
+	private float dir; // only for direction, must be normalized
 	private bool stop;
 	
 	// Use this for initialization
 	void Awake () {
-		dir = Vector3.right; // initial normalized direction 
-		move = GetComponent<MoveAbs>();
+		dir = 1f; // initial normalized direction 
+		walk = GetComponent<WalkAbs>();
 		stop = false;
 	}
 	
@@ -20,13 +20,13 @@ public class Patrol : MonoBehaviour {
 		if (stop)
 			return;
 		// always in movement. The only opportunity to stop is when chase action takes place
-		move.move(dir * speed);
+		walk.walk(dir * speed);
 	}
 	
 	/**
 	 * Set direction only (expected to be normalized)
 	 */
-	public void setNewDir (Vector3 pDir) {
+	public void setNewDir (float pDir) {
 		dir = pDir;
 	}
 	
@@ -40,11 +40,12 @@ public class Patrol : MonoBehaviour {
 	
 	public void stopPatrol () {
 		stop = true;
-		move.stopMoving();
+		walk.stopWalking();
 	}
 	
 	public void enablePatrol () {
 		stop = false;
+		walk.enableWalking();
 	}
 	
 	public static bool beginCollision (ChipmunkArbiter arbiter) {
@@ -61,7 +62,7 @@ public class Patrol : MonoBehaviour {
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore does the same but next frame.
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
 		return true;
 	}
 }

@@ -35,10 +35,13 @@ public class Jump : MonoBehaviour {
 		////////////////////////////////////
 	}
 	
-	public void jump (float pJumpVel) {
-		
+	public void jump (float jumpVel) {
 		if (isJumping)
 			return;
+		forceJump (jumpVel);
+	}
+	
+	public void forceJump (float jumpVel) {
 		
 		// set the correct sprite animation
 		if (crouch != null && !crouch.isCrouching()) {
@@ -51,10 +54,10 @@ public class Jump : MonoBehaviour {
 		
 		isJumping = true;
 		Vector2 v = body.velocity;
-		v.y += pJumpVel;
+		v.y += jumpVel;
 		body.velocity = v;
 	}
-	
+		
 	/// <summary>
 	/// Applies a gain factor to current jump velocity. Only once per jump.
 	/// </summary>
@@ -102,23 +105,23 @@ public class Jump : MonoBehaviour {
 			if (jump.foreverJump) {
 				jump.jump(jump.foreverJumpVel);
 			}
-			else {
-				jump.isJumping = false;
+			// if it was jumping then set player behavior to idle
+			else if (jump.isJumping) {
 				jump.gainApplied = false;
-				// if it was jumping then set player behavior to idle
+				jump.isJumping = false;
 				if (jump.idle != null && jump.crouch != null && !jump.crouch.isCrouching())
 					jump.idle.setIdle(false);
 			}
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore does the same but next frame.
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
 		return true;
 	}
 
-	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
-		ChipmunkShape shape1, shape2;
+	public static void endCollision (ChipmunkArbiter arbiter) {
+		/*ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
+	    arbiter.GetShapes(out shape1, out shape2);*/
 	}
 }

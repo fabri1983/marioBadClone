@@ -5,7 +5,6 @@ public class LevelManager : MonoBehaviour {
 	
 	public static int TELEPORT_LAYER;
 	public static int FOR_ENEMY_LAYER;
-	public static int POWER_UP_LAYER;
 	public static int CAMERA_IN_FRONT;
 	public static int POWERUP_LAYER;
 	public static int ONLY_WITH_MARIO_LAYER;
@@ -27,7 +26,6 @@ public class LevelManager : MonoBehaviour {
 	
 	// used for Mario's die animation
 	private GameObject mainCam, camInFront;
-	private CameraFollower camFollower;
 	
 	/**
 	 * Used for sorting the spawn positions
@@ -72,7 +70,6 @@ public class LevelManager : MonoBehaviour {
 		
 		TELEPORT_LAYER = LayerMask.NameToLayer("TeleportTrig");
 		FOR_ENEMY_LAYER = LayerMask.NameToLayer("ForEnemy");
-		POWER_UP_LAYER = LayerMask.NameToLayer("PowerUp");
 		CAMERA_IN_FRONT = LayerMask.NameToLayer("CameraInFront");
 		POWERUP_LAYER = LayerMask.NameToLayer("PowerUp");
 		ONLY_WITH_MARIO_LAYER = LayerMask.NameToLayer("OnlyWithMario");
@@ -110,7 +107,7 @@ public class LevelManager : MonoBehaviour {
 			activeLevel = level;
 		
 		// deactivate to avoid falling in empty scene
-		player.gameObject.active = false;
+		player.gameObject.SetActiveRecursively(false);
 		
 		// load level
 		Application.LoadLevel(activeLevel);
@@ -125,7 +122,7 @@ public class LevelManager : MonoBehaviour {
 		activeLevel = level;
 		
 		// activate the player's game object
-		player.gameObject.active = playerEnabled;
+		player.gameObject.SetActiveRecursively(playerEnabled);
 		
 		// load spawn positions for current level. This is invoked everytime a level is loaded but 
 		// the method considers if spawn positions were already loaded.
@@ -134,11 +131,10 @@ public class LevelManager : MonoBehaviour {
 		// set Mario spawn position for this level
 		setPlayerPosition(level);
 		
-		camFollower = mainCam.GetComponent<CameraFollower>();
-		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
 		InputTouchManager.warm();
+		OptionClickQuit.warm();
 	}
 	
 	public Player getPlayer () {
@@ -150,9 +146,8 @@ public class LevelManager : MonoBehaviour {
 		if (spawnPosList[level].Count > 0) {
 			if (lastSpawnPos[level] == null)
 				resetLastSpawnPos(level);
-			player.GetComponent<ChipmunkBody>().position = lastSpawnPos[level].getPosition();
-			if (player.rigidbody != null)
-				player.rigidbody.velocity = Vector3.zero;
+			ChipmunkBody body = player.GetComponent<ChipmunkBody>();
+			body.position = lastSpawnPos[level].getPosition();
 		}
 	}
 	
@@ -205,7 +200,7 @@ public class LevelManager : MonoBehaviour {
 		
 		if (dieAnim) {
 			// stop main camera animation
-			camFollower.stopAnimation();
+			mainCam.GetComponent<CameraFollower>().stopAnimation();
 			// set camera's position the same position than main camera
 			camInFront.transform.position = mainCam.transform.position;
 			// enable the camera so it renders mario game object in front of all

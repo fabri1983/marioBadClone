@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IPowerUpAble {
 	
-	public float moveVelocity = 10f;
+	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
 	public float gainJumpFactor = 1.4f;
 	
 	// Actions scripts
 	private Jump jump;
-	private PlayerMove move;
+	private PlayerWalk walk;
 	private PlayerDieAnim dieAnim;
 	private Crouch crouch;
 	private Idle idle;
@@ -18,17 +18,19 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	/// the position where the bullets start firing
 	private Transform firePivot;
 	private Vector3 rightFireDir, leftFireDir, fireDir;
-	private ChipmunkBody body;
 	
-	private float moveVelBackup;
+	private ChipmunkBody body;
+	private float walkVelBackup, signCollision;
 	
 	private static Player instance = null;
 	
 	public static Player Instance {
         get {
             if (instance == null) {
-				// instantiate the entire prefab. Don't assign to the instance variable because it is then assigned in Awake()
-				GameObject.Instantiate(Resources.Load("Prefabs/Mario"));
+				instance = GameObject.FindObjectOfType(typeof(Player)) as Player;
+				if (instance == null)
+					// instantiate the entire prefab. Don't assign to the instance variable because it is then assigned in Awake()
+					GameObject.Instantiate(Resources.Load("Prefabs/Mario"));
 			}
             return instance;
         }
@@ -40,13 +42,13 @@ public class Player : MonoBehaviour, IPowerUpAble {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-		
+
 		// deactivate to avoid falling in empty scene
-		gameObject.active = false;
+		gameObject.SetActiveRecursively(false);
 		
 		// action components
 		jump = GetComponent<Jump>();
-		move = GetComponent<PlayerMove>();
+		walk = GetComponent<PlayerWalk>();
 		firePivot = transform.FindChild("FirePivot");
 		teleportable = GetComponent<Teleportable>();
 		dieAnim = GetComponent<PlayerDieAnim>();
@@ -54,7 +56,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		
-		moveVelBackup = moveVelocity;
+		walkVelBackup = walkVelocity;
 		rightFireDir = new Vector3(1f, -0.5f, 0f);
 		leftFireDir = new Vector3(-1f, -0.5f, 0f);
 		fireDir = rightFireDir;
@@ -68,9 +70,9 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if (teleportable == null || !teleportable.isTeleporting()) {
 
-		if (teleportable == null || !teleportable.isTeleporting() || !dieAnim.isDying()) {
-			
 			bool isIdle = true;
 			
 			// jump
@@ -87,19 +89,26 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				powerUp.action(gameObject);
 			
 			// move
+			walk.enableWalking();
 			if (Gamepad.isLeft() || Input.GetKey(KeyCode.LeftArrow)) {
-				move.move(-moveVelocity);
+				walk.walk(-walkVelocity);
 				fireDir = leftFireDir;
 				isIdle = false;
+				// enable move speed after a wall collision if intended moving direction changes
+				if (signCollision > 0f)
+					walkVelocity = walkVelBackup;
 			}
 			else if (Gamepad.isRight() || Input.GetKey(KeyCode.RightArrow)) {
-				move.move(moveVelocity);
+				walk.walk(walkVelocity);
 				fireDir = rightFireDir;
 				isIdle = false;
+				// enable move speed after a wall collision if intended moving direction changes
+				if (signCollision < 0f)
+					walkVelocity = walkVelBackup;
 			}
-			// move script's internal status is modified when moving or in idle, and crouch needs to know realtime status
 			else
-				move.stopMoving();
+				// if no movement input then set correct internal status
+				walk.stopWalking();
 			
 			// crouch
 			if (Gamepad.isDown() || Input.GetKey(KeyCode.DownArrow)) {
@@ -111,7 +120,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				idle.setIdle(false);
 		}
 		
-		// reset game if Mario falls
+		// lose game if Player falls
 		if (transform.position.y <= LevelManager.ENDING_DIE_ANIM_Y_POS) {
 			LevelManager.Instance.loseGame(false);
 			return;
@@ -121,6 +130,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	/*########################### CLASS/INSTANCE METHODS #######################*/
 	
 	public void die () {
+		this.enabled = false;
 		dieAnim.startAnimation();
 	}
 	
@@ -129,13 +139,15 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	}
 	
 	public void resetPlayer () {
+		this.enabled = true; // enable Update() and OnGUI()
 		if (teleportable != null)
 			teleportable.teleportReset();
 		setPowerUp(null);
 		jump.reset();
-		idle.setIdle(true);
+		walk.reset();
 		body.ResetForces();
 		body.velocity = Vector2.zero;
+		walkVelocity = walkVelBackup;
 	}
 	
 	public void setPowerUp (PowerUp pPowerUp) {
@@ -162,31 +174,28 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		// if isn't a grounded surface then stop velocity and avoid getting inside the object
 		if (GameObjectTools.isWallHit(arbiter)) {
 			// get sign direction to know what offset apply to body
-			float dirSign = 1f;
-			if (player.transform.position.x > shape2.transform.position.x)
-				dirSign = -1f;
-			// stop the player
+			player.signCollision = -Mathf.Sign(player.transform.position.x - shape2.transform.position.x);
+			// dump to zero body's velocity
 			player.body.velocity = Vector2.zero;
+			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
+			player.walkVelocity = 0.001f;
+			// move back to the contact point
 			Vector2 thePos = player.body.position;
-			// move back to the contact point and a little more away
-			thePos.x += dirSign * (arbiter.GetDepth(0) - 0.1f);
+			thePos.x += player.signCollision * arbiter.GetDepth(0);
 			player.body.position = thePos;
-			// set moving velocity to 0 so it can advance anymore while collisioning
-			player.moveVelocity = 0f;
 		}
-		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore does the same but next frame.
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
 		return true;
 	}
 	
 	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
-		ChipmunkShape shape1, shape2;
+		/*ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		// restore moving velocity
 		Player player = shape1.GetComponent<Player>();
-		player.moveVelocity = player.moveVelBackup;
+		if (player.isDying())
+			return; // do nothing*/
 	}
 }

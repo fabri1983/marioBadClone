@@ -4,7 +4,6 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	
 	public float moveBerserkPower = 12f;
 	
-	private Move move;
 	private Jump jump;
 	private Chase chase;
 	private Patrol patrol;
@@ -19,7 +18,6 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		dying = false;
 		
 		// get the reference of every script involved in the koopa troopa life cycle
-		move = GetComponent<Move>();
 		jump = GetComponent<Jump>();
 		chase = GetComponent<Chase>();
 		patrol = GetComponent<Patrol>();
@@ -46,7 +44,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	public void die () {
 		dying = true;
 		jump.setForeverJump(false);
-		move.stopMoving();
+		chase.stopChasing();
 	}
 	
 	public void changeToHide () {
@@ -54,24 +52,20 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		bouncing = false;
 		// disable chasing
 		chase.stopChasing();
-		move.stopMoving();
 		jump.setForeverJump(false);
 		koopaHide.active = true;
 		koopaFull.active = false;
 	}
 	
-	public void changeToBouncing (Vector3 dir) {
+	public void changeToBouncing (float dir) {
 		hidding = false;
 		bouncing = true;
 		// change koopa troopa layer and tag
-		gameObject.layer = LevelManager.POWER_UP_LAYER;
+		gameObject.layer = LevelManager.POWERUP_LAYER;
 		gameObject.tag = "PowerUp";
-		// enable moving
-		move.enableMoving();
 		// tell patrol to start moving like crazy
 		patrol.enablePatrol();
 		patrol.setMovePower(moveBerserkPower);
-		dir.Normalize();
 		patrol.setNewDir(dir); 
 	}
 	

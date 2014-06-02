@@ -8,7 +8,7 @@ public class Gamepad : MonoBehaviour {
 		A, B, UP, RIGHT, DOWN, LEFT
 	}
 	
-	public static short HARD_PRESSED_MIN_COUNT = 6;
+	public static short HARD_PRESSED_MIN_COUNT = 5; // 5 is ok for mobile and 30 fps
 	
 	// keeps track of every button's state
 	private static bool[] buttonsState = new bool[System.Enum.GetValues(typeof(BUTTONS)).Length];

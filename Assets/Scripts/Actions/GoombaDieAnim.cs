@@ -2,33 +2,35 @@ using UnityEngine;
 
 public class GoombaDieAnim : MonoBehaviour {
 	
-	private Idle idle;
-	private Chase chase;
 	private bool dying;
-	private float halfHeigth;
-	private static Vector3 CRUNCH_VECTOR = new Vector3(0f, 0.8f, 0f);
-	private static float TIMING_DIE = 0.25f;
+	private static float CRUNCH_PROPORTION = 0.8f;
+	private static Vector3 CRUNCH_VECTOR = Vector3.up;
+	private static float TIMING_DIE = 0.3f;
 	
-	void Start () {
+	void Awake () {
 		dying = false;
-		halfHeigth = transform.GetChild(0).renderer.bounds.size.y / 2f;
-		// get the reference of every script involved in the goomba life cycle
-		idle = transform.GetComponent<Idle>();
-		chase = transform.GetComponent<Chase>();
 	}
 	
 	public void die () {
-		// avoid re dying
+		// avoid re doing the animation
 		if (dying)
 			return;
 		
 		dying = true;
-		if (chase != null)
-			chase.stopChasing();
-		idle.setIdle(true);
-		transform.Translate(0f, -halfHeigth, 0f);
-		transform.localScale -= CRUNCH_VECTOR;
-		GameObject.Destroy(this.gameObject, TIMING_DIE);
+		
+		// resize the game object, it also affects the chipmunk shape
+		transform.localScale -= CRUNCH_VECTOR * CRUNCH_PROPORTION;
+		// transform the body downwards
+		ChipmunkBody body = GetComponent<ChipmunkBody>();
+		float centerOffsetY = ((1f - CRUNCH_PROPORTION)*0.5f) * GetComponentInChildren<AnimateTiledTexture>().renderer.bounds.size.y;
+		Vector3 thePos = body.position;
+		thePos.y -= centerOffsetY*(1f+CRUNCH_PROPORTION);
+		body.position = thePos;
+		
+		// disable the game object to avoid ugly upward movement due to unknown behavior (maybe because its move script continues working?)
+		gameObject.active = false;
+		
+		GameObject.Destroy(gameObject, TIMING_DIE);
 	}
 	
 	public bool isDying () {

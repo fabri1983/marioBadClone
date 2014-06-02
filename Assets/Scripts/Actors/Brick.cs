@@ -14,7 +14,7 @@ public class Brick : MonoBehaviour {
 	void Start () {
 
 		hitCount = maxHits;
-		brickHalfSizeY = transform.renderer.bounds.size.y/2f + 1f;
+		brickHalfSizeY = gameObject.renderer.bounds.size.y/2f + 1f;
 		// used to check if Mario hit brick from below
 		brickBottomPoint = transform.position.y - (renderer.bounds.size.y / 2);
 	}

@@ -3,7 +3,7 @@ using UnityEngine;
 /**
  * Fade the scene to and from a given GUITexture object.
  */
-public class CameraFader : MonoBehaviour, IFadeable {
+public class FadeCamera : MonoBehaviour, IFadeable {
 	
 	public float fadeTimeFactor = 0.6f;
 	public bool fadeOutOnStart = true;
@@ -22,13 +22,10 @@ public class CameraFader : MonoBehaviour, IFadeable {
 	void Awake () {
 		
 		// create the texture manually
-		tex = new Texture2D(2, 2, TextureFormat.Alpha8, false);
+		tex = new Texture2D(1, 1, TextureFormat.Alpha8, false);
 		tex.SetPixel(1,1, Color.black);
-		tex.SetPixel(1,2, Color.black);
-		tex.SetPixel(2,1, Color.black);
-		tex.SetPixel(2,2, Color.black);
-		tex.wrapMode = TextureWrapMode.Repeat;
-		tex.Apply();
+		/*tex.wrapMode = TextureWrapMode.Repeat;
+		tex.Apply();*/
 		// create the rectangle where the texture will fill in
 		rectTex = new Rect(0, 0, Screen.width, Screen.height);
 		// create the fade color
@@ -45,11 +42,16 @@ public class CameraFader : MonoBehaviour, IFadeable {
 		
 		if (EventType.Repaint == Event.current.type) {
 			// if resize window, then calculate the new rectangle's size
-			if (Screen.width != rectTex.width || Screen.height != rectTex.height)
-				rectTex = new Rect(0, 0, Screen.width, Screen.height);
+			if (Screen.width != rectTex.width || Screen.height != rectTex.height) {
+				rectTex.x = 0f;
+				rectTex.y =	0f;
+				rectTex.width = Screen.width;
+				rectTex.height = Screen.height;
+				//rectTex = new Rect(0f, 0f, Screen.width, Screen.height);
+			}
 	
 			// do fading?
-			if (fadeDir != EnumFadeDirection.FADE_NONE && (EventType.Repaint == Event.current.type)) {
+			if (fadeDir != EnumFadeDirection.FADE_NONE) {
 				fading();
 			}
 		}

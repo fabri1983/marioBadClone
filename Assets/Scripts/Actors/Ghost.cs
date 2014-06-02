@@ -3,7 +3,7 @@ using UnityEngine;
 public class Ghost : MonoBehaviour {
 	
 	private Fly fly;
-	private Move move;
+	private Walk move;
 	private Chase chase;
 	private bool goingRight;
 	
@@ -12,7 +12,7 @@ public class Ghost : MonoBehaviour {
 		
 		fly = GetComponent<Fly>();
 		fly.setAutomaticFly(true);
-		move = GetComponent<Move>();
+		move = GetComponent<Walk>();
 		chase = transform.GetComponent<Chase>();
 		
 		// assuming koopa starts going left
@@ -29,13 +29,13 @@ public class Ghost : MonoBehaviour {
 		}
 		
 		// unique behavior: when change direction then scale by -1 in X to simulate rotation
-		if (goingRight && move.getDir().x < 0f) {
+		if (goingRight && !move.isLookingRight()) {
 			Vector3 theScale = transform.localScale;
 			theScale.x = transform.localScale.x * -1f;
 			transform.localScale = theScale;
 			goingRight = false;
 		}
-		else if (!goingRight && move.getDir().x > 0f) {
+		else if (!goingRight && move.isLookingRight()) {
 			Vector3 theScale = transform.localScale;
 			theScale.x = transform.localScale.x * -1f;
 			transform.localScale = theScale;
@@ -59,7 +59,7 @@ public class Ghost : MonoBehaviour {
 		
 		// when collides with Mario, then kill it
 		if (collision.transform.tag.Equals("Mario")) {
-			move.stopMoving();
+			move.stopWalking();
 			LevelManager.Instance.loseGame(true);
 		}
 		// if a powerUp (ie fireball) hits the goomba then it dies

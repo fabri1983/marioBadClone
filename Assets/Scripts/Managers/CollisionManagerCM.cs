@@ -10,6 +10,8 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 		// NOTE: doing this from Wake() will ignore base.Awake() method which is the one who adds this manager instance to chipmunk api
 		Time.fixedDeltaTime = 1f/180f;
 		Chipmunk.gravity = new Vector2(0f, -100f);
+		
+		Chipmunk.solverIterationCount = 3;
 	}
 	
 	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter){
@@ -36,6 +38,6 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 	
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter){
 		Player.endCollisionWithScenery(arbiter);
-		Jump.endCollisionWithScenery(arbiter);
+		Jump.endCollision(arbiter);
 	}
 }

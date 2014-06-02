@@ -9,7 +9,7 @@ public class Crouch : MonoBehaviour {
 	private ChipmunkBoxShape box;
 	private Jump jump;
 	private Sneak sneak;
-	private MoveAbs move;
+	private WalkAbs move;
 	private AnimateTiledConfig crouchAC;
 	
 	void Awake () {
@@ -22,7 +22,7 @@ public class Crouch : MonoBehaviour {
 		
 		jump = GetComponent<Jump>();
 		sneak = GetComponent<Sneak>();
-		move = GetComponent<MoveAbs>();
+		move = GetComponent<WalkAbs>();
 		crouchAC = GetComponentInChildren<CrouchAnimConfig>();
 	}
 	
@@ -34,7 +34,7 @@ public class Crouch : MonoBehaviour {
 			jumping = true;
 		// is it moving?
 		bool moving = false;
-		if (move != null && move.isMoving())
+		if (move != null && move.isWalking())
 			moving = true;
 		
 		// if crouching then update accordingly

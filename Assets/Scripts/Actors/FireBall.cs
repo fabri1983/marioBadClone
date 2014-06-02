@@ -6,7 +6,7 @@ public class FireBall : MonoBehaviour {
 	private Bounce bounce = null;
 	private float torqueGrades = 28f;
 	
-	void Start () {
+	void Awake () {
 		bounce = GetComponent<Bounce>();
 	}
 	
@@ -35,14 +35,8 @@ public class FireBall : MonoBehaviour {
 				dir.x *= -1f;
 				applyTorque();
 			}
-			getBounceScript().collision(collision);
+			bounce.collision(collision);
 		}
-	}
-	
-	private Bounce getBounceScript () {
-		if (bounce == null)
-			bounce = GetComponent<Bounce>();
-		return bounce;
 	}
 	
 	private void applyTorque () {
@@ -58,7 +52,7 @@ public class FireBall : MonoBehaviour {
 	}
 	
 	public void setDoBouncing (bool val) {
-		getBounceScript().canBounce = val;
+		bounce.canBounce = val;
 	}
 	
 	public void setDestroyTime(float time) {

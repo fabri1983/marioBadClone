@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class PlayerDieAnim : MonoBehaviour {
 
-	private int currentLayer;
-	private int currentLayerChild;
+	private int playerLayer;
 	private bool dying = false;
 	private float endPosition = 0f;
 	private Jump jump;
-	private static Component[] children;
-
+	
 	void Awake () {
-		children = gameObject.GetComponentsInChildren<Component>();
 		jump = GetComponent<Jump>();
 	}
 
@@ -22,9 +19,7 @@ public class PlayerDieAnim : MonoBehaviour {
 		if (transform.position.y < endPosition) {
 			dying = false;
 			// set back mario's original layer
-			gameObject.layer = currentLayer;
-			for (int i=0; i < children.Length; ++i)
-				children[i].gameObject.layer = currentLayerChild;
+			GameObjectTools.setLayerAndChildren(gameObject, playerLayer);
 			// restart level
 			LevelManager.Instance.loseGame(false);
 		}
@@ -34,20 +29,14 @@ public class PlayerDieAnim : MonoBehaviour {
 		
 		dying = true;
 		
-		// change Mario's current layer
-		currentLayer = gameObject.layer;
-		gameObject.layer = LevelManager.CAMERA_IN_FRONT;
-		for (int i=0; i < children.Length; ++i)
-		{
-			// only keeps last child's layer since they are all the same (should be)
-			currentLayerChild = children[i].gameObject.layer;
-			children[i].gameObject.layer = LevelManager.CAMERA_IN_FRONT;
-		}
+		// change Mario's current layer to CAMERA_IN_FRONT layer
+		playerLayer = gameObject.layer;
+		GameObjectTools.setLayerAndChildren(gameObject, LevelManager.CAMERA_IN_FRONT);
 
 		// execute die animation
 		endPosition = transform.position.y + LevelManager.ENDING_DIE_ANIM_Y_POS;
 		GetComponent<ChipmunkShape>().body.velocity = Vector2.zero;
-		jump.jump(GetComponent<Player>().lightJumpVelocity);
+		jump.forceJump(GetComponent<Player>().lightJumpVelocity);
 	}
 	
 	public bool isDying () {
