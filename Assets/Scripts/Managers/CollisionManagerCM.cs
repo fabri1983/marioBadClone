@@ -8,10 +8,10 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 		// Chipmunk is also pretty fast so you don't need to worry about the performance so much.
 		// Not really necessary, but helps in several subtle ways.
 		// NOTE: doing this from Wake() will ignore base.Awake() method which is the one who adds this manager instance to chipmunk api
-		Time.fixedDeltaTime = 1f/180f;
+		Time.fixedDeltaTime = 1f/180f; // between 0.003 and 0.005 is OK
 		Chipmunk.gravity = new Vector2(0f, -100f);
 		
-		Chipmunk.solverIterationCount = 3;
+		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 	
 	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter){
@@ -39,5 +39,10 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter){
 		Player.endCollisionWithScenery(arbiter);
 		Jump.endCollision(arbiter);
+	}
+	
+	bool ChipmunkBegin_Player_SpawnPos (ChipmunkArbiter arbiter){
+		Debug.Log("enter");
+		return SpawnPositionTrigger.beginCollisionWithPlayer(arbiter);
 	}
 }

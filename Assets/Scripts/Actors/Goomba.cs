@@ -6,12 +6,17 @@ public class Goomba : MonoBehaviour {
 	private Patrol patrol;
 	private Idle idle;
 	private float heightHalf;
+	private ChipmunkBody body;
+	private ChipmunkShape shape;
+	
+	private static float TIMING_DIE = 0.3f;
 	
 	void Awake () {
 		goombaDie = GetComponent<GoombaDieAnim>();
 		patrol = GetComponent<Patrol>();
 		idle = GetComponent<Idle>();
-
+		body = GetComponent<ChipmunkBody>();
+		shape = GetComponent<ChipmunkShape>();
 #if UNITY_EDITOR		
 		if (GetComponentInChildren<AnimateTiledTexture>() == null)
 			Debug.LogWarning("Can't get height from renderer component");
@@ -21,7 +26,20 @@ public class Goomba : MonoBehaviour {
 	}
 	
 	void OnDestroy () {
-		GameObjectTools.ChipmunkBodyDestroy(gameObject);
+		// NOTE: avoid using OnDestroy() since it has a performance hit in android
+		
+		if (body != null) {
+			body.enabled = false;
+			// registering a disable body will remove it from the list
+			ChipmunkInterpolationManager._Register(body);
+		}
+	}
+	
+	private void die () {
+		body.enabled = false; // makes the body to be removed from the space
+		shape.enabled = false; // makes the shape to be removed from the space
+		gameObject.active = false;
+		gameObject.SetActiveRecursively(false);
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {
@@ -59,6 +77,7 @@ public class Goomba : MonoBehaviour {
 		// if collides from top then kill the goomba
 		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y + goomba.heightHalf, shape2, arbiter)) {
 			goomba.goombaDie.die();
+			goomba.Invoke("die", TIMING_DIE);
 			// makes the killer jumps a little upwards
 			Jump jump = shape2.GetComponent<Jump>();
 			if (jump != null)

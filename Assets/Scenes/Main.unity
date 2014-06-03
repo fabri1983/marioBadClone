@@ -447,7 +447,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
   m_Name: 
-  _friction: .699999988
+  _friction: .899999976
   _elasticity: 0
   _isSensor: 0
   _collisionType: Player
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e256cb14adccd1548b6340e5f2564188, type: 1}
   m_Name: 
-  moveVelocity: 10
+  walkVelocity: 10
   lightJumpVelocity: 40
   gainJumpFactor: 1.39999998
 --- !u!114 &335493310
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 936dee571ca5a1f44898ce20c24eaaf8, type: 1}
   m_Name: 
-  targetFPS: 30
+  targetFPS: 60
 --- !u!114 &628859079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,6 +688,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da76be7a7b96229419aaf653c2674457, type: 1}
   m_Name: 
+  useCoroutine: 0
   startRect:
     serializedVersion: 2
     x: 0
@@ -695,7 +696,7 @@ MonoBehaviour:
     width: 75
     height: 25
   updateColor: 1
-  frequency: .5
+  frequency: .330000013
   nbDecimal: 1
 --- !u!1 &656453783
 GameObject:
@@ -1225,7 +1226,7 @@ Transform:
   m_PrefabInternal: {fileID: 1800799199}
   m_GameObject: {fileID: 1814345861}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -.0399999991, z: 0}
   m_LocalScale: {x: 1.60000002, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 335493302}
@@ -1565,6 +1566,14 @@ Prefab:
     - target: {fileID: 400000, guid: 00d6e04dd90f8e942b95ccda7d0f3649, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 00d6e04dd90f8e942b95ccda7d0f3649, type: 2}
+      propertyPath: frequency
+      value: .330000013
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 00d6e04dd90f8e942b95ccda7d0f3649, type: 2}
+      propertyPath: targetFPS
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00d6e04dd90f8e942b95ccda7d0f3649, type: 2}

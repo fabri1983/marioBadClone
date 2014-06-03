@@ -7,24 +7,18 @@ public class SpawnPositionTrigger : MonoBehaviour {
 	
 	private SpawnPositionSpot sps;
 	
-	void OnTriggerEnter (Collider collider) {
+	public static bool beginCollisionWithPlayer (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    arbiter.GetShapes(out shape1, out shape2);
 		
-		if (collider.tag.Equals("Mario")) {
-			// update the latest spawn position index for current level
-			LevelManager.Instance.updateLastSpawnPosition(getSpawnPos());
-		}
-	}
-	
-	void OnTriggerExit (Collider collider) {
+		LevelManager.Instance.updateLastSpawnPosition(shape2.GetComponent<SpawnPositionTrigger>().sps);
 		
-		if (collider.tag.Equals("Mario")) {
-			// update the latest spawn position index for current level
-			LevelManager.Instance.updateLastSpawnPosition(getSpawnPos());
-		}
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		return false;
 	}
 	
 	public SpawnPositionSpot getSpawnPos () {
-		// cache the spot position
 		if (sps == null)
 			sps = new SpawnPositionSpot(priority, transform.position);
 		return sps;

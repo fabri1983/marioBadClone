@@ -34,7 +34,7 @@ public class InputTouchManager : MonoBehaviour {
 	public static void warm () {
 		// in case the game object wasn't instantiated yet from another script
 		if (instance == null) {
-			// creates a game object with this script component.
+			// creates a game object with this script component
 			instance = new GameObject("InputTouchManager").AddComponent<InputTouchManager>();
 			DontDestroyOnLoad(instance);
 		}

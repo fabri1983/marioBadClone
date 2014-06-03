@@ -5,7 +5,6 @@ public class GoombaDieAnim : MonoBehaviour {
 	private bool dying;
 	private static float CRUNCH_PROPORTION = 0.8f;
 	private static Vector3 CRUNCH_VECTOR = Vector3.up;
-	private static float TIMING_DIE = 0.3f;
 	
 	void Awake () {
 		dying = false;
@@ -27,10 +26,9 @@ public class GoombaDieAnim : MonoBehaviour {
 		thePos.y -= centerOffsetY*(1f+CRUNCH_PROPORTION);
 		body.position = thePos;
 		
-		// disable the game object to avoid ugly upward movement due to unknown behavior (maybe because its move script continues working?)
+		// disable the game object (not children) to avoid ugly upward movement due to
+		// unknown behavior (maybe because its move script continues working?)
 		gameObject.active = false;
-		
-		GameObject.Destroy(gameObject, TIMING_DIE);
 	}
 	
 	public bool isDying () {

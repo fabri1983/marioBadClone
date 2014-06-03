@@ -8,6 +8,5 @@ public class FPSFixed : MonoBehaviour {
 	void Awake () {
 		// doesn't work in editor mode
 		Application.targetFrameRate = targetFPS; // -1 is the default
-		DontDestroyOnLoad(gameObject);
 	}
 }
