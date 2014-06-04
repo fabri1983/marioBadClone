@@ -19,8 +19,10 @@ public class InputTouchManager : MonoBehaviour {
 	private static List<ITouchListener> endedEternalListeners = new List<ITouchListener>(5);
 	private static List<ITouchListener> endedSceneOnlyListeners = new List<ITouchListener>(5);
 	
-	// controls what touch faces has been fired in current gameloop
-	private static bool[] phasesFired = new bool[System.Enum.GetValues(typeof(TouchPhase)).Length];
+	/// If true then you can touch overlapped game objects (in screen)
+	/// If false then once touched a game object for current touch and current phase there is no need to 
+	/// continue looking for another touched game object.
+	private static bool ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS = false;
 	
 	private static InputTouchManager instance = null;
 	
@@ -38,6 +40,8 @@ public class InputTouchManager : MonoBehaviour {
 			instance = new GameObject("InputTouchManager").AddComponent<InputTouchManager>();
 			DontDestroyOnLoad(instance);
 		}
+		// force to activate multi touch support
+		Input.multiTouchEnabled = true;
 	}
 	
 	/// <summary>
@@ -49,15 +53,10 @@ public class InputTouchManager : MonoBehaviour {
 	/// <param name='isSceneOnly'>
 	/// True if the registration is only valid during the liveness of the scene. False otherwise.
 	/// </param>
-	/// <param name='propagateOtherPhases'>
-	/// True for propagating the event in every touch phase added. False for stop on first phase.
-	/// </param>
 	/// <param name='touchPhases'>
 	/// All the touch phases you want your gameobject be registered to.
 	/// </param>
-	public void register (ITouchListener listener, bool isSceneOnly, bool propagateOtherPhases, params TouchPhase[] touchPhases) {
-
-		listener.setPropagationFlag(propagateOtherPhases);
+	public void register (ITouchListener listener, bool isSceneOnly, params TouchPhase[] touchPhases) {
 		
 		for (int i=0; i < touchPhases.Length; ++i) {
 			TouchPhase phase = touchPhases[i];
@@ -74,7 +73,7 @@ public class InputTouchManager : MonoBehaviour {
 				else
 					stationaryEternalListeners.Add(listener);
 			}
-			else if (TouchPhase.Ended.Equals(phase)) {
+			else if (TouchPhase.Ended.Equals(phase) || TouchPhase.Canceled.Equals(phase)) {
 				if (isSceneOnly)
 					endedSceneOnlyListeners.Add(listener);
 				else
@@ -140,26 +139,13 @@ public class InputTouchManager : MonoBehaviour {
 		
 		if (Input.touchCount == 0)
 			return;
-		
-		// reset phases fired
-		for (int i=0; i < phasesFired.Length; ++i)
-			phasesFired[i] = false;
-		
-		for (int i=0; i < Input.touchCount; ++i) {
-			Touch touch = Input.touches[i];
+
 #if UNITY_EDITOR
-			if (Debug.isDebugBuild)
-				Debug.Log(Input.touchCount + ": " + touch.phase + " -> finger " + touch.fingerId);
-#endif
-			// not supported yet
-			if (TouchPhase.Canceled.Equals(touch.phase))
-				continue;
-			
-			phasesFired[(int)touch.phase] = true;
+		if (Debug.isDebugBuild) {
+			for (int i=0; i < Input.touchCount; ++i)
+				Debug.Log(Input.touchCount + ": " + Input.touches[i].phase + " -> finger " + Input.touches[i].fingerId);
 		}
-		
-		// reset the processed flag of every listener only for pahses fired
-		resetProcessedFlags();
+#endif
 		
 		// send events to listeners
 		for (int i=0; i < Input.touchCount; ++i)
@@ -185,14 +171,15 @@ public class InputTouchManager : MonoBehaviour {
 			listEternal = stationaryEternalListeners;
 			listSceneOnly = stationarySceneOnlyListeners;
 		}
-		else if (TouchPhase.Ended.Equals(t.phase)) {
+		else if (TouchPhase.Ended.Equals(t.phase) || TouchPhase.Canceled.Equals(t.phase)) {
 			listEternal = endedEternalListeners;
 			listSceneOnly = endedSceneOnlyListeners;
 		}
 		// add here if else for other touch phases
 		
 		// one loop for scene only, another loop for global
-		for (int k=0; k < 2; ++k) {
+		int maxLoops = 2;
+		for (int k=0; k < maxLoops; ++k) {
 			
 			// is scene only list loop
 			if (k==0)
@@ -207,10 +194,6 @@ public class InputTouchManager : MonoBehaviour {
 				if (listener == null)
 					continue;
 				
-				// does the listener want to stop its propagation on next touch phases?
-				if (listener.stopPropagation())
-					continue;
-				
 				GameObject go = listener.getGameObject();
 				bool hitten = false;
 				
@@ -222,21 +205,11 @@ public class InputTouchManager : MonoBehaviour {
 					hitten = true;
 				// check for game object
 				else {
-					// option 1:
-					/*Ray vRay = Camera.main.ScreenPointToRay(t.position);
-					RaycastHit vHit;
-					if (Physics.Raycast(vRay, out vHit, 50)) {
-						if (vHit.collider != null && vHit.collider.name.Equals(go.collider.name))
-							hitten = true;
-					}*/
-					// option 2: search the web for unity touch fast hit detection
+					// use detection as in chipmunk platformer, since here I don't use physx colliders
 				}
 				
 				// hitten? then invoke callback
 				if (hitten) {
-					// touch event is consumed
-					listener.setConsumed(true);
-					
 					if (TouchPhase.Began.Equals(t.phase))
 						list[i].OnBeganTouch(t);
 					else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase))
@@ -244,49 +217,11 @@ public class InputTouchManager : MonoBehaviour {
 					else if (TouchPhase.Ended.Equals(t.phase))
 						list[i].OnEndedTouch(t);
 					// add here if else for other methods depending on touch phases
-				}
-			}
-		}
-	}
-	
-	private static void resetProcessedFlags () {
-		
-		// only reset the listeners for current fired touch phases
-		for (int k = 0; k < phasesFired.Length; ++k) {
-			
-			if (phasesFired[k] == false)
-				continue;
-			
-			TouchPhase touchPhase = (TouchPhase) k;
-			
-			if (TouchPhase.Began.Equals(touchPhase)) {
-				for (int i=0; i < beganSceneOnlyListeners.Count; ++i) {
-					if (beganSceneOnlyListeners[i] == null)
-						continue;
-					beganSceneOnlyListeners[i].setConsumed(false);
-				}
-				for (int i=0; i < beganEternalListeners.Count; ++i) {
-					beganEternalListeners[i].setConsumed(false);
-				}
-			}
-			else if (TouchPhase.Stationary.Equals(touchPhase) || TouchPhase.Moved.Equals(touchPhase)) {
-				for (int i=0; i < stationarySceneOnlyListeners.Count; ++i) {
-					if (stationarySceneOnlyListeners[i] == null)
-						continue;
-					stationarySceneOnlyListeners[i].setConsumed(false);
-				}
-				for (int i=0; i < stationaryEternalListeners.Count; ++i) {
-					stationaryEternalListeners[i].setConsumed(false);
-				}
-			}
-			else if (TouchPhase.Ended.Equals(touchPhase)) {
-				for (int i=0; i < endedSceneOnlyListeners.Count; ++i) {
-					if (endedSceneOnlyListeners[i] == null)
-						continue;
-					endedSceneOnlyListeners[i].setConsumed(false);
-				}
-				for (int i=0; i < endedEternalListeners.Count; ++i) {
-					endedEternalListeners[i].setConsumed(false);
+					
+					if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS) {
+						k = maxLoops;
+						break;
+					}
 				}
 			}
 		}

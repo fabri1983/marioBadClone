@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class OptionClickLoadLevel : TouchListenerAbs {
+public class OptionClickLoadLevel : MonoBehaviour, ITouchListener {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;
 
 	void Awake () {
-		bool isScenelOnly = true;
-		bool propagateAllPhases = false;
-		InputTouchManager.Instance.register(this, isScenelOnly, propagateAllPhases, TouchPhase.Began, TouchPhase.Ended);
+		bool isSceneOnly = true;
+		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Ended);
 	}
 	
 	void OnDestroy () {
@@ -22,17 +21,17 @@ public class OptionClickLoadLevel : TouchListenerAbs {
 		optionSelected();
 	}
 	
-	public override GameObject getGameObject () {
+	public GameObject getGameObject () {
 		return gameObject;
 	}
 	
-	public override void OnBeganTouch (Touch t) {
+	public void OnBeganTouch (Touch t) {
 		optionSelected();
 	}
 	
-	public override void OnStationaryTouch (Touch t) {}
+	public void OnStationaryTouch (Touch t) {}
 	
-	public override void OnEndedTouch (Touch t) {
+	public void OnEndedTouch (Touch t) {
 		optionSelected();
 	}
 	

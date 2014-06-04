@@ -39,26 +39,4 @@ public interface ITouchListener
 	/// The game object.
 	/// </returns>
 	GameObject getGameObject ();
-	
-	/// <summary>
-	/// Useful to know if the listener doesn't need to be called again for next touch phase.
-	/// </summary>
-	/// <returns>
-	/// True if the listener doesn't need to be called again for next touch phase
-	/// </returns>
-	bool stopPropagation ();
-	
-	/// <summary>
-	/// Remember that multitouch events are valid, and this let you set if you want that the listener 
-	/// avoids to be called again if a previous touch phase already called the listener callback methods.
-	/// </summary>
-	/// <param name='val'>
-	/// Value.
-	/// </param>
-	void setPropagationFlag (bool val);
-	
-	/// <summary>
-	/// It lets you set if the event was consumed or not. Needed for stop propagation behavior.
-	/// </summary>
-	void setConsumed (bool val);
 }

@@ -8,7 +8,8 @@ public class Gamepad : MonoBehaviour {
 		A, B, UP, RIGHT, DOWN, LEFT
 	}
 	
-	public static short HARD_PRESSED_MIN_COUNT = 5; // 5 is ok for mobile and 30 fps
+	// 5 is ok for mobile 30 fps, 6 for 60 fps
+	public static short HARD_PRESSED_MIN_COUNT = 6;
 	
 	// keeps track of every button's state
 	private static bool[] buttonsState = new bool[System.Enum.GetValues(typeof(BUTTONS)).Length];
@@ -67,7 +68,8 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	void OnApplicationQuit () {
-		instance = null;
+		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
+		//instance = null;
 	}
 	
 	// LateUpdate is called after all Update functions have been called

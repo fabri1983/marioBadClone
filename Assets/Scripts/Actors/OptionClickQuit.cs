@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionClickQuit : TouchListenerAbs {
+public class OptionClickQuit : MonoBehaviour, ITouchListener {
 	
 	private static OptionClickQuit instance = null;
 	
@@ -26,9 +26,8 @@ public class OptionClickQuit : TouchListenerAbs {
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		bool isScenelOnly = false;
-		bool propagateAllPhases = false;
-		InputTouchManager.Instance.register(this, isScenelOnly, propagateAllPhases, TouchPhase.Began, TouchPhase.Ended);
+		bool isSceneOnly = false;
+		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Ended);
 	}
 	
 	/**
@@ -38,17 +37,17 @@ public class OptionClickQuit : TouchListenerAbs {
 		optionSelected();
 	}
 	
-	public override GameObject getGameObject () {
+	public GameObject getGameObject () {
 		return gameObject;
 	}
 	
-	public override void OnBeganTouch (Touch t) {
+	public void OnBeganTouch (Touch t) {
 		optionSelected();
 	}
 	
-	public override void OnStationaryTouch (Touch t) {}
+	public void OnStationaryTouch (Touch t) {}
 	
-	public override void OnEndedTouch (Touch t) {
+	public void OnEndedTouch (Touch t) {
 		optionSelected();
 	}
 	

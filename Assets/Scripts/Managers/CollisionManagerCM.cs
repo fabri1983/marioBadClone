@@ -42,7 +42,6 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 	}
 	
 	bool ChipmunkBegin_Player_SpawnPos (ChipmunkArbiter arbiter){
-		Debug.Log("enter");
 		return SpawnPositionTrigger.beginCollisionWithPlayer(arbiter);
 	}
 }

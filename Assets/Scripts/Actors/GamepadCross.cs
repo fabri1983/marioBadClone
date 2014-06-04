@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class GamepadCross : TouchListenerAbs {
+public class GamepadCross : MonoBehaviour, ITouchListener {
+	
+	public bool isSceneOnly = false;
 	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
 	/// relative to the GUI texture with size 64x64. Scale adjustments are apply once the 
@@ -20,10 +22,8 @@ public class GamepadCross : TouchListenerAbs {
 	void Awake () {
 		// keep this game object alive between scenes
 		DontDestroyOnLoad(this.gameObject);
-		
-		bool isScenelOnly = true;
-		bool propagateAllPhases = false;
-		InputTouchManager.Instance.register(this, isScenelOnly, propagateAllPhases, TouchPhase.Began, TouchPhase.Stationary);
+
+		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Stationary);
 		
 		Rect guiRect = guiTexture.GetScreenRect();
 		guiPos = new Vector2(guiRect.x, guiRect.y);
@@ -57,19 +57,19 @@ public class GamepadCross : TouchListenerAbs {
 		optionSelected(vec2);
 	}
 	
-	public override GameObject getGameObject () {
+	public GameObject getGameObject () {
 		return gameObject;
 	}
 	
-	public override void OnBeganTouch (Touch t) {
+	public void OnBeganTouch (Touch t) {
 		optionSelected(t.position);
 	}
 	
-	public override void OnStationaryTouch (Touch t) {
+	public void OnStationaryTouch (Touch t) {
 		optionSelected(t.position);
 	}
 	
-	public override void OnEndedTouch (Touch t) {}
+	public void OnEndedTouch (Touch t) {}
 	
 	private static void optionSelected(Vector2 pos) {
 		/*if (Debug.isDebugBuild)

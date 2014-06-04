@@ -1,19 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamepadButton : TouchListenerAbs {
+public class GamepadButton : MonoBehaviour, ITouchListener {
 	
 	// this modified in inspector window
 	public string buttonLabel = "A";
-	public bool isScenelOnly = false;
-	public bool propagateAllPhases = false;
+	public bool isSceneOnly = false;
 	
 	void Awake () {
-		if (!isScenelOnly)
+		if (!isSceneOnly)
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 
-		InputTouchManager.Instance.register(this, isScenelOnly, propagateAllPhases, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
+		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
 	}
 	
 	/**
@@ -30,19 +29,19 @@ public class GamepadButton : TouchListenerAbs {
 		optionSelected();
 	}
 	
-	public override GameObject getGameObject () {
+	public GameObject getGameObject () {
 		return gameObject;
 	}
 	
-	public override void OnBeganTouch (Touch t) {
+	public void OnBeganTouch (Touch t) {
 		optionSelected();
 	}
 	
-	public override void OnStationaryTouch (Touch t) {
+	public void OnStationaryTouch (Touch t) {
 		optionSelected();
 	}
 	
-	public override void OnEndedTouch (Touch t) {
+	public void OnEndedTouch (Touch t) {
 		optionSelected();
 	}
 	
