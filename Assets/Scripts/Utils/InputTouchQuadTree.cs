@@ -9,7 +9,7 @@ public class InputTouchQuadTree {
 	private const int DEEP_LEVEL_THRESHOLD = 0;
 	
 	// this is the object to be saved in the Quad Tree's leaves
-	public ListenerLists content;
+	public ListenerLists quadContent;
 	
 	private int level;
 	private InputTouchQuadTree topLeft, topRight, botLeft, botRight;
@@ -34,84 +34,69 @@ public class InputTouchQuadTree {
 	public List<ListenerLists> add (Rect screenBounds) {
 		
 		List<ListenerLists> lists = new List<ListenerLists>(4);
-		
-		// reached max level?
-		if (level == DEEP_LEVEL_THRESHOLD) {
-			// allocate space for the listener lists
-			if (content == null) {
-				content = new ListenerLists();
-				lists.Add (content);
-			}
-			// the caller object is responsible to allocate the listener instance in the correct listener list
-			return lists;
-		}
-		
-		/// test four points of rect screenBounds to get the destiny quad/s. It can falls in four regions
-		///     -----------
-		///    |  0  |  1  |
-		///     -----------
-		///    |  3  |  2  |
-		/// Y   -----------
-		///  X
-		
-		// use actual level+1 or whatever to calculate fallen quad
-		int test = 0;
-		// depending on which quadrant/s it falls we need to allocate space for the quad/s tree node
-		if (((test >> 0) & 1) == 1) {
-			topLeft = new InputTouchQuadTree(level + 1);
-			lists.Add(topLeft.addRecursive(screenBounds.xMin, screenBounds.yMax));
-		}
-		if (((test >> 1) & 1) == 1) {
-			topRight = new InputTouchQuadTree(level + 1);
-			lists.Add(topRight.addRecursive(screenBounds.xMax, screenBounds.yMax));
-		}
-		if (((test >> 2) & 1) == 1) {
-			botRight = new InputTouchQuadTree(level + 1);
-			lists.Add(botRight.addRecursive(screenBounds.xMax, screenBounds.yMin));
-		}
-		if (((test >> 3) & 1) == 1) {
-			botLeft = new InputTouchQuadTree(level + 1);
-			lists.Add(botLeft.addRecursive(screenBounds.xMin, screenBounds.yMin));
-		}
-		
+		addRecursive(screenBounds, lists, 0,0, Screen.width,Screen.height);
 		return lists;
 	}
 	
-	private ListenerLists addRecursive (float x, float y) {
+	private void addRecursive (Rect screenBounds, List<ListenerLists> lists, float x0, float y0, float x1, float y1) {
 		
 		// reached max level?
 		if (level == DEEP_LEVEL_THRESHOLD) {
-			// allocate space for the listener lists
-			if (content == null)
-				content = new ListenerLists();
-			// the caller object is responsible to allocate the listener instance in the correct listener list
-			return content;
+			// if content is null it means it wasn't added into the listeners list
+			if (quadContent == null) {
+				quadContent = new ListenerLists();
+				lists.Add(quadContent);
+			}
+			// the caller object is responsible to allocate the listener instance in the many listeners list
+			return;
 		}
 		
-		// use actual level+1 or whatever to calculate fallen quad
-		int test = 0;
+		/// Test four points of rect screenBounds to get the destiny quad/s. 
+		/// It can falls in as much as four quads.
+		///                 y1
+		///     -----------   x1
+		///    |  0  |  1  |
+		///     -----------
+		///    |  3  |  2  |
+		/// y0  -----------
+		///  x0
+		/// 
+		// use actual limits to calculate destiny quadrant/s
+		int test = quadrantTest(screenBounds, x0,y0,x1,y1);
+		
+		/// depending on which quadrant/s it falls we need to allocate space for the 
+		/// quad/s node and continue testing recursively
 		if (((test >> 0) & 1) == 1) {
-			topLeft = new InputTouchQuadTree(level + 1);
-			return topLeft.addRecursive(x, y);
+			if (topLeft == null)
+				topLeft = new InputTouchQuadTree(level + 1);
+			topLeft.addRecursive(screenBounds, lists, x0,y1/2f, x1/2f,y1);
 		}
-		else if (((test >> 1) & 1) == 1) {
-			topRight = new InputTouchQuadTree(level + 1);
-			return topRight.addRecursive(x, y);
+		if (((test >> 1) & 1) == 1) {
+			if (topRight == null)
+				topRight = new InputTouchQuadTree(level + 1);
+			topRight.addRecursive(screenBounds, lists, x1/2f,y1/2f, x1,y1);
 		}
-		else if (((test >> 2) & 1) == 1) {
-			botRight = new InputTouchQuadTree(level + 1);
-			return botRight.addRecursive(x, y);
+		if (((test >> 2) & 1) == 1) {
+			if (botRight == null)
+				botRight = new InputTouchQuadTree(level + 1);
+			botRight.addRecursive(screenBounds, lists, x1/2f,y0, x1,y1/2f);
 		}
-		
-		botLeft = new InputTouchQuadTree(level + 1);
-		return botLeft.addRecursive(x, y);
+		if (((test >> 3) & 1) == 1) {
+			if (botLeft == null)
+				botLeft = new InputTouchQuadTree(level + 1);
+			botLeft.addRecursive(screenBounds, lists, x0,y0, x1/2f,y1/2f);
+		}
+	}
+	
+	private static int quadrantTest (Rect screenBounds, float x0, float y0, float x1, float y1) {
+		return 0;
 	}
 	
 	public ListenerLists getLists (Vector2 screenPos) {
 
 		// if is leaf then return the list of listeners
-		if (content != null)
-			return content;
+		if (quadContent != null)
+			return quadContent;
 		
 		// search in quad tree the leaf containing the screen position
 		

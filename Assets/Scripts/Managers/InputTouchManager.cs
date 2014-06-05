@@ -51,10 +51,15 @@ public class InputTouchManager : MonoBehaviour {
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
 
 		/*if (listener.getGameObject().isStatic) {
-			foreach (ListenerLists l in staticQuadTree.add(GameObjectTools.BoundsToScreenRect(listener.getGameObject().renderer.bounds))) {
+			/// adding the listener's screen bound into the quad tree will return a list of 
+			/// as much as 4 ListenerLists elems, since the listener can fall in more than one quadrant
+			List<ListenerLists> leaves = staticQuadTree.add(GameObjectTools.BoundsToScreenRect(listener.getGameObject().renderer.bounds));
+			foreach (ListenerLists l in leaves) {
 				if (l != null)
 					l.add(listener, touchPhases);
 			}
+			leaves.Clear();
+			leaves = null;
 		}
 		else*/
 			dynamicListeners.add(listener, touchPhases);
@@ -70,7 +75,8 @@ public class InputTouchManager : MonoBehaviour {
 		if (go != null && !go.isStatic)
 			dynamicListeners.remove(listener);
 		else {
-			ListenerLists ll = staticQuadTree.getLists(Camera.main.WorldToScreenPoint(listener.getGameObject().transform.position));
+			Vector2 screenPos = Camera.main.WorldToScreenPoint(listener.getGameObject().transform.position);
+			ListenerLists ll = staticQuadTree.getLists(screenPos);
 			if (ll != null)
 				ll.remove(listener);
 		}
@@ -103,16 +109,18 @@ public class InputTouchManager : MonoBehaviour {
 #endif
 		// send events to listeners
 		for (int i=0; i < Input.touchCount; ++i) {
-			// dynamic listeners
-			if (sendEvent(Input.touches[i], dynamicListeners))
-				continue;
 			// static listeners
-			sendEvent(Input.touches[i], staticQuadTree.getLists(Input.touches[i].position));
+			if (sendEvent(Input.touches[i], staticQuadTree.getLists(Input.touches[i].position)))
+				continue;
+			// dynamic listeners
+			sendEvent(Input.touches[i], dynamicListeners);
 		}
 	}
 	
 	private static bool sendEvent (Touch t, ListenerLists ll) {
-
+		if (ll == null)
+			return false;
+		
 		// NOTE: traverse the lists and ask if hitten in the correct order: Began, Stationary/Move, Ended, Canceled
 		
 		List<ITouchListener> list = null;

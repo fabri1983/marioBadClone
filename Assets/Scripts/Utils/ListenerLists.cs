@@ -30,7 +30,7 @@ public sealed class ListenerLists {
 		int id = listener.GetHashCode();
 		bool removed = false;
 		
-		for (int i=0; i < beganListeners.Count; ++i) {
+		for (int i=0, c=beganListeners.Count; i < c; ++i) {
 			/*if (beganListeners[i] == null)
 				continue;*/
 			if (id == beganListeners[i].GetHashCode()) {
@@ -40,7 +40,7 @@ public sealed class ListenerLists {
 			}
 		}
 	
-		for (int i=0; i < stationaryListeners.Count; ++i) {
+		for (int i=0, c=stationaryListeners.Count; i < c; ++i) {
 			/*if (stationaryListeners[i] == null)
 				continue;*/
 			if (id == stationaryListeners[i].GetHashCode()) {
@@ -50,7 +50,7 @@ public sealed class ListenerLists {
 			}
 		}
 	
-		for (int i=0; i < endedListeners.Count; ++i) {
+		for (int i=0, c=endedListeners.Count; i < c; ++i) {
 			/*if (endedListeners[i] == null)
 				continue;*/
 			if (id == endedListeners[i].GetHashCode()) {
