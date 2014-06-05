@@ -62,6 +62,12 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 		return gameObject;
 	}
 	
+	public Rect getScreenBoundsAA () {
+		// this method called only once since its a non destroyable game object
+		//guiTexture.GetScreenRect(Camera.main);
+		return guiTexture.pixelInset;
+	}
+	
 	public void OnBeganTouch (Touch t) {
 		optionSelected(t.position);
 	}

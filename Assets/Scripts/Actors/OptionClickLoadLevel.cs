@@ -24,6 +24,10 @@ public class OptionClickLoadLevel : MonoBehaviour, ITouchListener {
 		return gameObject;
 	}
 	
+	public Rect getScreenBoundsAA () {
+		return guiText.GetScreenRect(Camera.main);
+	}
+	
 	public void OnBeganTouch (Touch t) {
 		optionSelected();
 	}

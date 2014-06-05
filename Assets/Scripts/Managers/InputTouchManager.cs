@@ -50,10 +50,10 @@ public class InputTouchManager : MonoBehaviour {
 	/// </param>
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
 
-		/*if (listener.getGameObject().isStatic) {
-			/// adding the listener's screen bound into the quad tree will return a list of 
+		if (listener.getGameObject().isStatic) {
+			/// adding the listener's screen rect into the quad tree will return a list of 
 			/// as much as 4 ListenerLists elems, since the listener can fall in more than one quadrant
-			List<ListenerLists> leaves = staticQuadTree.add(GameObjectTools.BoundsToScreenRect(listener.getGameObject().renderer.bounds));
+			List<ListenerLists> leaves = staticQuadTree.add(listener.getScreenBoundsAA());
 			foreach (ListenerLists l in leaves) {
 				if (l != null)
 					l.add(listener, touchPhases);
@@ -61,7 +61,7 @@ public class InputTouchManager : MonoBehaviour {
 			leaves.Clear();
 			leaves = null;
 		}
-		else*/
+		else
 			dynamicListeners.add(listener, touchPhases);
 	}
 	
@@ -76,7 +76,7 @@ public class InputTouchManager : MonoBehaviour {
 			dynamicListeners.remove(listener);
 		else {
 			Vector2 screenPos = Camera.main.WorldToScreenPoint(listener.getGameObject().transform.position);
-			ListenerLists ll = staticQuadTree.getLists(screenPos);
+			ListenerLists ll = staticQuadTree.traverse(screenPos);
 			if (ll != null)
 				ll.remove(listener);
 		}
@@ -85,8 +85,6 @@ public class InputTouchManager : MonoBehaviour {
 	void OnApplicationQuit () {
 		dynamicListeners.clear();
 		staticQuadTree.clear();
-		dynamicListeners = null;
-		staticQuadTree = null;
 		
 		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
 		//instance = null;
@@ -109,11 +107,12 @@ public class InputTouchManager : MonoBehaviour {
 #endif
 		// send events to listeners
 		for (int i=0; i < Input.touchCount; ++i) {
+			Touch t = Input.touches[i];
 			// static listeners
-			if (sendEvent(Input.touches[i], staticQuadTree.getLists(Input.touches[i].position)))
+			if (sendEvent(t, staticQuadTree.traverse(t.position)))
 				continue;
 			// dynamic listeners
-			sendEvent(Input.touches[i], dynamicListeners);
+			sendEvent(t, dynamicListeners);
 		}
 	}
 	

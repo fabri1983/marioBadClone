@@ -2,14 +2,22 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Quad Tree for input touch listeners. Considers on screen positions.
+/// Quad Tree for input touch listeners. Considers on screen positions and axis alligned screen bounds.
+/// Accepted screen bound:   ----
+/// 						|    |
+/// 						|    |
+/// 						 ----
+/// Not porperly handled screen bound:   /\
+/// 									 \/
+/// (because is not axis alligned)
+/// 
 /// </summary>
 public class InputTouchQuadTree {
 	
 	private const int DEEP_LEVEL_THRESHOLD = 0;
 	
 	// this is the object to be saved in the Quad Tree's leaves
-	public ListenerLists quadContent;
+	private ListenerLists leafContent;
 	
 	private int level;
 	private InputTouchQuadTree topLeft, topRight, botLeft, botRight;
@@ -18,7 +26,7 @@ public class InputTouchQuadTree {
 	/// Initializes a new instance of the <see cref="InputTouchQuadTree"/> class.
 	/// </summary>
 	/// <param name='_level'>
-	/// _level: 0 means no division, 1 means first quads division, etc
+	/// _level: 0 means no division, 1 means first quads division, and so on in division levels
 	/// </param>
 	public InputTouchQuadTree (int _level) {
 		level = _level;
@@ -43,9 +51,9 @@ public class InputTouchQuadTree {
 		// reached max level?
 		if (level == DEEP_LEVEL_THRESHOLD) {
 			// if content is null it means it wasn't added into the listeners list
-			if (quadContent == null) {
-				quadContent = new ListenerLists();
-				lists.Add(quadContent);
+			if (leafContent == null) {
+				leafContent = new ListenerLists();
+				lists.Add(leafContent);
 			}
 			// the caller object is responsible to allocate the listener instance in the many listeners list
 			return;
@@ -88,22 +96,85 @@ public class InputTouchQuadTree {
 		}
 	}
 	
-	private static int quadrantTest (Rect screenBounds, float x0, float y0, float x1, float y1) {
-		return 0;
+	private static int quadrantTest (Rect bounds, float x0, float y0, float x1, float y1) {
+		int t = 0;
+		
+		/// Executes the test for each 4 points of screen bound element.
+		/// This way we ensure the bound lement falls in as many quadrants it can
+		
+		// minX is on left side?
+		if (bounds.xMin < x1/2f) {
+			if (bounds.yMin > y1/2f)
+				t |= 1; // quad topLeft
+			else t |= 8; // quad botLeft
+			
+			if (bounds.yMax > y1/2f)
+				t |= 1; // quad topLeft
+			// other case processed above because it means minY also was <= y1/2f
+			
+			// whenever maxX is on left, means minX is on side too
+			if (bounds.xMax < x1/2f)
+				return t;
+			// the other case is processed outside
+		}
+		// minX is on right
+		else {
+			if (bounds.yMin > y1/2f)
+				t |= 2; // quad topRight
+			else t |= 4; // quad botRight
+			
+			if (bounds.yMax > y1/2f)
+				t |= 2; // quad topRight
+			// other case processed above because it means minY also was <= y1/2f
+			
+			// whenever minX lies on right side, then maxX is also on right side
+			return t;
+		}
+		
+		// last case: maxX is on right
+		if (bounds.yMin > y1/2f)
+			t |= 2; // quad topRight
+		else t |= 4; // quad botRight
+		if (bounds.yMax > y1/2f)
+			t |= 2; // quad topRight
+		// other case processed above because it means minY also was <= y1/2f
+		
+		return t;
 	}
 	
-	public ListenerLists getLists (Vector2 screenPos) {
-
+	public ListenerLists traverse (Vector2 screenPos) {
+		return traverseRecursive(screenPos, 0,0, Screen.width,Screen.height);
+	}
+	
+	private ListenerLists traverseRecursive (Vector2 p, float x0, float y0, float x1, float y1) {
 		// if is leaf then return the list of listeners
-		if (quadContent != null)
-			return quadContent;
+		if (leafContent != null)
+			return leafContent;
 		
 		// search in quad tree the leaf containing the screen position
 		
-		return null;
+		if (p.x < x1/2f) {
+			if (p.y > y1/2f)
+				return topLeft.traverseRecursive(p, x0,y1/2f, x1/2f,y1);
+			else
+				return botLeft.traverseRecursive(p, x0,y0, x1/2f,y1/2f);
+		}
+		else {
+			if (p.y > y1/2f)
+				return topRight.traverseRecursive(p, x1/2f,y1/2f, x1,y1);
+			else
+				return botRight.traverseRecursive(p, x1/2f,y0, x1,y1/2f);
+		}
 	}
 	
 	public void clear () {
-		// traverse all listener lists and call clear()
+		// is it a leaf?
+		if (leafContent != null)
+			leafContent.clear();
+		
+		if (topLeft != null) topLeft.clear();
+		if (topRight != null) topRight.clear();
+		if (botRight != null) botRight.clear();
+		if (botLeft != null) botLeft.clear();
 	}
 }

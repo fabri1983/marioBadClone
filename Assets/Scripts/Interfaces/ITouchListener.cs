@@ -39,4 +39,10 @@ public interface ITouchListener
 	/// The game object.
 	/// </returns>
 	GameObject getGameObject ();
+	
+	/// <summary>
+	/// Gets the screen Rect element representing the bounds of the listener's game object.
+	/// The Rect element is Axis Aligned, so it's like a square in screen with no rotation.
+	/// </summary>
+	Rect getScreenBoundsAA ();
 }
