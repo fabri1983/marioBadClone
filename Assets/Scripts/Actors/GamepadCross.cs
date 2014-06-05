@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class GamepadCross : MonoBehaviour, ITouchListener {
 	
-	public bool isSceneOnly = false;
-	
+	public bool keepAlive = true;
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
 	/// relative to the GUI texture with size 64x64. Scale adjustments are apply once the 
 	/// game object awakes.
@@ -20,10 +19,12 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	private Vector2 vec2 = new Vector2();
 	
 	void Awake () {
-		// keep this game object alive between scenes
-		DontDestroyOnLoad(this.gameObject);
+		if (keepAlive) {
+			// keep this game object alive between scenes
+			DontDestroyOnLoad(this.gameObject);
+		}
 
-		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Stationary);
+		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
 		
 		Rect guiRect = guiTexture.GetScreenRect();
 		guiPos = new Vector2(guiRect.x, guiRect.y);

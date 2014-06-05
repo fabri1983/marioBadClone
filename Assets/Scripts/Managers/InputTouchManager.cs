@@ -6,18 +6,13 @@ using System.Collections.Generic;
 /// This class catches the events from touch screen, and call the instances registered to the event trigered.
 /// The class which wants to be called when an event is triggered needs to implement interface IInputListener.
 /// Also it needs to register it self in a desired event type against this input manager.
-/// There are two types of registration: scene only and eternal. Scene only is when the listener lives only in the scene. 
-/// Once the scene is destroyed its game ojects also are destroyed, thus the Input Manager needs to remove those listeners when 
-/// scene is destroyed.
+/// Once the scene is destroyed its game ojects also are destroyed, thus the Input Manager needs to remove the listeners when 
+/// game object is destroyed. For that call removeListener().
 /// </summary>
 public class InputTouchManager : MonoBehaviour {
-	
-	private static List<ITouchListener> beganEternalListeners = new List<ITouchListener>(5);
-	private static List<ITouchListener> beganSceneOnlyListeners = new List<ITouchListener>(5);
-	private static List<ITouchListener> stationaryEternalListeners = new List<ITouchListener>(5);
-	private static List<ITouchListener> stationarySceneOnlyListeners = new List<ITouchListener>(5);
-	private static List<ITouchListener> endedEternalListeners = new List<ITouchListener>(5);
-	private static List<ITouchListener> endedSceneOnlyListeners = new List<ITouchListener>(5);
+
+	private static ListenerLists dynamicListeners = new ListenerLists();
+	private static InputTouchQuadTree staticQuadTree = new InputTouchQuadTree(0);
 	
 	/// If true then you can touch overlapped game objects (in screen)
 	/// If false then once touched a game object for current touch and current phase there is no need to 
@@ -50,82 +45,42 @@ public class InputTouchManager : MonoBehaviour {
 	/// <param name='listener'>
 	/// The object you are registering. Needed for callback invocations.
 	/// </param>
-	/// <param name='isSceneOnly'>
-	/// True if the registration is only valid during the liveness of the scene. False otherwise.
-	/// </param>
 	/// <param name='touchPhases'>
 	/// All the touch phases you want your gameobject be registered to.
 	/// </param>
-	public void register (ITouchListener listener, bool isSceneOnly, params TouchPhase[] touchPhases) {
-		
-		for (int i=0; i < touchPhases.Length; ++i) {
-			TouchPhase phase = touchPhases[i];
-			if (TouchPhase.Began.Equals(phase)) {
-				if (isSceneOnly)
-					beganSceneOnlyListeners.Add(listener);
-				else
-					beganEternalListeners.Add(listener);
+	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
+
+		/*if (listener.getGameObject().isStatic) {
+			foreach (ListenerLists l in staticQuadTree.add(GameObjectTools.BoundsToScreenRect(listener.getGameObject().renderer.bounds))) {
+				if (l != null)
+					l.add(listener, touchPhases);
 			}
-			// stationary and moved seems to be very related
-			else if (TouchPhase.Stationary.Equals(phase) || TouchPhase.Moved.Equals(phase)) {
-				if (isSceneOnly)
-					stationarySceneOnlyListeners.Add(listener);
-				else
-					stationaryEternalListeners.Add(listener);
-			}
-			else if (TouchPhase.Ended.Equals(phase) || TouchPhase.Canceled.Equals(phase)) {
-				if (isSceneOnly)
-					endedSceneOnlyListeners.Add(listener);
-				else
-					endedEternalListeners.Add(listener);
-			}
-			// add here else if for other phases
 		}
+		else*/
+			dynamicListeners.add(listener, touchPhases);
 	}
 	
 	/// <summary>
 	/// Invoke from OnDestroy() method in your per level game object.
-	/// Removes the reference of the listener that only exist per game scene.
 	/// Use the hash code to identify the listener over the list of many listeners.
 	/// </summary>
-	public void removeSceneOnlyListener (ITouchListener listener) {
+	public void removeListener (ITouchListener listener) {
 		
-		int id = listener.GetHashCode();
-		
-		for (int i=0; i < beganSceneOnlyListeners.Count; ++i) {
-			if (beganSceneOnlyListeners[i] == null)
-				continue;
-			if (id == beganSceneOnlyListeners[i].GetHashCode())
-				//beganSceneOnlyListeners[i] = null;
-				beganSceneOnlyListeners.RemoveAt(i);
+		GameObject go = listener.getGameObject();
+		if (go != null && !go.isStatic)
+			dynamicListeners.remove(listener);
+		else {
+			ListenerLists ll = staticQuadTree.getLists(Camera.main.WorldToScreenPoint(listener.getGameObject().transform.position));
+			if (ll != null)
+				ll.remove(listener);
 		}
-	
-		for (int i=0; i < stationarySceneOnlyListeners.Count; ++i) {
-			if (stationarySceneOnlyListeners[i] == null)
-				continue;
-			if (id == stationarySceneOnlyListeners[i].GetHashCode())
-				//stationarySceneOnlyListeners[i] = null;
-				stationarySceneOnlyListeners.RemoveAt(i);
-		}
-	
-		for (int i=0; i < endedSceneOnlyListeners.Count; ++i) {
-			if (endedSceneOnlyListeners[i] == null)
-				continue;
-			if (id == endedSceneOnlyListeners[i].GetHashCode())
-				//endedSceneOnlyListeners[i] = null;
-				endedSceneOnlyListeners.RemoveAt(i);
-		}
-		
-		// add here if else for other traverses for different touch phases
 	}
 	
 	void OnApplicationQuit () {
-		beganEternalListeners.Clear();
-		beganSceneOnlyListeners.Clear();
-		stationaryEternalListeners.Clear();
-		stationarySceneOnlyListeners.Clear();
-		endedEternalListeners.Clear();
-		endedSceneOnlyListeners.Clear();
+		dynamicListeners.clear();
+		staticQuadTree.clear();
+		dynamicListeners = null;
+		staticQuadTree = null;
 		
 		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
 		//instance = null;
@@ -146,84 +101,74 @@ public class InputTouchManager : MonoBehaviour {
 				Debug.Log(Input.touchCount + ": " + Input.touches[i].phase + " -> finger " + Input.touches[i].fingerId);
 		}
 #endif
-		
 		// send events to listeners
-		for (int i=0; i < Input.touchCount; ++i)
-			sendEvent(Input.touches[i]);
+		for (int i=0; i < Input.touchCount; ++i) {
+			// dynamic listeners
+			if (sendEvent(Input.touches[i], dynamicListeners))
+				continue;
+			// static listeners
+			sendEvent(Input.touches[i], staticQuadTree.getLists(Input.touches[i].position));
+		}
 	}
 	
-	private static void sendEvent (Touch t) {
+	private static bool sendEvent (Touch t, ListenerLists ll) {
 
-		//############################
 		// NOTE: traverse the lists and ask if hitten in the correct order: Began, Stationary/Move, Ended, Canceled
-		//############################
 		
-		List<ITouchListener> listEternal = null;
-		List<ITouchListener> listSceneOnly = null;
 		List<ITouchListener> list = null;
 		
 		// which lists to traverse? according to touch phase
-		if (TouchPhase.Began.Equals(t.phase)) {
-			listEternal = beganEternalListeners;
-			listSceneOnly = beganSceneOnlyListeners;
-		}
-		else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase)) {
-			listEternal = stationaryEternalListeners;
-			listSceneOnly = stationarySceneOnlyListeners;
-		}
-		else if (TouchPhase.Ended.Equals(t.phase) || TouchPhase.Canceled.Equals(t.phase)) {
-			listEternal = endedEternalListeners;
-			listSceneOnly = endedSceneOnlyListeners;
-		}
+		if (TouchPhase.Began.Equals(t.phase))
+			list = ll.beganListeners;
+		else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase))
+			list = ll.stationaryListeners;
+		else if (TouchPhase.Ended.Equals(t.phase) || TouchPhase.Canceled.Equals(t.phase))
+			list = ll.endedListeners;
 		// add here if else for other touch phases
 		
 		// one loop for scene only, another loop for global
-		int maxLoops = 2;
-		for (int k=0; k < maxLoops; ++k) {
+		bool atLeastOneHit = false;
 			
-			// is scene only list loop
-			if (k==0)
-				list = listEternal;
-			// or eternals list loop
-			else
-				list = listSceneOnly;
+		for (int i=0; list != null && i < list.Count; ++i) {
 			
-			for (int i=0; list != null && i < list.Count; ++i) {
+			ITouchListener listener = list[i];
+			if (listener == null)
+				continue;
+			
+			GameObject go = listener.getGameObject();
+			bool hitInner = false;
+			
+			// check for GUI Texture
+			if (go.guiTexture != null && go.guiTexture.HitTest(t.position))
+				hitInner = true;
+			// check for GUI Text
+			else if (go.guiText != null && go.guiText.HitTest(t.position))
+				hitInner = true;
+			// check for game object
+			else {
+				// use detection as in chipmunk platformer, since here I don't use physx colliders
+				// or use cpShapeQuerySegment (see online documentation from release, cpShape class)
+			}
+			
+			// hitten? then invoke callback
+			if (hitInner) {
+				if (TouchPhase.Began.Equals(t.phase))
+					list[i].OnBeganTouch(t);
+				else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase))
+					list[i].OnStationaryTouch(t);
+				else if (TouchPhase.Ended.Equals(t.phase))
+					list[i].OnEndedTouch(t);
+				// add here if else for other methods depending on touch phases
 				
-				ITouchListener listener = list[i];
-				if (listener == null)
-					continue;
-				
-				GameObject go = listener.getGameObject();
-				bool hitten = false;
-				
-				// check for GUI Texture
-				if (go.guiTexture != null && go.guiTexture.HitTest(t.position))
-					hitten = true;
-				// check for GUI Text
-				else if (go.guiText != null && go.guiText.HitTest(t.position))
-					hitten = true;
-				// check for game object
-				else {
-					// use detection as in chipmunk platformer, since here I don't use physx colliders
-				}
-				
-				// hitten? then invoke callback
-				if (hitten) {
-					if (TouchPhase.Began.Equals(t.phase))
-						list[i].OnBeganTouch(t);
-					else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase))
-						list[i].OnStationaryTouch(t);
-					else if (TouchPhase.Ended.Equals(t.phase))
-						list[i].OnEndedTouch(t);
-					// add here if else for other methods depending on touch phases
-					
-					if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS) {
-						k = maxLoops;
-						break;
-					}
-				}
+				if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS)
+					return true;
+				atLeastOneHit = true;
 			}
 		}
+		
+		if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS && atLeastOneHit)
+			return true;
+		
+		return false;
 	}
 }

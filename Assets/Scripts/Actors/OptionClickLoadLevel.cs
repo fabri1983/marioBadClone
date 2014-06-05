@@ -6,12 +6,11 @@ public class OptionClickLoadLevel : MonoBehaviour, ITouchListener {
 	public int sceneIndex;
 
 	void Awake () {
-		bool isSceneOnly = true;
-		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Ended);
+		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
 	}
 	
 	void OnDestroy () {
-		InputTouchManager.Instance.removeSceneOnlyListener(this);
+		InputTouchManager.Instance.removeListener(this);
 	}
 	
 	/**

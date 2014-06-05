@@ -134,8 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ad68f1104b8e945a2f1f3f7c8e3ab8, type: 1}
   m_Name: 
   buttonLabel: B
-  isScenelOnly: 0
-  propagateAllPhases: 0
+  isSceneOnly: 0
 --- !u!1 &46351032
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +711,7 @@ GameObject:
   - 81: {fileID: 656453786}
   - 114: {fileID: 656453789}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1100,8 +1099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ad68f1104b8e945a2f1f3f7c8e3ab8, type: 1}
   m_Name: 
   buttonLabel: A
-  isScenelOnly: 0
-  propagateAllPhases: 0
+  isSceneOnly: 0
 --- !u!1 &1277972082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,6 +1530,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e23999b8d19e1db44870c998ce778b84, type: 1}
   m_Name: 
+  isSceneOnly: 0
 --- !u!1001 &2128456574
 Prefab:
   m_ObjectHideFlags: 0

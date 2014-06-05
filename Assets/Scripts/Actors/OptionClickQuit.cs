@@ -26,8 +26,7 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		bool isSceneOnly = false;
-		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Ended);
+		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
 	}
 	
 	/**

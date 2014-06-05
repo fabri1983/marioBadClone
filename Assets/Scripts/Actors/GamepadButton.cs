@@ -5,14 +5,14 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 	
 	// this modified in inspector window
 	public string buttonLabel = "A";
-	public bool isSceneOnly = false;
-	
+	public bool keepAlive = true;
+		
 	void Awake () {
-		if (!isSceneOnly)
+		if (keepAlive)
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 
-		InputTouchManager.Instance.register(this, isSceneOnly, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
+		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
 	}
 	
 	/**
