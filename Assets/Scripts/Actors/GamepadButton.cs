@@ -12,7 +12,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 
-		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
+		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
 	}
 	
 	/**

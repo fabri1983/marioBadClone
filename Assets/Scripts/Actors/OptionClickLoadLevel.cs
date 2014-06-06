@@ -6,11 +6,11 @@ public class OptionClickLoadLevel : MonoBehaviour, ITouchListener {
 	public int sceneIndex;
 
 	void Awake () {
-		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
+		TouchEventManager.Instance.register(this, TouchPhase.Ended);
 	}
 	
 	void OnDestroy () {
-		InputTouchManager.Instance.removeListener(this);
+		TouchEventManager.Instance.removeListener(this);
 	}
 	
 	/**

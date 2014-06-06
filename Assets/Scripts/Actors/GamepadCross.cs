@@ -24,7 +24,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			DontDestroyOnLoad(this.gameObject);
 		}
 
-		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
+		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
 		
 		Rect guiRect = guiTexture.GetScreenRect();
 		guiPos = new Vector2(guiRect.x, guiRect.y);

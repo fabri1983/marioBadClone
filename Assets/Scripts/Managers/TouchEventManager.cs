@@ -2,26 +2,26 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Input manager.
+/// Touch Event Manager.
 /// This class catches the events from touch screen, and call the instances registered to the event trigered.
 /// The class which wants to be called when an event is triggered needs to implement interface IInputListener.
 /// Also it needs to register it self in a desired event type against this input manager.
 /// Once the scene is destroyed its game ojects also are destroyed, thus the Input Manager needs to remove the listeners when 
 /// game object is destroyed. For that call removeListener().
 /// </summary>
-public class InputTouchManager : MonoBehaviour {
+public class TouchEventManager : MonoBehaviour {
 
 	private static ListenerLists dynamicListeners = new ListenerLists();
-	private static InputTouchQuadTree staticQuadTree = new InputTouchQuadTree(InputTouchQuadTree.FIRST_LEVEL);
+	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent(QuadTreeTouchEvent.FIRST_LEVEL);
 	
 	/// If true then you can touch overlapped game objects (in screen)
 	/// If false then once touched a game object for current touch and current phase there is no need to 
 	/// continue looking for another touched game object.
 	private static bool ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS = false;
 	
-	private static InputTouchManager instance = null;
+	private static TouchEventManager instance = null;
 	
-	public static InputTouchManager Instance {
+	public static TouchEventManager Instance {
         get {
             warm();
             return instance;
@@ -32,7 +32,7 @@ public class InputTouchManager : MonoBehaviour {
 		// in case the game object wasn't instantiated yet from another script
 		if (instance == null) {
 			// creates a game object with this script component
-			instance = new GameObject("InputTouchManager").AddComponent<InputTouchManager>();
+			instance = new GameObject("TouchEventManager").AddComponent<TouchEventManager>();
 			DontDestroyOnLoad(instance);
 		}
 		// force to activate multi touch support
@@ -74,10 +74,13 @@ public class InputTouchManager : MonoBehaviour {
 		if (go != null && !go.isStatic)
 			dynamicListeners.remove(listener);
 		else {
-			Vector2 screenPos = listener.getScreenBoundsAA().center;
-			ListenerLists ll = staticQuadTree.traverse(screenPos);
-			if (ll != null)
-				ll.remove(listener);
+			// need to remove from every list the listener appears
+			List<ListenerLists> lls = staticQuadTree.traverse(listener.getScreenBoundsAA());
+			for (int i=0,c=lls.Count; i < c; ++i) {
+				ListenerLists ll = lls[i];
+				if (ll != null)
+					ll.remove(listener);
+			}
 		}
 	}
 	

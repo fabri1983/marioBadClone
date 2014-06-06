@@ -26,7 +26,7 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		InputTouchManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
+		TouchEventManager.Instance.register(this, TouchPhase.Ended);
 	}
 	
 	/**

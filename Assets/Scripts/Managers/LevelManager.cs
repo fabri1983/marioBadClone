@@ -133,7 +133,7 @@ public class LevelManager : MonoBehaviour {
 		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
-		InputTouchManager.warm();
+		TouchEventManager.warm();
 		OptionClickQuit.warm();
 	}
 	
