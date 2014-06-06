@@ -12,7 +12,7 @@ using System.Collections.Generic;
 public class InputTouchManager : MonoBehaviour {
 
 	private static ListenerLists dynamicListeners = new ListenerLists();
-	private static InputTouchQuadTree staticQuadTree = new InputTouchQuadTree(0);
+	private static InputTouchQuadTree staticQuadTree = new InputTouchQuadTree(InputTouchQuadTree.FIRST_LEVEL);
 	
 	/// If true then you can touch overlapped game objects (in screen)
 	/// If false then once touched a game object for current touch and current phase there is no need to 
@@ -59,7 +59,6 @@ public class InputTouchManager : MonoBehaviour {
 					l.add(listener, touchPhases);
 			}
 			leaves.Clear();
-			leaves = null;
 		}
 		else
 			dynamicListeners.add(listener, touchPhases);
@@ -75,7 +74,7 @@ public class InputTouchManager : MonoBehaviour {
 		if (go != null && !go.isStatic)
 			dynamicListeners.remove(listener);
 		else {
-			Vector2 screenPos = Camera.main.WorldToScreenPoint(listener.getGameObject().transform.position);
+			Vector2 screenPos = listener.getScreenBoundsAA().center;
 			ListenerLists ll = staticQuadTree.traverse(screenPos);
 			if (ll != null)
 				ll.remove(listener);

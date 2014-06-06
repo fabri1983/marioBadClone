@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ad68f1104b8e945a2f1f3f7c8e3ab8, type: 1}
   m_Name: 
   buttonLabel: B
-  isSceneOnly: 0
+  keepAlive: 1
 --- !u!1 &46351032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,7 +1099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ad68f1104b8e945a2f1f3f7c8e3ab8, type: 1}
   m_Name: 
   buttonLabel: A
-  isSceneOnly: 0
+  keepAlive: 1
 --- !u!1 &1277972082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1187,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c962b9c1f9528d14ea03cd06fefbcf87, type: 2}
       propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400030, guid: c962b9c1f9528d14ea03cd06fefbcf87, type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1530,7 +1534,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e23999b8d19e1db44870c998ce778b84, type: 1}
   m_Name: 
-  isSceneOnly: 0
+  keepAlive: 1
 --- !u!1001 &2128456574
 Prefab:
   m_ObjectHideFlags: 0

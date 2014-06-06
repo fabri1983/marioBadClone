@@ -42,8 +42,7 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 	
 	public Rect getScreenBoundsAA () {
 		// this method called only once since its a non destroyable game object
-		//guiTexture.GetScreenRect(Camera.main);
-		return guiTexture.pixelInset;
+		return guiTexture.GetScreenRect(Camera.main);
 	}
 	
 	public void OnBeganTouch (Touch t) {

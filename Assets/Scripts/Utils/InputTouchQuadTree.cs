@@ -14,14 +14,17 @@ using System.Collections.Generic;
 /// </summary>
 public class InputTouchQuadTree {
 	
-	private const int DEEP_LEVEL_THRESHOLD = 0;
+	public const int FIRST_LEVEL = 0;
+	
+	private const int DEEP_LEVEL_THRESHOLD = 1;
 	
 	// this is the object to be saved in the Quad Tree's leaves
-	private ListenerLists leafContent;
+	private ListenerLists leafContent = null;
 	
-	private int level;
+	private int level = FIRST_LEVEL;
 	private InputTouchQuadTree topLeft, topRight, botLeft, botRight;
-	
+	private static List<ListenerLists> tempLists = new List<ListenerLists>(4);
+		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="InputTouchQuadTree"/> class.
 	/// </summary>
@@ -41,32 +44,30 @@ public class InputTouchQuadTree {
 	/// </param>
 	public List<ListenerLists> add (Rect screenBounds) {
 		
-		List<ListenerLists> lists = new List<ListenerLists>(4);
-		addRecursive(screenBounds, lists, 0,0, Screen.width,Screen.height);
-		return lists;
+		tempLists.Clear();
+		addRecursive(screenBounds, tempLists, 0,0, Screen.width,Screen.height);
+		return tempLists;
 	}
 	
 	private void addRecursive (Rect screenBounds, List<ListenerLists> lists, float x0, float y0, float x1, float y1) {
 		
 		// reached max level?
 		if (level == DEEP_LEVEL_THRESHOLD) {
-			// if content is null it means it wasn't added into the listeners list
-			if (leafContent == null) {
+			if (leafContent == null)
 				leafContent = new ListenerLists();
-				lists.Add(leafContent);
-			}
+			lists.Add(leafContent);
 			// the caller object is responsible to allocate the listener instance in the many listeners list
 			return;
 		}
 		
 		/// Test four points of rect screenBounds to get the destiny quad/s. 
 		/// It can falls in as much as four quads.
-		///                 y1
-		///     -----------   x1
-		///    |  0  |  1  |
-		///     -----------
-		///    |  3  |  2  |
-		/// y0  -----------
+		///                   y1
+		///     -------------   x1
+		///    |  001 | 010  |
+		///     -------------
+		///    | 1000 | 100  |
+		/// y0  -------------
 		///  x0
 		/// 
 		// use actual limits to calculate destiny quadrant/s
