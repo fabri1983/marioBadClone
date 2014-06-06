@@ -25,10 +25,9 @@ public sealed class ListenerLists {
 		}
 	}
 	
-	public bool remove (ITouchListener listener) {
+	public void remove (ITouchListener listener) {
 		
 		int id = listener.GetHashCode();
-		bool removed = false;
 		
 		for (int i=0, c=beganListeners.Count; i < c; ++i) {
 			/*if (beganListeners[i] == null)
@@ -36,7 +35,7 @@ public sealed class ListenerLists {
 			if (id == beganListeners[i].GetHashCode()) {
 				//beganListeners[i] = null;
 				beganListeners.RemoveAt(i);
-				removed = true;
+				break;
 			}
 		}
 	
@@ -46,7 +45,7 @@ public sealed class ListenerLists {
 			if (id == stationaryListeners[i].GetHashCode()) {
 				//stationaryListeners[i] = null;
 				stationaryListeners.RemoveAt(i);
-				removed = true;
+				break;
 			}
 		}
 	
@@ -56,13 +55,10 @@ public sealed class ListenerLists {
 			if (id == endedListeners[i].GetHashCode()) {
 				//endedListeners[i] = null;
 				endedListeners.RemoveAt(i);
-				removed = true;
+				break;
 			}
 		}
-		
 		// add here if else for other traverses for different touch phases
-		
-		return removed;
 	}
 	
 	public void clear () {
