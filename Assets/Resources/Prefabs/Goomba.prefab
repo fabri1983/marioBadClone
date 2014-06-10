@@ -15,7 +15,8 @@ GameObject:
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400014}
-  m_Layer: 18
+  - 114: {fileID: 11400020}
+  m_Layer: 8
   m_Name: Goomba
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +36,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400016}
   - 114: {fileID: 11400018}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +50,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43.1307106, y: 1.73558903, z: 0}
+  m_LocalPosition: {x: 19.402317, y: 1.73558903, z: 0}
   m_LocalScale: {x: 2.13896298, y: 2.13896298, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -131,8 +132,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32f6c6199a815bb4fbe846d6d6ee8fc2, type: 1}
   m_Name: 
-  animFPSBoost: 8
-  speedUpFactor: 1.89999998
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,6 +238,17 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 0
   colLengthAnim: 2
+--- !u!114 &11400020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
+  m_Name: 
+  otherLayersBelongTo: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
