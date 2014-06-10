@@ -28,8 +28,7 @@ public class CameraFollower : MonoBehaviour {
 	/// LateUpdate is called after all Update functions have been called.
 	/// Dependant objects might have moved during Update.
 	void LateUpdate () {
-	
-		// use FixedUpdate() if camera jitters
+		// NOTE: use FixedUpdate() if camera jitters
 		
 		if (stop)
 			return;
@@ -43,7 +42,7 @@ public class CameraFollower : MonoBehaviour {
 		}
 		
 		Vector3 thePos = transform.position;
-		// get XY position of target and keep Z untouched
+		// get XY position of target and keep Z untouch
 		thePos.x = lookAtTarget.position.x;
 		thePos.y = lookAtTarget.position.y + offsetY;
 		
@@ -65,6 +64,9 @@ public class CameraFollower : MonoBehaviour {
 		        // Go to position2 t = 1.0f
 		        constantTimer = Mathf.Clamp(constantTimer + Time.deltaTime, 0.0f, 1.0f);
 		}
+		
+		if (lookAtTarget.position.y < LevelManager.FREE_FALL_STOP_CAM_FOLLOW)
+			stopAnimation();
 	}
 	
 	public void doInstantMovement () {

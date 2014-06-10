@@ -18,6 +18,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400030}
   - 114: {fileID: 11400028}
+  - 114: {fileID: 11400032}
   m_Layer: 10
   m_Name: Mario
   m_TagString: Mario
@@ -334,7 +335,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
   m_Name: 
-  _friction: .899999976
+  _friction: .75
   _elasticity: 0
   _isSensor: 0
   _collisionType: Player
@@ -359,6 +360,17 @@ MonoBehaviour:
   _interpolationMode: 1
   _transform: {fileID: 0}
   _savedZ: 0
+--- !u!114 &11400032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
+  m_Name: 
+  aditionalLayers: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

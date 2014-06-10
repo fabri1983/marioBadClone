@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerDieAnim : MonoBehaviour {
 
 	private int playerLayer;
+	private uint layersCP;
 	private bool dying = false;
-	private float endPosition = 0f;
 	private Jump jump;
 	
 	void Awake () {
@@ -16,10 +16,11 @@ public class PlayerDieAnim : MonoBehaviour {
 			return;
 		
 		// end of animation?
-		if (transform.position.y < endPosition) {
+		if (transform.position.y < LevelManager.ENDING_DIE_ANIM_Y_POS) {
 			dying = false;
-			// set back mario's original layer
-			GameObjectTools.setLayerAndChildren(gameObject, playerLayer);
+			// set back player's original layer
+			GameObjectTools.setLayer(gameObject, playerLayer);
+			GameObjectTools.setLayerForShapes(gameObject, layersCP);
 			// restart level
 			LevelManager.Instance.loseGame(false);
 		}
@@ -29,12 +30,13 @@ public class PlayerDieAnim : MonoBehaviour {
 		
 		dying = true;
 		
-		// change Mario's current layer to CAMERA_IN_FRONT layer
+		// change player's current layer to CAMERA_IN_FRONT layer
 		playerLayer = gameObject.layer;
-		GameObjectTools.setLayerAndChildren(gameObject, LevelManager.CAMERA_IN_FRONT);
+		layersCP = gameObject.GetComponent<ChipmunkShape>().layers;
+		GameObjectTools.setLayer(gameObject, LevelManager.CAMERA_IN_FRONT);
+		GameObjectTools.setLayerForShapes(gameObject, 0);
 
 		// execute die animation
-		endPosition = transform.position.y + LevelManager.ENDING_DIE_ANIM_Y_POS;
 		GetComponent<ChipmunkShape>().body.velocity = Vector2.zero;
 		jump.forceJump(GetComponent<Player>().lightJumpVelocity);
 	}

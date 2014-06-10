@@ -64,6 +64,6 @@ public class FireBall : MonoBehaviour {
 		if (val)
 			gameObject.layer = LevelManager.POWERUP_LAYER;
 		else
-			gameObject.layer = LevelManager.ONLY_WITH_MARIO_LAYER;
+			gameObject.layer = LevelManager.ONLY_WITH_PLAYER_LAYER;
 	}
 }

@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	private Crouch crouch;
 	private Idle idle;
 	private Teleportable teleportable;
+	
 	/// powerUp object
 	private PowerUp powerUp;
 	/// the position where the bullets start firing
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		dieAnim = GetComponent<PlayerDieAnim>();
 		crouch = GetComponent<Crouch>();
 		idle = GetComponent<Idle>();
+		
 		body = GetComponent<ChipmunkBody>();
 		
 		walkVelBackup = walkVelocity;
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	
 	// Use this for initialization
 	void Start () {
-		// invoke after getting action components
+		// invoke after having got action components
 		resetPlayer();
 	}
 	
@@ -104,7 +106,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				isIdle = false;
 				// enable move speed after a wall collision if intended moving direction changes
 				if (signCollision > 0f)
-					walkVelocity = walkVelBackup;
+					restoreWalkVel();
 			}
 			else if (Gamepad.isRight() || Input.GetKey(KeyCode.RightArrow)) {
 				walk.walk(walkVelocity);
@@ -112,7 +114,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				isIdle = false;
 				// enable move speed after a wall collision if intended moving direction changes
 				if (signCollision < 0f)
-					walkVelocity = walkVelBackup;
+					restoreWalkVel();
 			}
 			else
 				// if no movement input then set correct internal status
@@ -128,7 +130,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				idle.setIdle(false);
 		}
 		
-		// lose game if Player falls
+		// lose game if Player falls beyond a theshold
 		if (transform.position.y <= LevelManager.ENDING_DIE_ANIM_Y_POS) {
 			LevelManager.Instance.loseGame(false);
 			return;
@@ -170,6 +172,10 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		return fireDir;
 	}
 	
+	private void restoreWalkVel () {
+		walkVelocity = walkVelBackup;
+	}
+	
 	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
@@ -183,13 +189,11 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		if (GameObjectTools.isWallHit(arbiter)) {
 			// get sign direction to know what offset apply to body
 			player.signCollision = -Mathf.Sign(player.transform.position.x - shape2.transform.position.x);
-			// dump to zero body's velocity
-			player.body.velocity = Vector2.zero;
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
-			// move back to the contact point
+			// move back to the contact point and a little more
 			Vector2 thePos = player.body.position;
-			thePos.x += player.signCollision * arbiter.GetDepth(0);
+			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
 			player.body.position = thePos;
 		}
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
@@ -205,5 +209,19 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		Player player = shape1.GetComponent<Player>();
 		if (player.isDying())
 			return; // do nothing*/
+	}
+	
+	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		Player player = shape1.GetComponent<Player>();
+		if (!player.isDying())
+			player.restoreWalkVel();
+		
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		return false;
 	}
 }

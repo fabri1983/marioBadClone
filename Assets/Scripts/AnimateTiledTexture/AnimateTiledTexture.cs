@@ -26,7 +26,7 @@ public class AnimateTiledTexture : MonoBehaviour
 	private int _direction = 1;						// 1: forward direction. -1: backwards
 	private int _maxIndex;							// Max index for current animation
     private Vector2 _textureSize = Vector2.zero;    // Keeps track of the texture scale 
-    private Material _materialInstance = null;      // Material instance of the material we create (if needed)
+    private Material _materialInstance = null;      // Material instance of the material we create
     private bool _hasMaterialInstance = false;      // A flag so we know if we have a material instance we need to clean up (better than a null check i think)
     private bool _isPlaying = false;                // A flag to determine if the animation is currently playing
 	private float updateTime;						// Use for none coroutine function. Keeps track of time passed during game loops
@@ -42,7 +42,7 @@ public class AnimateTiledTexture : MonoBehaviour
         if (_enableEvents)
             _voidEventCallbackList = new List<VoidEvent>();
  
-        //Create the material instance, if needed. else, just use this function to recalc the texture size
+        //Create the material instance. Else, just use this function to recalc the texture size
         ChangeMaterial(renderer.sharedMaterial, _newMaterialInstance);
 		
 		updateTime = Time.time;

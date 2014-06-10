@@ -9,7 +9,7 @@ public class Goomba : MonoBehaviour {
 	private ChipmunkBody body;
 	private ChipmunkShape shape;
 	
-	private static float TIMING_DIE = 0.3f;
+	private const float TIMING_DIE = 0.3f;
 	
 	void Awake () {
 		goombaDie = GetComponent<GoombaDieAnim>();
@@ -68,8 +68,10 @@ public class Goomba : MonoBehaviour {
 		Goomba goomba = shape1.GetComponent<Goomba>();
 		Player player = shape2.GetComponent<Player>();
 		
-		if (goomba.goombaDie.isDying() || player.isDying())
+		if (goomba.goombaDie.isDying() || player.isDying()) {
+			arbiter.Ignore(); // avoid the collision to continue since this frame
 			return false; // avoid the collision to continue since this frame
+		}
 		
 		goomba.patrol.stopPatrol();
 		goomba.idle.setIdle(true);

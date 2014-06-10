@@ -7,13 +7,14 @@ public class LevelManager : MonoBehaviour {
 	public static int FOR_ENEMY_LAYER;
 	public static int CAMERA_IN_FRONT;
 	public static int POWERUP_LAYER;
-	public static int ONLY_WITH_MARIO_LAYER;
-	public static float ENDING_DIE_ANIM_Y_POS = -20f;
+	public static int ONLY_WITH_PLAYER_LAYER;
+	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
+	public const float FREE_FALL_STOP_CAM_FOLLOW = -2f; // y world position for stopping camera follower
 	
 	// aspect ratio variables
 	public static bool keepAspectRatio = true;
-	public static float ASPECT_W = 16f;
-	public static float ASPECT_H = 10.5f;
+	public const float ASPECT_W = 16f;
+	public const float ASPECT_H = 10.5f;
 	
 	// spawn positions for mario. They are set automatically when a level is loaded
 	private static List<SpawnPositionSpot>[] spawnPosList = new List<SpawnPositionSpot>[Application.levelCount];
@@ -72,7 +73,7 @@ public class LevelManager : MonoBehaviour {
 		FOR_ENEMY_LAYER = LayerMask.NameToLayer("ForEnemy");
 		CAMERA_IN_FRONT = LayerMask.NameToLayer("CameraInFront");
 		POWERUP_LAYER = LayerMask.NameToLayer("PowerUp");
-		ONLY_WITH_MARIO_LAYER = LayerMask.NameToLayer("OnlyWithMario");
+		ONLY_WITH_PLAYER_LAYER = LayerMask.NameToLayer("OnlyWithPlayer");
 		
 		// reset indexes spawn position matrix
 		for (int i=0; i < Application.levelCount; ++i)
@@ -118,19 +119,16 @@ public class LevelManager : MonoBehaviour {
 	 * It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
 	 */
 	public void startLevel (int level, bool playerEnabled) {
-		
 		activeLevel = level;
-		
+		// disable in front camera
+		camInFront.camera.enabled = false;
 		// activate the player's game object
 		player.gameObject.SetActiveRecursively(playerEnabled);
-		
 		// load spawn positions for current level. This is invoked everytime a level is loaded but 
 		// the method considers if spawn positions were already loaded.
 		loadSpawnPositions(level);
-		
 		// set Mario spawn position for this level
 		setPlayerPosition(level);
-		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
 		TouchEventManager.warm();

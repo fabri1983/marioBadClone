@@ -3,7 +3,7 @@ using UnityEngine;
 public class GoombaDieAnim : MonoBehaviour {
 	
 	private bool dying;
-	private static float CRUNCH_PROPORTION = 0.8f;
+	private const float CRUNCH_PROPORTION = 0.8f;
 	private static Vector3 CRUNCH_VECTOR = Vector3.up;
 	
 	void Awake () {

@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class CollisionManagerCM : ChipmunkCollisionManager {
+public class CollisionManagerCP : ChipmunkCollisionManager {
 
 	protected void Start(){
 		// Turning down the timestep can smooth things out significantly.
 		// Chipmunk is also pretty fast so you don't need to worry about the performance so much.
 		// Not really necessary, but helps in several subtle ways.
 		// NOTE: doing this from Wake() will ignore base.Awake() method which is the one who adds this manager instance to chipmunk api
-		Time.fixedDeltaTime = 1f/180f; // between 0.003 and 0.005 is OK
+		Time.fixedDeltaTime = 0.01f; // between 0.003 (1f/300f) and 0.005 (1f/180f) is OK
 		Chipmunk.gravity = new Vector2(0f, -100f);
 		
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
@@ -43,5 +43,9 @@ public class CollisionManagerCM : ChipmunkCollisionManager {
 	
 	bool ChipmunkBegin_Player_SpawnPos (ChipmunkArbiter arbiter){
 		return SpawnPositionTrigger.beginCollisionWithPlayer(arbiter);
+	}
+	
+	bool ChipmunkBegin_Player_UnlockSensor (ChipmunkArbiter arbiter){
+		return Player.beginCollisionWithUnlockSensor(arbiter);
 	}
 }
