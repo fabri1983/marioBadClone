@@ -9,7 +9,7 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	// 5 is ok for mobile 30 fps, 6 for 60 fps
-	public static short HARD_PRESSED_MIN_COUNT = 6;
+	public const short HARD_PRESSED_MIN_COUNT = 6;
 	
 	// keeps track of every button's state
 	private static bool[] buttonsState = new bool[System.Enum.GetValues(typeof(BUTTONS)).Length];

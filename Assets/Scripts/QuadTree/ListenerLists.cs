@@ -1,12 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public sealed class ListenerLists {
+public struct ListenerLists {
 
-	public List<ITouchListener> beganListeners = new List<ITouchListener>(3);
-	public List<ITouchListener> stationaryListeners = new List<ITouchListener>(3);
-	public List<ITouchListener> endedListeners = new List<ITouchListener>(3);
-
+	public List<ITouchListener> beganListeners;
+	public List<ITouchListener> stationaryListeners;
+	public List<ITouchListener> endedListeners;
+	public bool initialized;
+	
+	public void initialize () {
+		beganListeners = new List<ITouchListener>(3);
+		stationaryListeners = new List<ITouchListener>(3);
+		endedListeners = new List<ITouchListener>(3);
+		initialized = true;
+	}
 	
 	public void add (ITouchListener listener, TouchPhase[] touchPhases) {
 		for (int i=0; i < touchPhases.Length; ++i) {
@@ -62,8 +69,8 @@ public sealed class ListenerLists {
 	}
 	
 	public void clear () {
-		beganListeners.Clear();
-		stationaryListeners.Clear();
-		endedListeners.Clear();
+		if (beganListeners != null) beganListeners.Clear();
+		if (stationaryListeners != null) stationaryListeners.Clear();
+		if (endedListeners != null) endedListeners.Clear();
 	}
 }

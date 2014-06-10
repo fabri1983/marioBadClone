@@ -11,8 +11,8 @@ using System.Collections.Generic;
 /// </summary>
 public class TouchEventManager : MonoBehaviour {
 
-	private static ListenerLists dynamicListeners = new ListenerLists();
-	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent(QuadTreeTouchEvent.FIRST_LEVEL);
+	private static ListenerLists dynamicListeners; // it's a struct, no instancing needed
+	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent();
 	
 	/// If true then you can touch overlapped game objects (in screen)
 	/// If false then once touched a game object for current touch and current phase there is no need to 
@@ -53,15 +53,17 @@ public class TouchEventManager : MonoBehaviour {
 		if (listener.getGameObject().isStatic) {
 			/// adding the listener's screen rect into the quad tree will return a list of 
 			/// as much as 4 ListenerLists elems, since the listener can fall in more than one quadrant
-			List<ListenerLists> leaves = staticQuadTree.add(listener.getScreenBoundsAA());
-			foreach (ListenerLists l in leaves) {
-				if (l != null)
-					l.add(listener, touchPhases);
+			ListenerLists[] leaves = staticQuadTree.add(listener.getScreenBoundsAA());
+			for (int i=0, c=leaves.Length; i < c; ++i) {
+				if (leaves[i].initialized)
+					leaves[i].add(listener, touchPhases);
 			}
-			leaves.Clear();
 		}
-		else
+		else {
+			if (!dynamicListeners.initialized)
+				dynamicListeners.initialize();
 			dynamicListeners.add(listener, touchPhases);
+		}
 	}
 	
 	/// <summary>
@@ -75,11 +77,10 @@ public class TouchEventManager : MonoBehaviour {
 			dynamicListeners.remove(listener);
 		else {
 			// need to remove from every list the listener appears
-			List<ListenerLists> lls = staticQuadTree.traverse(listener.getScreenBoundsAA());
-			for (int i=0,c=lls.Count; i < c; ++i) {
-				ListenerLists ll = lls[i];
-				if (ll != null)
-					ll.remove(listener);
+			ListenerLists[] lls = staticQuadTree.traverse(listener.getScreenBoundsAA());
+			for (int i=0,c=lls.Length; i < c; ++i) {
+				if (lls[i].initialized)
+					lls[i].remove(listener);
 			}
 		}
 	}
@@ -119,7 +120,7 @@ public class TouchEventManager : MonoBehaviour {
 	}
 	
 	private static bool sendEvent (Touch t, ListenerLists ll) {
-		if (ll == null)
+		if (!ll.initialized)
 			return false;
 		
 		// NOTE: traverse the lists and ask if hitten in the correct order: Began, Stationary/Move, Ended, Canceled

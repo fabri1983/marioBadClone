@@ -74,11 +74,29 @@ static public class GameObjectTools
 		return true;
 	}
 	
-	public static void setLayerAndChildren (GameObject go, int layer) {
+	/**
+	 * Set the layer to game object and also ot their chidlren. So only considers two levels of deep.
+	 */
+	public static void setLayer (GameObject go, int layer) {
 		go.layer = layer;
 		Component[] children = go.GetComponentsInChildren<Component>();
-		for (int i=0; i < children.Length; ++i)
+		for (int i=0,c=children.Length; i < c; ++i)
 			children[i].gameObject.layer = layer;
+	}
+	
+	/**
+	 * Set the layer to the shape and also ot their chidlren shapes. So only considers two levels of deep.
+	 */
+	public static void setLayerForShapes (GameObject go, uint mask) {
+		// first: sets game object's shape layer 
+		ChipmunkShape s = go.GetComponent<ChipmunkShape>();
+		if (s != null)
+			s.layers = mask;
+		
+		// second: set chidlren's shape layer
+		ChipmunkShape[] shapes = go.GetComponentsInChildren<ChipmunkShape>();
+		for (int i=0,c=shapes.Length; i < c; ++i)
+			shapes[i].layers = mask;
 	}
 	
 	public static void ChipmunkBodyDestroy (GameObject go) {
@@ -109,10 +127,9 @@ static public class GameObjectTools
 	 * Better implementation that accounts for rotation and scale.
 	 * It uses Camera.main for screen space conversion.
 	 */
-	public static Rect BoundsToScreenRect(Bounds bounds) {
+	public static Rect BoundsToScreenRect(Bounds bounds, Camera cam) {
 		Vector3 cen = bounds.center;
 		Vector3 ext = bounds.extents;
-		Camera cam = Camera.main;
 		Vector2[] extentPoints = new Vector2[8] {
 			cam.WorldToScreenPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z-ext.z)),
 			cam.WorldToScreenPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z-ext.z)),
@@ -136,8 +153,7 @@ static public class GameObjectTools
 		return new Rect(min.x, min.y, max.x-min.x, max.y-min.y);
 	}
 	
-	public static void drawGUIBox (Bounds b) {
-		Camera cam = Camera.main;
+	public static void drawGUIBox (Bounds b, Camera cam) {
  		float margin = 0;
 		
 		// is object behind us?

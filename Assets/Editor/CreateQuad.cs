@@ -46,6 +46,7 @@ public class CreateQuad : ScriptableWizard
 	
 	//Vert Position of Anchor on Plane
 	public float AnchorY = 0.5f;
+	
 	//------------------------------------------------
 	[MenuItem("GameObject/Create Other/Custom Plane")]
     static void CreateWizard()

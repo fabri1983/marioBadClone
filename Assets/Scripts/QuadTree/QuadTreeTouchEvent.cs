@@ -15,28 +15,21 @@ using System.Collections.Generic;
 public class QuadTreeTouchEvent {
 	
 	public const int FIRST_LEVEL = 0;
+	public const int DEEP_LEVEL_THRESHOLD = 1;
 	
-	private const int DEEP_LEVEL_THRESHOLD = 1;
-	
-	// this is the object to be saved in the Quad Tree's leaves
-	private ListenerLists leafContent = null;
-	
-	private int level = FIRST_LEVEL;
-	private QuadTreeTouchEvent topLeft, topRight, botLeft, botRight;
-	private List<ListenerLists> tempLists;
-	private int elemsTotal = 0;	
+	private QuadNode root;
+	private ListenerLists[] tempArr = new ListenerLists[4];
+	// this temporal list is created once per quad tree root instance
+	private int tempIndex = 0;
+	// this for avoid instancing an empty listener list
+	private ListenerLists llEmpty = new ListenerLists();
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="QuadTreeTouchEvent"/> class.
 	/// </summary>
-	/// <param name='_level'>
-	/// _level: 0 means no division, 1 means first quads division, and so on in division levels
-	/// </param>
-	public QuadTreeTouchEvent (int _level) {
-		level = _level;
-		// this temporal list is created once per quad tree root instance
-		if (_level == FIRST_LEVEL)
-			tempLists = new List<ListenerLists>(4);
+	public QuadTreeTouchEvent () {
+		//root = new QuadNodeFIRST_LEVEL;
+		root.level = FIRST_LEVEL;
 	}
 	
 	/// <summary>
@@ -46,20 +39,19 @@ public class QuadTreeTouchEvent {
 	/// <param name='screenBounds'>
 	/// Screen bounds.
 	/// </param>
-	public List<ListenerLists> add (Rect screenBounds) {
-		tempLists.Clear();
-		addRecursive(screenBounds, tempLists, 0,0, Screen.width,Screen.height);
-		elemsTotal += tempLists.Count;
-		return tempLists;
+	public ListenerLists[] add (Rect screenBounds) {
+		clear(tempArr);
+		addRecursive(root, screenBounds, tempArr, 0,0, Screen.width,Screen.height);
+		return tempArr;
 	}
 	
-	private void addRecursive (Rect screenBounds, List<ListenerLists> lists, float x0, float y0, float x1, float y1) {
+	private void addRecursive (QuadNode n, Rect screenBounds, ListenerLists[] arr, float x0, float y0, float x1, float y1) {
 		
 		// reached max level?
-		if (level == DEEP_LEVEL_THRESHOLD) {
-			if (leafContent == null)
-				leafContent = new ListenerLists();
-			lists.Add(leafContent);
+		if (n.level == DEEP_LEVEL_THRESHOLD) {
+			if (!n.leafContent.initialized)
+				n.leafContent.initialize();
+			arr[tempIndex++] = n.leafContent;
 			// the caller object is responsible to allocate the listener instance in the many listeners list
 			return;
 		}
@@ -80,24 +72,24 @@ public class QuadTreeTouchEvent {
 		/// depending on which quadrant/s it falls we need to allocate space for the 
 		/// quad/s node and continue testing recursively
 		if (((test >> 0) & 1) == 1) {
-			if (topLeft == null)
-				topLeft = new QuadTreeTouchEvent(level + 1);
-			topLeft.addRecursive(screenBounds, lists, x0,y1/2f, x1/2f,y1);
+			if (n.topLeft == null)
+				n.topLeft = new QuadNodeMutable(n.level + 1);
+			addRecursive(n.topLeft.s, screenBounds, arr, x0,y1/2f, x1/2f,y1);
 		}
 		if (((test >> 1) & 1) == 1) {
-			if (topRight == null)
-				topRight = new QuadTreeTouchEvent(level + 1);
-			topRight.addRecursive(screenBounds, lists, x1/2f,y1/2f, x1,y1);
+			if (n.topRight == null)
+				n.topRight = new QuadNodeMutable(n.level + 1);
+			addRecursive(n.topRight.s, screenBounds, arr, x1/2f,y1/2f, x1,y1);
 		}
 		if (((test >> 2) & 1) == 1) {
-			if (botRight == null)
-				botRight = new QuadTreeTouchEvent(level + 1);
-			botRight.addRecursive(screenBounds, lists, x1/2f,y0, x1,y1/2f);
+			if (n.botRight == null)
+				n.botRight = new QuadNodeMutable(n.level + 1);
+			addRecursive(n.botRight.s, screenBounds, arr, x1/2f,y0, x1,y1/2f);
 		}
 		if (((test >> 3) & 1) == 1) {
-			if (botLeft == null)
-				botLeft = new QuadTreeTouchEvent(level + 1);
-			botLeft.addRecursive(screenBounds, lists, x0,y0, x1/2f,y1/2f);
+			if (n.botLeft == null)
+				n.botLeft = new QuadNodeMutable(n.level + 1);
+			addRecursive(n.botLeft.s, screenBounds, arr, x0,y0, x1/2f,y1/2f);
 		}
 	}
 	
@@ -148,75 +140,73 @@ public class QuadTreeTouchEvent {
 	}
 	
 	public ListenerLists traverse (Vector2 screenPos) {
-		return traverseRecursive(this, screenPos, 0,0, Screen.width,Screen.height);
+		return traverseRecursive(root, screenPos, 0,0, Screen.width,Screen.height);
 	}
 	
-	public List<ListenerLists> traverse (Rect bounds) {
-		tempLists.Clear();
+	public ListenerLists[] traverse (Rect bounds) {
+		clear(tempArr);
 		
 		// if is leaf then return the list of listeners
-		if (leafContent != null) {
-			tempLists.Add(leafContent);
-			return tempLists;
+		if (root.level == DEEP_LEVEL_THRESHOLD) {
+			tempArr[tempIndex++] = root.leafContent;
+			return tempArr;
 		}
 		
 		ListenerLists ll;
-		Vector2 vaux;
+		Vector2 v2aux;
 		
 		// do some check if we can save some traverse work, for example when the entire bound is in one quadrant
 		
-		vaux.x = bounds.xMin;
-		vaux.y = bounds.yMax;
-		ll = traverse(vaux);
-		if (ll != null) tempLists.Add(ll);
+		v2aux.x = bounds.xMin;
+		v2aux.y = bounds.yMax;
+		ll = traverse(v2aux);
+		if (ll.initialized) tempArr[tempIndex++] = ll;
 		
-		vaux.x = bounds.xMax;
-		vaux.y = bounds.yMax;
-		ll = traverse(vaux);
-		if (ll != null) tempLists.Add(ll);
+		v2aux.x = bounds.xMax;
+		v2aux.y = bounds.yMax;
+		ll = traverse(v2aux);
+		if (ll.initialized) tempArr[tempIndex++] = ll;
 		
-		vaux.x = bounds.xMax;
-		vaux.y = bounds.yMin;
-		ll = traverse(vaux);
-		if (ll != null) tempLists.Add(ll);
+		v2aux.x = bounds.xMax;
+		v2aux.y = bounds.yMin;
+		ll = traverse(v2aux);
+		if (ll.initialized) tempArr[tempIndex++] = ll;
 		
-		vaux.x = bounds.xMin;
-		vaux.y = bounds.yMin;
-		ll = traverse(vaux);
-		if (ll != null) tempLists.Add(ll);
+		v2aux.x = bounds.xMin;
+		v2aux.y = bounds.yMin;
+		ll = traverse(v2aux);
+		if (ll.initialized) tempArr[tempIndex++] = ll;
 		
-		return tempLists;
+		return tempArr;
 	}
 	
-	private static ListenerLists traverseRecursive (QuadTreeTouchEvent q, Vector2 p, float x0, float y0, float x1, float y1) {
+	private ListenerLists traverseRecursive (QuadNode n, Vector2 p, float x0, float y0, float x1, float y1) {
 		// if is leaf then return the list of listeners
-		if (q.leafContent != null)
-			return q.leafContent;
+		if (n.level == DEEP_LEVEL_THRESHOLD)
+			return n.leafContent;
 		
 		// search in quad tree a leaf containing the screen position
 		
 		if (p.x < x1/2f) {
 			if (p.y > y1/2f)
-				return q.topLeft==null? null : traverseRecursive(q.topLeft, p, x0,y1/2f, x1/2f,y1);
+				return n.topLeft==null? llEmpty : traverseRecursive(n.topLeft.s, p, x0,y1/2f, x1/2f,y1);
 			else
-				return q.botLeft==null? null : traverseRecursive(q.botLeft, p, x0,y0, x1/2f,y1/2f);
+				return n.botLeft==null? llEmpty : traverseRecursive(n.botLeft.s, p, x0,y0, x1/2f,y1/2f);
 		}
 		else {
 			if (p.y > y1/2f)
-				return q.topRight==null? null : traverseRecursive(q.topRight, p, x1/2f,y1/2f, x1,y1);
+				return n.topRight==null? llEmpty : traverseRecursive(n.topRight.s, p, x1/2f,y1/2f, x1,y1);
 			else
-				return q.botRight==null? null : traverseRecursive(q.botRight, p, x1/2f,y0, x1,y1/2f);
+				return n.botRight==null? llEmpty : traverseRecursive(n.botRight.s, p, x1/2f,y0, x1,y1/2f);
 		}
 	}
 	
+	public void clear (ListenerLists[] arr) {
+		arr[0]= arr[1]= arr[2]= arr[3]= llEmpty;
+		tempIndex = 0;
+	}
+	
 	public void clear () {
-		// is it a leaf?
-		if (leafContent != null)
-			leafContent.clear();
-		
-		if (topLeft != null) topLeft.clear();
-		if (topRight != null) topRight.clear();
-		if (botRight != null) botRight.clear();
-		if (botLeft != null) botLeft.clear();
+		root.clear();
 	}
 }
