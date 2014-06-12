@@ -21,20 +21,17 @@ public class QuadTreeTouchEvent {
 	private ListenerLists[] tempArr = new ListenerLists[4];
 	// this temporal list is created once per quad tree root instance
 	private int tempIndex = 0;
-	// this for avoid instancing an empty listener list
-	private ListenerLists llEmpty = new ListenerLists();
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="QuadTreeTouchEvent"/> class.
 	/// </summary>
 	public QuadTreeTouchEvent () {
-		//root = new QuadNodeFIRST_LEVEL;
-		root.level = FIRST_LEVEL;
+		root = new QuadNode(FIRST_LEVEL);
 	}
 	
 	/// <summary>
-	/// According to the Rect screenBounds returns the list of listeners that it affects.
-	/// It can be a max of four lists.
+	/// Tests the Rect screenBounds and returns the list of listeners that it affects.
+	/// There is a max of four lists.
 	/// </summary>
 	/// <param name='screenBounds'>
 	/// Screen bounds.
@@ -49,8 +46,8 @@ public class QuadTreeTouchEvent {
 		
 		// reached max level?
 		if (n.level == DEEP_LEVEL_THRESHOLD) {
-			if (!n.leafContent.initialized)
-				n.leafContent.initialize();
+			if (n.leafContent == null)
+				n.leafContent = new ListenerLists();
 			arr[tempIndex++] = n.leafContent;
 			// the caller object is responsible to allocate the listener instance in the many listeners list
 			return;
@@ -73,23 +70,23 @@ public class QuadTreeTouchEvent {
 		/// quad/s node and continue testing recursively
 		if (((test >> 0) & 1) == 1) {
 			if (n.topLeft == null)
-				n.topLeft = new QuadNodeMutable(n.level + 1);
-			addRecursive(n.topLeft.s, screenBounds, arr, x0,y1/2f, x1/2f,y1);
+				n.topLeft = new QuadNode(n.level + 1);
+			addRecursive(n.topLeft, screenBounds, arr, x0,y1/2f, x1/2f,y1);
 		}
 		if (((test >> 1) & 1) == 1) {
 			if (n.topRight == null)
-				n.topRight = new QuadNodeMutable(n.level + 1);
-			addRecursive(n.topRight.s, screenBounds, arr, x1/2f,y1/2f, x1,y1);
+				n.topRight = new QuadNode(n.level + 1);
+			addRecursive(n.topRight, screenBounds, arr, x1/2f,y1/2f, x1,y1);
 		}
 		if (((test >> 2) & 1) == 1) {
 			if (n.botRight == null)
-				n.botRight = new QuadNodeMutable(n.level + 1);
-			addRecursive(n.botRight.s, screenBounds, arr, x1/2f,y0, x1,y1/2f);
+				n.botRight = new QuadNode(n.level + 1);
+			addRecursive(n.botRight, screenBounds, arr, x1/2f,y0, x1,y1/2f);
 		}
 		if (((test >> 3) & 1) == 1) {
 			if (n.botLeft == null)
-				n.botLeft = new QuadNodeMutable(n.level + 1);
-			addRecursive(n.botLeft.s, screenBounds, arr, x0,y0, x1/2f,y1/2f);
+				n.botLeft = new QuadNode(n.level + 1);
+			addRecursive(n.botLeft, screenBounds, arr, x0,y0, x1/2f,y1/2f);
 		}
 	}
 	
@@ -160,22 +157,22 @@ public class QuadTreeTouchEvent {
 		v2aux.x = bounds.xMin;
 		v2aux.y = bounds.yMax;
 		ll = traverse(v2aux);
-		if (ll.initialized) tempArr[tempIndex++] = ll;
+		if (ll != null) tempArr[tempIndex++] = ll;
 		
 		v2aux.x = bounds.xMax;
 		v2aux.y = bounds.yMax;
 		ll = traverse(v2aux);
-		if (ll.initialized) tempArr[tempIndex++] = ll;
+		if (ll != null) tempArr[tempIndex++] = ll;
 		
 		v2aux.x = bounds.xMax;
 		v2aux.y = bounds.yMin;
 		ll = traverse(v2aux);
-		if (ll.initialized) tempArr[tempIndex++] = ll;
+		if (ll != null) tempArr[tempIndex++] = ll;
 		
 		v2aux.x = bounds.xMin;
 		v2aux.y = bounds.yMin;
 		ll = traverse(v2aux);
-		if (ll.initialized) tempArr[tempIndex++] = ll;
+		if (ll != null) tempArr[tempIndex++] = ll;
 		
 		return tempArr;
 	}
@@ -189,21 +186,21 @@ public class QuadTreeTouchEvent {
 		
 		if (p.x < x1/2f) {
 			if (p.y > y1/2f)
-				return n.topLeft==null? llEmpty : traverseRecursive(n.topLeft.s, p, x0,y1/2f, x1/2f,y1);
+				return n.topLeft==null? null : traverseRecursive(n.topLeft, p, x0,y1/2f, x1/2f,y1);
 			else
-				return n.botLeft==null? llEmpty : traverseRecursive(n.botLeft.s, p, x0,y0, x1/2f,y1/2f);
+				return n.botLeft==null? null : traverseRecursive(n.botLeft, p, x0,y0, x1/2f,y1/2f);
 		}
 		else {
 			if (p.y > y1/2f)
-				return n.topRight==null? llEmpty : traverseRecursive(n.topRight.s, p, x1/2f,y1/2f, x1,y1);
+				return n.topRight==null? null : traverseRecursive(n.topRight, p, x1/2f,y1/2f, x1,y1);
 			else
-				return n.botRight==null? llEmpty : traverseRecursive(n.botRight.s, p, x1/2f,y0, x1,y1/2f);
+				return n.botRight==null? null : traverseRecursive(n.botRight, p, x1/2f,y0, x1,y1/2f);
 		}
 	}
 	
-	public void clear (ListenerLists[] arr) {
-		arr[0]= arr[1]= arr[2]= arr[3]= llEmpty;
+	private void clear (ListenerLists[] arr) {
 		tempIndex = 0;
+		arr[0]= arr[1]= arr[2]= arr[3]= null;
 	}
 	
 	public void clear () {

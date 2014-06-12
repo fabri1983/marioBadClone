@@ -6,7 +6,8 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 	// this modified in inspector window
 	public string buttonLabel = "A";
 	public bool keepAlive = true;
-		
+	public bool isStaticRuntime = true;
+	
 	void Awake () {
 		if (keepAlive)
 			// keep this game object alive between scenes
@@ -27,6 +28,10 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 	 */
 	void OnMouseDrag () {
 		optionSelected();
+	}
+	
+	public bool isStatic () {
+		return isStaticRuntime;
 	}
 	
 	public GameObject getGameObject () {

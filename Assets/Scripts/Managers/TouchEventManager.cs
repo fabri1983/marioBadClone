@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// </summary>
 public class TouchEventManager : MonoBehaviour {
 
-	private static ListenerLists dynamicListeners; // it's a struct, no instancing needed
+	private static ListenerLists dynamicListeners = new ListenerLists(); // it's a struct, no instancing needed
 	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent();
 	
 	/// If true then you can touch overlapped game objects (in screen)
@@ -50,37 +50,37 @@ public class TouchEventManager : MonoBehaviour {
 	/// </param>
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
 
-		if (listener.getGameObject().isStatic) {
+		if (!listener.isStatic())
+			dynamicListeners.add(listener, touchPhases);
+		else {
 			/// adding the listener's screen rect into the quad tree will return a list of 
 			/// as much as 4 ListenerLists elems, since the listener can fall in more than one quadrant
 			ListenerLists[] leaves = staticQuadTree.add(listener.getScreenBoundsAA());
 			for (int i=0, c=leaves.Length; i < c; ++i) {
-				if (leaves[i].initialized)
-					leaves[i].add(listener, touchPhases);
+				// first listenerList element being not valid means next ones are also invalid
+				if (leaves[i] == null)
+					break;
+				leaves[i].add(listener, touchPhases);
 			}
-		}
-		else {
-			if (!dynamicListeners.initialized)
-				dynamicListeners.initialize();
-			dynamicListeners.add(listener, touchPhases);
 		}
 	}
 	
 	/// <summary>
 	/// Invoke from OnDestroy() method in your per level game object.
-	/// Use the hash code to identify the listener over the list of many listeners.
+	/// Uses the hash code to identify the listener over the list of many listeners.
 	/// </summary>
 	public void removeListener (ITouchListener listener) {
-		
-		GameObject go = listener.getGameObject();
-		if (go != null && !go.isStatic)
+
+		if (!listener.isStatic())
 			dynamicListeners.remove(listener);
 		else {
 			// need to remove from every list the listener appears
 			ListenerLists[] lls = staticQuadTree.traverse(listener.getScreenBoundsAA());
 			for (int i=0,c=lls.Length; i < c; ++i) {
-				if (lls[i].initialized)
-					lls[i].remove(listener);
+				// first listenerList element being not valid means next ones are also invalid
+				if (lls[i] == null)
+					break;
+				lls[i].remove(listener);
 			}
 		}
 	}
@@ -120,10 +120,10 @@ public class TouchEventManager : MonoBehaviour {
 	}
 	
 	private static bool sendEvent (Touch t, ListenerLists ll) {
-		if (!ll.initialized)
+		if (ll == null)
 			return false;
 		
-		// NOTE: traverse the lists and ask if hitten in the correct order: Began, Stationary/Move, Ended, Canceled
+		// NOTE: traverse the lists and ask if something hitten in the correct order: Began, Stationary/Move, Ended, Canceled
 		
 		List<ITouchListener> list = null;
 		

@@ -45,4 +45,10 @@ public interface ITouchListener
 	/// The Rect element is Axis Aligned, so it's like a square in screen with no rotation.
 	/// </summary>
 	Rect getScreenBoundsAA ();
+	
+	/// <summary>
+	/// Since in Runtime (no Editor mode) the gameObject.isStatic property isn't valid, use this 
+	/// method to define if listener's gameObject is static.
+	/// </summary>
+	bool isStatic ();
 }

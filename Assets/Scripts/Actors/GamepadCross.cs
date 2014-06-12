@@ -3,6 +3,8 @@ using UnityEngine;
 public class GamepadCross : MonoBehaviour, ITouchListener {
 	
 	public bool keepAlive = true;
+	public bool isStaticRuntime = true;
+	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
 	/// relative to the GUI texture with size 64x64. Scale adjustments are apply once the 
 	/// game object awakes.
@@ -56,6 +58,10 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	void OnMouseDrag () {
 		vec2.Set(Input.mousePosition.x, Input.mousePosition.y);
 		optionSelected(vec2);
+	}
+	
+	public bool isStatic () {
+		return isStaticRuntime;
 	}
 	
 	public GameObject getGameObject () {

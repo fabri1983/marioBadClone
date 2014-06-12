@@ -36,6 +36,10 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 		optionSelected();
 	}
 	
+	public bool isStatic () {
+		return true;
+	}
+	
 	public GameObject getGameObject () {
 		return gameObject;
 	}
