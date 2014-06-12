@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e243d08a90efc241a618585bf15044d, type: 1}
   m_Name: 
-  lookTarget: 1
+  lookTarget: 0
   timeFactor: 3
   offsetY: 5
   smoothLerp: 1

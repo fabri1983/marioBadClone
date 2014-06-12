@@ -8,7 +8,7 @@ public class StartLevel : MonoBehaviour {
 	public GameObject mainCam;
 	public GameObject camInFront;
 	
-	void Awake () {
+	void Start () {
 		
 		LevelManager.Instance.setMainCamera(mainCam);
 		LevelManager.Instance.setCamerainFront(camInFront);

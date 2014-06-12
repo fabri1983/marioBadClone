@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class SpawnPositionTrigger : MonoBehaviour {
 	
-	// the priority says which is the first spawn position used to locate the player
+	// the priority says which is the first spawn position used to locate the player when level is first time loaded
 	public int priority = 0;
 	
 	private SpawnPositionSpot sps;
+	
+	void Awake () {
+		sps.priority = priority;
+		sps.position = transform.position;
+	}
 	
 	public static bool beginCollisionWithPlayer (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
@@ -19,8 +24,11 @@ public class SpawnPositionTrigger : MonoBehaviour {
 	}
 	
 	public SpawnPositionSpot getSpawnPos () {
-		if (sps == null)
-			sps = new SpawnPositionSpot(priority, transform.position);
+		// LevelManager can call this method before the Awake() of this game object happens
+		if (sps.priority == LevelManager.INVALID_PRIORITY) {
+			sps.priority = priority;
+			sps.position = transform.position;
+		}
 		return sps;
 	}
 }

@@ -370,7 +370,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
   m_Name: 
-  aditionalLayers: 
+  otherLayersBelongTo: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

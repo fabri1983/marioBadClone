@@ -8,7 +8,7 @@ public class CameraFollower : MonoBehaviour {
 	public bool smoothLerp = true;
 	
 	private Transform lookAtTarget; // object which this game object will folow to and also look at to
-	private bool instantly; // if true then the camera will not use Lerp to move to location. Valid to use one time
+	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private bool stop = false;
 	private float constantTimer = 0.15f;
 	
@@ -16,7 +16,7 @@ public class CameraFollower : MonoBehaviour {
 	void Start () {
 
 		lookAtTarget = LevelManager.Instance.getPlayer().transform;
-		instantly = false;
+		instantlyOneTime = false;
 		
 		// starting position is the Mario's XY position
 		Vector3 thePos = transform.position;
@@ -47,9 +47,9 @@ public class CameraFollower : MonoBehaviour {
 		thePos.y = lookAtTarget.position.y + offsetY;
 		
 		// always follow the pivot
-		if (instantly) {
+		if (instantlyOneTime) {
 			transform.position = thePos;
-			instantly = false;
+			instantlyOneTime = false;
 		}
 		else if (smoothLerp){
 			transform.position = Vector3.Lerp(transform.position, thePos, Time.deltaTime * timeFactor);
@@ -69,8 +69,8 @@ public class CameraFollower : MonoBehaviour {
 			stopAnimation();
 	}
 	
-	public void doInstantMovement () {
-		instantly = true;
+	public void doInstantMovOneTime () {
+		instantlyOneTime = true;
 	}
 	
 	public void stopAnimation () {
