@@ -33,9 +33,13 @@ public class FadeCamera : MonoBehaviour, IFadeable {
 		
 		finishedTransition = false;
 		fadeDir = EnumFadeDirection.FADE_NONE;
-		
+	}
+	
+	void Start () {
 		if (fadeOutOnStart)
 			startFading(EnumFadeDirection.FADE_OUT);
+		else
+			stopFading();
 	}
 	
 	void OnGUI () {
@@ -49,7 +53,6 @@ public class FadeCamera : MonoBehaviour, IFadeable {
 				rectTex.height = Screen.height;
 				//rectTex = new Rect(0f, 0f, Screen.width, Screen.height);
 			}
-	
 			// do fading?
 			if (fadeDir != EnumFadeDirection.FADE_NONE) {
 				fading();
@@ -87,7 +90,7 @@ public class FadeCamera : MonoBehaviour, IFadeable {
 	}
 	
 	public void startFading (EnumFadeDirection direction) {
-		
+		this.enabled = true;
 		// keeps the fade direction for the fade transition
 		fadeDir = direction;
 		// reset status
@@ -102,6 +105,7 @@ public class FadeCamera : MonoBehaviour, IFadeable {
 	}
 	
 	public void stopFading () {
+		this.enabled = false;
 		fadeDir = EnumFadeDirection.FADE_NONE;
 		finishedTransition = true;
 	}

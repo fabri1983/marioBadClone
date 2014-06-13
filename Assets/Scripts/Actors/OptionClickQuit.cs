@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class OptionClickQuit : MonoBehaviour, ITouchListener {
 	
+	private static bool appQuit = false;
+	private static Rect rectQuit, rectBack;
+	
 	private static OptionClickQuit instance = null;
 	
 	public static OptionClickQuit Instance {
@@ -25,6 +28,9 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
+		
+		rectQuit = new Rect(Screen.width / 2 - 25 - 50, Screen.height / 2 - 25, 50, 24);
+		rectBack = new Rect(Screen.width / 2 - 25 + 50, Screen.height / 2 - 25, 50, 24);
 		
 		TouchEventManager.Instance.register(this, TouchPhase.Ended);
 	}
@@ -60,7 +66,27 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 	}
 	
 	private void optionSelected() {
-		// Quit() doesn't work in editor mode
-		Application.Quit();
+		if (appQuit)
+			return;
+		PauseGameManager.Instance.pause();
+		Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_IN);
+		appQuit = true;
+	}
+	
+	void OnGUI () {
+		if (!appQuit)
+			return;
+		
+		if(GUI.Button(rectQuit, "Quit")) {
+			Application.Quit(); // doesn't work on Editor mode
+			appQuit = false;
+			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
+			PauseGameManager.Instance.resume();
+		}
+		if(GUI.Button(rectBack, "Back")) {
+			appQuit = false;
+			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
+			PauseGameManager.Instance.resume();
+		}
 	}
 }

@@ -5,7 +5,6 @@ public class Goomba : MonoBehaviour {
 	private GoombaDieAnim goombaDie;
 	private Patrol patrol;
 	private Idle idle;
-	private float heightHalf;
 	private ChipmunkBody body;
 	private ChipmunkShape shape;
 	
@@ -17,12 +16,6 @@ public class Goomba : MonoBehaviour {
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
-#if UNITY_EDITOR		
-		if (GetComponentInChildren<AnimateTiledTexture>() == null)
-			Debug.LogWarning("Can't get height from renderer component");
-		else
-#endif
-			heightHalf = GetComponentInChildren<AnimateTiledTexture>().renderer.bounds.size.y / 2f;
 	}
 	
 	void OnDestroy () {
@@ -77,13 +70,13 @@ public class Goomba : MonoBehaviour {
 		goomba.idle.setIdle(true);
 		
 		// if collides from top then kill the goomba
-		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y + goomba.heightHalf, shape2, arbiter)) {
+		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, arbiter)) {
 			goomba.goombaDie.die();
-			goomba.Invoke("die", TIMING_DIE);
+			goomba.Invoke("die", TIMING_DIE); // a replacement for Destroy with time
 			// makes the killer jumps a little upwards
-			Jump jump = shape2.GetComponent<Jump>();
-			if (jump != null)
-				jump.forceJump(player.lightJumpVelocity * 1.8f);
+			Vector2 theVel = shape2.body.velocity;
+			theVel.y = player.lightJumpVelocity;
+			shape2.body.velocity = theVel;
 		}
 		// kills Mario
 		else {

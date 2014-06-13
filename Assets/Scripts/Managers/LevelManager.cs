@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour {
 	public static LevelManager Instance {
         get {
             if (instance == null) {
-				// creates a game object with this script component.
+				// creates a game object with this script component
 				instance = new GameObject("LevelManager").AddComponent<LevelManager>();
 				DontDestroyOnLoad(instance);
 				instance.initialize();
