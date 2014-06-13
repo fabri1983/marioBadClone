@@ -25,10 +25,10 @@ public class Teleportable : MonoBehaviour, ITeleportable {
 
 		if (onTeleportTrigger && !teleporting) {
 			
-			if (   (dirEntrance.x < 0 && Input.GetKey(KeyCode.LeftArrow)) 
-				|| (dirEntrance.x > 0 && Input.GetKey(KeyCode.RightArrow))
-				|| (dirEntrance.y < 0 && Input.GetKey(KeyCode.DownArrow))
-				|| (dirEntrance.y > 0 && Input.GetKey(KeyCode.UpArrow)) ) {
+			if (   (dirEntrance.x < 0 && Input.GetAxis("Horizontal") < -0.2f) 
+				|| (dirEntrance.x > 0 && Input.GetAxis("Horizontal") > 0.2f)
+				|| (dirEntrance.y < 0 && Input.GetAxis("Vertical") < -0.2f)
+				|| (dirEntrance.y > 0 && Input.GetAxis("Vertical") > 0.2f) ) {
 				
 				// keep this game object's current layer
 				originalLayer = gameObject.layer;

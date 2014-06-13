@@ -86,7 +86,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 			bool isIdle = true;
 			
 			// jump
-			if (Gamepad.isA() || Input.GetKey(KeyCode.Space)) {
+			if (Gamepad.isA() || Input.GetButton("Jump")) {
 				jump.jump(lightJumpVelocity);
 				// apply gain jump power. Only once per jump (handled in Jump component)
 				if (Gamepad.isHardPressed(Gamepad.BUTTONS.A))
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 			
 			// move
 			walk.enableWalking();
-			if (Gamepad.isLeft() || Input.GetKey(KeyCode.LeftArrow)) {
+			if (Gamepad.isLeft() || Input.GetAxis("Horizontal") < -0.2f) {
 				walk.walk(-walkVelocity);
 				fireDir = leftFireDir;
 				isIdle = false;
@@ -108,7 +108,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				if (signCollision > 0f)
 					restoreWalkVel();
 			}
-			else if (Gamepad.isRight() || Input.GetKey(KeyCode.RightArrow)) {
+			else if (Gamepad.isRight() || Input.GetAxis("Horizontal") > 0.2f) {
 				walk.walk(walkVelocity);
 				fireDir = rightFireDir;
 				isIdle = false;
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				walk.stopWalking();
 			
 			// crouch
-			if (Gamepad.isDown() || Input.GetKey(KeyCode.DownArrow)) {
+			if (Gamepad.isDown() || Input.GetAxis("Vertical") < -0.2f) {
 				crouch.crouch();
 				isIdle = false;
 			}

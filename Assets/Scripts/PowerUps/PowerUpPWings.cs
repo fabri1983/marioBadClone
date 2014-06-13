@@ -91,7 +91,7 @@ public class PowerUpPWings : PowerUp {
 	}
 	
 	public override bool isAllowedInput () {
-		return Input.GetKey(KeyCode.Space);
+		return Input.GetButtonDown("Jump");
 	}
 	
 	public override bool isLethal () {

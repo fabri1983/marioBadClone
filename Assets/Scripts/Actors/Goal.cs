@@ -10,10 +10,10 @@ public class Goal : MonoBehaviour {
 	void Update () {
 	
 		if (isInside &&
-			((dirEntrance.x < 0 && Input.GetKey(KeyCode.LeftArrow)) 
-			|| (dirEntrance.x > 0 && Input.GetKey(KeyCode.RightArrow))
-			|| (dirEntrance.y < 0 && Input.GetKey(KeyCode.DownArrow))
-			|| (dirEntrance.y > 0 && Input.GetKey(KeyCode.UpArrow))) ) {
+			((dirEntrance.x < 0 && Input.GetAxis("Horizontal") < -0.2f) 
+			|| (dirEntrance.x > 0 && Input.GetAxis("Horizontal") > 0.2f)
+			|| (dirEntrance.y < 0 && Input.GetAxis("Vertical") < -0.2f)
+			|| (dirEntrance.y > 0 && Input.GetAxis("Vertical") > 0.2f)) ) {
 			
 			isInside = false;
 			LevelManager.Instance.loadNextLevel();

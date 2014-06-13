@@ -71,7 +71,7 @@ public class PowerUpFireBall : PowerUp {
 	}
 	
 	public override bool isAllowedInput () {
-		return Gamepad.isB() || Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl);
+		return Gamepad.isB() || Input.GetButtonDown("Fire1");
 	}
 	
 	public override bool isLethal () {

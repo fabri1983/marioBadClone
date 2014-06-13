@@ -18,7 +18,7 @@ public class PlayerWalk : WalkAbs {
 		if (stop)
 			return;
 		
-		if (Gamepad.isB() || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+		if (Gamepad.isB() || Input.GetButton("Fire1")) {
 			gain = speedUpFactor;
 			base._walk(velocity);
 			if (walkAC.animComp != null)
