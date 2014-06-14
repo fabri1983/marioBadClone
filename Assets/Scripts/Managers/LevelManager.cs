@@ -89,11 +89,9 @@ public class LevelManager : MonoBehaviour {
 		else
 			activeLevel = level;
 		
-		// deactivate to avoid falling in empty scene
-		player.gameObject.SetActiveRecursively(false);
-		
-		// load level
-		Application.LoadLevel(activeLevel);
+		player.gameObject.SetActiveRecursively(false); // deactivate to avoid falling in empty scene
+		OptionQuit.Instance.reset(); // remove option buttons if on screen
+		Application.LoadLevel(activeLevel); // load scene
 	}
 	
 	/**
@@ -110,7 +108,7 @@ public class LevelManager : MonoBehaviour {
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
 		TouchEventManager.warm();
-		OptionClickQuit.warm();
+		OptionQuit.warm();
 	}
 	
 	public Player getPlayer () {

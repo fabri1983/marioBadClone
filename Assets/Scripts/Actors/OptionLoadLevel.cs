@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionClickLoadLevel : MonoBehaviour, ITouchListener {
+public class OptionLoadLevel : MonoBehaviour, ITouchListener {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;

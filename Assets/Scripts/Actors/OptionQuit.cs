@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class OptionClickQuit : MonoBehaviour, ITouchListener {
+public class OptionQuit : MonoBehaviour, ITouchListener {
 	
-	private static bool appQuit = false;
+	private static bool showOptions = false;
 	private static Rect rectQuit, rectBack;
 	
-	private static OptionClickQuit instance = null;
+	private static OptionQuit instance = null;
 	
-	public static OptionClickQuit Instance {
+	public static OptionQuit Instance {
         get {
             warm();
             return instance;
@@ -65,26 +65,30 @@ public class OptionClickQuit : MonoBehaviour, ITouchListener {
 		optionSelected();
 	}
 	
+	public void reset() {
+		showOptions = false;
+	}
+	
 	private void optionSelected() {
-		if (appQuit)
+		if (showOptions)
 			return;
 		PauseGameManager.Instance.pause();
 		Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_IN);
-		appQuit = true;
+		showOptions = true;
 	}
 	
 	void OnGUI () {
-		if (!appQuit)
+		if (!showOptions)
 			return;
 		
 		if(GUI.Button(rectQuit, "Quit")) {
 			Application.Quit(); // doesn't work on Editor mode
-			appQuit = false;
+			showOptions = false;
 			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
 			PauseGameManager.Instance.resume();
 		}
 		if(GUI.Button(rectBack, "Back")) {
-			appQuit = false;
+			showOptions = false;
 			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
 			PauseGameManager.Instance.resume();
 		}
