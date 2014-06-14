@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Goomba : MonoBehaviour {
 
-	private GoombaDieAnim goombaDie;
+	private GoombaDieAnim dieAnim;
 	private Patrol patrol;
 	private Idle idle;
 	private ChipmunkBody body;
@@ -11,16 +11,14 @@ public class Goomba : MonoBehaviour {
 	private const float TIMING_DIE = 0.3f;
 	
 	void Awake () {
-		goombaDie = GetComponent<GoombaDieAnim>();
+		dieAnim = GetComponent<GoombaDieAnim>();
 		patrol = GetComponent<Patrol>();
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
 	}
 	
-	void OnDestroy () {
-		// NOTE: avoid using OnDestroy() since it has a performance hit in android
-		
+	void OnDestroy () {	
 		if (body != null) {
 			body.enabled = false;
 			// registering a disable body will remove it from the list
@@ -28,10 +26,12 @@ public class Goomba : MonoBehaviour {
 		}
 	}
 	
-	private void die () {
+	/**
+	 * Self implementaiton for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 */
+	private void destroy () {
 		body.enabled = false; // makes the body to be removed from the space
 		shape.enabled = false; // makes the shape to be removed from the space
-		gameObject.active = false;
 		gameObject.SetActiveRecursively(false);
 	}
 	
@@ -42,11 +42,11 @@ public class Goomba : MonoBehaviour {
 		Goomba goomba = shape1.GetComponent<Goomba>();
 		PowerUp powerUp = shape2.GetComponent<PowerUp>();
 		
-		if (goomba.goombaDie.isDying() || !powerUp.isLethal())
+		if (goomba.dieAnim.isDying() || !powerUp.isLethal())
 			return false; // avoid the collision to continue since this frame
 		else {
 			Destroy(powerUp.gameObject);
-			goomba.goombaDie.die();
+			goomba.dieAnim.start();
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
@@ -61,7 +61,7 @@ public class Goomba : MonoBehaviour {
 		Goomba goomba = shape1.GetComponent<Goomba>();
 		Player player = shape2.GetComponent<Player>();
 		
-		if (goomba.goombaDie.isDying() || player.isDying()) {
+		if (goomba.dieAnim.isDying() || player.isDying()) {
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			return false; // avoid the collision to continue since this frame
 		}
@@ -71,8 +71,8 @@ public class Goomba : MonoBehaviour {
 		
 		// if collides from top then kill the goomba
 		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, arbiter)) {
-			goomba.goombaDie.die();
-			goomba.Invoke("die", TIMING_DIE); // a replacement for Destroy with time
+			goomba.dieAnim.start();
+			goomba.Invoke("destroy", TIMING_DIE); // a replacement for Destroy with time
 			// makes the killer jumps a little upwards
 			Vector2 theVel = shape2.body.velocity;
 			theVel.y = player.lightJumpVelocity;

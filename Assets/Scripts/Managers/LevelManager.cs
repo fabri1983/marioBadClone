@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour {
 	 */
 	public void startLevel (int level, bool playerEnabled) {
 		activeLevel = level;
-		camInFront.camera.enabled = false; // disable in front camera
+		camInFront.SetActiveRecursively(false); // disable in front camera
 		mainCam.GetComponent<CameraFollower>().doInstantMovOneTime(); // move camera instantaneously to where player spawns
 		player.gameObject.SetActiveRecursively(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
@@ -162,9 +162,9 @@ public class LevelManager : MonoBehaviour {
 			mainCam.GetComponent<CameraFollower>().stopAnimation();
 			// set camera's position the same position than main camera
 			camInFront.transform.position = mainCam.transform.position;
-			// enable the camera so it renders mario game object in front of all
-			camInFront.camera.enabled = true;
 			camInFront.transform.forward = mainCam.transform.forward;
+			// enable the camera so it renders mario game object in front of all
+			camInFront.SetActiveRecursively(true);
 			// execute Mario's die animation
 			player.die();
 			

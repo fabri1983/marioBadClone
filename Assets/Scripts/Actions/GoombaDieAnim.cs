@@ -10,7 +10,7 @@ public class GoombaDieAnim : MonoBehaviour {
 		dying = false;
 	}
 	
-	public void die () {
+	public void start () {
 		// avoid re doing the animation
 		if (dying)
 			return;
