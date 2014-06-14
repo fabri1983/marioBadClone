@@ -13,7 +13,7 @@ public class AnimateTiledTexture : MonoBehaviour
 [HideInInspector] public bool _disableUponCompletion = false;	// Enable this if you want the texture to disable the renderer when it is finished playing
 [HideInInspector] public bool _enableEvents = false;			// Enable this if you want to register an event that fires when the animation is finished playing
 [HideInInspector] public bool _playOnEnable = true;				// The animation will play when the object is enabled
-[HideInInspector] public bool _newMaterialInstance = false;		// Set this to true if you want to create a new material instance
+	public bool _newMaterialInstance = false;					// Set this to true when having more than one game object using same sprite
 [HideInInspector] public Vector2 _scale = new Vector2(1f, 1f);	// scale the texture. This must be a non-zero number. negative scale flips the image.
 [HideInInspector] public Vector2 _offset = Vector2.zero;		// You can use this if you do not want the texture centered. (These are very small numbers .001)
 [HideInInspector] public Vector2 _buffer = Vector2.zero;		// You can use this to buffer frames to hide unwanted grid lines or artifacts

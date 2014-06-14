@@ -161,7 +161,7 @@ MonoBehaviour:
   _disableUponCompletion: 0
   _enableEvents: 0
   _playOnEnable: 1
-  _newMaterialInstance: 0
+  _newMaterialInstance: 1
   _scale: {x: 1, y: 1}
   _offset: {x: 0, y: 0}
   _buffer: {x: 0, y: 0}
