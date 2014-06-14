@@ -20,7 +20,7 @@ public abstract class PowerUp : MonoBehaviour {
 	
 	void Update () {
 		// only for animate how the power up artifact shows when pops up the brick
-		if (objectToAnim)
+		if (objectToAnim != null)
 			animOnGotcha();
 		
 		// invokes implementation's specific update
@@ -92,8 +92,8 @@ public abstract class PowerUp : MonoBehaviour {
 		if (artifact != null) {
 			objectToAnim = GameObject.Instantiate(artifact) as GameObject;
 			objectToAnim.transform.position = startingPos;
-			Destroy(objectToAnim, 1f);
 			//objectToAnim.transform.parent = null;
+			Invoke("destroy", 1f);
 		}
 	}
 	
