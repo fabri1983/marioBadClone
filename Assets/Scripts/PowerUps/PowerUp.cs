@@ -8,17 +8,20 @@ public abstract class PowerUp : MonoBehaviour {
 	protected float firePow; 
 	protected float destroyTime; // destroy the game object after certain seconds since instantiated
 	protected GameObject objectToAnim; // short live gameobject to show when the power up is gained
+	protected ChipmunkBody body;
+	protected ChipmunkShape shape;
 	
 	void Start () {
+		body = GetComponent<ChipmunkBody>();
+		shape = GetComponent<ChipmunkShape>();
 		// invokes subclass own starting method
 		ownStart();
 	}
 	
 	void Update () {
 		// only for animate how the power up artifact shows when pops up the brick
-		if (objectToAnim) {
+		if (objectToAnim)
 			animOnGotcha();
-		}
 		
 		// invokes implementation's specific update
 		ownUpdate();
@@ -104,5 +107,22 @@ public abstract class PowerUp : MonoBehaviour {
 	
 	public float getPower () {
 		return firePow;
+	}
+	
+	void OnDestroy () {	
+		if (body != null) {
+			body.enabled = false;
+			// registering a disable body will remove it from the list
+			ChipmunkInterpolationManager._Register(body);
+		}
+	}
+	
+	/**
+	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 */
+	private void destroy () {
+		body.enabled = false; // makes the body to be removed from the space
+		shape.enabled = false; // makes the shape to be removed from the space
+		gameObject.SetActiveRecursively(false);
 	}
 }

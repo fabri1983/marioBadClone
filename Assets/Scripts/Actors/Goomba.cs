@@ -27,7 +27,7 @@ public class Goomba : MonoBehaviour {
 	}
 	
 	/**
-	 * Self implementaiton for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
 	 */
 	private void destroy () {
 		body.enabled = false; // makes the body to be removed from the space
@@ -45,7 +45,7 @@ public class Goomba : MonoBehaviour {
 		if (goomba.dieAnim.isDying() || !powerUp.isLethal())
 			return false; // avoid the collision to continue since this frame
 		else {
-			Destroy(powerUp.gameObject);
+			powerUp.Invoke("destroy", 0f); // a replacement for Destroy
 			goomba.dieAnim.start();
 		}
 		
