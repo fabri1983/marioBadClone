@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour {
 	public static int POWERUP_LAYER;
 	public static int ONLY_WITH_PLAYER_LAYER;
 	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
-	public const float FREE_FALL_STOP_CAM_FOLLOW = -2f; // y world position for stopping camera follower
+	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
 	
 	// aspect ratio variables

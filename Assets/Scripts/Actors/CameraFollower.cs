@@ -65,7 +65,7 @@ public class CameraFollower : MonoBehaviour {
 		        constantTimer = Mathf.Clamp(constantTimer + Time.deltaTime, 0.0f, 1.0f);
 		}
 		
-		if (lookAtTarget.position.y < LevelManager.FREE_FALL_STOP_CAM_FOLLOW)
+		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
 			stopAnimation();
 	}
 	
