@@ -19,14 +19,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 	/**
 	 * This only fired on PC
 	 */
-	void OnMouseUpAsButton () {
-		optionSelected();
-	}
-	
-	/**
-	 * This only fired on PC
-	 */
-	void OnMouseDrag () {
+	void OnMouseDown () {
 		optionSelected();
 	}
 	

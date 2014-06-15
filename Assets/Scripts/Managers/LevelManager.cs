@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour {
 	public const int INVALID_PRIORITY = -1;
 	
 	// aspect ratio variables
-	public static bool keepAspectRatio = true;
+	public static bool keepAspectRatio = false;
 	public const float ASPECT_W = 16f;
 	public const float ASPECT_H = 10.5f;
 	

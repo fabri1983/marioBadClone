@@ -60,15 +60,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	/**
 	 * This only fired on PC
 	 */
-	void OnMouseUpAsButton () {
-		vec2.Set(Input.mousePosition.x, Input.mousePosition.y);
-		optionSelected(vec2);
-	}
-	
-	/**
-	 * This only fired on PC
-	 */
-	void OnMouseDrag () {
+	void OnMouseDown () {
 		vec2.Set(Input.mousePosition.x, Input.mousePosition.y);
 		optionSelected(vec2);
 	}

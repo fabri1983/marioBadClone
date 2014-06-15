@@ -592,7 +592,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: debugZones
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_Name: 
   keepAlive: 1
   isStaticRuntime: 1
-  debugZones: 1
+  debugZones: 0
 --- !u!1001 &2128456574
 Prefab:
   m_ObjectHideFlags: 0
