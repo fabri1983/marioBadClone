@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class Ghost : MonoBehaviour {
+public class Ghost : MonoBehaviour, IPausable {
 	
 	private Fly fly;
 	private Walk move;
 	private Chase chase;
 	private bool goingRight;
+	private ChipmunkShape shape;
 	
 	// Use this for initialization
 	void Start () {
@@ -13,10 +14,35 @@ public class Ghost : MonoBehaviour {
 		fly = GetComponent<Fly>();
 		fly.setAutomaticFly(true);
 		move = GetComponent<Walk>();
-		chase = transform.GetComponent<Chase>();
-		
-		// assuming koopa starts going left
-		goingRight = false;
+		chase = GetComponent<Chase>();
+		shape = GetComponent<ChipmunkShape>();
+		PauseGameManager.Instance.register(this);
+		goingRight = false; // going left
+	}
+	
+	void OnDestroy () {
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	/**
+	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 */
+	private void destroy () {
+		shape.enabled = false; // makes the shape to be removed from the space
+		gameObject.SetActiveRecursively(false);
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	public void pause () {
+		gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return true;
 	}
 	
 	// Update is called once per frame

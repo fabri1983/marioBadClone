@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Goomba : MonoBehaviour {
+public class Goomba : MonoBehaviour, IPausable {
 
 	private GoombaDieAnim dieAnim;
 	private Patrol patrol;
@@ -16,23 +16,33 @@ public class Goomba : MonoBehaviour {
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
+		PauseGameManager.Instance.register(this);
 	}
 	
-	void OnDestroy () {	
-		if (body != null) {
-			body.enabled = false;
-			// registering a disable body will remove it from the list
-			ChipmunkInterpolationManager._Register(body);
-		}
+	void OnDestroy () {
+		PauseGameManager.Instance.remove(this);
 	}
 	
 	/**
 	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
 	 */
 	private void destroy () {
-		body.enabled = false; // makes the body to be removed from the space
 		shape.enabled = false; // makes the shape to be removed from the space
+		GameObjectTools.ChipmunkBodyDestroy(body);
 		gameObject.SetActiveRecursively(false);
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	public void pause () {
+		gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return true;
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {

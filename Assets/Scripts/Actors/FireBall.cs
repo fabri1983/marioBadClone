@@ -1,13 +1,41 @@
 using UnityEngine;
 
-public class FireBall : MonoBehaviour {
+public class FireBall : MonoBehaviour, IPausable {
 	
 	private Vector3 dir = Vector3.zero;
 	private Bounce bounce = null;
 	private float torqueGrades = 28f;
+	private ChipmunkShape shape;
 	
 	void Awake () {
 		bounce = GetComponent<Bounce>();
+		shape = GetComponent<ChipmunkShape>();
+		PauseGameManager.Instance.register(this);
+	}
+	
+	void OnDestroy () {
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	/**
+	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 */
+	private void destroy () {
+		shape.enabled = false; // makes the shape to be removed from the space
+		gameObject.SetActiveRecursively(false);
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	public void pause () {
+		gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return true;
 	}
 	
 	void Update () {

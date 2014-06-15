@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPowerUpAble {
+public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
 	public float gainJumpFactor = 1.4f;
 	
-	// Actions scripts
 	private Jump jump;
 	private PlayerWalk walk;
 	private PlayerDieAnim dieAnim;
 	private Crouch crouch;
 	private Idle idle;
 	private Teleportable teleportable;
-	
-	/// powerUp object
 	private PowerUp powerUp;
+	private bool ableToPause;
+	
 	/// the position where the bullets start firing
 	private Transform firePivot;
 	private Vector3 rightFireDir, leftFireDir, fireDir;
@@ -43,9 +42,11 @@ public class Player : MonoBehaviour, IPowerUpAble {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-
+		
+		PauseGameManager.Instance.register(this);
+		
 		// deactivate to avoid falling in empty scene
-		gameObject.SetActiveRecursively(false);
+		toogleActivate(false);
 		
 		// action components
 		jump = GetComponent<Jump>();
@@ -71,11 +72,22 @@ public class Player : MonoBehaviour, IPowerUpAble {
 	}
 	
 	void OnDestroy () {
-		if (body != null) {
-			body.enabled = false;
-			// registering a disable body will remove it from the list
-			ChipmunkInterpolationManager._Register(body);
-		}
+		GameObjectTools.ChipmunkBodyDestroy(body);
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	public void pause () {
+		if (ableToPause)
+			gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		if (ableToPause)
+			gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return false;
 	}
 	
 	// Update is called once per frame
@@ -137,7 +149,10 @@ public class Player : MonoBehaviour, IPowerUpAble {
 		}
 	}
 	
-	/*########################### CLASS/INSTANCE METHODS #######################*/
+	public void toogleActivate (bool active) {
+		gameObject.SetActiveRecursively(active);
+		ableToPause = active;
+	}
 	
 	public void die () {
 		this.enabled = false;

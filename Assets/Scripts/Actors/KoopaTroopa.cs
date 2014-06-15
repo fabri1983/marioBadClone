@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KoopaTroopa : MonoBehaviour {
+public class KoopaTroopa : MonoBehaviour, IPausable {
 	
 	public bool jumpInLoop = false;
 	
@@ -8,11 +8,14 @@ public class KoopaTroopa : MonoBehaviour {
 	private float heightHalf;
 	private Walk move;
 	private bool goingRight;
+	private ChipmunkShape shape;
 	
 	void Start () {
 		
 		koopaDie = GetComponent<KoopaTroopaDieAnim>();
-
+		shape = GetComponent<ChipmunkShape>();
+		PauseGameManager.Instance.register(this);
+		
 		// half the height of the goomba's renderer
 		heightHalf = transform.GetChild(0).renderer.bounds.size.y / 2f;
 		
@@ -29,6 +32,31 @@ public class KoopaTroopa : MonoBehaviour {
 		
 		// assuming koopa starts going right
 		goingRight = true;
+	}
+	
+	void OnDestroy () {
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	/**
+	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 */
+	private void destroy () {
+		shape.enabled = false; // makes the shape to be removed from the space
+		gameObject.SetActiveRecursively(false);
+		PauseGameManager.Instance.remove(this);
+	}
+	
+	public void pause () {
+		gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return true;
 	}
 	
 	void Update () {

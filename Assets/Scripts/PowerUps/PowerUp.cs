@@ -110,11 +110,7 @@ public abstract class PowerUp : MonoBehaviour {
 	}
 	
 	void OnDestroy () {	
-		if (body != null) {
-			body.enabled = false;
-			// registering a disable body will remove it from the list
-			ChipmunkInterpolationManager._Register(body);
-		}
+		GameObjectTools.ChipmunkBodyDestroy(body);
 	}
 	
 	/**

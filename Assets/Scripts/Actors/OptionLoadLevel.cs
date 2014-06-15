@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class OptionLoadLevel : MonoBehaviour, ITouchListener {
+public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;
 
 	void Awake () {
 		TouchEventManager.Instance.register(this, TouchPhase.Ended);
+		PauseGameManager.Instance.register(this);
 	}
 	
 	void OnDestroy () {
 		TouchEventManager.Instance.removeListener(this);
+		PauseGameManager.Instance.remove(this);
 	}
 	
 	/**
@@ -44,5 +46,17 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener {
 	
 	private void optionSelected() {
 		LevelManager.Instance.loadLevel(sceneIndex);
+	}
+	
+	public void pause () {
+		gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return true;
 	}
 }

@@ -89,7 +89,7 @@ public class LevelManager : MonoBehaviour {
 		else
 			activeLevel = level;
 		
-		player.gameObject.SetActiveRecursively(false); // deactivate to avoid falling in empty scene
+		player.toogleActivate(false); // deactivate to avoid falling in empty scene
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
 		Application.LoadLevel(activeLevel); // load scene
 	}
@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour {
 		activeLevel = level;
 		camInFront.SetActiveRecursively(false); // disable in front camera
 		mainCam.GetComponent<CameraFollower>().doInstantMovOneTime(); // move camera instantaneously to where player spawns
-		player.gameObject.SetActiveRecursively(playerEnabled); // activate the player's game object
+		player.toogleActivate(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
 		
 		// warm other needed elements in case they don't exist yet

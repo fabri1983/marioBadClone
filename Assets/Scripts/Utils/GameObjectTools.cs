@@ -91,12 +91,11 @@ static public class GameObjectTools
 			shapes[i].layers = mask;
 	}
 	
-	public static void ChipmunkBodyDestroy (GameObject go) {
-		ChipmunkBody body = go.GetComponent<ChipmunkBody>();
-		if (body != null) {
-			body.enabled = false;
+	public static void ChipmunkBodyDestroy (ChipmunkBody b) {
+		if (b != null) {
+			b.enabled = false;
 			// registering a disable body will remove it from the list
-			ChipmunkInterpolationManager._Register(body);
+			ChipmunkInterpolationManager._Register(b);
 		}
 	}
 	
@@ -181,6 +180,6 @@ static public class GameObjectTools
 		r.yMax += margin;
 		 
 		//Render the box
-		GUI.Box (r,"This is a box covering the player");
+		GUI.Box (r,"");
 	}
 }

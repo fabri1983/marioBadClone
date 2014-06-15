@@ -19,11 +19,34 @@ public class PauseGameManager : MonoBehaviour {
         }
     }
 	
+	void OnDestroy () {
+		sceneOnly.Clear();
+		durables.Clear();
+	}
+	
 	public void register(IPausable p) {
 		if (p.isSceneOnly())
 			sceneOnly.Add(p);
 		else
 			durables.Add(p);
+	}
+	
+	public void remove (IPausable p) {
+		int h = p.GetHashCode();
+		if (p.isSceneOnly()) {
+			for (int i=0, c=sceneOnly.Count; i<c; ++i)
+				if (h == sceneOnly[i].GetHashCode()) {
+					sceneOnly.RemoveAt(i);
+					break;
+				}
+		}
+		else {
+			for (int i=0, c=durables.Count; i<c; ++i)
+				if (h == durables[i].GetHashCode()) {
+					durables.RemoveAt(i);
+					break;
+				}
+		}
 	}
 	
 	public void pause() {
