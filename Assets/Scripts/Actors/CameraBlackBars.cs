@@ -4,6 +4,7 @@ using System.Collections;
 public class CameraBlackBars : MonoBehaviour {
 
 	void Awake () {
-		DontDestroyOnLoad(gameObject);
+		if (LevelManager.keepAspectRatio)
+			DontDestroyOnLoad(gameObject);
 	}
 }

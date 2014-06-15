@@ -100,7 +100,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 			
 			// move
 			walk.enableWalking();
-			if (Gamepad.isLeft() || Input.GetAxis("Horizontal") < -0.2f) {
+			if (Gamepad.isLeft() || Input.GetAxis("Horizontal") < -0.1f) {
 				walk.walk(-walkVelocity);
 				fireDir = leftFireDir;
 				isIdle = false;
@@ -108,7 +108,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				if (signCollision > 0f)
 					restoreWalkVel();
 			}
-			else if (Gamepad.isRight() || Input.GetAxis("Horizontal") > 0.2f) {
+			else if (Gamepad.isRight() || Input.GetAxis("Horizontal") > 0.1f) {
 				walk.walk(walkVelocity);
 				fireDir = rightFireDir;
 				isIdle = false;
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour, IPowerUpAble {
 				walk.stopWalking();
 			
 			// crouch
-			if (Gamepad.isDown() || Input.GetAxis("Vertical") < -0.2f) {
+			if (Gamepad.isDown() || Input.GetAxis("Vertical") < -0.1f) {
 				crouch.crouch();
 				isIdle = false;
 			}

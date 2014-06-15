@@ -20,7 +20,6 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	private static Vector2 guiPos;
 	// auxiliar variables
 	private Vector2 vec2;// = new Vector2();
-	private Rect auxRect = new Rect(0,0,0,0);
 	
 	void Awake () {
 		if (keepAlive) {
@@ -51,8 +50,8 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			// NOTE: use this with no aspect ratio modification. Set it as false in LevelManager
 			for (int i=0; i < arrowRects.Length ; ++i) {
 				Rect r = arrowRects[i];
-				auxRect.Set(r.x, Screen.height - r.y - r.height, r.width, r.height);
-				GUI.Box(auxRect,"");
+				Rect rTarget = new Rect(r.x, Screen.height - r.y - r.height, r.width, r.height);
+				GUI.Box(rTarget,"");
 			}
 		}
 	}

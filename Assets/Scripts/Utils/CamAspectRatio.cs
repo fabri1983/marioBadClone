@@ -17,11 +17,15 @@ public class CamAspectRatio : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		if (!LevelManager.keepAspectRatio)
+			return;
 		screenRect = new Rect(0, 0, Screen.width, Screen.height);
 		setAspectRatio();
 	}
 	
 	void OnGUI () {
+		if (!LevelManager.keepAspectRatio)
+			return;
 		
 		if (EventType.Repaint == Event.current.type) {
 			// if resize window, then calculate the new rectangle's size and set again the aspect ratio

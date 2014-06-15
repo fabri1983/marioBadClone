@@ -84,7 +84,8 @@ public class CustomGameView : EditorWindow {
 		}
 		
 		// close the popup window
-		popup.Close();
+		if (popup != null)
+			popup.Close();
 	}
 	
 	/**
