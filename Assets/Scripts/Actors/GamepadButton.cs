@@ -57,10 +57,8 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 	
 	private void optionSelected() {
 #if UNITY_EDITOR
-		if (Debug.isDebugBuild)
-			Debug.Log(buttonLabel);
+		Debug.Log(buttonLabel);
 #endif
-		
 		// set the pressed button on GamepadInput manager
 		if ("A".Equals(buttonLabel))
 			Gamepad.fireButton(Gamepad.BUTTONS.A);

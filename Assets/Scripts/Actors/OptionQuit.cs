@@ -81,16 +81,18 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 		if (!showOptions)
 			return;
 		
-		if(GUI.Button(rectQuit, "Quit")) {
-			Application.Quit(); // doesn't work on Editor mode
-			showOptions = false;
-			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
-			PauseGameManager.Instance.resume();
-		}
-		if(GUI.Button(rectBack, "Back")) {
-			showOptions = false;
-			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
-			PauseGameManager.Instance.resume();
+		if (EventType.Repaint == Event.current.type) {
+			if(GUI.Button(rectQuit, "Quit")) {
+				Application.Quit(); // doesn't work on Editor mode
+				showOptions = false;
+				Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
+				PauseGameManager.Instance.resume();
+			}
+			if(GUI.Button(rectBack, "Back")) {
+				showOptions = false;
+				Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
+				PauseGameManager.Instance.resume();
+			}
 		}
 	}
 }

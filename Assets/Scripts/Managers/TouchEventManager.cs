@@ -103,10 +103,8 @@ public class TouchEventManager : MonoBehaviour {
 			return;
 
 #if UNITY_EDITOR
-		if (Debug.isDebugBuild) {
-			for (int i=0; i < Input.touchCount; ++i)
-				Debug.Log(Input.touchCount + ": " + Input.touches[i].phase + " -> finger " + Input.touches[i].fingerId);
-		}
+		for (int i=0; i < Input.touchCount; ++i)
+			Debug.Log(Input.touchCount + ": " + Input.touches[i].phase + " -> finger " + Input.touches[i].fingerId);
 #endif
 		// send events to listeners
 		for (int i=0; i < Input.touchCount; ++i) {
