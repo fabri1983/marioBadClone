@@ -4,6 +4,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	
 	public bool keepAlive = true;
 	public bool isStaticRuntime = true;
+	public bool debugZones = false;
 	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
 	/// relative to the GUI texture with size 64x64. Scale adjustments are apply once the 
@@ -17,8 +18,9 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	
 	// absolute screen position of gui
 	private static Vector2 guiPos;
-	// auxiliar
-	private Vector2 vec2 = new Vector2();
+	// auxiliar variables
+	private Vector2 vec2;// = new Vector2();
+	private Rect auxRect = new Rect(0,0,0,0);
 	
 	void Awake () {
 		if (keepAlive) {
@@ -37,13 +39,24 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 		// scale according target resolution (maybe only necessary when using unity remote, I don't know how to detect when going on remote)
 		scaleW *= 1f;
 		scaleH *= 1f;
-		// sacle the array of arrows because they were defined in a 64x64 basis
+		// scale the array of arrows because they were defined in a 64x64 basis
 		for (int i=0; i < arrowRects.Length ; ++i) {
 			Rect r = arrowRects[i];
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
 		}
 	}
-	
+#if UNITY_EDITOR
+	void OnGUI () {
+		if (debugZones && EventType.Repaint == Event.current.type) {
+			// NOTE: use this with no aspect ratio modification. Set it as false in LevelManager
+			for (int i=0; i < arrowRects.Length ; ++i) {
+				Rect r = arrowRects[i];
+				auxRect.Set(r.x, Screen.height - r.y - r.height, r.width, r.height);
+				GUI.Box(auxRect,"");
+			}
+		}
+	}
+#endif	
 	/**
 	 * This only fired on PC
 	 */
@@ -84,38 +97,35 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	public void OnEndedTouch (Touch t) {}
 	
 	private static void optionSelected(Vector2 pos) {
-		/*if (Debug.isDebugBuild)
-			Debug.Log(pos + " -- " + guiPos);*/
+#if UNITY_EDITOR
+		//Debug.Log(pos + " -- " + guiPos);
+#endif
 		
 		// up?
 		if (arrowRects[0].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
-			if (Debug.isDebugBuild)
-				Debug.Log("up");
+			Debug.Log("up");
 #endif
 			Gamepad.fireButton(Gamepad.BUTTONS.UP);
 		}
 		// right?
 		if (arrowRects[1].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
-			if (Debug.isDebugBuild)
-				Debug.Log("right");
+			Debug.Log("right");
 #endif
 			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
 		}
 		// down?
 		if (arrowRects[2].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
-			if (Debug.isDebugBuild)
-				Debug.Log("down");
+			Debug.Log("down");
 #endif
 			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
 		}
 		// left?
 		if (arrowRects[3].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
-			if (Debug.isDebugBuild)
-				Debug.Log("left");
+			Debug.Log("left");
 #endif
 			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
 		}
