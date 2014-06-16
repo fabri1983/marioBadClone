@@ -30,7 +30,7 @@ public abstract class WalkAbs : MonoBehaviour {
 	public abstract void walk (float velocity);
 	
 	protected void _walk (float velocity) {
-		//NOTE: remember to set the gain property before calling this method
+		//NOTE: remember to set the gain property before calling this method from subclasses
 		
 		// set the correct sprite animation
 		if (!walking && (jump == null || !jump.IsJumping()) && (crouch == null || !crouch.isCrouching())) {

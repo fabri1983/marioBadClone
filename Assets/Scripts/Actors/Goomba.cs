@@ -80,7 +80,7 @@ public class Goomba : MonoBehaviour, IPausable {
 		goomba.idle.setIdle(true);
 		
 		// if collides from top then kill the goomba
-		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, arbiter)) {
+		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, shape2.body, arbiter)) {
 			goomba.dieAnim.start();
 			goomba.Invoke("destroy", TIMING_DIE); // a replacement for Destroy with time
 			// makes the killer jumps a little upwards

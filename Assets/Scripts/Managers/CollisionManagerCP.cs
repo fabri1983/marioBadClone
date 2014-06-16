@@ -14,7 +14,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 	
-	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Scenery_Goomba (ChipmunkArbiter arbiter){
 		return Patrol.beginCollision(arbiter);
 	}
 	
@@ -30,13 +30,13 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		return Goomba.beginCollisionWithPlayer(arbiter);
 	}
 	
-	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Scenery_Player (ChipmunkArbiter arbiter){
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
 		return Jump.beginCollisionWithScenery(arbiter);
 	}
 	
-	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter){
+	void ChipmunkSeparate_Scenery_Player (ChipmunkArbiter arbiter){
 		Player.endCollisionWithScenery(arbiter);
 		Jump.endCollision(arbiter);
 	}

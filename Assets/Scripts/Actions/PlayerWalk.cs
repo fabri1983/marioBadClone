@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/**
- * Moves a transform horizontally. So this script manages if transform is moving left or right.
- */
 public class PlayerWalk : WalkAbs {
 	
 	public float animFPSBoost = 8;

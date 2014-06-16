@@ -95,7 +95,7 @@ public class Jump : MonoBehaviour {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Jump jump = shape1.GetComponent<Jump>();
+		Jump jump = shape2.GetComponent<Jump>();
 		
 		// if is jumping and hits a wall the player can't jump again
 		if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))

@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 static public class GameObjectTools
 {
+	public static float COS_45 = Mathf.Cos(45);
+	
 	///////////////////////////////////////////////////////////
 	// Essentially a reimplementation of
 	// GameObject.GetComponentInChildren< T >()
@@ -35,12 +37,16 @@ static public class GameObjectTools
 		return tRetComponent;
 	}
 	
-	public static bool isHitFromAbove (float sourceMaxY, ChipmunkArbiter arbiter) {
+	public static bool isHitFromAbove (float sourceMaxY, ChipmunkBody target, ChipmunkArbiter arbiter) {
+		/// The collision normal is the direction of the surfaces where the two objects collided.
+		/// Keep in mind that the normal points out of the first object and into the second. 
+		/// If you switch the order of your collision types in the method name, it will flip the normal around.
+		
 		// came from above?
-		if (arbiter.GetNormal(0).y > 0.7f) {
+		if (target.velocity.normalized.y <= -COS_45) {
 			// check collision points to be all above goomba's height
 			for (int i=0, c=arbiter.contactCount; i < c; ++i) {
-				if (sourceMaxY > arbiter.GetPoint(i).y + (-1f*arbiter.GetDepth(i)))
+				if (sourceMaxY > (arbiter.GetPoint(i).y - arbiter.GetDepth(i)))
 					return false;
 			}
 			return true;
@@ -49,21 +55,25 @@ static public class GameObjectTools
 	}
 	
 	public static bool isGrounded (ChipmunkArbiter arbiter) {
+		/// The collision normal is the direction of the surfaces where the two objects collided.
+		/// Keep in mind that the normal points out of the first object and into the second. 
+		/// If you switch the order of your collision types in the method name, it will flip the normal around.
+		
 		// if normal.y is near to 1 it means it's a grounded plane
-		for (int i=0, c=arbiter.contactCount; i < c; ++i) {
-			if (Mathf.Abs(arbiter.GetNormal(i).y) <= 0.7f)
-				return false;
-		}
-		return true;
+		if (Mathf.Abs(arbiter.GetNormal(0).y) >= COS_45)
+			return true;
+		return false;
 	}
 
 	public static bool isWallHit (ChipmunkArbiter arbiter) {
+		/// The collision normal is the direction of the surfaces where the two objects collided.
+		/// Keep in mind that the normal points out of the first object and into the second. 
+		/// If you switch the order of your collision types in the method name, it will flip the normal around.
+		
 		// if normal.x is near to 1 it means it's a plane that can be considered as a wall
-		for (int i=0, c=arbiter.contactCount; i < c; ++i) {
-			if (Mathf.Abs(arbiter.GetNormal(i).x) <= 0.7f)
-				return false;
-		}
-		return true;
+		if (Mathf.Abs(arbiter.GetNormal(0).x) >= COS_45)
+			return true;
+		return false;
 	}
 	
 	/**

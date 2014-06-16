@@ -196,18 +196,23 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Player player = shape1.GetComponent<Player>();
+		Player player = shape2.GetComponent<Player>();
 		if (player.isDying())
 			return false; // stop collision with scenery since this frame
+		
+		// move the player out from intersection with scenery only in Y axis
+		Vector2 thePos = player.body.position;
+		thePos.y += -arbiter.GetDepth(0);
+		player.body.position = thePos;
 		
 		// if isn't a grounded surface then stop velocity and avoid getting inside the object
 		if (GameObjectTools.isWallHit(arbiter)) {
 			// get sign direction to know what offset apply to body
-			player.signCollision = -Mathf.Sign(player.transform.position.x - shape2.transform.position.x);
+			player.signCollision = -Mathf.Sign(player.transform.position.x - shape1.transform.position.x);
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
 			// move back to the contact point and a little more
-			Vector2 thePos = player.body.position;
+			thePos = player.body.position;
 			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
 			player.body.position = thePos;
 		}
@@ -221,7 +226,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Player player = shape1.GetComponent<Player>();
+		Player player = shape2.GetComponent<Player>();
 		if (player.isDying())
 			return; // do nothing*/
 	}

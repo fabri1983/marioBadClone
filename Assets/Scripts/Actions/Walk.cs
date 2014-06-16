@@ -1,8 +1,4 @@
-using UnityEngine;
 
-/**
- * Moves a transform horizontally. So this script manages if transform is moving left or right.
- */
 public class Walk : WalkAbs {
 	
 	public override void reset () {
