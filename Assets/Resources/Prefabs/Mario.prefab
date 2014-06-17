@@ -357,7 +357,7 @@ MonoBehaviour:
   momentCalculationMode: 1
   _customMoment: 0
   _isKinematic: 0
-  _interpolationMode: 1
+  _interpolationMode: 0
   _transform: {fileID: 0}
   _savedZ: 0
 --- !u!114 &11400032
