@@ -200,7 +200,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 		if (player.isDying())
 			return false; // stop collision with scenery since this frame
 		
-		// move the player out from intersection with scenery only in Y axis
+		// avoid ground penetration (Y axis)
 		Vector2 thePos = player.body.position;
 		thePos.y += -arbiter.GetDepth(0);
 		player.body.position = thePos;

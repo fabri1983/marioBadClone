@@ -83,9 +83,11 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 		
 		if(GUI.Button(rectQuit, "Quit")) {
 			Application.Quit(); // doesn't work on Editor mode
+#if UNITY_EDITOR
 			showOptions = false;
 			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
 			PauseGameManager.Instance.resume();
+#endif
 		}
 		if(GUI.Button(rectBack, "Back")) {
 			showOptions = false;
