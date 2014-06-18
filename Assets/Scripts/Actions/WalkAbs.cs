@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public abstract class WalkAbs : MonoBehaviour {
 	
+	private static Vector2 VEC2_RIGHT = Vector2.right;
+	private static Vector2 VEC2_LEFT = -Vector2.right;
+	
 	protected bool stop, walking, lookingRight;
 	protected float gain;
 	protected Jump jump;
@@ -66,6 +69,12 @@ public abstract class WalkAbs : MonoBehaviour {
 	
 	public bool isLookingRight () {
 		return lookingRight;
+	}
+	
+	public Vector2 getLookingDir () {
+		if (lookingRight)
+			return VEC2_RIGHT;
+		return VEC2_LEFT;
 	}
 	
 	public bool isWalking () {

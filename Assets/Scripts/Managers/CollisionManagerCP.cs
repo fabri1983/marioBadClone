@@ -22,12 +22,32 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		return Patrol.beginCollision(arbiter);
 	}
 	
+	bool ChipmunkBegin_Goomba_Ghost (ChipmunkArbiter arbiter){
+		return Patrol.beginCollision(arbiter);
+	}
+	
 	bool ChipmunkBegin_Goomba_PowerUp (ChipmunkArbiter arbiter){
 		return Goomba.beginCollisionWithPowerUp(arbiter);
 	}
 	
 	bool ChipmunkBegin_Goomba_Player (ChipmunkArbiter arbiter){
 		return Goomba.beginCollisionWithPlayer(arbiter);
+	}
+	
+	bool ChipmunkBegin_Ghost_PowerUp (ChipmunkArbiter arbiter){
+		return Ghost.beginCollisionWithPowerUp(arbiter);
+	}
+	
+	bool ChipmunkBegin_Ghost_Player (ChipmunkArbiter arbiter){
+		return Ghost.beginCollisionWithPlayer(arbiter);
+	}
+	
+	bool ChipmunkBegin_ChaseSensor_Player (ChipmunkArbiter arbiter){
+		return Chase.beginCollisionWithPlayer(arbiter);
+	}
+	
+	void ChipmunkSeparate_ChaseSensor_Player (ChipmunkArbiter arbiter){
+		Chase.endCollisionWithPlayer(arbiter);
 	}
 	
 	bool ChipmunkBegin_Scenery_Player (ChipmunkArbiter arbiter){

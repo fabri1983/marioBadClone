@@ -27,7 +27,6 @@ public class PlayerDieAnim : MonoBehaviour {
 	}
 	
 	public void startAnimation () {
-		
 		dying = true;
 		
 		// change player's current layer to CAMERA_IN_FRONT layer

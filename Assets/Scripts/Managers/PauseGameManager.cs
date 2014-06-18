@@ -19,9 +19,14 @@ public class PauseGameManager : MonoBehaviour {
         }
     }
 	
-	void OnDestroy () {
+	void OnApplicationQuit () {
 		sceneOnly.Clear();
 		durables.Clear();
+#if UNITY_EDITOR
+#else
+		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console
+		instance = null;
+#endif
 	}
 	
 	public void register(IPausable p) {

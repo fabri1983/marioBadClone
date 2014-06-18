@@ -2,65 +2,40 @@ using UnityEngine;
 
 public class Chase : MonoBehaviour {
 	
-	public bool allowChasing = false;
-	public float movePower = 6f;
+	public float speed = 5f;
 	
 	private WalkAbs walk;
-	private Patrol patrol;
-	Transform target;
-	private float lastDir;
-	private bool wasChasing, stop;
+	private Idle idle;
+	private Transform target;
+	private bool stop;
+	private ChipmunkBody body;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		walk = GetComponent<WalkAbs>();
-		patrol = GetComponent<Patrol>();
-		wasChasing = false;
-		stop = false;
+		idle = GetComponent<Idle>();
+		body = GetComponent<ChipmunkBody>();
+	}
+	
+	void Start () {
+		stopChasing();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (stop)
 			return;
-		
-		// there is a target which patrol to?
-		if (target) {
-			if (patrol != null)
-				patrol.stopPatrol();
-			// calculate vector direction
-			lastDir = Mathf.Sign(target.position.x - transform.position.x);
-			walk.walk(lastDir * movePower);
-		}
-		// restore last direction of movement for patrolling
-		else if (wasChasing) {
-			wasChasing = false;
-			if (patrol != null) {
-				patrol.setNewDir(lastDir);
-				patrol.enablePatrol();
-			}
-		}
-	}
-	
-	void OnTriggerEnter (Collider collider) {
-		if (allowChasing) {
-			if (collider.tag.Equals("Mario")) {
-				target = collider.transform;
-				wasChasing = true;
-			}
-		}
-	}
-	
-	void OnTriggerExit (Collider collider) {
-		if (allowChasing) {
-			if (collider.tag.Equals("Mario"))
-				target = null;
-		}
+
+		// calculate vector direction
+		float sign = Mathf.Sign(target.position.x - transform.position.x);
+		walk.walk(sign * speed);
 	}
 	
 	public void stopChasing () {
 		stop = true;
 		walk.stopWalking();
+		idle.setIdle(true);
+		body.velocity = Vector2.zero;
 	}
 	
 	public void enableChasing () {
@@ -68,7 +43,39 @@ public class Chase : MonoBehaviour {
 		walk.enableWalking();
 	}
 	
+	public bool isChasing () {
+		return !stop;
+	}
+	
 	public Transform getTarget () {
 		return target;
+	}
+	
+	public static bool beginCollisionWithPlayer (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		Player player = shape2.GetComponent<Player>();
+		if (player.isDying())
+			return false; // stop collision since this frame
+
+		Chase chase = shape1.GetComponent<Chase>();
+		chase.target = player.transform;
+		chase.enableChasing();
+		
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		return false;
+	}
+	
+	public static void endCollisionWithPlayer (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		Chase chase = shape1.GetComponent<Chase>();
+		chase.stopChasing();
+		chase.target = null;
 	}
 }

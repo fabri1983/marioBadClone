@@ -88,9 +88,11 @@ public class TouchEventManager : MonoBehaviour {
 	void OnApplicationQuit () {
 		dynamicListeners.clear();
 		staticQuadTree.clear();
-		
-		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
-		//instance = null;
+#if UNITY_EDITOR
+#else
+		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console
+		instance = null;
+#endif
 	}
 	
 	void Update () {

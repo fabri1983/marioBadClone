@@ -186,7 +186,7 @@ public class AnimateTiledTexture : MonoBehaviour
             StopCoroutine("updateCoroutine");
 		
         // Make sure the renderer is enabled
-        renderer.enabled = true;
+        //renderer.enabled = true;
  
         // Because of the way textures calculate the y value, we need to start at the max y value
 		//_index = _rowsTotal * _maxColsCurrentAnim;
@@ -197,8 +197,6 @@ public class AnimateTiledTexture : MonoBehaviour
         	StartCoroutine(updateCoroutine());
 		else
 			updateTiling();
-		
-		_isPlaying = true;
     }
 	
 	void Update () {
@@ -266,7 +264,7 @@ public class AnimateTiledTexture : MonoBehaviour
 		);
  
 		// Reset the y offset, if needed
-        if (offset.y == 1)
+        if (offset.y == 1f)
             offset.y = 0.0f;
  
         // If we have scaled the texture, we need to reposition the texture to the center of the object

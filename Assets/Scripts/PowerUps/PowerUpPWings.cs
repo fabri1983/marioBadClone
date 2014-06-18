@@ -47,17 +47,10 @@ public class PowerUpPWings : PowerUp {
 	}
 	
 	public override void assignToCharacter (MonoBehaviour element) {
-		Player pc = (Player) element;
-		pc.setPowerUp(this);
-		
-		// get rigidbody to disable/enable gravity
-		targetRigidbody = pc.rigidbody;
-		if (targetRigidbody)
-			targetRigidbody.useGravity = false;
-		// get Jump script to disable/enable jump action
-		targetJump = pc.GetComponent<Jump>();
-		if (targetJump)
-			targetJump.enabled = false;
+		Player p = (Player) element;
+		p.setPowerUp(this);
+		if (p.GetComponent<Fly>() == null)
+			fly = p.gameObject.AddComponent<Fly>();
 		
 		// init usage left
 		base.usageLeft = 50;
@@ -77,7 +70,7 @@ public class PowerUpPWings : PowerUp {
 
 		if (fly != null && rateOfFly <= 0f) {
 			targetJump.reset();
-			fly.fly(go.transform, flySpeed, fallSpeed);
+			fly.fly();
 			// restore rate of fly
 			rateOfFly = timeBetweenFly;
 		}

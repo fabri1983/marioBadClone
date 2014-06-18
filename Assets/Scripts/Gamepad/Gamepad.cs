@@ -67,9 +67,12 @@ public class Gamepad : MonoBehaviour {
 		}
 	}
 	
-	void OnApplicationQuit () {
+	void OnDestroy () {
+#if UNITY_EDITOR
+#else
 		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
-		//instance = null;
+		instance = null;
+#endif
 	}
 	
 	// LateUpdate is called after all Update functions have been called

@@ -74,6 +74,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	void OnDestroy () {
 		GameObjectTools.ChipmunkBodyDestroy(body);
 		PauseGameManager.Instance.remove(this);
+#if UNITY_EDITOR
+#else
+		instance = null;
+#endif
 	}
 	
 	public void pause () {
@@ -156,6 +160,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	
 	public void die () {
 		this.enabled = false;
+		Vector2 v = body.velocity;
+		v.x =0;
+		body.velocity = v;
 		dieAnim.startAnimation();
 	}
 	
@@ -170,7 +177,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 		setPowerUp(null);
 		jump.reset();
 		walk.reset();
-		body.ResetForces();
 		body.velocity = Vector2.zero;
 		walkVelocity = walkVelBackup;
 	}
@@ -197,8 +203,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		Player player = shape2.GetComponent<Player>();
-		if (player.isDying())
-			return false; // stop collision with scenery since this frame
+		/*if (player.isDying())
+			return false; // stop collision with scenery since this frame*/
 		
 		// avoid ground penetration (Y axis)
 		Vector2 thePos = player.body.position;
@@ -224,11 +230,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
 		/*ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
-		
-		Player player = shape2.GetComponent<Player>();
-		if (player.isDying())
-			return; // do nothing*/
+	    arbiter.GetShapes(out shape1, out shape2);*/
 	}
 	
 	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
@@ -237,8 +239,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		Player player = shape1.GetComponent<Player>();
-		if (!player.isDying())
-			player.restoreWalkVel();
+		player.restoreWalkVel();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.

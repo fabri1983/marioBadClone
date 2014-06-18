@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: GhostQuiteMat
+  m_Name: GhostSpriteMat
   m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
   m_SavedProperties:
     serializedVersion: 2
@@ -15,9 +15,9 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 4789f2e9c879cfe42bf1f7fd8dbda4ec, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+          m_Texture: {fileID: 2800000, guid: 06629f551f6e7a9408651e0d157a6d7b, type: 1}
+          m_Scale: {x: .5, y: 1}
+          m_Offset: {x: .5, y: 0}
     m_Floats: {}
     m_Colors:
       data:

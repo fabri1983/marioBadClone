@@ -47,6 +47,11 @@ public class LevelManager : MonoBehaviour {
     }
 	
     void OnApplicationQuit() {
+#if UNITY_EDITOR
+#else
+		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
+		instance = null;
+#endif
     }
 	
 	private void initialize() {

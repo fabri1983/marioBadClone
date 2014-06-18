@@ -52,7 +52,7 @@ public class Patrol : MonoBehaviour {
 		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
-
+		
 		// change direction of movement whenever hit something like a wall
 		if (GameObjectTools.isWallHit(arbiter)) {
 			Patrol p1 = shape1.GetComponent<Patrol>();

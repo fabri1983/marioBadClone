@@ -45,6 +45,13 @@ public class Goomba : MonoBehaviour, IPausable {
 		return true;
 	}
 	
+	private void die () {
+		patrol.stopPatrol();
+		idle.setIdle(true);
+		dieAnim.start();
+		Invoke("destroy", TIMING_DIE); // a replacement for Destroy with time
+	}
+	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
@@ -56,7 +63,7 @@ public class Goomba : MonoBehaviour, IPausable {
 			return false; // avoid the collision to continue since this frame
 		else {
 			powerUp.Invoke("destroy", 0f); // a replacement for Destroy
-			goomba.dieAnim.start();
+			goomba.die();
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
@@ -76,13 +83,11 @@ public class Goomba : MonoBehaviour, IPausable {
 			return false; // avoid the collision to continue since this frame
 		}
 		
-		goomba.patrol.stopPatrol();
 		goomba.idle.setIdle(true);
 		
 		// if collides from top then kill the goomba
 		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, shape2.body, arbiter)) {
-			goomba.dieAnim.start();
-			goomba.Invoke("destroy", TIMING_DIE); // a replacement for Destroy with time
+			goomba.die();
 			// makes the killer jumps a little upwards
 			Vector2 theVel = shape2.body.velocity;
 			theVel.y = player.lightJumpVelocity;
