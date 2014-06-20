@@ -324,7 +324,9 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: -1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 12400000, guid: b94964b228f143e438a5a4acc65d7726, type: 2}
+    - {fileID: 8100000, guid: b94964b228f143e438a5a4acc65d7726, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b94964b228f143e438a5a4acc65d7726, type: 2}
   m_RootGameObject: {fileID: 1665207013}
   m_IsPrefabParent: 0
@@ -368,7 +370,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 12400000, guid: 4c7af622c0523c34eaf58b9b137868ae, type: 2}
+    - {fileID: 8100000, guid: 4c7af622c0523c34eaf58b9b137868ae, type: 2}
+    - {fileID: 9200000, guid: 4c7af622c0523c34eaf58b9b137868ae, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4c7af622c0523c34eaf58b9b137868ae, type: 2}
   m_RootGameObject: {fileID: 707075236}
   m_IsPrefabParent: 0
@@ -438,7 +443,7 @@ MonoBehaviour:
   momentCalculationMode: 1
   _customMoment: 0
   _isKinematic: 0
-  _interpolationMode: 1
+  _interpolationMode: 0
   _transform: {fileID: 0}
   _savedZ: 0
 --- !u!114 &335493305
@@ -814,9 +819,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 707075237}
   - 20: {fileID: 707075238}
-  - 124: {fileID: 707075241}
-  - 92: {fileID: 707075240}
-  - 81: {fileID: 707075239}
   - 114: {fileID: 707075242}
   m_Layer: 0
   m_Name: CameraBlackBars
@@ -865,30 +867,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
---- !u!81 &707075239
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: 4c7af622c0523c34eaf58b9b137868ae,
-    type: 2}
-  m_PrefabInternal: {fileID: 271068952}
-  m_GameObject: {fileID: 707075236}
-  m_Enabled: 0
---- !u!92 &707075240
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9200000, guid: 4c7af622c0523c34eaf58b9b137868ae,
-    type: 2}
-  m_PrefabInternal: {fileID: 271068952}
-  m_GameObject: {fileID: 707075236}
-  m_Enabled: 0
---- !u!124 &707075241
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: 4c7af622c0523c34eaf58b9b137868ae,
-    type: 2}
-  m_PrefabInternal: {fileID: 271068952}
-  m_GameObject: {fileID: 707075236}
-  m_Enabled: 0
 --- !u!114 &707075242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,7 +1046,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 12400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
   m_RootGameObject: {fileID: 1549489661}
   m_IsPrefabParent: 0
@@ -1108,7 +1087,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1549489662}
   - 20: {fileID: 1549489663}
-  - 124: {fileID: 1549489666}
   - 92: {fileID: 1549489665}
   - 81: {fileID: 1549489664}
   - 114: {fileID: 1549489669}
@@ -1168,7 +1146,7 @@ AudioListener:
     type: 2}
   m_PrefabInternal: {fileID: 1219392665}
   m_GameObject: {fileID: 1549489661}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!92 &1549489665
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1177,14 +1155,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 1219392665}
   m_GameObject: {fileID: 1549489661}
   m_Enabled: 1
---- !u!124 &1549489666
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1219392665}
-  m_GameObject: {fileID: 1549489661}
-  m_Enabled: 0
 --- !u!114 &1549489667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1487,10 +1457,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1947964903}
   - 20: {fileID: 1947964904}
-  - 124: {fileID: 1947964907}
-  - 92: {fileID: 1947964906}
-  - 81: {fileID: 1947964905}
   - 114: {fileID: 1947964908}
+  - 92: {fileID: 1947964905}
   m_Layer: 0
   m_Name: CameraBG
   m_TagString: Untagged
@@ -1538,15 +1506,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
---- !u!81 &1947964905
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 230529339}
-  m_GameObject: {fileID: 1947964902}
-  m_Enabled: 0
---- !u!92 &1947964906
+--- !u!92 &1947964905
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 9200000, guid: b94964b228f143e438a5a4acc65d7726,
@@ -1554,14 +1514,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 230529339}
   m_GameObject: {fileID: 1947964902}
   m_Enabled: 1
---- !u!124 &1947964907
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 230529339}
-  m_GameObject: {fileID: 1947964902}
-  m_Enabled: 0
 --- !u!114 &1947964908
 MonoBehaviour:
   m_ObjectHideFlags: 0
