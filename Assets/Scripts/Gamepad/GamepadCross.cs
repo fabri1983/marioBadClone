@@ -51,7 +51,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			for (int i=0; i < arrowRects.Length ; ++i) {
 				Rect r = arrowRects[i];
 				Rect rTarget = new Rect(r.x, Screen.height - r.y - r.height, r.width, r.height);
-				GUI.Box(rTarget,"");
+				GUI.Box(rTarget, GUIContent.none);
 			}
 		}
 	}
