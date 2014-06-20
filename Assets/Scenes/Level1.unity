@@ -369,9 +369,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 125215093}
   - 20: {fileID: 125215094}
-  - 124: {fileID: 125215097}
-  - 92: {fileID: 125215096}
-  - 81: {fileID: 125215095}
   - 114: {fileID: 125215098}
   m_Layer: 0
   m_Name: CameraInFront
@@ -420,30 +417,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
---- !u!81 &125215095
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: 1ca2fc5ca0202464ca0d8ffdfdf312b5,
-    type: 2}
-  m_PrefabInternal: {fileID: 44451947}
-  m_GameObject: {fileID: 125215092}
-  m_Enabled: 0
---- !u!92 &125215096
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9200000, guid: 1ca2fc5ca0202464ca0d8ffdfdf312b5,
-    type: 2}
-  m_PrefabInternal: {fileID: 44451947}
-  m_GameObject: {fileID: 125215092}
-  m_Enabled: 0
---- !u!124 &125215097
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: 1ca2fc5ca0202464ca0d8ffdfdf312b5,
-    type: 2}
-  m_PrefabInternal: {fileID: 44451947}
-  m_GameObject: {fileID: 125215092}
-  m_Enabled: 0
 --- !u!114 &125215098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5351,10 +5324,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1491864885}
   - 20: {fileID: 1491864886}
-  - 124: {fileID: 1491864889}
-  - 92: {fileID: 1491864888}
-  - 81: {fileID: 1491864887}
   - 114: {fileID: 1491864890}
+  - 92: {fileID: 1491864888}
   m_Layer: 0
   m_Name: CameraBG
   m_TagString: Untagged
@@ -5402,14 +5373,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
---- !u!81 &1491864887
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 1404901889}
-  m_GameObject: {fileID: 1491864884}
-  m_Enabled: 0
 --- !u!92 &1491864888
 Behaviour:
   m_ObjectHideFlags: 0
@@ -5418,14 +5381,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 1404901889}
   m_GameObject: {fileID: 1491864884}
   m_Enabled: 1
---- !u!124 &1491864889
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 1404901889}
-  m_GameObject: {fileID: 1491864884}
-  m_Enabled: 0
 --- !u!114 &1491864890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7095,7 +7050,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1912612808}
   - 20: {fileID: 1912612809}
-  - 124: {fileID: 1912612812}
   - 92: {fileID: 1912612811}
   - 81: {fileID: 1912612810}
   - 114: {fileID: 1912612813}
@@ -7155,7 +7109,7 @@ AudioListener:
     type: 2}
   m_PrefabInternal: {fileID: 1107288097}
   m_GameObject: {fileID: 1912612807}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!92 &1912612811
 Behaviour:
   m_ObjectHideFlags: 0
@@ -7164,14 +7118,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 1107288097}
   m_GameObject: {fileID: 1912612807}
   m_Enabled: 1
---- !u!124 &1912612812
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1107288097}
-  m_GameObject: {fileID: 1912612807}
-  m_Enabled: 0
 --- !u!114 &1912612813
 MonoBehaviour:
   m_ObjectHideFlags: 0
