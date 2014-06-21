@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
+/*[ExecuteInEditMode]
 [RequireComponent(typeof(UIRoot))]
 public class UIScreenAdaptive : MonoBehaviour
 {
@@ -58,4 +58,4 @@ public class UIScreenAdaptive : MonoBehaviour
             this.enabled = false;
         }
     }
-}
+}*/
