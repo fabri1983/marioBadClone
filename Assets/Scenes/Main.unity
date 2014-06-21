@@ -146,7 +146,6 @@ GameObject:
   - 4: {fileID: 46351033}
   - 131: {fileID: 46351034}
   - 114: {fileID: 46351035}
-  - 114: {fileID: 46351036}
   m_Layer: 0
   m_Name: GUI_Quit
   m_TagString: Untagged
@@ -161,8 +160,8 @@ Transform:
   m_PrefabInternal: {fileID: 658401305}
   m_GameObject: {fileID: 46351032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .00625000009, y: .00625000009, z: .00625000009}
+  m_LocalPosition: {x: .930999994, y: .898999989, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!131 &46351034
@@ -196,20 +195,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bae94145a21392848b4adbea3a9645a2, type: 1}
   m_Name: 
---- !u!114 &46351036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 46351032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5ecb5660b11414fb042fb826e03b73, type: 1}
-  m_Name: 
-  scalingStyle: 2
-  manualHeight: 320
-  minimumHeight: 320
-  maximumHeight: 800
 --- !u!1 &96146348
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,11 +686,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: .930999994
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: .898999989
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -729,15 +714,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalScale.x
-      value: .00625000009
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalScale.y
-      value: .00625000009
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalScale.z
-      value: .00625000009
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 13100000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_PixelInset.width
