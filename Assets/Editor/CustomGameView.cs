@@ -11,11 +11,20 @@ using UnityEditor;
  */
 public class CustomGameView : EditorWindow {
 	
+	public enum RESOLUTIONS {
+		_480_x_320,
+		_800_x_480,
+		_854_x_480,
+		_1024_x_600,
+		_1280_x_800
+	}
+	
 	private static int menuOffset = 17; // extra height for new Game window (maybe for top bar?)
 	
 	// must be set to the ppi (dpi) reported by Screen.dpi, not the actual ppi.
 	private static int mobilePPI = 163;
-	private static Vector2 mobileRes = new Vector2(480, 320);
+	private static RESOLUTIONS resolution = RESOLUTIONS._480_x_320;
+	private static Vector2 mobileRes;
 	// physical horizontal size (inch) of the monitor you use to view the Editor. Is used for getting monitor's ppi
 	private static float monitorInchX = 15f;
 	private static WindowInfos gameWindow = null;
@@ -37,8 +46,15 @@ public class CustomGameView : EditorWindow {
 	
 	private static void setNewGameWindow () {
 		// get width and height from user
-		mobileRes.x = EditorGUILayout.IntField("X", (int)mobileRes.x);
-		mobileRes.y = EditorGUILayout.IntField("Y", (int)mobileRes.y);
+		resolution = (RESOLUTIONS)EditorGUILayout.EnumPopup("Resolution", resolution);
+		switch (resolution) {
+			case RESOLUTIONS._480_x_320: {mobileRes.x = 480; mobileRes.y = 320; break;}
+			case RESOLUTIONS._800_x_480: {mobileRes.x = 800; mobileRes.y = 480; break;}
+			case RESOLUTIONS._854_x_480: {mobileRes.x = 854; mobileRes.y = 480; break;}
+			case RESOLUTIONS._1024_x_600: {mobileRes.x = 1024; mobileRes.y = 600; break;}
+			case RESOLUTIONS._1280_x_800: {mobileRes.x = 1280; mobileRes.y = 800; break;}
+		default: break;
+		}
 		
 		// get mobile ppi
 		mobilePPI = EditorGUILayout.IntField("Mobile PPI", mobilePPI);
@@ -64,7 +80,6 @@ public class CustomGameView : EditorWindow {
 			mobileOnMonitorRes.x = (mobileInch.x * Screen.currentResolution.width) / monitorInchX;
 			float aspect = mobileRes.y / mobileRes.x;
 			mobileOnMonitorRes.y = mobileOnMonitorRes.x * aspect;
-			
 			// this factor to be applied in Editor mode only, multiply the scale of your game world by this
 			scaleFactor = mobileOnMonitorRes.x / mobileRes.x;
 		}

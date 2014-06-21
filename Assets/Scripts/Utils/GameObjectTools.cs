@@ -7,6 +7,30 @@ static public class GameObjectTools
 {
 	public static float COS_45 = Mathf.Cos(45);
 	
+	public static void adjustSize (GUITexture gt, ref float lastScreenWidth, ref float lastScreenHeight) {
+		float textureHeight = gt.pixelInset.height;
+		float textureWidth = gt.pixelInset.width;
+		float screenHeight = Screen.height;
+		float screenWidth = Screen.width;
+		
+		float screenAspectRatio = screenHeight / screenWidth;
+		float wChange = (screenWidth - lastScreenWidth) / screenWidth;
+		float hChange = (screenHeight - lastScreenHeight) / screenHeight;
+		lastScreenWidth = Screen.width;
+		lastScreenHeight = Screen.height;
+		float factor = Mathf.Min(screenAspectRatio, Mathf.Max(Mathf.Abs(wChange), Mathf.Abs(hChange)));
+		int scaledWidth = (int)(textureWidth * (1f + Mathf.Sign(wChange)*factor));
+		int scaledHeight = (int)(textureHeight * (1f + Mathf.Sign(hChange)*factor));
+		
+		Rect p = gt.pixelInset;
+		p.width = scaledWidth;
+		p.height = scaledHeight;
+		gt.pixelInset = p;
+	}
+	
+	public static void adjustPos (GUITexture gt) {
+	}
+	
 	///////////////////////////////////////////////////////////
 	// Essentially a reimplementation of
 	// GameObject.GetComponentInChildren< T >()
