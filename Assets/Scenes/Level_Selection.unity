@@ -360,10 +360,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1541125250}
   - 20: {fileID: 1541125251}
-  - 124: {fileID: 1541125254}
   - 92: {fileID: 1541125253}
-  - 81: {fileID: 1541125252}
-  - 114: {fileID: 1541125255}
   m_Layer: 0
   m_Name: CameraBG
   m_TagString: Untagged
@@ -411,14 +408,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
---- !u!81 &1541125252
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 990668215}
-  m_GameObject: {fileID: 1541125249}
-  m_Enabled: 0
 --- !u!92 &1541125253
 Behaviour:
   m_ObjectHideFlags: 0
@@ -427,25 +416,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 990668215}
   m_GameObject: {fileID: 1541125249}
   m_Enabled: 1
---- !u!124 &1541125254
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 990668215}
-  m_GameObject: {fileID: 1541125249}
-  m_Enabled: 0
---- !u!114 &1541125255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: b94964b228f143e438a5a4acc65d7726,
-    type: 2}
-  m_PrefabInternal: {fileID: 990668215}
-  m_GameObject: {fileID: 1541125249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c833c61f82389a4faeefe068b8fee20, type: 1}
-  m_Name: 
 --- !u!1001 &2021319502
 Prefab:
   m_ObjectHideFlags: 0
@@ -495,12 +465,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 2122884576}
   - 20: {fileID: 2122884577}
-  - 124: {fileID: 2122884580}
   - 92: {fileID: 2122884579}
   - 81: {fileID: 2122884578}
   - 114: {fileID: 2122884583}
   - 114: {fileID: 2122884582}
-  - 114: {fileID: 2122884581}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -555,7 +523,7 @@ AudioListener:
     type: 2}
   m_PrefabInternal: {fileID: 2021319502}
   m_GameObject: {fileID: 2122884575}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!92 &2122884579
 Behaviour:
   m_ObjectHideFlags: 0
@@ -564,25 +532,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 2021319502}
   m_GameObject: {fileID: 2122884575}
   m_Enabled: 1
---- !u!124 &2122884580
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 12400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c,
-    type: 2}
-  m_PrefabInternal: {fileID: 2021319502}
-  m_GameObject: {fileID: 2122884575}
-  m_Enabled: 0
---- !u!114 &2122884581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c,
-    type: 2}
-  m_PrefabInternal: {fileID: 2021319502}
-  m_GameObject: {fileID: 2122884575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c833c61f82389a4faeefe068b8fee20, type: 1}
-  m_Name: 
 --- !u!114 &2122884582
 MonoBehaviour:
   m_ObjectHideFlags: 0

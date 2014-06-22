@@ -6,7 +6,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable {
 	public int sceneIndex;
 
 	void Awake () {
-		TouchEventManager.Instance.register(this, TouchPhase.Ended);
+		TouchEventManager.Instance.register(this, TouchPhase.Began);
 		PauseGameManager.Instance.register(this);
 	}
 	

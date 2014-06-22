@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class OptionQuit : MonoBehaviour, ITouchListener {
 	
-	private static bool showOptions = false;
-	private static Rect rectQuit, rectBack;
-	private static float lastScreenWidth, lastScreenHeight;
+	private bool showOptions = false;
+	private Rect rectQuit, rectBack;
 	
 	private static OptionQuit instance = null;
 	
@@ -29,9 +28,6 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-		
-		lastScreenWidth = Screen.width;
-		lastScreenHeight = Screen.height;
 		
 		rectQuit = new Rect(Screen.width / 2 - 25 - 50, Screen.height / 2 - 25, 50, 24);
 		rectBack = new Rect(Screen.width / 2 - 25 + 50, Screen.height / 2 - 25, 50, 24);
@@ -82,12 +78,6 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 	}
 	
 	void OnGUI () {
-		// if screen is resized then need to change background texture size
-		if (EventType.Repaint == Event.current.type) {
-			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight)
-				GameObjectTools.adjustPos(guiTexture);
-		}
-		
 		if (!showOptions)
 			return;
 		
