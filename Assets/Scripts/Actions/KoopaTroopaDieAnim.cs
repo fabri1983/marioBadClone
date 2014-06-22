@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class KoopaTroopaDieAnim : MonoBehaviour {
 	
-	public float moveBerserkPower = 12f;
+	public float kickedSpeed = 12f;
 	
 	private Jump jump;
 	private Chase chase;
@@ -65,7 +65,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		gameObject.tag = "PowerUp";
 		// tell patrol to start moving like crazy
 		patrol.enablePatrol();
-		patrol.setMovePower(moveBerserkPower);
+		patrol.setMovePower(kickedSpeed);
 		patrol.setNewDir(dir); 
 	}
 	
