@@ -8,25 +8,26 @@ public class ScreenLayoutManager : MonoBehaviour {
 	private float lastScreenWidth, lastScreenHeight;
 	
 	private static ScreenLayoutManager instance = null;
-	
+
 	public static ScreenLayoutManager Instance {
         get {
             if (instance == null) {
 				instance = (ScreenLayoutManager)FindObjectOfType(typeof(ScreenLayoutManager));
-				if (instance == null)
+				if (instance == null) {
 					// creates a game object with this script component
 					instance = new GameObject("ScreenLayoutManager").AddComponent<ScreenLayoutManager>();
-				DontDestroyOnLoad(instance);
+					DontDestroyOnLoad(instance);
+				}
 			}
             return instance;
         }
     }
 	
-	void Awake () {		
+	void Awake () {
 		lastScreenWidth = Screen.width;
 		lastScreenHeight = Screen.height;
 	}
-	
+
 	void OnApplicationQuit() {
 		consumers.Clear();
 #if UNITY_EDITOR
@@ -109,13 +110,20 @@ public class ScreenLayoutManager : MonoBehaviour {
 		float screenHeight = Screen.height;
 		float screenWidth = Screen.width;
 		
-		// falta preguntar por aspectRatio <= 1 y else
+		// NOTE: only works when size increases
 		float screenAspectRatio = screenHeight / screenWidth;
 		float wChange = (screenWidth - lastScreenWidth) / screenWidth;
 		float hChange = (screenHeight - lastScreenHeight) / screenHeight;
-		float factor = Mathf.Min(screenAspectRatio, Mathf.Max(Mathf.Abs(wChange), Mathf.Abs(hChange)));
-		int scaledWidth = (int)(textureWidth * (1f + Mathf.Sign(wChange)*factor));
-		int scaledHeight = (int)(textureHeight * (1f + Mathf.Sign(hChange)*factor));
+		int scaledWidth, scaledHeight;
+		if (screenAspectRatio <= 1f) {
+			float factor = screenAspectRatio * Mathf.Max(Mathf.Abs(wChange), Mathf.Abs(hChange));
+			scaledWidth = (int)(textureWidth * (1f + Mathf.Sign(wChange)*factor));
+			scaledHeight = (int)(textureHeight * (1f + Mathf.Sign(hChange)*factor));
+		}
+		else {
+			scaledWidth = (int)(textureWidth / screenAspectRatio);
+			scaledHeight = (int)(textureHeight / screenAspectRatio);
+		}
 		
 		Rect p = gt.pixelInset;
 		p.width = scaledWidth;
