@@ -33,10 +33,12 @@ public class Idle : MonoBehaviour {
 		// set the correct sprite animation
 		if (idleAC == null)
 			idleAC = GetComponentInChildren<IdleAnimConfig>();
-		idleAC.animComp.setFPS(idleAC.animFPS);
-		idleAC.animComp.setRowLimits(idleAC.rowStartAnim, idleAC.rowLengthAnim);
-		idleAC.animComp.setColLimits(idleAC.maxColsAnimInRow, idleAC.colStartAnim, idleAC.colLengthAnim);
-		idleAC.animComp.setPingPongAnim(idleAC.pingPongAnim);
-		idleAC.animComp.Play();
+		if (idleAC != null) {
+			idleAC.animComp.setFPS(idleAC.animFPS);
+			idleAC.animComp.setRowLimits(idleAC.rowStartAnim, idleAC.rowLengthAnim);
+			idleAC.animComp.setColLimits(idleAC.maxColsAnimInRow, idleAC.colStartAnim, idleAC.colLengthAnim);
+			idleAC.animComp.setPingPongAnim(idleAC.pingPongAnim);
+			idleAC.animComp.Play();
+		}
 	}
 }

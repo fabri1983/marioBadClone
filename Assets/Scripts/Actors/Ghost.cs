@@ -10,6 +10,7 @@ public class Ghost : MonoBehaviour, IPausable {
 	private ChipmunkBody body;
 	private ChipmunkShape shape;
 	private float velScape;
+	private float stillPosY;
 	
 	// Use this for initialization
 	void Awake () {
@@ -20,6 +21,7 @@ public class Ghost : MonoBehaviour, IPausable {
 		
 		PauseGameManager.Instance.register(this);
 		velScape = Mathf.Sqrt(body.mass * -Chipmunk.gravity.y);
+		stillPosY = body.position.y;
 	}
 	
 	void Start () {
@@ -59,31 +61,39 @@ public class Ghost : MonoBehaviour, IPausable {
 		destroy();
 	}
 	
+	private void stop () {
+		chase.stopChasing();
+		fly.stopFlying();
+	}
+	
 	void FixedUpdate () {
 		// avoid falling down when idle
 		if (chase.getTarget() == null || isTargetFacingMe())
-			cancelGravityForce();
+			still();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 		// disable chasing if target is facing the ghost
-		if (chase.getTarget() == null || isTargetFacingMe()) {
-			fly.stopFlying();
-			chase.stopChasing();
-		}
+		if (chase.getTarget() == null || isTargetFacingMe())
+			stop();
 		else {
 			chase.enableChasing();
 			fly.fly();
+			stillPosY = body.position.y;
 		}
 	}
 	
-	private void cancelGravityForce () {
-
+	private void still () {
+		// cancel gravity force
 		Vector2 v = body.velocity;
 		v.y = velScape * Time.fixedDeltaTime;
 		body.velocity = v;
+		// set back last position
+		Vector2 p = body.position;
+		p.y = stillPosY;
+		body.position = p;
 	}
 	
 	public bool isTargetFacingMe () {
@@ -114,8 +124,7 @@ public class Ghost : MonoBehaviour, IPausable {
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		Ghost ghost = shape1.GetComponent<Ghost>();
-		ghost.chase.stopChasing();
-		ghost.fly.stopFlying();
+		ghost.stop();
 		
 		// kills Mario
 		arbiter.Ignore(); // avoid the collision to continue since this frame

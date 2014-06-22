@@ -8,11 +8,11 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400000}
+  - 114: {fileID: 11400004}
   m_Layer: 8
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
@@ -100,16 +100,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11b1edc4db3e46a49bfdc1d8398b87f5, type: 1}
+  m_Script: {fileID: 11500000, guid: 3fd3a79d80fb41f468f0c7c6fc695aed, type: 1}
   m_Name: 
-  animComp: {fileID: 0}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 2
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 1
+  _useCoroutine: 0
+  _framesPerSecond: 10
+  _pingPongAnim: 0
+  _rowsTotalInSprite: 1
+  _maxColsInRows: 2
+  _playOnce: 0
+  _disableUponCompletion: 0
+  _enableEvents: 0
+  _playOnEnable: 1
+  _newMaterialInstance: 1
+  _scale: {x: 1, y: 1}
+  _offset: {x: 0, y: 0}
+  _buffer: {x: 0, y: 0}
+  _rowLimits: 0000000001000000
+  _colLimits: 0000000002000000
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,23 +143,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd3a79d80fb41f468f0c7c6fc695aed, type: 1}
+  m_Script: {fileID: 11500000, guid: 11b1edc4db3e46a49bfdc1d8398b87f5, type: 1}
   m_Name: 
-  _useCoroutine: 0
-  _framesPerSecond: 1
-  _pingPongAnim: 0
-  _rowsTotalInSprite: 1
-  _maxColsInRows: 1
-  _playOnce: 0
-  _disableUponCompletion: 0
-  _enableEvents: 0
-  _playOnEnable: 1
-  _newMaterialInstance: 1
-  _scale: {x: 1, y: 1}
-  _offset: {x: 0, y: 0}
-  _buffer: {x: 0, y: 0}
-  _rowLimits: 0000000001000000
-  _colLimits: 0000000001000000
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 1
+  maxColsAnimInRow: 2
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 1
+  colLengthAnim: 1
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

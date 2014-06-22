@@ -17,7 +17,7 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 06629f551f6e7a9408651e0d157a6d7b, type: 1}
           m_Scale: {x: .5, y: 1}
-          m_Offset: {x: .5, y: 0}
+          m_Offset: {x: 0, y: 0}
     m_Floats: {}
     m_Colors:
       data:
