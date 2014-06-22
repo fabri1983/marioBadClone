@@ -11,6 +11,8 @@ GameObject:
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400014}
+  - 114: {fileID: 11400020}
+  - 114: {fileID: 11400018}
   m_Layer: 0
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
@@ -60,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.22660065, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 2.79999995, y: 3, z: 1}
   m_Children:
   - {fileID: 400000}
   m_Father: {fileID: 0}
@@ -214,6 +216,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
   m_Name: 
   otherLayersBelongTo: 
+--- !u!114 &11400018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5070e576b4ad35b459c9ee55e7190ff6, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 1
+  pingPongAnim: 0
+  maxColsAnimInRow: 3
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 2
+  colLengthAnim: 1
+--- !u!114 &11400020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b1edc4db3e46a49bfdc1d8398b87f5, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  animFPS: 7
+  pingPongAnim: 1
+  maxColsAnimInRow: 3
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 0
+  colLengthAnim: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
