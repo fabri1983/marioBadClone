@@ -4,6 +4,7 @@ using System.Collections;
 [ExecuteInEditMode]
 public class ScreenLayout : MonoBehaviour {
 	
+	public bool allowResize = false;
 	public Vector2 offset = Vector2.zero;
 	public EnumScreenLayout layout = EnumScreenLayout.BOTTOM_LEFT;
 	
@@ -17,6 +18,10 @@ public class ScreenLayout : MonoBehaviour {
 	}
 	
 	public void updateSizeAndPosition() {
+		// first resize
+		if (allowResize)
+			ScreenLayoutManager.adjustSize(guiTexture);
+		// then apply position correction
 		ScreenLayoutManager.adjustPos(guiTexture, offset, layout);
 	}
 
