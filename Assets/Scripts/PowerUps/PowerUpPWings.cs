@@ -17,7 +17,6 @@ public class PowerUpPWings : PowerUp {
 	private Jump targetJump;
 	
 	protected override void ownStart () {
-		
 		base.usageLeft = 0;
 		base.destroyTime = lifeTimeSecs;
 		base.firePow = 0f;

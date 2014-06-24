@@ -24,7 +24,7 @@ public class Goomba : MonoBehaviour, IPausable {
 	}
 	
 	/**
-	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */
 	private void destroy () {
 		shape.enabled = false; // makes the shape to be removed from the space
@@ -88,12 +88,12 @@ public class Goomba : MonoBehaviour, IPausable {
 		// if collides from top then kill the goomba
 		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, shape2.body, arbiter)) {
 			goomba.die();
-			// makes the killer jumps a little upwards
+			// makes the player jumps a little upwards
 			Vector2 theVel = shape2.body.velocity;
 			theVel.y = player.lightJumpVelocity;
 			shape2.body.velocity = theVel;
 		}
-		// kills Mario
+		// kills Player
 		else {
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			LevelManager.Instance.loseGame(true); // force die animation

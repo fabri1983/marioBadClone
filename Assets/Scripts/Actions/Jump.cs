@@ -6,11 +6,10 @@ using UnityEngine;
 /// </summary>
 public class Jump : MonoBehaviour {
 	
-	private bool isJumping = false;
 	private bool foreverJump = false;
+	private bool isJumping = false;
 	private float foreverJumpVel = 0f;
 	private bool gainApplied = false; // whether a jump gain was or wasn't applied in current jump loop
-	
 	private Crouch crouch;
 	private Idle idle; // when stop jumping we need to set the player to idle behavior
 	private AnimateTiledConfig jumpAC;
@@ -97,9 +96,9 @@ public class Jump : MonoBehaviour {
 		
 		Jump jump = shape2.GetComponent<Jump>();
 		
-		// if is jumping and hits a wall the player can't jump again
-		if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
-			return true;
+		// if is jumping and hits a wall then proceed with collision
+		/*if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
+			return true;*/
 		
 		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump) {

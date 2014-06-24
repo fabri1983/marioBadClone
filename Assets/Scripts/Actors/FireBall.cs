@@ -18,7 +18,7 @@ public class FireBall : MonoBehaviour, IPausable {
 	}
 	
 	/**
-	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */
 	private void destroy () {
 		shape.enabled = false; // makes the shape to be removed from the space

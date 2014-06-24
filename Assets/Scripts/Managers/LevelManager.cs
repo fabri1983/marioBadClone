@@ -39,20 +39,20 @@ public class LevelManager : MonoBehaviour {
             if (instance == null) {
 				// creates a game object with this script component
 				instance = new GameObject("LevelManager").AddComponent<LevelManager>();
-				DontDestroyOnLoad(instance);
-				instance.initialize();
 			}
             return instance;
         }
     }
 	
-    void OnApplicationQuit() {
-#if UNITY_EDITOR
-#else
-		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
-		instance = null;
-#endif
-    }
+	void Awake () {
+		if (instance != null && instance != this)
+			Destroy(this.gameObject);
+		else {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		initialize();
+	}
 	
 	private void initialize() {
 		
@@ -71,6 +71,14 @@ public class LevelManager : MonoBehaviour {
 		
 		// NOTE: here is the place where able to load a stored saved game: get latest level and spawn position, stats, powerups, etc
 	}
+	
+	void OnApplicationQuit() {
+#if UNITY_EDITOR
+#else
+		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
+		instance = null;
+#endif
+    }
 	
     public int getLevel() {
         return activeLevel;

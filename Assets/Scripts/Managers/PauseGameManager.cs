@@ -13,11 +13,19 @@ public class PauseGameManager : MonoBehaviour {
             if (instance == null) {
 				// creates a game object with this script component.
 				instance = new GameObject("PauseGameManager").AddComponent<PauseGameManager>();
-				DontDestroyOnLoad(instance);
 			}
             return instance;
         }
     }
+	
+	void Awake () {
+		if (instance != null && instance != this)
+			Destroy(this.gameObject);
+		else {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+	}
 	
 	void OnApplicationQuit () {
 		sceneOnly.Clear();

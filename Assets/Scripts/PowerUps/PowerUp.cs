@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class PowerUp : MonoBehaviour {
+public abstract class PowerUp : MonoBehaviour, IPausable {
 	
 	public GameObject artifact; // Game Object that will be used as bullet/gunfire
 	
@@ -25,6 +25,18 @@ public abstract class PowerUp : MonoBehaviour {
 		
 		// invokes implementation's specific update
 		ownUpdate();
+	}
+	
+	public void pause () {
+		gameObject.SetActiveRecursively(false);
+	}
+	
+	public void resume () {
+		gameObject.SetActiveRecursively(true);
+	}
+	
+	public bool isSceneOnly () {
+		return true;
 	}
 	
 	/**
@@ -114,7 +126,7 @@ public abstract class PowerUp : MonoBehaviour {
 	}
 	
 	/**
-	 * Self implementation for destroy since using GamObject.Destroy() when running game since it has a performance hit in android.
+	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */
 	private void destroy () {
 		body.enabled = false; // makes the body to be removed from the space

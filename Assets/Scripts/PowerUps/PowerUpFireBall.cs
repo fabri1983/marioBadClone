@@ -11,7 +11,6 @@ public class PowerUpFireBall : PowerUp {
 	private float timingFire; // rate of fire
 	
 	protected override void ownStart () {
-		
 		base.usageLeft = 15;
 		base.destroyTime = 5f;
 		base.firePow = 20f;

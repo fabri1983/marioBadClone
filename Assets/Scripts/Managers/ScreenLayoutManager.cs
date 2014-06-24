@@ -12,11 +12,10 @@ public class ScreenLayoutManager : MonoBehaviour {
 	public static ScreenLayoutManager Instance {
         get {
             if (instance == null) {
-				instance = (ScreenLayoutManager)FindObjectOfType(typeof(ScreenLayoutManager));
+				instance = FindObjectOfType(typeof(ScreenLayoutManager)) as ScreenLayoutManager;
 				if (instance == null) {
 					// creates a game object with this script component
 					instance = new GameObject("ScreenLayoutManager").AddComponent<ScreenLayoutManager>();
-					DontDestroyOnLoad(instance);
 				}
 			}
             return instance;
@@ -24,6 +23,17 @@ public class ScreenLayoutManager : MonoBehaviour {
     }
 	
 	void Awake () {
+		if (instance != null && instance != this)
+#if UNITY_EDITOR
+			DestroyImmediate(this.gameObject);
+#else
+			Destroy(this.gameObject);
+#endif
+		else {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		
 		lastScreenWidth = Screen.width;
 		lastScreenHeight = Screen.height;
 	}

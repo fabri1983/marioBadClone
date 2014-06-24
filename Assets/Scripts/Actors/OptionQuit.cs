@@ -23,8 +23,9 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 	}
 	
 	void Awake () {
-		// in case the game object wasn't instantiated yet from another script
-		if (instance == null) {
+		if (instance != null && instance != this)
+			Destroy(this.gameObject);
+		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}

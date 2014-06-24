@@ -14,6 +14,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 	
+	//##################### Goomba #################
 	bool ChipmunkBegin_Scenery_Goomba (ChipmunkArbiter arbiter){
 		return Patrol.beginCollision(arbiter);
 	}
@@ -26,6 +27,10 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		return Patrol.beginCollision(arbiter);
 	}
 	
+	bool ChipmunkBegin_Goomba_KoopaTroopa (ChipmunkArbiter arbiter){
+		return Patrol.beginCollision(arbiter);
+	}
+	
 	bool ChipmunkBegin_Goomba_PowerUp (ChipmunkArbiter arbiter){
 		return Goomba.beginCollisionWithPowerUp(arbiter);
 	}
@@ -34,6 +39,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		return Goomba.beginCollisionWithPlayer(arbiter);
 	}
 	
+	//##################### Ghost #################
 	bool ChipmunkBegin_Ghost_PowerUp (ChipmunkArbiter arbiter){
 		return Ghost.beginCollisionWithPowerUp(arbiter);
 	}
@@ -42,6 +48,26 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		return Ghost.beginCollisionWithPlayer(arbiter);
 	}
 	
+	//##################### KoopaTroopa #################
+	bool ChipmunkBegin_Scenery_KoopaTroopa (ChipmunkArbiter arbiter){
+		if (!Patrol.beginCollision(arbiter))
+			return false;
+		return Jump.beginCollisionWithScenery(arbiter);
+	}
+	
+	bool ChipmunkBegin_KoopaTroopa_KoopaTroopa (ChipmunkArbiter arbiter){
+		return Patrol.beginCollision(arbiter);
+	}
+	
+	bool ChipmunkBegin_KoopaTroopa_PowerUp (ChipmunkArbiter arbiter){
+		return KoopaTroopa.beginCollisionWithPowerUp(arbiter);
+	}
+	
+	bool ChipmunkBegin_KoopaTroopa_Player (ChipmunkArbiter arbiter){
+		return KoopaTroopa.beginCollisionWithPlayer(arbiter);
+	}
+	
+	//##################### ChaseSensor #################
 	bool ChipmunkBegin_ChaseSensor_Player (ChipmunkArbiter arbiter){
 		return Chase.beginCollisionWithPlayer(arbiter);
 	}
@@ -50,6 +76,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		Chase.endCollisionWithPlayer(arbiter);
 	}
 	
+	//##################### Player #################
 	bool ChipmunkBegin_Scenery_Player (ChipmunkArbiter arbiter){
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;

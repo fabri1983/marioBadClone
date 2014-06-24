@@ -12,7 +12,7 @@ public class Patrol : MonoBehaviour {
 	void Awake () {
 		dir = 1f; // initial normalized direction 
 		walk = GetComponent<WalkAbs>();
-		stop = false;
+		stop = false; // patrolling is enabled
 	}
 	
 	// Update is called once per frame
@@ -34,7 +34,7 @@ public class Patrol : MonoBehaviour {
 		dir *= -1f;
 	}
 	
-	public void setMovePower (float val) {
+	public void setMoveSpeed (float val) {
 		speed = val;
 	}
 	

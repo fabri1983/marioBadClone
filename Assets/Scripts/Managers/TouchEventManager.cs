@@ -33,7 +33,15 @@ public class TouchEventManager : MonoBehaviour {
 		if (instance == null) {
 			// creates a game object with this script component
 			instance = new GameObject("TouchEventManager").AddComponent<TouchEventManager>();
-			DontDestroyOnLoad(instance);
+		}
+	}
+	
+	void Awake () {
+		if (instance != null && instance != this)
+			Destroy(this.gameObject);
+		else {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
 		}
 		// force to activate multi touch support
 		Input.multiTouchEnabled = true;

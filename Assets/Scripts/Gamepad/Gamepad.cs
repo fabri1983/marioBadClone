@@ -25,25 +25,26 @@ public class Gamepad : MonoBehaviour {
         }
     }
 	
-	private void initialize () {
-		resetButtonState();
-	}
-	
-	void Awake () {
-		// in case the game object wasn't instantiated yet from another script
-		if (instance == null) {
-			instance = this;
-			DontDestroyOnLoad(instance);
-			instance.initialize();
-		}
-	}
-	
 	public static void warm () {
 		if (instance == null) {
 			// instantiate the entire prefab because it has herarchy. 
 			// Don't assign to the instance variable because it is then assigned in Awake()
 			GameObject.Instantiate(Resources.Load("Prefabs/Gamepad"));
 		}
+	}
+	
+	void Awake () {
+		if (instance != null && instance != this)
+			Destroy(this.gameObject);
+		else {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		initialize();
+	}
+	
+	private void initialize () {
+		resetButtonState();
 	}
 	
 	/// <summary>
