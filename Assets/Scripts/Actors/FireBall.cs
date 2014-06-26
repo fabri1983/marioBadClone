@@ -2,19 +2,31 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour, IPausable {
 	
-	private Vector3 dir = Vector3.zero;
-	private Bounce bounce = null;
-	private float torqueGrades = 28f;
+	private Vector2 dir = Vector2.zero;
+	private float rotAnimGrades = 28f;
+	private Patrol patrol;
+	private Jump jump;
 	private ChipmunkShape shape;
+	private ChipmunkBody body;
 	
 	void Awake () {
-		bounce = GetComponent<Bounce>();
+		jump = GetComponent<Jump>();
+		patrol = GetComponent<Patrol>();
 		shape = GetComponent<ChipmunkShape>();
+		body = GetComponent<ChipmunkBody>();
 		PauseGameManager.Instance.register(this);
+	}
+	
+	void Update () {
+		applyRotation();
 	}
 	
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this);
+	}
+
+	private void applyRotation () {
+        // usar body y dir aca
 	}
 	
 	/**
@@ -22,6 +34,7 @@ public class FireBall : MonoBehaviour, IPausable {
 	 */
 	private void destroy () {
 		shape.enabled = false; // makes the shape to be removed from the space
+		GameObjectTools.ChipmunkBodyDestroy(body);
 		gameObject.SetActiveRecursively(false);
 		PauseGameManager.Instance.remove(this);
 	}
@@ -38,60 +51,31 @@ public class FireBall : MonoBehaviour, IPausable {
 		return true;
 	}
 	
-	void Update () {
-		
-		// move the game object in a rectiline direction until first hit occurs
-		if (!bounce.firstCollision)
-			transform.Translate(dir.x * Time.deltaTime, dir.y * Time.deltaTime,	0f, Space.World);
-		// after first bounce occurred continue translating only in X axis
-		else
-			transform.Translate(dir.x * Time.deltaTime, 0f,	0f, Space.World);
-	}
-	
-	void OnCollisionEnter (Collision collision) {
-
-		// if it hits Mario then kill it
-		if (collision.transform.tag.Equals("Mario")) {
-			LevelManager.Instance.loseGame(true);
-			Destroy(gameObject);
-		}
-		// only change X axis direction if the fireball can bounce
-		else if (bounce.canBounce){
-			// if normal.x is near to 1 it means it is a hit against something perpendicular to floor (a wall)
-			float absX = Mathf.Abs(collision.contacts[0].normal.x);
-			if (absX > 0.8f) {
-				dir.x *= -1f;
-				applyTorque();
-			}
-			bounce.collision(collision);
-		}
-	}
-	
-	private void applyTorque () {
-		if (dir.x < 0)
-			rigidbody.AddTorque(0f, 0f, torqueGrades);
-		if (dir.x > 0)
-			rigidbody.AddTorque(0f, 0f, -torqueGrades);
-	}
-	
-	public void setDir (Vector3 pDir) {
+	public void setDir (Vector2 pDir) {
 		dir = pDir;
-		applyTorque();
+		patrol.setNewDir(pDir.x);
 	}
 	
-	public void setDoBouncing (bool val) {
-		bounce.canBounce = val;
+	public void setSpeed (float speed) {
+		patrol.setMoveSpeed(speed);
+	}
+	
+	public void setBouncing (bool val) {
+		if (val) {
+			jump.setForeverJump(true);
+			jump.setForeverJumpSpeed(20f);
+		}			
+		else
+			jump.setForeverJump(false);
 	}
 	
 	public void setDestroyTime(float time) {
-		if (time > 0f)
-			Destroy(gameObject, time);
+		if (time >= 0f)
+			Invoke("destroy", time);
 	}
 	
-	public void setHitForEnemy (bool val) {
-		if (val)
-			gameObject.layer = LevelManager.POWERUP_LAYER;
-		else
-			gameObject.layer = LevelManager.ONLY_WITH_PLAYER_LAYER;
+	public void addTargetLayer (int val) {
+		// ACA HACER ACTUALIZAR LOS LAYERS DEL SHAPE y tmb del gameobject
+		// convertir a uint
 	}
 }

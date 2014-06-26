@@ -32,7 +32,7 @@ public class PlayerDieAnim : MonoBehaviour {
 		// change player's current layer to CAMERA_IN_FRONT layer
 		playerLayer = gameObject.layer;
 		layersCP = gameObject.GetComponent<ChipmunkShape>().layers;
-		GameObjectTools.setLayer(gameObject, LevelManager.CAMERA_IN_FRONT);
+		GameObjectTools.setLayer(gameObject, LevelManager.LAYER_CAMERA_IN_FRONT);
 		GameObjectTools.setLayerForShapes(gameObject, 0);
 
 		// execute die animation

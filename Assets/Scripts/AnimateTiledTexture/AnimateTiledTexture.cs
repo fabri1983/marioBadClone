@@ -22,17 +22,18 @@ public class AnimateTiledTexture : MonoBehaviour
 [HideInInspector] public int[] _rowLimits = new int[]{0,1};		// start row and number of rows for current animation (0-based)
 [HideInInspector] public int[] _colLimits = new int[]{0,1};		// start column and number of sprite frames for current animation (0-based)
 
-    private int _index = 0;                         // Keeps track of the current frame
+    private int _index = 0;							// Keeps track of the current frame
 	private int _direction = 1;						// 1: forward direction. -1: backwards
 	private int _maxIndex;							// Max index for current animation
-    private Vector2 _textureSize = Vector2.zero;    // Keeps track of the texture scale 
-    private Material _materialInstance = null;      // Material instance of the material we create
-    private bool _hasMaterialInstance = false;      // A flag so we know if we have a material instance we need to clean up (better than a null check i think)
-    private bool _isPlaying = false;                // A flag to determine if the animation is currently playing
+    private Vector2 _textureTiling = Vector2.zero;	// Keeps track of the texture scale 
+    private Material _materialInstance = null;		// Material instance of the material we create
+    private bool _hasMaterialInstance = false;		// A flag so we know if we have a material instance we need to clean up (better than a null check i think)
+    private bool _isPlaying = false;				// A flag to determine if the animation is currently playing
 	private float updateTime;						// Use for none coroutine function. Keeps track of time passed during game loops
 	private float period;							// The inverse of frames per second. Calculated every time the fps is changed
 	private float offsetYStart;						// what is the offset in Y the current animation starts from
-	private List<VoidEvent> _voidEventCallbackList; // A list of functions we need to call if events are enabled
+	private Vector2 offsetTemp = Vector2.zero;
+	private List<VoidEvent> _voidEventCallbackList;	// A list of functions we need to call if events are enabled
 	public delegate void VoidEvent();				// The Event delegate
 	
 	
@@ -58,17 +59,15 @@ public class AnimateTiledTexture : MonoBehaviour
  
 	private void OnEnable()
     {
-		CalcTextureSize();
+		CalcTextureTiling();
 
         if (_playOnEnable)
             Play();
     }
 	
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         // If we wanted new material instances, we need to destroy the material
-        if (_hasMaterialInstance)
-        {
+        if (_hasMaterialInstance) {
             Object.Destroy(renderer.sharedMaterial);
             _hasMaterialInstance = false;
         }
@@ -77,26 +76,23 @@ public class AnimateTiledTexture : MonoBehaviour
 	public void setRowLimits(int start, int numRows) {
 		_rowLimits[0] = start;
 		_rowLimits[1] = numRows;
-		
 		offsetYStart = 1f - 1f / (_rowsTotalInSprite - start);
 	}
 	
 	public void setColLimits(int maxColsInRow, int start, int length) {
-		bool recalc  = false;
+		bool recalc = false;
 		if (_maxColsInRows != maxColsInRow)
 			recalc = true;
 		
 		_maxColsInRows = maxColsInRow;
 		_colLimits[0] = start;
 		_colLimits[1] = length;
-		
 		_maxIndex = start + length - 1;
-		
 		_index = start;
 		
 		// We need to recalc the texture size since different columns length affects the UV map
 		if (recalc)
-			CalcTextureSize();
+			CalcTextureTiling();
 	}
  
 	public void setFPS (float fps) {
@@ -110,8 +106,7 @@ public class AnimateTiledTexture : MonoBehaviour
 	}
 	
     // Use this function to register your callback function with this script
-    public void RegisterCallback(VoidEvent cbFunction)
-    {
+    public void RegisterCallback(VoidEvent cbFunction) {
         // If events are enabled, add the callback function to the event list
         if (_enableEvents)
             _voidEventCallbackList.Add(cbFunction);
@@ -139,8 +134,7 @@ public class AnimateTiledTexture : MonoBehaviour
 
     public void ChangeMaterial(Material newMaterial, bool newInstance = false)
     {
-        if (newInstance)
-        {
+        if (newInstance) {
             // First check our material instance, if we already have a material instance
             // and we want to create a new one, we need to clean up the old one
             if (_hasMaterialInstance)
@@ -158,25 +152,25 @@ public class AnimateTiledTexture : MonoBehaviour
         else // if we dont have create a new instance, just assign the texture
             renderer.sharedMaterial = newMaterial;        
  
-        // We need to recalc the texture size (since different material = possible different texture)
-        CalcTextureSize();
- 
-        // Assign the new texture size
-        renderer.sharedMaterial.SetTextureScale("_MainTex", _textureSize);
+        // We need to recalc the texture tiling (since different material = possible different texture)
+        CalcTextureTiling();
     }
  
-    private void CalcTextureSize()
+    private void CalcTextureTiling()
     {
         //set the tile size of the texture (in UV units), based on the rows and columns
-		_textureSize.x = 1f / _maxColsInRows;
-		_textureSize.y = 1f / _rowsTotalInSprite;
+		_textureTiling.x = 1f / _maxColsInRows;
+		_textureTiling.y = 1f / _rowsTotalInSprite;
  
         // Add in the scale
-        _textureSize.x = _textureSize.x / _scale.x;
-        _textureSize.y = _textureSize.y / _scale.y;
+        _textureTiling.x = _textureTiling.x / _scale.x;
+        _textureTiling.y = _textureTiling.y / _scale.y;
  
         // Buffer some of the image out (removes gridlines and stufF)
-        _textureSize -= _buffer;
+        _textureTiling -= _buffer;
+		
+		// Assign the new texture tiling
+        renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
     }
  
 	public void Play()
@@ -255,27 +249,25 @@ public class AnimateTiledTexture : MonoBehaviour
         _index += _direction;
     }
  
-    private void ApplyOffset()
-    {
-        //split into x and y indexes. calculate the new offsets
-        Vector2 offset = new Vector2(
-			(float)_index / _maxColsInRows - (_index / _maxColsInRows),	//x index
-			1f - ((_index / _maxColsInRows) / (float)_rowsTotalInSprite) - offsetYStart //y index
-		);
+    private void ApplyOffset() {
+		float xTemp = (float)_index / (float)_maxColsInRows;
+		float xTempFloor = _index / _maxColsInRows; // operation beetween ints, then result is saved as float
+		float x = xTemp - xTempFloor;
+		float y = 1f - (xTempFloor / (float)_rowsTotalInSprite) - offsetYStart;
  
 		// Reset the y offset, if needed
-        if (offset.y == 1f)
-            offset.y = 0.0f;
+        if (y == 1f)
+            y = 0.0f;
  
         // If we have scaled the texture, we need to reposition the texture to the center of the object
-        offset.x += ((1f / _maxColsInRows) - _textureSize.x) / 2.0f;
-        offset.y += ((1f / _rowsTotalInSprite) - _textureSize.y) / 2.0f;
+        x += ((1f / _maxColsInRows) - _textureTiling.x) / 2.0f;
+        y += ((1f / _rowsTotalInSprite) - _textureTiling.y) / 2.0f;
  
         // Add an additional offset if the user does not want the texture centered
-        offset.x += _offset.x;
-        offset.y += _offset.y;
+        offsetTemp.x = x + _offset.x;
+        offsetTemp.y = y + _offset.y;
  
         // Update the material
-        renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
+        renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);
     }
 }

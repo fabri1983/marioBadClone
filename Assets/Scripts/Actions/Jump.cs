@@ -26,7 +26,7 @@ public class Jump : MonoBehaviour {
 	
 	void Update(){
 		////////////////////////////////////
-		//IMPORTANT: this fixes the crash when assigning the modified velocity to the body
+		//IMPORTANT: this fixes the crash when assigning the modified velocity to the body along this script
 		if (isJumping)
 			return;
 		Vector2 v = body.velocity;
@@ -37,18 +37,18 @@ public class Jump : MonoBehaviour {
 	public void jump (float jumpVel) {
 		if (isJumping)
 			return;
-		forceJump (jumpVel);
+		forceJump(jumpVel);
 	}
 	
 	public void forceJump (float jumpVel) {
-		
 		// set the correct sprite animation
-		if (crouch != null && !crouch.isCrouching()) {
+		if (crouch == null || !crouch.isCrouching()) {
 			jumpAC.animComp.setFPS(jumpAC.animFPS);
 			jumpAC.animComp.setRowLimits(jumpAC.rowStartAnim, jumpAC.rowLengthAnim);
 			jumpAC.animComp.setColLimits(jumpAC.maxColsAnimInRow, jumpAC.colStartAnim, jumpAC.colLengthAnim);
 			jumpAC.animComp.setPingPongAnim(jumpAC.pingPongAnim);
 			jumpAC.animComp.Play();
+			jumpAC.working = true;
 		}
 		
 		isJumping = true;
@@ -97,11 +97,12 @@ public class Jump : MonoBehaviour {
 		Jump jump = shape2.GetComponent<Jump>();
 		
 		// if is jumping and hits a wall then proceed with collision
-		/*if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
-			return true;*/
+		if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
+			return true;
 		
 		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump) {
+				jump.isJumping = false;
 				jump.jump(jump.foreverJumpVel);
 			}
 			// if it was jumping then set player behavior to idle

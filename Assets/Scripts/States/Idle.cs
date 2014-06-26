@@ -39,6 +39,7 @@ public class Idle : MonoBehaviour {
 			idleAC.animComp.setColLimits(idleAC.maxColsAnimInRow, idleAC.colStartAnim, idleAC.colLengthAnim);
 			idleAC.animComp.setPingPongAnim(idleAC.pingPongAnim);
 			idleAC.animComp.Play();
+			idleAC.working = true;
 		}
 	}
 }

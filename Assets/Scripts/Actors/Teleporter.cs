@@ -109,7 +109,7 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 	private void doAnimation() {
 		
 		// change the layer of the player to avoid collision with the tube
-		target.gameObject.layer = LevelManager.TELEPORT_LAYER;
+		target.gameObject.layer = LevelManager.LAYER_TELEPORT;
 		// we are teleporting
 		teleportable.setTeleporting(true);
 		teleportable.toogleTargetState(false);

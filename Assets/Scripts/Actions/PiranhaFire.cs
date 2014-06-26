@@ -88,9 +88,10 @@ public class PiranhaFire : MonoBehaviour {
 		newGO.active = false; // so it doesn't interact with current game object creator
 		FireBall fireball = newGO.GetComponent<FireBall>();
 		fireball.setDestroyTime(destroyTime);
-		fireball.setDoBouncing(false);
-		fireball.setHitForEnemy(false);
-		fireball.setDir(dirFire * firePow);
+		fireball.setBouncing(false);
+		fireball.setDir(dirFire);
+		fireball.setSpeed(firePow);
+		fireball.addTargetLayer(LevelManager.LAYER_PLAYER);
 		newGO.transform.parent = null;
 		newGO.active = true;
 	}

@@ -4,11 +4,10 @@ using System;
 
 public class LevelManager : MonoBehaviour {
 	
-	public static int TELEPORT_LAYER;
-	public static int FOR_ENEMY_LAYER;
-	public static int CAMERA_IN_FRONT;
-	public static int POWERUP_LAYER;
-	public static int ONLY_WITH_PLAYER_LAYER;
+	public static int LAYER_TELEPORT;
+	public static int LAYER_POWERUP;
+	public static int LAYER_PLAYER;
+	public static int LAYER_CAMERA_IN_FRONT;
 	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
@@ -56,11 +55,10 @@ public class LevelManager : MonoBehaviour {
 	
 	private void initialize() {
 		
-		TELEPORT_LAYER = LayerMask.NameToLayer("TeleportTrig");
-		FOR_ENEMY_LAYER = LayerMask.NameToLayer("ForEnemy");
-		CAMERA_IN_FRONT = LayerMask.NameToLayer("CameraInFront");
-		POWERUP_LAYER = LayerMask.NameToLayer("PowerUp");
-		ONLY_WITH_PLAYER_LAYER = LayerMask.NameToLayer("OnlyWithPlayer");
+		LAYER_TELEPORT = LayerMask.NameToLayer("TeleportTrig");
+		LAYER_CAMERA_IN_FRONT = LayerMask.NameToLayer("CameraInFront");
+		LAYER_POWERUP = LayerMask.NameToLayer("PowerUp");
+		LAYER_PLAYER = LayerMask.NameToLayer("Player");
 
 		// reset spawn positions array
 		for (int i=0; i < Application.levelCount; ++i)

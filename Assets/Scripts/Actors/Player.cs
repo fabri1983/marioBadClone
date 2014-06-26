@@ -208,9 +208,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 			return false; // stop collision with scenery since this frame*/
 		
 		// avoid ground penetration (Y axis)
-		Vector2 thePos = player.body.position;
+		/*Vector2 thePos = player.body.position;
 		thePos.y += -arbiter.GetDepth(0);
-		player.body.position = thePos;
+		player.body.position = thePos;*/
 		
 		// if isn't a grounded surface then stop velocity and avoid getting inside the object
 		if (GameObjectTools.isWallHit(arbiter)) {
@@ -219,6 +219,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
 			// move back to the contact point and a little more
+			Vector2 thePos = player.body.position;
 			thePos = player.body.position;
 			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
 			player.body.position = thePos;

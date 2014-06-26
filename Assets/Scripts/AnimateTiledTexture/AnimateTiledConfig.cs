@@ -13,6 +13,7 @@ public class AnimateTiledConfig : MonoBehaviour {
 	public int rowLengthAnim = 0; // how many rows the anim has
 	public int colStartAnim = 0; // the col position where the anim start
 	public int colLengthAnim = 0; // how many cols the anim has
+[HideInInspector] public bool working = false;
 	
 	void Awake() {
 		animComp = GetComponent<AnimateTiledTexture>();

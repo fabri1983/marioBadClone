@@ -52,9 +52,10 @@ public class PowerUpFireBall : PowerUp {
 			newGO.tag = "PowerUp";
 			FireBall fireball = newGO.GetComponent<FireBall>();
 			fireball.setDestroyTime(getDestroyTime());
-			fireball.setDoBouncing(true);
-			fireball.setHitForEnemy(true);
-			fireball.setDir(player.getFireDir() * getPower());
+			fireball.setBouncing(true);
+			fireball.setDir(player.getFireDir());
+			fireball.setSpeed(getPower());
+			fireball.addTargetLayer(LevelManager.LAYER_POWERUP);
 			newGO.transform.parent = null;
 			newGO.active = true;
 			use();

@@ -24,6 +24,7 @@ public class Sneak : MonoBehaviour {
 		sneakAC.animComp.setColLimits(sneakAC.maxColsAnimInRow, sneakAC.colStartAnim, sneakAC.colLengthAnim);
 		sneakAC.animComp.setPingPongAnim(sneakAC.pingPongAnim);
 		sneakAC.animComp.Play();
+		sneakAC.working = true;
 	}
 	
 	public bool isSneaking () {
@@ -32,5 +33,6 @@ public class Sneak : MonoBehaviour {
 	
 	public void stopSneaking () {
 		sneaking = false;
+		sneakAC.working = false;
 	}
 }

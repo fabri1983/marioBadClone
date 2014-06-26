@@ -83,6 +83,7 @@ public class Crouch : MonoBehaviour {
 		crouchAC.animComp.setColLimits(crouchAC.maxColsAnimInRow, crouchAC.colStartAnim, crouchAC.colLengthAnim);
 		crouchAC.animComp.setPingPongAnim(crouchAC.pingPongAnim);
 		crouchAC.animComp.Play();
+		crouchAC.working = true;
 	}
 	
 	public void noCrouch () {
@@ -94,6 +95,7 @@ public class Crouch : MonoBehaviour {
 			return;
 		
 		crouching = false;
+		crouchAC.working = false;
 		
 		// transform the collider
 		Vector3 theCenter = box.center;
