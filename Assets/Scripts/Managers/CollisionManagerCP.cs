@@ -3,14 +3,14 @@ using System.Collections;
 
 public class CollisionManagerCP : ChipmunkCollisionManager {
 
-	protected void Start(){
+	void Start(){
+		// NOTE: doing this from Wake() will ignore base.Awake() method which is the one who adds this manager instance to chipmunk api
+		
 		// Turning down the timestep can smooth things out significantly.
 		// Chipmunk is also pretty fast so you don't need to worry about the performance so much.
 		// Not really necessary, but helps in several subtle ways.
-		// NOTE: doing this from Wake() will ignore base.Awake() method which is the one who adds this manager instance to chipmunk api
 		Time.fixedDeltaTime = 0.01f; // between 0.003 (1f/300f) and 0.005 (1f/180f) is OK
-		Chipmunk.gravity = new Vector2(0f, -100f);
-		
+		Chipmunk.gravity = new Vector2(0f, -100f);	
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 	
@@ -50,6 +50,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	
 	//##################### KoopaTroopa #################
 	bool ChipmunkBegin_Scenery_KoopaTroopa (ChipmunkArbiter arbiter){
+		Chase.beginCollisionWithScenery(arbiter);
 		if (!Patrol.beginCollision(arbiter))
 			return false;
 		return Jump.beginCollisionWithScenery(arbiter);

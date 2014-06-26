@@ -9,7 +9,7 @@ public class Chase : MonoBehaviour {
 	private Patrol patrol;
 	private Idle idle;
 	private Transform target;
-	private bool stop, operable;
+	private bool stop, operable, enableWhenOutOfSensor;
 	private ChipmunkBody body;
 	
 	// Use this for initialization
@@ -26,7 +26,6 @@ public class Chase : MonoBehaviour {
 	void Update () {
 		if (stop)
 			return;
-
 		// calculate sign direction
 		signDir = Mathf.Sign(target.position.x - transform.position.x);
 		walk.walk(signDir * speed);
@@ -70,6 +69,34 @@ public class Chase : MonoBehaviour {
 		return operable;
 	}
 	
+	public void disableOperateWhenOutOfSensor () {
+		operable = false;
+		enableWhenOutOfSensor = true;
+	}
+	public void revertOperateWhenOutOfSensor () {
+		if (enableWhenOutOfSensor) {
+			enableWhenOutOfSensor = false;
+			operable = true;
+		}
+	}
+	
+	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    // The order of the arguments matches the order in the function name.
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		// if chasing then avoid wall penetration
+		Chase chase = shape2.GetComponent<Chase>();
+		if (chase != null && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
+			chase.stopChasing();
+			chase.disableOperateWhenOutOfSensor();
+		}
+
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		return true;
+	}
+	
 	public static bool beginCollisionWithPlayer (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
@@ -98,5 +125,6 @@ public class Chase : MonoBehaviour {
 		Chase chase = shape1.GetComponent<Chase>();
 		chase.stopChasing();
 		chase.target = null;
+		chase.revertOperateWhenOutOfSensor();
 	}
 }
