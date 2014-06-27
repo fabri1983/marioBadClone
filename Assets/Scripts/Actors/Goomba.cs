@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Goomba : MonoBehaviour, IPausable {
+public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 
 	private GoombaDieAnim dieAnim;
 	private Patrol patrol;
@@ -50,6 +50,10 @@ public class Goomba : MonoBehaviour, IPausable {
 		idle.setIdle(true);
 		dieAnim.start();
 		Invoke("destroy", TIMING_DIE); // a replacement for Destroy with time
+	}
+	
+	public void dieWhenFalling () {
+		die();
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {

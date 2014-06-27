@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KoopaTroopa : MonoBehaviour, IPausable {
+public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	
 	public bool jumpInLoop = false;
 	public float jumpSpeed = 20f;
@@ -59,6 +59,11 @@ public class KoopaTroopa : MonoBehaviour, IPausable {
 			destroy();
 		else
 			dieAnim.hide();
+	}
+	
+	public void dieWhenFalling () {
+		stop();
+		destroy();
 	}
 	
 	private void stop () {

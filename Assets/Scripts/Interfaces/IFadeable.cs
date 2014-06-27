@@ -1,7 +1,7 @@
 
 /**
- * Exposes signature for fedeable game objects. 
- * Although is thought as for camera fades between scene to black and viceversa
+ * Exposes signature for fadeable game objects. 
+ * Is thought as for camera fades between or in scene.
  */
 public interface IFadeable
 {

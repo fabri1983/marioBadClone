@@ -77,5 +77,7 @@ public class FireBall : MonoBehaviour, IPausable {
 	public void addTargetLayer (int val) {
 		// ACA HACER ACTUALIZAR LOS LAYERS DEL SHAPE y tmb del gameobject
 		// convertir a uint
+		//GameObjectTools.setLayer(gameObject, playerLayer);
+		//GameObjectTools.setLayerForShapes(gameObject, layersCP);
 	}
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Ghost : MonoBehaviour, IPausable {
+public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	
 	public float flySpeed = 6f;
 	public float flyRange = 6f;
@@ -64,6 +64,10 @@ public class Ghost : MonoBehaviour, IPausable {
 	private void stop () {
 		chase.stopChasing();
 		fly.stopFlying();
+	}
+	
+	public void dieWhenFalling () {
+		die();
 	}
 	
 	void FixedUpdate () {

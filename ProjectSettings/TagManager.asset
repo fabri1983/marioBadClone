@@ -3,11 +3,6 @@
 --- !u!78 &1
 TagManager:
   tags:
-  - Floor
-  - Teleport
-  - Mario
-  - Left
-  - PowerUp
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

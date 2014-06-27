@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPowerUpAble, IPausable {
+public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -146,12 +146,11 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 			if (isIdle)
 				idle.setIdle(false);
 		}
-		
-		// lose game if Player falls beyond a theshold
-		if (transform.position.y <= LevelManager.ENDING_DIE_ANIM_Y_POS) {
-			LevelManager.Instance.loseGame(false);
-			return;
-		}
+	}
+	
+	public void dieWhenFalling () {
+		dieAnim.restorePlayerProps();
+		LevelManager.Instance.loseGame(false);
 	}
 	
 	public void toogleActivate (bool active) {
@@ -178,7 +177,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable {
 		setPowerUp(null);
 		jump.reset();
 		walk.reset();
-		body.velocity = Vector2.zero;
+		//body.velocity = Vector2.zero;
 		walkVelocity = walkVelBackup;
 	}
 	
