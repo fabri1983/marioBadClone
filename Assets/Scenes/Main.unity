@@ -115,7 +115,7 @@ GUITexture:
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: 357.799988
+    x: 376.799988
     y: 0
     width: 52
     height: 52
@@ -192,7 +192,7 @@ GUITexture:
   m_Color: {r: .5, g: .5, b: .5, a: .501960814}
   m_PixelInset:
     serializedVersion: 2
-    x: 442
+    x: 461
     y: 282
     width: 38
     height: 38
@@ -402,11 +402,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13100000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_PixelInset.x
-      value: 357.799988
+      value: 376.799988
       objectReference: {fileID: 0}
     - target: {fileID: 13100002, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_PixelInset.x
-      value: 426.980011
+      value: 445.980011
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
@@ -432,9 +432,10 @@ GameObject:
   - 114: {fileID: 335493304}
   - 114: {fileID: 335493305}
   - 114: {fileID: 335493306}
+  - 114: {fileID: 335493307}
   m_Layer: 10
   m_Name: Mario
-  m_TagString: Mario
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -512,6 +513,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
   m_Name: 
   otherLayersBelongTo: 
+--- !u!114 &335493307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400034, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800799199}
+  m_GameObject: {fileID: 335493301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5fd291e55c029b4ea5438c99f3fdede, type: 1}
+  m_Name: 
 --- !u!114 &335493308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,43 +727,6 @@ MonoBehaviour:
   updateColor: 1
   frequency: .330000013
   nbDecimal: 1
---- !u!1 &675779509
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 675779510}
-  - 114: {fileID: 675779511}
-  m_Layer: 0
-  m_Name: ScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &675779510
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 675779509}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &675779511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 675779509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
 --- !u!1 &701197884
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +766,7 @@ GUITexture:
   m_Color: {r: .5, g: .5, b: .5, a: 1}
   m_PixelInset:
     serializedVersion: 2
-    x: 115
+    x: 124
     y: 158.5
     width: 250
     height: 154
@@ -924,7 +899,7 @@ GUITexture:
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: 426.980011
+    x: 445.980011
     y: 0
     width: 52
     height: 52
@@ -997,7 +972,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13100000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_PixelInset.x
-      value: 442
+      value: 461
       objectReference: {fileID: 0}
     - target: {fileID: 13100000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_PixelInset.y
@@ -1357,6 +1332,7 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 8
   colLengthAnim: 2
+  working: 0
 --- !u!114 &1814345867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,6 +1352,7 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 7
   colLengthAnim: 1
+  working: 0
 --- !u!114 &1814345868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,6 +1372,7 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 0
   colLengthAnim: 1
+  working: 0
 --- !u!114 &1814345869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,6 +1392,7 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 6
   colLengthAnim: 1
+  working: 0
 --- !u!114 &1814345870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,6 +1412,7 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 1
   colLengthAnim: 3
+  working: 0
 --- !u!1 &1947964902
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,6 +1555,43 @@ MonoBehaviour:
   allowResize: 0
   offset: {x: 0, y: 0}
   layout: 6
+--- !u!1 &2073214814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 2073214815}
+  - 114: {fileID: 2073214816}
+  m_Layer: 0
+  m_Name: ScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2073214815
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2073214814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &2073214816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2073214814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
 --- !u!1001 &2128456574
 Prefab:
   m_ObjectHideFlags: 0

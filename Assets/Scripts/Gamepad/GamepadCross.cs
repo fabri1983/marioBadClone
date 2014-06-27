@@ -26,7 +26,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 		}
-
+		
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
 		
 		Rect guiRect = guiTexture.GetScreenRect();
