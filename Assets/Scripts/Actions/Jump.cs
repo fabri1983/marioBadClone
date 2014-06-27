@@ -24,7 +24,7 @@ public class Jump : MonoBehaviour {
 		reset();
 	}
 	
-	void Update(){
+	void LateUpdate () {
 		////////////////////////////////////
 		//IMPORTANT: this fixes the crash when assigning the modified velocity to the body along this script
 		if (isJumping)
@@ -58,7 +58,7 @@ public class Jump : MonoBehaviour {
 	}
 		
 	/// <summary>
-	/// Applies a gain factor to current jump velocity. Only once per jump.
+	/// Applies a gain factor to current jump velocity. Only once per jump cycle.
 	/// </summary>
 	/// <param name='factor'>
 	/// Factor.
@@ -73,7 +73,7 @@ public class Jump : MonoBehaviour {
 	}
 	
 	public void reset () {
-		isJumping = true; // initialized as true in case the player is spawned in the air
+		isJumping = true; // initialized as true in case the object is spawned in the air
 		gainApplied = true;
 	}
 	
@@ -102,8 +102,7 @@ public class Jump : MonoBehaviour {
 		
 		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump) {
-				jump.isJumping = false;
-				jump.jump(jump.foreverJumpVel);
+				jump.forceJump(jump.foreverJumpVel);
 			}
 			// if it was jumping then set player behavior to idle
 			else if (jump.isJumping) {

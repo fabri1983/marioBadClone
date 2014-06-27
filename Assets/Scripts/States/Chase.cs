@@ -28,29 +28,30 @@ public class Chase : MonoBehaviour {
 			return;
 		// calculate sign direction
 		signDir = Mathf.Sign(target.position.x - transform.position.x);
-		walk.walk(signDir * speed);
+		if (patrol != null)
+			patrol.setNewDir(signDir);
+		else
+			walk.walk(signDir * speed);
 	}
 	
 	public void stopChasing () {
 		if (!operable)
 			return;
 		stop = true;
-		// if has patrol action then set current dir as patrolling dir
-		if (patrol != null)
-			patrol.setNewDir(signDir);
-		else {
+		if (patrol == null) {
+			body.velocity = Vector2.zero;
 			walk.stopWalking();
 			if (idle != null)
 				idle.setIdle(true);
 		}
-		body.velocity = Vector2.zero;
 	}
 	
-	public void enableChasing () {
+	public void enableChasing () {		
 		if (!operable)
 			return;
 		stop = false;
-		walk.enableWalking();
+		if (patrol == null)
+			walk.enableWalking();
 	}
 	
 	public bool isChasing () {
@@ -69,11 +70,13 @@ public class Chase : MonoBehaviour {
 		return operable;
 	}
 	
-	public void disableOperateWhenOutOfSensor () {
+	private void enableOperateWhenOutOfSensor () {
+		// this behavior is esential for avoiding wall penetration
 		operable = false;
 		enableWhenOutOfSensor = true;
 	}
-	public void revertOperateWhenOutOfSensor () {
+	
+	private void enableOperate () {
 		if (enableWhenOutOfSensor) {
 			enableWhenOutOfSensor = false;
 			operable = true;
@@ -89,7 +92,7 @@ public class Chase : MonoBehaviour {
 		Chase chase = shape2.GetComponent<Chase>();
 		if (chase != null && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
 			chase.stopChasing();
-			chase.disableOperateWhenOutOfSensor();
+			chase.enableOperateWhenOutOfSensor();
 		}
 
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
@@ -125,6 +128,6 @@ public class Chase : MonoBehaviour {
 		Chase chase = shape1.GetComponent<Chase>();
 		chase.stopChasing();
 		chase.target = null;
-		chase.revertOperateWhenOutOfSensor();
+		chase.enableOperate();
 	}
 }
