@@ -11,6 +11,12 @@ public class PlayerDieAnim : MonoBehaviour {
 		jump = GetComponent<Jump>();
 	}
 	
+	void Start () {
+		// get original player layers so when falling in empty space and die we have the correct layers to restore the player
+		playerLayer = gameObject.layer;
+		layersCP = gameObject.GetComponent<ChipmunkShape>().layers;
+	}
+	
 	public void startAnimation () {
 		dying = true;
 		

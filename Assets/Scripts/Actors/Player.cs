@@ -177,7 +177,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		setPowerUp(null);
 		jump.reset();
 		walk.reset();
-		//body.velocity = Vector2.zero;
+		body.velocity = Vector2.zero;
 		walkVelocity = walkVelBackup;
 	}
 	
