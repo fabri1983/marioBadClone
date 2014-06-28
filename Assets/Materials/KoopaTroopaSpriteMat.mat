@@ -22,7 +22,7 @@ Material:
       data:
         first:
           name: _OffsetX
-        second: 0
+        second: -4.96705388e-09
       data:
         first:
           name: _OffsetY
@@ -30,7 +30,7 @@ Material:
       data:
         first:
           name: _TilingX
-        second: 1
+        second: .333333343
       data:
         first:
           name: _TilingY

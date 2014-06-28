@@ -4,6 +4,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 	
 	private bool showOptions = false;
 	private Rect rectQuit, rectBack;
+	private IFadeable fader;
 	
 	private static OptionQuit instance = null;
 	
@@ -74,7 +75,9 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 		if (showOptions)
 			return;
 		PauseGameManager.Instance.pause();
-		Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_IN);
+		// need to find IFadeable component here because camera can change during scenes
+		fader = (IFadeable)Camera.main.GetComponent(typeof(IFadeable));
+		fader.startFading(EnumFadeDirection.FADE_IN);
 		showOptions = true;
 	}
 	
@@ -86,13 +89,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 			Application.Quit(); // doesn't work on Editor mode
 #if UNITY_EDITOR
 			showOptions = false;
-			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
+			fader.startFading(EnumFadeDirection.FADE_OUT);
 			PauseGameManager.Instance.resume();
 #endif
 		}
 		if(GUI.Button(rectBack, "Back")) {
 			showOptions = false;
-			Camera.main.GetComponent<FadeCamera>().startFading(EnumFadeDirection.FADE_OUT);
+			fader.startFading(EnumFadeDirection.FADE_OUT);
 			PauseGameManager.Instance.resume();
 		}
 	}
