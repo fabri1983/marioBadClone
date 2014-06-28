@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BushMat
-  m_Shader: {fileID: 4800000, guid: 942727f5d264c7542860fcdfb421d001, type: 1}
+  m_Shader: {fileID: 4800000, guid: 6dc79a74ff374ed41a4a718efd8cdade, type: 1}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -18,7 +18,23 @@ Material:
           m_Texture: {fileID: 2800000, guid: 814e5e4ea000be84faae79c2295bb8e7, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats: {}
+    m_Floats:
+      data:
+        first:
+          name: _OffsetX
+        second: 0
+      data:
+        first:
+          name: _OffsetY
+        second: 0
+      data:
+        first:
+          name: _TilingX
+        second: 1
+      data:
+        first:
+          name: _TilingY
+        second: 1
     m_Colors:
       data:
         first:

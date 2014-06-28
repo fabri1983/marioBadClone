@@ -170,7 +170,9 @@ public class AnimateTiledTexture : MonoBehaviour
         _textureTiling -= _buffer;
 		
 		// Assign the new texture tiling
-        renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
+        //renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
+		renderer.sharedMaterial.SetFloat("_TilingX", _textureTiling.x);
+		renderer.sharedMaterial.SetFloat("_TilingY", _textureTiling.y);
     }
  
 	public void Play()
@@ -268,6 +270,8 @@ public class AnimateTiledTexture : MonoBehaviour
         offsetTemp.y = y + _offset.y;
  
         // Update the material
-        renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);
+        //renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);
+		renderer.sharedMaterial.SetFloat("_OffsetX", offsetTemp.x);
+		renderer.sharedMaterial.SetFloat("_OffsetY", offsetTemp.y);
     }
 }

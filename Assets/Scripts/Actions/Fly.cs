@@ -23,6 +23,7 @@ public class Fly : MonoBehaviour {
 		
 		// when automatic fly is on, then the movement is dictated by a linear function
 		if (automaticFly) {
+			//goDown = (Mathf.PingPong(Time.time, 1f) - 0.5f) < 0f;
 			flyAcum += flyRange * Time.deltaTime;
 			if (flyAcum >= flyRange) {
 				goDown = !goDown;
