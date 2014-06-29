@@ -101,9 +101,8 @@ public class Jump : MonoBehaviour {
 			return true;
 		
 		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
-			if (jump.foreverJump) {
+			if (jump.foreverJump)
 				jump.forceJump(jump.foreverJumpVel);
-			}
 			// if it was jumping then set player behavior to idle
 			else if (jump.isJumping) {
 				jump.gainApplied = false;

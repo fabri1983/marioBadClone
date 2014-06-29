@@ -48,7 +48,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 	private void die () {
 		patrol.stopPatrol();
 		idle.setIdle(true);
-		dieAnim.start();
+		dieAnim.die();
 		Invoke("destroy", TIMING_DIE); // a replacement for Destroy with time
 	}
 	
@@ -93,9 +93,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		if (GameObjectTools.isHitFromAbove(goomba.transform.position.y, shape2.body, arbiter)) {
 			goomba.die();
 			// makes the player jumps a little upwards
-			Vector2 theVel = shape2.body.velocity;
-			theVel.y = player.lightJumpVelocity;
-			shape2.body.velocity = theVel;
+			player.forceJump();
 		}
 		// kills Player
 		else {

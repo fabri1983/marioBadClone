@@ -170,6 +170,14 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		return dieAnim.isDying();
 	}
 	
+	public void forceJump () {
+		// used when the player kills an enemy from above
+		jump.forceJump(0f);
+		Vector2 v = body.velocity;
+		v.y = lightJumpVelocity;
+		body.velocity = v;
+	}
+	
 	public void resetPlayer () {
 		this.enabled = true; // enable Update() and OnGUI()
 		if (teleportable != null)

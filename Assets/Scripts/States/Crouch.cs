@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Crouch : MonoBehaviour {
 	
-	public float crouchProportion = 0.75f;
+	public float crouchColliderProportion = 0.75f;
 	
 	private bool crouching;
 	private float colliderCenterY, centerOffsetY;
@@ -18,7 +18,7 @@ public class Crouch : MonoBehaviour {
 		// take the collider and some useful values
 		box = GetComponent<ChipmunkBoxShape>();
 		colliderCenterY = box.center.y;
-		centerOffsetY = ((1f - crouchProportion)*0.5f) * box.size.y;
+		centerOffsetY = ((1f - crouchColliderProportion)*0.5f) * box.size.y;
 		
 		jump = GetComponent<Jump>();
 		sneak = GetComponent<Sneak>();
@@ -39,14 +39,14 @@ public class Crouch : MonoBehaviour {
 		
 		// if crouching then update accordingly
 		if (sneak != null && crouching) {
-			// if jumping and sneaking: stop sneaking and crouch
+			// if jumping and sneaking: stop sneaking and do crouch
 			if (jumping) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
 					startAnim();
 				}
 			}
-			// if not jumping and not moving and sneaking: stop sneaking and crouch
+			// if not jumping and not moving and sneaking: stop sneaking and do crouch
 			else if (!moving) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
@@ -66,7 +66,7 @@ public class Crouch : MonoBehaviour {
 		
 		// resize the collider
 		Vector3 theSize = box.size;
-		theSize.y *= crouchProportion;
+		theSize.y *= crouchColliderProportion;
 		box.size = theSize;
 		// transform the collider
 		Vector3 theCenter = box.center;
@@ -103,7 +103,7 @@ public class Crouch : MonoBehaviour {
 		box.center = theCenter;
 		// resize the collider
 		Vector3 theSize = box.size;
-		theSize.y /= crouchProportion;
+		theSize.y /= crouchColliderProportion;
 		box.size = theSize;
 	}
 	

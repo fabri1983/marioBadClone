@@ -55,10 +55,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	
 	private void die () {
 		stop();
-		if (dieAnim.isHidden())
-			destroy();
-		else
-			dieAnim.hide();
+		destroy();
 	}
 	
 	public void dieWhenFalling () {
@@ -84,7 +81,11 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			return false; // avoid the collision to continue since this frame
 		else {
 			powerUp.Invoke("destroy", 0f); // a replacement for Destroy
-			koopa.die(); // might hide or kill the koopa
+			// might hide or kill the koopa
+			if (koopa.dieAnim.isHidden())
+				koopa.die();
+			else
+				koopa.dieAnim.hide();
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
@@ -115,9 +116,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			else
 				koopa.die();
 			// makes the player jumps a little upwards
-			Vector2 theVel = shape2.body.velocity;
-			theVel.y = player.lightJumpVelocity;
-			shape2.body.velocity = theVel;
+			player.forceJump();
 		}
 		// koopa starts bouncing
 		else if (koopa.dieAnim.isHidden() && !koopa.dieAnim.isBouncing()){
@@ -128,6 +127,29 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			LevelManager.Instance.loseGame(true); // force die animation
 		}
+		
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		return true;
+	}
+	
+	public static bool beginCollisionWithKoopaTroopa (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		KoopaTroopa koopa1 = shape1.GetComponent<KoopaTroopa>();
+		KoopaTroopa koopa2 = shape2.GetComponent<KoopaTroopa>();
+		bool hidden1 = koopa1.dieAnim.isHidden();
+		bool hidden2 = koopa2.dieAnim.isHidden();
+		bool bouncing1 = koopa1.dieAnim.isBouncing();
+		bool bouncing2 = koopa2.dieAnim.isBouncing();
+		
+		// kills koopa 2
+		if (bouncing1 && !hidden2 && !bouncing2)
+			koopa2.die();
+		// kills koopa 1
+		else if (bouncing2 && !hidden1 && !bouncing1)
+			koopa1.die();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.

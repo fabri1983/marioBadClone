@@ -57,6 +57,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	bool ChipmunkBegin_KoopaTroopa_KoopaTroopa (ChipmunkArbiter arbiter){
+		KoopaTroopa.beginCollisionWithKoopaTroopa(arbiter);
 		return Patrol.beginCollision(arbiter);
 	}
 	

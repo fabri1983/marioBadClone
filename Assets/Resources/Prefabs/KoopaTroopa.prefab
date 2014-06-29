@@ -110,8 +110,8 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: KoopaTroopa
   _collisionGroup: 
-  _center: {x: 0, y: -.129999995}
-  _size: {x: .899999976, y: .75}
+  _center: {x: 0, y: -.0949999988}
+  _size: {x: .899999976, y: .810000002}
   _radius: 0
 --- !u!114 &11400002
 MonoBehaviour:
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311ba107db55a3c40b883cfe7e22a75c, type: 1}
   m_Name: 
   kickedSpeed: 20
+  hideColliderProportion: .800000012
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
