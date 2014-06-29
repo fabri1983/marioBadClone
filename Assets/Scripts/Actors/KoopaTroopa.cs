@@ -144,8 +144,17 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		bool bouncing1 = koopa1.dieAnim.isBouncing();
 		bool bouncing2 = koopa2.dieAnim.isBouncing();
 		
+		// is koopa above the other koopa?
+		if (GameObjectTools.isGrounded(arbiter)) {
+			if (!hidden1)
+				koopa1.jump.forceJump(koopa1.jumpSpeed);
+			else
+				koopa2.jump.forceJump(koopa1.jumpSpeed);
+			// NOTE: I assume here the isGrounded() works as expected
+			return false; // avoid the collision to continue since this frame
+		}
 		// kills koopa 2
-		if (bouncing1 && !hidden2 && !bouncing2)
+		else if (bouncing1 && !hidden2 && !bouncing2)
 			koopa2.die();
 		// kills koopa 1
 		else if (bouncing2 && !hidden1 && !bouncing1)
