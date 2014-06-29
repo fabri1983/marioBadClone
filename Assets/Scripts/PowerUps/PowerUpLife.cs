@@ -43,8 +43,4 @@ public class PowerUpLife : PowerUp {
 	public override bool isAllowedInput () {
 		return false; // a 1up isn't reactive to Input
 	}
-	
-	public override bool isLethal () {
-		return false;
-	}
 }

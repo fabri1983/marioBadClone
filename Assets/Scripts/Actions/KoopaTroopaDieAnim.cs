@@ -7,7 +7,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	
 	private Chase chase;
 	private Patrol patrol;
-	private bool hidden, bouncing, dying;
+	private bool hidden, bouncing;
 	private DieAnimConfig dieAC;
 	private float colliderCenterY, centerOffsetY;
 	private ChipmunkBoxShape box;
@@ -19,7 +19,6 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		dieAC = GetComponentInChildren<DieAnimConfig>();
 		hidden = false;
 		bouncing = false;
-		dying = false;
 		
 		// take the collider and some useful values
 		ChipmunkBoxShape[] boxes = GetComponents<ChipmunkBoxShape>();
@@ -47,12 +46,18 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		dieAC.animComp.Play();
 	}
 	
-	/*public void die () {
-		dying = true;
-		bouncing = false;
-		patrol.stopPatrol();
-		setAnim(); // set correct sprite anim
-	}*/
+	public void die () {
+		if (hidden) {
+			// transform the collider
+			Vector3 theCenter = box.center;
+			theCenter.y = colliderCenterY;
+			box.center = theCenter;
+			// resize the collider
+			Vector3 theSize = box.size;
+			theSize.y /= hideColliderProportion;
+			box.size = theSize;
+		}
+	}
 	
 	public void hide () {
 		if (!hidden) {
@@ -82,9 +87,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		setAnim(); // set correct sprite animation
 	}
 	
-	public bool isDying () {
-		return dying;
-	}
+	
 	
 	public bool isHidden () {
 		return hidden;

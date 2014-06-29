@@ -172,7 +172,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	
 	public void forceJump () {
 		// used when the player kills an enemy from above
-		jump.forceJump(0f);
+		jump.forceJump(0f); // do this way to avoid super jump
 		Vector2 v = body.velocity;
 		v.y = lightJumpVelocity;
 		body.velocity = v;

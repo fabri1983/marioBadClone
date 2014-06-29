@@ -63,7 +63,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		Goomba goomba = shape1.GetComponent<Goomba>();
 		PowerUp powerUp = shape2.GetComponent<PowerUp>();
 		
-		if (goomba.dieAnim.isDying() || !powerUp.isLethal())
+		if (goomba.dieAnim.isDying())
 			return false; // avoid the collision to continue since this frame
 		else {
 			powerUp.Invoke("destroy", 0f); // a replacement for Destroy

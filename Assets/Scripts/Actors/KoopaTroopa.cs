@@ -55,6 +55,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	
 	private void die () {
 		stop();
+		dieAnim.die();
 		destroy();
 	}
 	
@@ -77,16 +78,12 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		KoopaTroopa koopa = shape1.GetComponent<KoopaTroopa>();
 		PowerUp powerUp = shape2.GetComponent<PowerUp>();
 		
-		if (koopa.dieAnim.isDying() || !powerUp.isLethal())
-			return false; // avoid the collision to continue since this frame
-		else {
-			powerUp.Invoke("destroy", 0f); // a replacement for Destroy
-			// might hide or kill the koopa
-			if (koopa.dieAnim.isHidden())
-				koopa.die();
-			else
-				koopa.dieAnim.hide();
-		}
+		powerUp.Invoke("destroy", 0f); // a replacement for Destroy
+		// hide or kill the koopa
+		if (koopa.dieAnim.isHidden())
+			koopa.die();
+		else
+			koopa.dieAnim.hide();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.
@@ -100,7 +97,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		KoopaTroopa koopa = shape1.GetComponent<KoopaTroopa>();
 		Player player = shape2.GetComponent<Player>();
 		
-		if (koopa.dieAnim.isDying() || player.isDying()) {
+		if (player.isDying()) {
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			return false; // avoid the collision to continue since this frame
 		}
@@ -145,13 +142,13 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		bool bouncing2 = koopa2.dieAnim.isBouncing();
 		
 		// avoid koopa1 pushes hidden koopa2
-		chase = shape1.GetComponent<Chase>();
+		Chase chase = shape1.GetComponent<Chase>();
 		if (chase != null && chase.isChasing()) {
 			chase.stopChasing();
 			chase.enableOperateWhenOutOfSensor();
 		}
 		// avoid koopa2 pushes hidden koopa1
-		Chase chase = shape2.GetComponent<Chase>();
+		chase = shape2.GetComponent<Chase>();
 		if (chase != null && chase.isChasing()) {
 			chase.stopChasing();
 			chase.enableOperateWhenOutOfSensor();

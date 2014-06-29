@@ -85,9 +85,5 @@ public class PowerUpPWings : PowerUp {
 	public override bool isAllowedInput () {
 		return Input.GetButtonDown("Jump");
 	}
-	
-	public override bool isLethal () {
-		return false;
-	}
 }
 

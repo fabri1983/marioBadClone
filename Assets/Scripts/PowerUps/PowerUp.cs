@@ -79,11 +79,6 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	 */
 	public abstract bool isAllowedInput ();
 	
-	/**
-	 * True if power up can kill when hitting something. Final decision is taken by the hitten game object.
-	 */
-	public abstract bool isLethal ();
-	
 	public void action (GameObject go) {
 		// checks first if input key is correct and if the power up is still usable
 		if (!isAllowedInput() || !ableToUse())

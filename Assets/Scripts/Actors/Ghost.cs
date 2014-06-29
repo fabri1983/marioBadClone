@@ -113,10 +113,8 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		Ghost ghost = shape1.GetComponent<Ghost>();
 		PowerUp powerUp = shape2.GetComponent<PowerUp>();
 		
-		if (powerUp.isLethal()) {
-			powerUp.Invoke("destroy", 0f); // a replacement for Destroy
-			ghost.die();
-		}
+		powerUp.Invoke("destroy", 0f); // a replacement for Destroy
+		ghost.die();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.

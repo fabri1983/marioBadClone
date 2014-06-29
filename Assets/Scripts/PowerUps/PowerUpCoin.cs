@@ -44,9 +44,5 @@ public class PowerUpCoin : PowerUp {
 	public override bool isAllowedInput () {
 		return false; // a coin isn't reactive to Input
 	}
-	
-	public override bool isLethal () {
-		return false;
-	}
 }
 
