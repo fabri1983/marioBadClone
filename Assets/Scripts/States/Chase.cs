@@ -70,7 +70,7 @@ public class Chase : MonoBehaviour {
 		return operable;
 	}
 	
-	private void enableOperateWhenOutOfSensor () {
+	public void enableOperateWhenOutOfSensor () {
 		if (!operable)
 			return;
 		// this behavior is esential for avoiding wall penetration

@@ -144,6 +144,23 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		bool bouncing1 = koopa1.dieAnim.isBouncing();
 		bool bouncing2 = koopa2.dieAnim.isBouncing();
 		
+		// avoid koopa2 pushes hidden koopa1
+		if (hidden1 && !hidden2) {
+			Chase chase = shape2.GetComponent<Chase>();
+			if (chase != null && chase.isChasing()) {
+				chase.stopChasing();
+				chase.enableOperateWhenOutOfSensor();
+			}
+		}
+		// avoid koopa1 pushes hidden koopa2
+		else if (!hidden1 && hidden2) {
+			Chase chase = shape1.GetComponent<Chase>();
+			if (chase != null && chase.isChasing()) {
+				chase.stopChasing();
+				chase.enableOperateWhenOutOfSensor();
+			}
+		}
+		
 		// is koopa above the other koopa?
 		if (GameObjectTools.isGrounded(arbiter)) {
 			if (!hidden1)
