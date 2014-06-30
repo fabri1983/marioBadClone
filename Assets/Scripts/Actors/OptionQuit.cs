@@ -3,7 +3,7 @@ using UnityEngine;
 public class OptionQuit : MonoBehaviour, ITouchListener {
 	
 	private bool showOptions = false;
-	private Rect rectQuit, rectBack;
+	private Rect rectQuit, rectBack, rectLevelSel;
 	private IFadeable fader;
 	
 	private static OptionQuit instance = null;
@@ -31,8 +31,9 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		rectQuit = new Rect(Screen.width / 2 - 25 - 50, Screen.height / 2 - 25, 50, 24);
-		rectBack = new Rect(Screen.width / 2 - 25 + 50, Screen.height / 2 - 25, 50, 24);
+		rectQuit = new Rect(Screen.width / 2 - 25 - 50, Screen.height / 2 - 35, 50, 24);
+		rectBack = new Rect(Screen.width / 2 - 25 + 50, Screen.height / 2 - 35, 50, 24);
+		rectLevelSel = new Rect(Screen.width / 2 - 35, Screen.height / 2, 70, 24);
 		
 		TouchEventManager.Instance.register(this, TouchPhase.Ended);
 	}
@@ -97,6 +98,12 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 			showOptions = false;
 			fader.startFading(EnumFadeDirection.FADE_OUT);
 			PauseGameManager.Instance.resume();
+		}
+		if(GUI.Button(rectLevelSel, "Levels")) {
+			showOptions = false;
+			fader.startFading(EnumFadeDirection.FADE_OUT);
+			PauseGameManager.Instance.resume();
+			LevelManager.Instance.loadLevelSelection();
 		}
 	}
 }

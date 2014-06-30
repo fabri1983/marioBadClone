@@ -92,6 +92,10 @@ public class LevelManager : MonoBehaviour {
 		loadLevel(getNextLevel());
 	}
 	
+	public void loadLevelSelection () {
+		loadLevel(1);
+	}
+	
 	public void loadLevel (int level) {
 		// fix level index if invalid
 		if (level < 0 || level >= Application.levelCount)
@@ -102,6 +106,7 @@ public class LevelManager : MonoBehaviour {
 		
 		player.toogleActivate(false); // deactivate to avoid falling in empty scene
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
+		GC.Collect();
 		Application.LoadLevel(activeLevel); // load scene
 	}
 	
