@@ -7,19 +7,24 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	public bool debugZones = false;
 	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
-	/// relative to the GUI texture with size 64x64. Scale adjustments are apply once the 
+	/// relative to the GUI texture of size 64x64. Scale adjustments are apply once the 
 	/// game object awakes.
 	private static Rect[] arrowRects = new Rect[]{
-		new Rect(16f, 38f, 30f, 24f), // UP
-		new Rect(42f, 16f, 22f, 28f), // RIGHT
-		new Rect(16f, 0f, 30f, 20f), // DOWN
-		new Rect(0, 16f, 22f, 28f) // LEFT
+		new Rect(20f, 40f, 24f, 22f), // UP
+		new Rect(42f, 20f, 22f, 24f), // RIGHT
+		new Rect(20f, 0f, 24f, 22f), // DOWN
+		new Rect(0f, 20f, 22f, 24f), // LEFT
+		
+		new Rect(48f, 46f, 16f, 16f), // UP-RIGHT
+		new Rect(0f, 46f, 16f, 16f), // UP-LEFT
+		new Rect(48f, 0f, 16f, 16f), // DOWN-RIGHT
+		new Rect(0f, 0f, 16f, 16f) // DOWN-LEFT
 	};
 	
 	// absolute screen position of gui
 	private static Vector2 guiPos;
 	// auxiliar variables
-	private Vector2 vec2;// = new Vector2();
+	private Vector2 vec2;
 	
 	void Awake () {
 		if (keepAlive) {
@@ -35,9 +40,6 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 		// calculate scaling if current GUI texture dimension is diferent than 64x64
 		float scaleW = guiRect.width / 64f;
 		float scaleH = guiRect.height / 64f;
-		// scale according target resolution (maybe only necessary when using unity remote, I don't know how to detect when going on remote)
-		scaleW *= 1f;
-		scaleH *= 1f;
 		// scale the array of arrows because they were defined in a 64x64 basis
 		for (int i=0; i < arrowRects.Length ; ++i) {
 			Rect r = arrowRects[i];
@@ -100,24 +102,56 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			Gamepad.fireButton(Gamepad.BUTTONS.UP);
 		}
 		// right?
-		if (arrowRects[1].Contains(pos - guiPos)) {
+		else if (arrowRects[1].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("right");
 #endif
 			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
 		}
 		// down?
-		if (arrowRects[2].Contains(pos - guiPos)) {
+		else if (arrowRects[2].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("down");
 #endif
 			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
 		}
 		// left?
-		if (arrowRects[3].Contains(pos - guiPos)) {
+		else if (arrowRects[3].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("left");
 #endif
+			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
+		}
+		// up-right?
+		else if (arrowRects[4].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
+			Debug.Log("up-right");
+#endif
+			Gamepad.fireButton(Gamepad.BUTTONS.UP);
+			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
+		}
+		// up-left?
+		else if (arrowRects[5].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
+			Debug.Log("up-left");
+#endif
+			Gamepad.fireButton(Gamepad.BUTTONS.UP);
+			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
+		}
+		// up-left?
+		else if (arrowRects[6].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
+			Debug.Log("down-right");
+#endif
+			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
+			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
+		}
+		// up-left?
+		else if (arrowRects[7].Contains(pos - guiPos)) {
+#if UNITY_EDITOR
+			Debug.Log("down-left");
+#endif
+			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
 			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
 		}
 	}
