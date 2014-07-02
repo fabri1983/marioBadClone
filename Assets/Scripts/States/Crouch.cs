@@ -39,18 +39,18 @@ public class Crouch : MonoBehaviour {
 		
 		// if crouching then update accordingly
 		if (sneak != null && crouching) {
-			// if jumping and sneaking: stop sneaking and do crouch
+			// while in the air we can't sneak
 			if (jumping) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
-					startAnim();
+					setAnim(); // set crouch anim
 				}
 			}
 			// if not jumping and not moving and sneaking: stop sneaking and do crouch
 			else if (!moving) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
-					startAnim();
+					setAnim();
 				}
 			}
 			// if not jumping and moving: sneak
@@ -74,10 +74,10 @@ public class Crouch : MonoBehaviour {
 		box.center = theCenter;
 		
 		// set the correct sprite animation
-		startAnim();
+		setAnim();
 	}
 	
-	private void startAnim () {
+	private void setAnim () {
 		crouchAC.animComp.setFPS(crouchAC.animFPS);
 		crouchAC.animComp.setRowLimits(crouchAC.rowStartAnim, crouchAC.rowLengthAnim);
 		crouchAC.animComp.setColLimits(crouchAC.maxColsAnimInRow, crouchAC.colStartAnim, crouchAC.colLengthAnim);

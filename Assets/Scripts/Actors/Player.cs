@@ -142,6 +142,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 				crouch.crouch();
 				isIdle = false;
 			}
+			else
+				crouch.noCrouch();
 			
 			if (isIdle)
 				idle.setIdle(false);
