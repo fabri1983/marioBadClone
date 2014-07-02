@@ -47,7 +47,8 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	}
 	
 	public void die () {
-		if (hidden) {
+		// restore the collider's size and position
+		/*if (hidden) {
 			// transform the collider
 			Vector3 theCenter = box.center;
 			theCenter.y = colliderCenterY;
@@ -56,7 +57,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 			Vector3 theSize = box.size;
 			theSize.y /= hideColliderProportion;
 			box.size = theSize;
-		}
+		}*/
 	}
 	
 	public void hide () {

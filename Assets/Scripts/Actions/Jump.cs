@@ -52,9 +52,11 @@ public class Jump : MonoBehaviour {
 		}
 		
 		isJumping = true;
-		Vector2 v = body.velocity;
-		v.y += jumpVel;
-		body.velocity = v;
+		if (jumpVel != 0f) {
+			Vector2 v = body.velocity;
+			v.y += jumpVel;
+			body.velocity = v;
+		}
 	}
 		
 	/// <summary>
