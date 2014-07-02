@@ -79,37 +79,6 @@ public class EditorScriptAlphaMeshCollider : Editor {
 	}
 	
 	//-------------------------------------------------------------------------
-	[MenuItem ("Component/Physics/Alpha MeshCollider", false, 51)]
-	static void ComponentPhysicsAlphaMeshCollider() {
-		
-		foreach (GameObject gameObj in Selection.gameObjects) {
-			AlphaMeshCollider alphaCollider = gameObj.GetComponent<AlphaMeshCollider>();
-			if (alphaCollider == null) {
-				alphaCollider = gameObj.AddComponent<AlphaMeshCollider>();
-			}
-		}
-    }
-	//-------------------------------------------------------------------------
-	// Validation function for the function above.
-	[MenuItem ("Component/Physics/Alpha MeshCollider", true)]
-	static bool ValidateComponentPhysicsAlphaMeshCollider() {
-		
-		if (Selection.gameObjects.Length == 0) {
-			return false;
-		}
-		else {
-			foreach (GameObject gameObj in Selection.gameObjects) {
-				object tk2dSprite = gameObj.GetComponent("tk2dBaseSprite");
-				if (tk2dSprite != null) {
-					return false;
-				}
-			}
-			return true; // no tk2dSprite selected
-		}
-    }
-	
-	
-	//-------------------------------------------------------------------------
 	[MenuItem ("2D ColliderGen/Add AlphaMeshCollider", false, 10)]
 	static void ColliderGenAddAlphaMeshCollider() {
 		
@@ -165,58 +134,6 @@ public class EditorScriptAlphaMeshCollider : Editor {
 	static bool ValidateColliderGenSelectChildAlphaMeshColliders() {
 		
 		return (Selection.gameObjects.Length > 0);
-    }
-	
-	//-------------------------------------------------------------------------
-	[MenuItem ("2D ColliderGen/SmoothMoves Specific/Add AlphaMeshColliders To BoneAnimation", false, 100)]
-	static void ColliderGenAddAlphaMeshColliderToAllBones() {
-		
-		foreach (GameObject gameObj in Selection.gameObjects) {
-			Component boneAnimObject = gameObj.GetComponent("BoneAnimation");
-			if (boneAnimObject != null) {
-				AddCollidersToBoneAnimationTree(gameObj.transform);
-			}
-		}
-		
-		SelectChildAlphaMeshColliders(Selection.gameObjects);
-    }
-	//-------------------------------------------------------------------------
-	// Validation function for the function above.
-	[MenuItem ("2D ColliderGen/SmoothMoves Specific/Add AlphaMeshColliders To BoneAnimation", true)]
-	static bool ValidateColliderGenAddAlphaMeshColliderToAllBones() {
-		
-		foreach (GameObject gameObj in Selection.gameObjects) {
-			Component boneAnimObject = gameObj.GetComponent("BoneAnimation");
-			if (boneAnimObject != null) {
-				return true;
-			}
-		}
-		return false; // no BoneAnimation component found.
-    }
-	
-	//-------------------------------------------------------------------------
-	[MenuItem ("2D ColliderGen/Orthello Specific/Add AlphaMeshColliders To OTTileMap", false, 101)]
-	static void ColliderGenAddAlphaMeshColliderToTileMap() {
-		
-		foreach (GameObject gameObj in Selection.gameObjects) {
-			Component tileMapObject = gameObj.GetComponent("OTTileMap");
-			if (tileMapObject != null) {
-				AddCollidersToOTTileMap(gameObj.transform, tileMapObject);
-			}
-		}
-    }
-	//-------------------------------------------------------------------------
-	// Validation function for the function above.
-	[MenuItem ("2D ColliderGen/Orthello Specific/Add AlphaMeshColliders To OTTileMap", true)]
-	static bool ValidateColliderGenAddAlphaMeshColliderToTileMap() {
-		
-		foreach (GameObject gameObj in Selection.gameObjects) {
-			Component tileMapObject = gameObj.GetComponent("OTTileMap");
-			if (tileMapObject != null) {
-				return true;
-			}
-		}
-		return false; // no OTTileMap component found.
     }
 	
 	//-------------------------------------------------------------------------
