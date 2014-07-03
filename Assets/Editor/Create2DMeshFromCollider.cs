@@ -14,7 +14,8 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Triangulator))]
 public class Create2DMeshFromCollider : ScriptableWizard
 {
-	public enum MIRROR_DIRS {
+	public enum MIRROR_DIRS
+	{
 		NONE,
 		LEFT_TO_RIGHT,
 		RIGHT_TO_LEFT,
@@ -22,56 +23,50 @@ public class Create2DMeshFromCollider : ScriptableWizard
 		BOTTOM_TO_TOP
 	}
 	
-	// mirroring
-	public MIRROR_DIRS mirrorDir = MIRROR_DIRS.NONE;
-	// z-thickness as in the 2d collider gen
-	public float sourceZThickness = 1;
-	//collider
-	public Mesh _Mesh = null;
-	//Name of Quad Asset
-	public string MeshName = "mesh";
-	//Game Object Name
-	public string GameObjectName = "go_mesh";
+	public MIRROR_DIRS mirrorDir = MIRROR_DIRS.NONE; // mirroring
+	public float sourceZThickness = 1; // z-thickness as in the 2d collider gen
+	public Mesh _Mesh = null; //mesh generated from 2D ColliderGen
+	public string MeshName = "mesh"; // asset name
+	public bool createGameObject = true; // choose yes or no for game object creaiotn into the scene
+	public string GameObjectName = "mesh"; // game object name
 	//Name of asset folder to contain quad asset when created
 	public string AssetFolder = "Assets/Colliders/Generated";
 	
-	
 	[MenuItem("GameObject/Create Other/2D Mesh from 2D ColliderGen")]
-    static void CreateWizard()
-    {
-        ScriptableWizard.DisplayWizard("Create 2D Mesh from a 2D ColliderGen mesh", typeof(Create2DMeshFromCollider));
-    }
+	static void CreateWizard ()
+	{
+		ScriptableWizard.DisplayWizard ("Create 2D Mesh from a 2D ColliderGen mesh", typeof(Create2DMeshFromCollider));
+	}
 	
 	//Function called when window is created
-	void OnEnable()
+	void OnEnable ()
 	{
 		//Call selection change to load asset path from selected, if any
-		OnSelectionChange();
+		OnSelectionChange ();
 	}
 	
 	//Called 10 times per second
-	void OnInspectorUpdate()
+	void OnInspectorUpdate ()
 	{
 	}
 
 	//Function called when window is updated
-	void OnSelectionChange()
+	void OnSelectionChange ()
 	{
 		//Check user selection in editor - check for folder selection
-		if (Selection.objects != null && Selection.objects.Length == 1)
-		{
+		if (Selection.objects != null && Selection.objects.Length == 1) {
 			//Get path from selected asset
-			string assetPath = AssetDatabase.GetAssetPath(Selection.objects[0]);
-			if (assetPath != null && !"".Equals(assetPath))
-				AssetFolder = Path.GetDirectoryName(assetPath);
+			string assetPath = AssetDatabase.GetAssetPath (Selection.objects [0]);
+			if (assetPath != null && !"".Equals (assetPath))
+				AssetFolder = Path.GetDirectoryName (assetPath);
 		}
 	}
 	
 	//Function to create quad mesh
-	void OnWizardCreate()
+	void OnWizardCreate ()
 	{
 		if (_Mesh == null) {
-			Debug.LogError("You have to select a mesh");
+			Debug.LogError ("You have to select a mesh");
 			return;
 		}
 		
@@ -82,68 +77,84 @@ public class Create2DMeshFromCollider : ScriptableWizard
 		/// So we need to extract only frontal vertices (z = z-thickness/2) and avoid duplicates
 		
 		Vector3[] colliderVerts = _Mesh.vertices;
-		HashSet<Vector3> vertsSet = new HashSet<Vector3>(new Vector3Comparer());
+		HashSet<Vector3> vertsSet = new HashSet<Vector3> (new Vector3Comparer ());
 		for (int i=0,c=colliderVerts.Length; i<c; ++i)
-			vertsSet.Add(colliderVerts[i]);
+			vertsSet.Add (colliderVerts [i]);
 		
 		// the set should contain colliderVerts/2 verts according to my analysis
-		if (vertsSet.Count != colliderVerts.Length/2) {
-			Debug.LogError("Set of vertices should contain colliderVerts/2 verts. The set has " + 
-				vertsSet.Count + " and colliderVerts/2 = " + colliderVerts.Length/2);
+		if (vertsSet.Count != colliderVerts.Length / 2) {
+			Debug.LogError ("Set of vertices should contain colliderVerts/2 verts. The set has " + 
+				vertsSet.Count + " and colliderVerts/2 = " + colliderVerts.Length / 2);
 			return;
 		}
 		
-		// some vertices are duplicated although we only take those frontal ones. So use a set
-		HashSet<Vector2> verts2DSet = new HashSet<Vector2>(new Vector2Comparer());
+		// although we only take frontal vertices, some of them may be duplicated
+		HashSet<Vector2> verts2DSet = new HashSet<Vector2> (new Vector2Comparer ());
 		float z = sourceZThickness / 2f;
 		foreach (Vector3 v in vertsSet) {
 			if (v.z == z)
-				verts2DSet.Add((Vector2)v);
+				verts2DSet.Add ((Vector2)v);
 		}
 		Vector2[] verts = new Vector2[verts2DSet.Count];
-		verts2DSet.CopyTo(verts);
+		verts2DSet.CopyTo (verts);
 		
 		// triangulate
-		Mesh mesh = Triangulator.CreateMesh3D(verts, 0f); // use 0 for no extruding
+		Mesh mesh = Triangulator.CreateMesh3D (verts, 0f); // use 0 for no extruding
 		mesh.name = MeshName;
 		
-		//Create asset in database
-		AssetDatabase.CreateAsset(mesh, AssetDatabase.GenerateUniqueAssetPath(AssetFolder + "/" + MeshName) + ".asset");
-        AssetDatabase.SaveAssets();
+		//Create or Replace asset in database
+		CreateOrReplaceAsset(mesh);
 		
-		//Create game object
-		GameObject _2d_mesh = new GameObject(GameObjectName);
-		MeshFilter meshFilter = (MeshFilter)_2d_mesh.AddComponent(typeof(MeshFilter));
-		_2d_mesh.AddComponent(typeof(MeshRenderer));
+		//Create game object to locate into the scene
+		if (createGameObject) {
+			GameObject _2d_mesh = new GameObject (GameObjectName);
+			MeshFilter meshFilter = (MeshFilter)_2d_mesh.AddComponent (typeof(MeshFilter));
+			_2d_mesh.AddComponent (typeof(MeshRenderer));
+			meshFilter.sharedMesh = mesh;
+		}
 		
-		//Assign mesh to mesh filter
-		meshFilter.sharedMesh = mesh;
-		mesh.RecalculateBounds();
+		mesh.RecalculateBounds ();
+	}
+	
+	private void CreateOrReplaceAsset (Mesh mesh) {
+		string path = AssetDatabase.GenerateUniqueAssetPath (AssetFolder + "/" + GameObjectName) + ".asset";
+		Mesh outputMesh = AssetDatabase.LoadMainAssetAtPath (path) as Mesh;
+		
+		// if asset exists, then copy current mesh into outputMesh, so updating the existing asset
+	    if (outputMesh != null) {
+		    EditorUtility.CopySerialized (mesh, outputMesh);
+		    AssetDatabase.SaveAssets ();
+	    }
+		// asset doesn't exist, create it
+	    else {
+		    AssetDatabase.CreateAsset (mesh, path);
+			AssetDatabase.SaveAssets ();
+	    }
 	}
 }
 
 class Vector2Comparer : IEqualityComparer<Vector2>
 {
-  public bool Equals(Vector2 a, Vector2 b)
-  {
-    return a.Equals(b);
-  }
+	public bool Equals (Vector2 a, Vector2 b)
+	{
+		return a.Equals (b);
+	}
 
-  public int GetHashCode(Vector2 v)
-  {
-    return v.GetHashCode();
-  }
+	public int GetHashCode (Vector2 v)
+	{
+		return v.GetHashCode ();
+	}
 }
 
 class Vector3Comparer : IEqualityComparer<Vector3>
 {
-  public bool Equals(Vector3 a, Vector3 b)
-  {
-    return a.Equals(b);
-  }
+	public bool Equals (Vector3 a, Vector3 b)
+	{
+		return a.Equals (b);
+	}
 
-  public int GetHashCode(Vector3 v)
-  {
-    return v.GetHashCode();
-  }
+	public int GetHashCode (Vector3 v)
+	{
+		return v.GetHashCode ();
+	}
 }

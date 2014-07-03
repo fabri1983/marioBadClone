@@ -848,19 +848,6 @@ public class EditorScriptAlphaMeshCollider : Editor {
 				colliderNode = alphaMeshColliderComponent.TargetNodeToAttachMeshCollider;
 				DestroyImmediate(alphaMeshColliderComponent);
 			}
-			// secondary components
-			AlphaMeshColliderSmoothMovesRestore restoreComponent = gameObj.GetComponent<AlphaMeshColliderSmoothMovesRestore>();
-			if (restoreComponent) {
-				DestroyImmediate(restoreComponent);
-			}
-			AlphaMeshColliderUpdateOTTilesSpriteColliders updateComponent = gameObj.GetComponent<AlphaMeshColliderUpdateOTTilesSpriteColliders>();
-			if (updateComponent) {
-				DestroyImmediate(updateComponent);
-			}
-			AlphaMeshColliderCopyColliderEnabled copyComponent = gameObj.GetComponent<AlphaMeshColliderCopyColliderEnabled>();
-			if (copyComponent) {
-				DestroyImmediate(copyComponent);
-			}
 			// MeshCollider component
 			MeshCollider meshColliderComponent = gameObj.GetComponent<MeshCollider>();
 			if (meshColliderComponent) {

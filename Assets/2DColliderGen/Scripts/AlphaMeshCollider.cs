@@ -1847,27 +1847,17 @@ public class AlphaMeshCollider : MonoBehaviour {
 	
 	//-------------------------------------------------------------------------
 	void EnsureSmoothMovesBoneAnimHasRestoreComponent(Component smoothMovesBoneAnimation) {
-		AlphaMeshColliderSmoothMovesRestore restoreComponent = smoothMovesBoneAnimation.GetComponent<AlphaMeshColliderSmoothMovesRestore>();
-		if (restoreComponent == null) {
-			smoothMovesBoneAnimation.gameObject.AddComponent<AlphaMeshColliderSmoothMovesRestore>();
-		}
+		
 	}
 	
 	//-------------------------------------------------------------------------
 	void EnsureOTTilesSpriteHasUpdateComponent(Component otTilesSprite) {
-		AlphaMeshColliderUpdateOTTilesSpriteColliders updateComponent = otTilesSprite.GetComponent<AlphaMeshColliderUpdateOTTilesSpriteColliders>();
-		if (updateComponent == null) {
-			updateComponent = otTilesSprite.gameObject.AddComponent<AlphaMeshColliderUpdateOTTilesSpriteColliders>();
-			updateComponent.SetOTTilesSprite(otTilesSprite);
-		}
+		
 	}
 	
 	//-------------------------------------------------------------------------
 	public void RecalculateCollidersForOTTilesSprite() {
-		AlphaMeshColliderUpdateOTTilesSpriteColliders updateComponent = this.GetComponent<AlphaMeshColliderUpdateOTTilesSpriteColliders>();
-		if (updateComponent != null) {
-			updateComponent.RecreateAllTileColliderPrefabs();
-		}
+		
 	}
 	
 	//-------------------------------------------------------------------------
