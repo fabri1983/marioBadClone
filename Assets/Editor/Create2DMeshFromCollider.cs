@@ -14,16 +14,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Triangulator))]
 public class Create2DMeshFromCollider : ScriptableWizard
 {
-	public enum MIRROR_DIRS
-	{
-		NONE,
-		LEFT_TO_RIGHT,
-		RIGHT_TO_LEFT,
-		TOP_TO_BOTTOM,
-		BOTTOM_TO_TOP
-	}
-	
-	public MIRROR_DIRS mirrorDir = MIRROR_DIRS.NONE; // mirroring
 	public float sourceZThickness = 1; // z-thickness as in the 2d collider gen
 	public Mesh meshSource = null; //mesh generated from 2D ColliderGen
 	public string meshName = "mesh_2d"; // asset name
@@ -97,9 +87,6 @@ public class Create2DMeshFromCollider : ScriptableWizard
 				verts2DSet.Add ((Vector2)v);
 		}
 		
-		// modify the Set of verts if a mirroring strategy was selected
-		applyMirroring(verts2DSet);
-		
 		Vector2[] verts = new Vector2[verts2DSet.Count];
 		verts2DSet.CopyTo (verts);
 		
@@ -128,13 +115,6 @@ public class Create2DMeshFromCollider : ScriptableWizard
 			_2d_mesh.GetComponent<MeshRenderer>().sharedMaterial = materialToUse;
 			meshFilter.sharedMesh = mesh;
 		}
-	}
-	
-	private void applyMirroring (HashSet<Vector2> vertsSet) {
-		if (mirrorDir == MIRROR_DIRS.NONE)
-			return;
-		
-		
 	}
 	
 	private void CreateOrReplaceAsset (Mesh mesh) {
