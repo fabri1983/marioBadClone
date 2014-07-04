@@ -25,12 +25,13 @@ public class Create2DMeshFromCollider : ScriptableWizard
 	
 	public MIRROR_DIRS mirrorDir = MIRROR_DIRS.NONE; // mirroring
 	public float sourceZThickness = 1; // z-thickness as in the 2d collider gen
-	public Mesh _Mesh = null; //mesh generated from 2D ColliderGen
-	public string MeshName = "mesh"; // asset name
+	public Mesh meshSource = null; //mesh generated from 2D ColliderGen
+	public string meshName = "mesh_2d"; // asset name
 	public bool createGameObject = true; // choose yes or no for game object creaiotn into the scene
-	public string GameObjectName = "mesh"; // game object name
+	public string gameObjectName = "mesh_2d"; // game object name
+	public Material materialToUse = null;
 	//Name of asset folder to contain quad asset when created
-	public string AssetFolder = "Assets/Colliders/Generated";
+	public string assetFolder = "Assets/Colliders/Generated";
 	
 	[MenuItem("GameObject/Create Other/2D Mesh from 2D ColliderGen")]
 	static void CreateWizard ()
@@ -58,14 +59,14 @@ public class Create2DMeshFromCollider : ScriptableWizard
 			//Get path from selected asset
 			string assetPath = AssetDatabase.GetAssetPath (Selection.objects [0]);
 			if (assetPath != null && !"".Equals (assetPath))
-				AssetFolder = Path.GetDirectoryName (assetPath);
+				assetFolder = Path.GetDirectoryName (assetPath);
 		}
 	}
 	
 	//Function to create quad mesh
 	void OnWizardCreate ()
 	{
-		if (_Mesh == null) {
+		if (meshSource == null) {
 			Debug.LogError ("You have to select a mesh");
 			return;
 		}
@@ -76,7 +77,7 @@ public class Create2DMeshFromCollider : ScriptableWizard
 		/// Eg: having an outline of 24 verts will generate a mesh collider of 92 verts.
 		/// So we need to extract only frontal vertices (z = z-thickness/2) and avoid duplicates
 		
-		Vector3[] colliderVerts = _Mesh.vertices;
+		Vector3[] colliderVerts = meshSource.vertices;
 		HashSet<Vector3> vertsSet = new HashSet<Vector3> (new Vector3Comparer ());
 		for (int i=0,c=colliderVerts.Length; i<c; ++i)
 			vertsSet.Add (colliderVerts [i]);
@@ -95,29 +96,49 @@ public class Create2DMeshFromCollider : ScriptableWizard
 			if (v.z == z)
 				verts2DSet.Add ((Vector2)v);
 		}
+		
+		// modify the Set of verts if a mirroring strategy was selected
+		applyMirroring(verts2DSet);
+		
 		Vector2[] verts = new Vector2[verts2DSet.Count];
 		verts2DSet.CopyTo (verts);
 		
 		// triangulate
 		Mesh mesh = Triangulator.CreateMesh3D (verts, 0f); // use 0 for no extruding
-		mesh.name = MeshName;
+		mesh.name = meshName;
+		
+		// it seems that 2D ColliderGen creates meshes normalized inside unitary XY plane center in 0.0, so the UVs are offset by 0.5
+		Vector2[] uvs = mesh.uv;
+		for (int i=0,c=uvs.Length; i < c; ++i) {
+			uvs[i].x += 0.5f;
+			uvs[i].y += 0.5f;
+		}
+		mesh.uv = uvs;
 		
 		//Create or Replace asset in database
 		CreateOrReplaceAsset(mesh);
 		
 		//Create game object to locate into the scene
 		if (createGameObject) {
-			GameObject _2d_mesh = new GameObject (GameObjectName);
+			GameObject _2d_mesh = new GameObject (gameObjectName);
 			MeshFilter meshFilter = (MeshFilter)_2d_mesh.AddComponent (typeof(MeshFilter));
 			_2d_mesh.AddComponent (typeof(MeshRenderer));
+			_2d_mesh.GetComponent<MeshRenderer>().castShadows = false;
+			_2d_mesh.GetComponent<MeshRenderer>().receiveShadows = false;
+			_2d_mesh.GetComponent<MeshRenderer>().sharedMaterial = materialToUse;
 			meshFilter.sharedMesh = mesh;
 		}
+	}
+	
+	private void applyMirroring (HashSet<Vector2> vertsSet) {
+		if (mirrorDir == MIRROR_DIRS.NONE)
+			return;
 		
-		mesh.RecalculateBounds ();
+		
 	}
 	
 	private void CreateOrReplaceAsset (Mesh mesh) {
-		string path = AssetDatabase.GenerateUniqueAssetPath (AssetFolder + "/" + GameObjectName) + ".asset";
+		string path = AssetDatabase.GenerateUniqueAssetPath (assetFolder + "/" + gameObjectName) + ".asset";
 		Mesh outputMesh = AssetDatabase.LoadMainAssetAtPath (path) as Mesh;
 		
 		// if asset exists, then copy current mesh into outputMesh, so updating the existing asset

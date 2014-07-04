@@ -162,9 +162,9 @@ public class Triangulator {
 		
 		//texture coordinate
 		Vector2[] uvs = new Vector2[vertices.Length];
-	 
-		for (int i = 0; i < uvs.Length; i++) {
-			uvs [i] = new Vector2 (vertices[i].x, vertices[i].z);
+		for (int i=0,c=uvs.Length; i < c; ++i) {
+			uvs[i].x = vertices[i].x;
+			uvs[i].y = vertices[i].y;
 		}
 
 		m.vertices = vertices;
