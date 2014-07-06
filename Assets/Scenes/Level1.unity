@@ -3936,6 +3936,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
   m_RootGameObject: {fileID: 2119660812}

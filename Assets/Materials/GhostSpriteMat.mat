@@ -22,7 +22,7 @@ Material:
       data:
         first:
           name: _OffsetX
-        second: 0
+        second: .5
       data:
         first:
           name: _OffsetY
