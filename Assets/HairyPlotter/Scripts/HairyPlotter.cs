@@ -19,6 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
 
+//#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -413,7 +414,16 @@ public class HairyPlotter : MonoBehaviour
 
         return clone;
     }
-
+	
+	public static bool RayIntersectsVertex(Ray ray, Vector3 vertex, float epsilon)
+	{
+		// First version: if ray XY origin position is near to XY vertex position then return true
+		if (Mathf.Abs(ray.origin.x - vertex.x) < epsilon &&
+			Mathf.Abs(ray.origin.y - vertex.y) < epsilon)
+			return true;
+		return false;
+	}
+	
     public static bool RayIntersectsTriangle(Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3)
     {
         //Compute vectors along two edges of the triangle.
@@ -666,3 +676,4 @@ public enum HairyPlotterActions
     TriangleClear,
     TriangleSwitch
 }
+//#endif

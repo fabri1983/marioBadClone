@@ -19,6 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
 
+//#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -38,20 +39,26 @@ public class HairyPlotterEditor : Editor
 
     public static readonly Color TriangleHoverColor = new Color(135f / 255f, 203f / 255f, 255f / 255f, 127f / 255f);
     public static readonly Color TriangleSelectedColor = new Color(255f / 255f, 0f, 0f, 127f / 255f);
-
+	
+	public static float GizmoSize = 0.32f;
+	
     HairyPlotter plotter = null;
     SceneView.OnSceneFunc sceneViewCallback = null;
     Texture2D markerTexture = null;
     Material material = null;
-
+	HairyPlotterVertex hoveredVertex = null;
+	bool allowMoveVerts = false;
+	
     Material highlightMaterial
     {
         get
         {
             if (!material)
             {
-                material = new Material("Shader \"Lines/Colored Blended\" {" +
-                    "SubShader { Pass { " +
+                material = new Material(
+					"Shader \"Lines/Colored Blended\" {" +
+                    "SubShader { " +
+                    "	Pass { " +
                     "    Blend SrcAlpha OneMinusSrcAlpha " +
                     "    ZWrite Off Cull Off Fog { Mode Off } " +
                     "    BindChannels {" +
@@ -83,18 +90,19 @@ public class HairyPlotterEditor : Editor
 
         if (plotter.VertexCount == 0)
             return;
-
+		
+		Transform t = plotter.transform; // this for position gizmo vertices and triangles according parent game object world coordinates
+		
         for (int i = 0; i < plotter.VertexCount; ++i)
         {
             Handles.color = Color.white;
-            float size = 0.04f;
 
             if (plotter.IsSelected(i))
             {
                 continue;
             }
 
-            if (Handles.Button(plotter.GetVertex(i).Position, Quaternion.identity, size, size, Handles.CubeCap))
+            if (Handles.Button(t.TransformPoint(plotter.GetVertex(i).Position), Quaternion.identity, GizmoSize, GizmoSize, Handles.CubeCap))
             {
                 plotter.ToggleSelected(plotter.GetVertex(i));
                 Repaint();
@@ -104,19 +112,16 @@ public class HairyPlotterEditor : Editor
         for (int i = 0; i < plotter.VertexCount; ++i)
         {
             Handles.color = Color.white;
-            float size = 0.04f;
 
             if (plotter.IsSelected(i))
             {
                 if (plotter.UvEditVertex == plotter.GetVertex(i))
                 {
                     Handles.color = UvEditedVertexColor;
-                    size = 0.02f;
                 }
                 else
                 {
                     Handles.color = SelectedVertexColor;
-                    size = 0.02f;
                 }
             }
             else
@@ -124,7 +129,7 @@ public class HairyPlotterEditor : Editor
                 continue;
             }
 
-            if (Handles.Button(plotter.GetVertex(i).Position, Quaternion.identity, size, size, Handles.CubeCap))
+            if (Handles.Button(t.TransformPoint(plotter.GetVertex(i).Position), Quaternion.identity, GizmoSize, GizmoSize, Handles.CubeCap))
             {
                 plotter.ToggleSelected(plotter.GetVertex(i));
                 Repaint();
@@ -137,14 +142,14 @@ public class HairyPlotterEditor : Editor
         if (plotter.HoveredTriangle != null)
         {
             HairyPlotterTriangle tri = plotter.HoveredTriangle;
-
+			Transform t = plotter.transform; // this for position gizmo vertices and triangles according parent game object world coordinates
             highlightMaterial.SetPass(0);
 
             GL.Begin(GL.TRIANGLES);
             GL.Color(TriangleHoverColor);
-            GL.Vertex(tri.GetVertex(0).Position);
-            GL.Vertex(tri.GetVertex(1).Position);
-            GL.Vertex(tri.GetVertex(2).Position);
+            GL.Vertex(t.TransformPoint(tri.GetVertex(0).Position));
+            GL.Vertex(t.TransformPoint(tri.GetVertex(1).Position));
+            GL.Vertex(t.TransformPoint(tri.GetVertex(2).Position));
             GL.End();
         }
 
@@ -154,13 +159,13 @@ public class HairyPlotterEditor : Editor
         {
             GL.Begin(GL.TRIANGLES);
             GL.Color(TriangleSelectedColor);
-
+			Transform t = plotter.transform; // this for position gizmo vertices and triangles according parent game object world coordinates
             for (int i = 0; i < selectedTriangles.Count; ++i)
             {
                 HairyPlotterTriangle tri = selectedTriangles[i];
-                GL.Vertex(tri.GetVertex(0).Position);
-                GL.Vertex(tri.GetVertex(1).Position);
-                GL.Vertex(tri.GetVertex(2).Position);
+                GL.Vertex(t.TransformPoint(tri.GetVertex(0).Position));
+                GL.Vertex(t.TransformPoint(tri.GetVertex(1).Position));
+                GL.Vertex(t.TransformPoint(tri.GetVertex(2).Position));
             }
 
             GL.End();
@@ -186,9 +191,13 @@ public class HairyPlotterEditor : Editor
 
         if (plotter.CurrentAction == HairyPlotterActions.None)
         {
-            plotter.SetTriangleHover(HoverTriangle());
+			// don't hover triangle when moving vertices
+			if (allowMoveVerts)
+            	plotter.SetTriangleHover(null);
+			else
+				plotter.SetTriangleHover(HoverTriangle());
 
-            if (plotter.ToggleSelected(PickTriangle()))
+            if (plotter.ToggleSelected(PickTriangle()) && !allowMoveVerts)
             {
                 Repaint();
             }
@@ -197,6 +206,51 @@ public class HairyPlotterEditor : Editor
             {
                 SceneView.lastActiveSceneView.Repaint();
             }
+			
+			// detect if dragging a single vertex or selected vertices and update position/s according mouse position
+			if (Event.current.button == 0) {
+				KeyCode _keyCode = Event.current.keyCode;
+				EventType _type = Event.current.type;
+				
+				if (_type == EventType.MouseDown) {
+					// pick selected vertices?
+					if (_keyCode == KeyCode.LeftShift || _keyCode == KeyCode.RightShift) {
+						// use plotter.SelectedVertices
+					}
+					// or pick single vertex
+					else
+						hoveredVertex = PickVertex();
+					// set flag for allow moving vertices
+					allowMoveVerts = true;
+				}
+				// on mouse up finish the edition
+				else if (_type == EventType.MouseUp) {
+					allowMoveVerts = false;
+					hoveredVertex = null;
+				}
+				// while dragging mouse update vertex position
+				else if (_type == EventType.MouseDrag && allowMoveVerts) {
+					
+					Ray r = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+					Transform t = plotter.transform; // this for position gizmo vertices and triangles according parent game object world coordinates
+					Vector2 p = t.InverseTransformPoint(r.origin); // use inverse trasnform because then we transform again for displaying
+					
+					// moving selected vertices?
+					if (_keyCode == KeyCode.LeftShift || _keyCode == KeyCode.RightShift) {
+						for (int i=0,c=plotter.SelectedVertices.Count; i < c; ++i) {
+							plotter.SelectedVertices[i].Position.x = p.x;
+			            	plotter.SelectedVertices[i].Position.y = p.y;
+						}
+					}
+					// or single vertex?
+					else if (hoveredVertex != null) {
+						hoveredVertex.Position.x = p.x;
+			            hoveredVertex.Position.y = p.y;
+					}
+					plotter.Dirty = true;
+					plotter.ResetSelectionPosition();
+				}
+			}
         }
         
         if (plotter.CurrentAction == HairyPlotterActions.TriangleSwitch)
@@ -221,7 +275,11 @@ public class HairyPlotterEditor : Editor
 
         DrawTriangles();
     }
-
+	
+	HairyPlotterVertex PickVertex () {
+		return RaycastVertex();
+	}
+	
     HairyPlotterTriangle HoverTriangle()
     {
         return RaycastTriangle();
@@ -241,7 +299,8 @@ public class HairyPlotterEditor : Editor
     {
         // This transform from GUI space to scene camera ray
         Ray r = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-
+		Transform t = plotter.transform; // this for position gizmo vertices and triangles according parent game object world coordinates
+		
         // Iterate over each triangle in plotter
         for (int i = 0; i < plotter.TriangleCount; ++i)
         {
@@ -251,22 +310,43 @@ public class HairyPlotterEditor : Editor
             // Intersect ray
             if (HairyPlotter.RayIntersectsTriangle(
                 r,
-                triangle.GetVertex(0).Position,
-                triangle.GetVertex(1).Position,
-                triangle.GetVertex(2).Position
+                t.TransformPoint(triangle.GetVertex(0).Position),
+                t.TransformPoint(triangle.GetVertex(1).Position),
+                t.TransformPoint(triangle.GetVertex(2).Position)
             ))
             {
                 // Found!
                 plotter.CurrentAction = HairyPlotterActions.None;
-
-                // Destroy triangle
                 return triangle;
             }
         }
 
         return null;
     }
+	
+	HairyPlotterVertex RaycastVertex()
+    {
+		// This transform from GUI space to scene camera ray
+        Ray r = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+		Transform t = plotter.transform; // this for position gizmo vertices and triangles according parent game object world coordinates
+		
+		// Iterate over each vertex in plotter
+        for (int i = 0; i < plotter.VertexCount; ++i)
+        {
+            // Grab triangle
+            HairyPlotterVertex vertex = plotter.GetVertex(i);
 
+            // Intersect ray
+            if (HairyPlotter.RayIntersectsVertex(r, t.TransformPoint(vertex.Position), GizmoSize))
+            {
+                // Found!
+                return vertex;
+            }
+        }
+		
+		return null;
+	}
+	
     public override void OnInspectorGUI()
     {
         plotter = (HairyPlotter)target;
@@ -815,3 +895,4 @@ public class HairyPlotterEditor : Editor
         return v;
     }
 }
+//#endif

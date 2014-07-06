@@ -119,7 +119,7 @@ public class Create2DMeshFromCollider : ScriptableWizard
 	
 	private void CreateOrReplaceAsset (Mesh mesh) {
 		string path = AssetDatabase.GenerateUniqueAssetPath (assetFolder + "/" + gameObjectName) + ".asset";
-		Mesh outputMesh = AssetDatabase.LoadMainAssetAtPath (path) as Mesh;
+		Mesh outputMesh = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
 		
 		// if asset exists, then copy current mesh into outputMesh, so updating the existing asset
 	    if (outputMesh != null) {

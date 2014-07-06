@@ -135,6 +135,9 @@ public class HairyPlotterMeshFilterEditor : Editor
                     // Clean upp assets
                     CleanUp(plotter);
                 }
+				
+				// select vertex gizmo size
+				HairyPlotterEditor.GizmoSize = EditorGUILayout.FloatField("Gizmo Vertex Zize", HairyPlotterEditor.GizmoSize);
             }
         }
         else
