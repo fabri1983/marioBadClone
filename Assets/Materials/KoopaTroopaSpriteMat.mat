@@ -40,3 +40,11 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SetupVec1
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _SetupVec2
+        second: {r: 0, g: 0, b: 0, a: 0}

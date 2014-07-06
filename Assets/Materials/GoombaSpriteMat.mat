@@ -44,3 +44,11 @@ Material:
         first:
           name: _EmisColor
         second: {r: .501960814, g: .501960814, b: .501960814, a: 1}
+      data:
+        first:
+          name: _SetupVec1
+        second: {r: 0, g: 2, b: 1, a: 0}
+      data:
+        first:
+          name: _SetupVec2
+        second: {r: .5, g: 1, b: 0, a: 0}

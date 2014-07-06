@@ -32,7 +32,8 @@ public class AnimateTiledTexture : MonoBehaviour
 	private float updateTime;						// Use for none coroutine function. Keeps track of time passed during game loops
 	private float period;							// The inverse of frames per second. Calculated every time the fps is changed
 	private float offsetYStart;						// what is the offset in Y the current animation starts from
-	private Vector2 offsetTemp = Vector2.zero;
+	private Vector2 offsetTemp;
+	//private Vector4 setupVec1, setupVec2;
 	private List<VoidEvent> _voidEventCallbackList;	// A list of functions we need to call if events are enabled
 	public delegate void VoidEvent();				// The Event delegate
 	
@@ -170,7 +171,9 @@ public class AnimateTiledTexture : MonoBehaviour
         _textureTiling -= _buffer;
 		
 		// Assign the new texture tiling
-        //renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
+        // old approach:
+		//renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
+		// new approach:
 		renderer.sharedMaterial.SetFloat("_TilingX", _textureTiling.x);
 		renderer.sharedMaterial.SetFloat("_TilingY", _textureTiling.y);
     }
@@ -259,19 +262,35 @@ public class AnimateTiledTexture : MonoBehaviour
  
 		// Reset the y offset, if needed
         if (y == 1f)
-            y = 0.0f;
+            y = 0f;
  
         // If we have scaled the texture, we need to reposition the texture to the center of the object
-        x += ((1f / _maxColsInRows) - _textureTiling.x) / 2.0f;
-        y += ((1f / _rowsTotalInSprite) - _textureTiling.y) / 2.0f;
+        x += ((1f / _maxColsInRows) - _textureTiling.x) / 2f;
+        y += ((1f / _rowsTotalInSprite) - _textureTiling.y) / 2f;
  
         // Add an additional offset if the user does not want the texture centered
         offsetTemp.x = x + _offset.x;
         offsetTemp.y = y + _offset.y;
  
         // Update the material
-        //renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);
+        //old approach:
+		/*renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);*/
+		//new approach:
 		renderer.sharedMaterial.SetFloat("_OffsetX", offsetTemp.x);
 		renderer.sharedMaterial.SetFloat("_OffsetY", offsetTemp.y);
+		
+		// setupVec1: _index, _maxColsInRows, _rowsTotalInSprite, offsetYStart
+		/*setupVec1.x = _index;
+		setupVec1.y = _maxColsInRows;
+		setupVec1.z = _rowsTotalInSprite;
+		setupVec1.w = offsetYStart;
+		// setupVec2: _textureTiling.x, _textureTiling.y, _offset.x, _offset.y
+		setupVec2.x = _textureTiling.x;
+		setupVec2.y = _textureTiling.y;
+		setupVec2.z = _offset.x;
+		setupVec2.w = _offset.y;
+		// update shader params
+		renderer.sharedMaterial.SetVector("_SetupVec1", setupVec1);
+		renderer.sharedMaterial.SetVector("_SetupVec2", setupVec2);*/
     }
 }
