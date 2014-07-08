@@ -40,6 +40,7 @@ public class HairyPlotterEditor : Editor
     public static readonly Color TriangleSelectedColor = new Color(255f / 255f, 0f, 0f, 127f / 255f);
 	
 	public static float GizmoSize = 0.32f;
+	public static bool KeepUVOnVertsMove = true;
 	
     HairyPlotter plotter = null;
     SceneView.OnSceneFunc sceneViewCallback = null;
@@ -239,12 +240,20 @@ public class HairyPlotterEditor : Editor
 						for (int i=0,c=plotter.SelectedVertices.Count; i < c; ++i) {
 							plotter.SelectedVertices[i].Position.x = p.x;
 			            	plotter.SelectedVertices[i].Position.y = p.y;
+							if (HairyPlotterEditor.KeepUVOnVertsMove) {
+								plotter.SelectedVertices[i].Uv.x = 0.5f + p.x;
+					            plotter.SelectedVertices[i].Uv.y = 0.5f + p.y;
+							}
 						}
 					}
 					// or single vertex?
 					else if (hoveredVertex != null) {
 						hoveredVertex.Position.x = p.x;
 			            hoveredVertex.Position.y = p.y;
+						if (HairyPlotterEditor.KeepUVOnVertsMove) {
+							hoveredVertex.Uv.x = 0.5f + p.x;
+				            hoveredVertex.Uv.y = 0.5f + p.y;
+						}
 					}
 					plotter.Dirty = true;
 					plotter.ResetSelectionPosition();

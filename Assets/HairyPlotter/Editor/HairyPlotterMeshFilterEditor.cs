@@ -138,6 +138,8 @@ public class HairyPlotterMeshFilterEditor : Editor
 				
 				// select vertex gizmo size
 				HairyPlotterEditor.GizmoSize = EditorGUILayout.FloatField("Gizmo Vertex Zize", HairyPlotterEditor.GizmoSize);
+				// keep UV mapping while moving verts?
+				HairyPlotterEditor.KeepUVOnVertsMove = EditorGUILayout.Toggle("Keep vertices UVs", HairyPlotterEditor.KeepUVOnVertsMove);
             }
         }
         else

@@ -74,9 +74,8 @@ public class Create2DMeshFromCollider : ScriptableWizard
 		
 		// the set should contain colliderVerts/2 verts according to my analysis
 		if (vertsSet.Count != colliderVerts.Length / 2) {
-			Debug.LogError ("Set of vertices should contain colliderVerts/2 verts. The set has " + 
+			Debug.LogWarning("Set of vertices should contain colliderVerts/2 verts. The set has " + 
 				vertsSet.Count + " and colliderVerts/2 = " + colliderVerts.Length / 2);
-			return;
 		}
 		
 		// although we only take frontal vertices, some of them may be duplicated
@@ -118,7 +117,7 @@ public class Create2DMeshFromCollider : ScriptableWizard
 	}
 	
 	private void CreateOrReplaceAsset (Mesh mesh) {
-		string path = AssetDatabase.GenerateUniqueAssetPath (assetFolder + "/" + gameObjectName) + ".asset";
+		string path = AssetDatabase.GenerateUniqueAssetPath (assetFolder + "/" + meshName) + ".asset";
 		Mesh outputMesh = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
 		
 		// if asset exists, then copy current mesh into outputMesh, so updating the existing asset
