@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -676,4 +676,4 @@ public enum HairyPlotterActions
     TriangleClear,
     TriangleSwitch
 }
-//#endif
+#endif
