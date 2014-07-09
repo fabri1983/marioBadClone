@@ -20,9 +20,15 @@ public enum Direction
 
 enum Element
 {
+	// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with pixels
 	TRANSFORM, GUI_TEXT, GUI_TEXTURE
 }
 
+/// <summary>
+/// This class modifies transform component for doing a transition effect.
+/// When this script in a GUIText or GUITexture element, please consider your actual pixel offset 
+/// and set the start offset transform property accordingly.
+/// </summary>
 public class TransitionGUIFx : MonoBehaviour {
 	
 	public Vector2 startOffsetTransform = Vector2.zero;
@@ -40,6 +46,7 @@ public class TransitionGUIFx : MonoBehaviour {
 	private float offsetX=0;
 	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
+	private bool update;
 	
 	void Awake ()
 	{
@@ -49,6 +56,7 @@ public class TransitionGUIFx : MonoBehaviour {
 		else if (guiText != null)
 			elem = Element.GUI_TEXT;*/
 		
+		update = false;
 		prepareTransition();
 	}
 	
@@ -57,7 +65,7 @@ public class TransitionGUIFx : MonoBehaviour {
 		if (useCoroutine)
 			StartCoroutine("DoCoroutine");
 		else
-			Invoke("DoTransition", startDelaySecs);
+			Invoke("enableUpdate", startDelaySecs);
 	}
 	
 	void OnDisable () {
@@ -68,7 +76,12 @@ public class TransitionGUIFx : MonoBehaviour {
 	void Update () {
 		if (useCoroutine)
 			return;
-		DoTransition();
+		if (update)
+			DoTransition();
+	}
+	
+	void enableUpdate () {
+		update = true;
 	}
 	
 	private void prepareTransition ()
