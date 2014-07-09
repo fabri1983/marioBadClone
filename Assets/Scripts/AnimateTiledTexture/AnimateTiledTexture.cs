@@ -199,9 +199,12 @@ public class AnimateTiledTexture : MonoBehaviour
     }
 	
 	void Update () {
-		if (!_useCoroutine && (Time.time - updateTime > period) && _isPlaying) {
+		if (_useCoroutine || !_isPlaying)
+			return;
+		float t = Time.time;
+		if (t - updateTime > period) {
 			updateTiling();
-			updateTime = Time.time;
+			updateTime = t;
 		}
 	}
 	
@@ -215,7 +218,7 @@ public class AnimateTiledTexture : MonoBehaviour
 				yield break;
 			
 			// Wait a time before we move to the next frame. Note, this gives unexpected results on mobile devices
-            yield return new WaitForSeconds(1f / _framesPerSecond);
+            yield return new WaitForSeconds(period);
         }        
 	}
 	
