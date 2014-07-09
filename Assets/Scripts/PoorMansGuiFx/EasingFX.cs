@@ -3,11 +3,11 @@
 using UnityEngine;
 using System;
 
-public static class Easing
+public static class EasingFX
 {
 	// Adapted from source : http://www.robertpenner.com/easing/
 	
-	public static float Ease(double linearStep, float acceleration, EasingType type)
+	public static float Ease(float linearStep, float acceleration, EasingType type)
 	{
 		float easedStep = acceleration > 0 ? EaseIn(linearStep, type) : 
 			acceleration < 0 ? EaseOut(linearStep, type) : 
@@ -16,12 +16,12 @@ public static class Easing
 		return MathHelper.Lerp(linearStep, easedStep, Math.Abs(acceleration));
 	}
 	
-	public static float EaseIn(double linearStep, EasingType type)
+	public static float EaseIn(float linearStep, EasingType type)
 	{
 		switch (type)
 		{
 		case EasingType.Step:       return linearStep < 0.5 ? 0 : 1;
-		case EasingType.Linear:     return (float)linearStep;
+		case EasingType.Linear:     return linearStep;
 		case EasingType.Sine:       return Sine.EaseIn(linearStep);
 		case EasingType.Quadratic:  return Power.EaseIn(linearStep, 2);
 		case EasingType.Cubic:      return Power.EaseIn(linearStep, 3);
@@ -31,7 +31,7 @@ public static class Easing
 		throw new NotImplementedException();
 	}
 	
-	public static float EaseOut(double linearStep, EasingType type)
+	public static float EaseOut(float linearStep, EasingType type)
 	{
 		switch (type)
 		{
@@ -46,11 +46,11 @@ public static class Easing
 		throw new NotImplementedException();
 	}
 	
-	public static float EaseInOut(double linearStep, EasingType easeInType, EasingType easeOutType)
+	public static float EaseInOut(float linearStep, EasingType easeInType, EasingType easeOutType)
 	{
 		return linearStep < 0.5 ? EaseInOut(linearStep, easeInType) : EaseInOut(linearStep, easeOutType);
 	}
-	public static float EaseInOut(double linearStep, EasingType type)
+	public static float EaseInOut(float linearStep, EasingType type)
 	{
 		switch (type)
 		{
@@ -67,15 +67,15 @@ public static class Easing
 	
 	static class Sine
 	{
-		public static float EaseIn(double s)
+		public static float EaseIn(float s)
 		{
 			return (float)Math.Sin(s * MathHelper.HalfPi - MathHelper.HalfPi) + 1;
 		}
-		public static float EaseOut(double s)
+		public static float EaseOut(float s)
 		{
 			return (float)Math.Sin(s * MathHelper.HalfPi);
 		}
-		public static float EaseInOut(double s)
+		public static float EaseInOut(float s)
 		{
 			return (float)(Math.Sin(s * MathHelper.Pi - MathHelper.HalfPi) + 1) / 2;
 		}
@@ -83,16 +83,16 @@ public static class Easing
 	
 	static class Power
 	{
-		public static float EaseIn(double s, int power)
+		public static float EaseIn(float s, int power)
 		{
 			return (float)Math.Pow(s, power);
 		}
-		public static float EaseOut(double s, int power)
+		public static float EaseOut(float s, int power)
 		{
 			var sign = power % 2 == 0 ? -1 : 1;
 			return (float)(sign * (Math.Pow(s - 1, power) + sign));
 		}
-		public static float EaseInOut(double s, int power)
+		public static float EaseInOut(float s, int power)
 		{
 			s *= 2;
 			if (s < 1) return EaseIn(s, power) / 2;
@@ -118,8 +118,8 @@ public static class MathHelper
 	public const float Pi = (float)Math.PI;
 	public const float HalfPi = (float)(Math.PI / 2);
 	
-	public static float Lerp(double from, double to, double step)
+	public static float Lerp(float _from, float _to, float _step)
 	{
-		return (float)((to - from) * step + from);
+		return (float)((_to - _from) * _step + _from);
 	}
 }

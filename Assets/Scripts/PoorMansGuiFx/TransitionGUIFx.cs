@@ -24,31 +24,30 @@ enum Element
 }
 
 public class TransitionGUIFx : MonoBehaviour {
-
+	
+	public Vector2 startOffsetTransform = Vector2.zero;
 	public Transition _transition;
 	public Direction direction;
-	public float fps = 20f;
 	public float startDelaySecs=0;
 	public int steps = 32;
-	public float acceleration = 1.0f;
+	public float acceleration = 1f;
 	public EasingType easingType;
 	public bool useCoroutine = false;
 	
 	private Element elem; // which element the script will transform
+	private Vector2 finalPos = Vector2.zero;
 	private int currentStep;
 	private float offsetX=0;
 	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
-	private Vector2 tempPos = Vector2.zero;
-	private float updateTime;
 	
 	void Awake ()
 	{
 		elem = Element.TRANSFORM;
-		if (guiTexture != null)
+		/*if (guiTexture != null)
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)
-			elem = Element.GUI_TEXT;
+			elem = Element.GUI_TEXT;*/
 		
 		prepareTransition();
 	}
@@ -57,10 +56,8 @@ public class TransitionGUIFx : MonoBehaviour {
 		currentStep = 0;
 		if (useCoroutine)
 			StartCoroutine("DoCoroutine");
-		else {
-			updateTime = 0;
+		else
 			Invoke("DoTransition", startDelaySecs);
-		}
 	}
 	
 	void OnDisable () {
@@ -71,59 +68,34 @@ public class TransitionGUIFx : MonoBehaviour {
 	void Update () {
 		if (useCoroutine)
 			return;
-		float t = Time.time;
-		if (t - updateTime > 1f/fps) {
-			DoTransition();
-			updateTime = t;
-		}
-	}
-	
-	// actual transition happens here
-	IEnumerator DoCoroutine () 
-	{
-		// startup delay
-		if (startDelaySecs > 0)
-		{
-			float startTime = Time.time;
-			while(Time.time < startTime + startDelaySecs)
-			{
-				yield return null;
-			}
-		} // startup delay
-
-		// main transition/easing loop
-		while (currentStep < steps)
-		{
-			transition(currentStep);
-			// Wait a time before we move to the next frame. Note, this gives unexpected results on mobile devices
-            yield return new WaitForSeconds(1f/fps);
-			
-			++currentStep;
-
-		} // transition for loop
-		
-		this.enabled = false;
+		DoTransition();
 	}
 	
 	private void prepareTransition ()
 	{
+		if (Mathf.Abs(steps) < 2)
+			steps = (int)Mathf.Sign(steps) * 2;
+		
+		// set final position
+		finalPos.Set(transform.position.x, transform.position.y);
+		
 		if (elem == Element.TRANSFORM)
-			startPos = transform.position;
+			startPos.Set(transform.position.x + startOffsetTransform.x, transform.position.y + startOffsetTransform.y);
 		else if (elem == Element.GUI_TEXT)
-			startPos.Set(guiText.pixelOffset.x, guiText.pixelOffset.y);
+			startPos.Set(guiText.pixelOffset.x + startOffsetTransform.x, guiText.pixelOffset.y + startOffsetTransform.y);
 		else if (elem == Element.GUI_TEXTURE)
-			startPos.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
+			startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);
 		
 		// calculate automatic offsets
 		switch (_transition)
 		{
 		case Transition.FromCurrentPosition:
-			offsetX = -Easing.Ease(0,acceleration, easingType);
-			offsetY = -Easing.Ease(0,acceleration, easingType);
+			offsetX = -EasingFX.Ease(0,acceleration, easingType);
+			offsetY = -EasingFX.Ease(0,acceleration, easingType);
 			break;
 		case Transition.ToCurrentPosition:
-			offsetX = -Easing.Ease(1,acceleration, easingType);
-			offsetY = -Easing.Ease(1,acceleration, easingType);
+			offsetX = -EasingFX.Ease(1,acceleration, easingType);
+			offsetY = -EasingFX.Ease(1,acceleration, easingType);
 			break;
 		}
 
@@ -167,11 +139,41 @@ public class TransitionGUIFx : MonoBehaviour {
 		}
 	}
 	
+	// actual transition happens here
+	IEnumerator DoCoroutine () 
+	{
+		// startup delay
+		if (startDelaySecs > 0)
+		{
+			float startTime = Time.time;
+			while(Time.time < startTime + startDelaySecs)
+			{
+				yield return null;
+			}
+		}
+
+		// main transition/easing loop
+		//while (currentStep < steps)
+		while (true)
+		{
+			transition(currentStep);
+			++currentStep;
+			if (finalPos.x == transform.position.x && finalPos.y == transform.position.y)
+				break;
+            yield return null;
+		}
+		
+		this.enabled = false;
+	}
+	
 	private void DoTransition ()
 	{
 		// main transition/easing loop
-		if (currentStep >= steps)
+		//if (currentStep >= steps)
+		if (finalPos.x == transform.position.x && finalPos.y == transform.position.y) {
 			this.enabled = false;
+			return;
+		}
 		transition(currentStep);
 		++currentStep;
 	}
@@ -179,41 +181,53 @@ public class TransitionGUIFx : MonoBehaviour {
 	private void transition (int step)
 	{
 		// TODO: remap step from 0-steps into 0-1
-		float e = Easing.Ease((float)step/((float)steps-1f), acceleration, easingType);
+		float linearStep = (float)step/(steps-1);
+		float e = EasingFX.Ease(linearStep, acceleration, easingType);
+		float newX=0f, newY=0f;
 		
 		switch (direction)
 		{
 		case Direction.Up:
-			tempPos.Set(startPos.x + offsetX, startPos.y + offsetY + e);
+			newX=startPos.x + offsetX; newY=startPos.y + offsetY + e;
+			if (newY > finalPos.y) newY = finalPos.y;
 			break;
 		case Direction.Down:
-			tempPos.Set(startPos.x + offsetX, startPos.y + offsetY - e);
+			newX=startPos.x + offsetX; newY=startPos.y + offsetY - e;
+			// don't exceed the final position
+			if (newY < finalPos.y) newY = finalPos.y;
 			break;
 		case Direction.Left:
-			tempPos.Set(startPos.x + offsetX - e, startPos.y + offsetY);
+			newX=startPos.x + offsetX - e; newY=startPos.y + offsetY;
+			// don't exceed the final position
+			if (newX < finalPos.x) newX = finalPos.x;
 			break;
 		case Direction.Right:
-			tempPos.Set(startPos.x + offsetX + e, startPos.y + offsetY);
+			newX=startPos.x + offsetX + e; newY=startPos.y + offsetY;
+			// don't exceed the final position
+			if (newX > finalPos.x) newX = finalPos.x;
 			break;
 		}
 		
-		if (elem == Element.TRANSFORM) {
+		switch (elem)
+		{
+		case Element.TRANSFORM:
 			Vector3 pos = transform.position;
-			pos.x = tempPos.x;
-			pos.y = tempPos.y;
+			pos.x = newX;
+			pos.y = newY;
 			transform.position = pos;
-		}
-		else if (elem == Element.GUI_TEXT) {
+			break;
+		case Element.GUI_TEXT:
 			Vector2 pOffset = guiText.pixelOffset;
-			pOffset.x = tempPos.x;
-			pOffset.y = tempPos.y;
+			pOffset.x = newX;
+			pOffset.y = newY;
 			guiText.pixelOffset = pOffset;
-		}
-		else if (elem == Element.GUI_TEXTURE) {
+			break;
+		case Element.GUI_TEXTURE:
 			Rect pInset = guiTexture.pixelInset;
-			pInset.x = tempPos.x;
-			pInset.y = tempPos.y;
+			pInset.x = newX;
+			pInset.y = newY;
 			guiTexture.pixelInset = pInset;
+			break;
 		}
 	}
 	
