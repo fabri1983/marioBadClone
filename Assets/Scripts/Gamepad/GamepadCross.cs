@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GamepadCross : MonoBehaviour, ITouchListener {
+public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	public bool keepAlive = true;
 	public bool isStaticRuntime = true;
@@ -32,20 +32,22 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			DontDestroyOnLoad(this.gameObject);
 		}
 		
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
-		
-		Rect guiRect = guiTexture.GetScreenRect();
-		guiPos = new Vector2(guiRect.x, guiRect.y);
+		TransitionGUIFxManager.Instance.register(this, false);
 		
 		// calculate scaling if current GUI texture dimension is diferent than 64x64
-		float scaleW = guiRect.width / 64f;
-		float scaleH = guiRect.height / 64f;
+		float scaleW = guiTexture.pixelInset.width / 64f;
+		float scaleH = guiTexture.pixelInset.height / 64f;
 		// scale the array of arrows because they were defined in a 64x64 basis
 		for (int i=0; i < arrowRects.Length ; ++i) {
 			Rect r = arrowRects[i];
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
 		}
 	}
+	
+	void OnDestroy () {
+		//TransitionGUIFxManager.Instance.remove(this);
+	}
+	
 #if UNITY_EDITOR
 	void OnGUI () {
 		if (debugZones && EventType.Repaint == Event.current.type) {
@@ -57,7 +59,8 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 			}
 		}
 	}
-#endif	
+#endif
+	
 	/**
 	 * This only fired on PC
 	 */
@@ -88,6 +91,17 @@ public class GamepadCross : MonoBehaviour, ITouchListener {
 	}
 	
 	public void OnEndedTouch (Touch t) {}
+	
+	public TransitionGUIFx[] getTransitions () {
+		return GetComponents<TransitionGUIFx>();
+	}
+	
+	public void onEndTransition (TransitionGUIFx fx) {
+		// register with touch event manager once the transition finishes since the manager
+		// depends on final element's position
+		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
+		guiPos.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
+	}
 	
 	private static void optionSelected(Vector2 pos) {
 #if UNITY_EDITOR

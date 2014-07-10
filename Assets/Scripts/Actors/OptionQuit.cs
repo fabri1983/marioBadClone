@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionQuit : MonoBehaviour, ITouchListener {
+public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	private bool showOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;
@@ -36,7 +36,11 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 		rectBack = new Rect(Screen.width / 2 - 25 + 50, Screen.height / 2 - 45, 50, 24);
 		rectLevelSel = new Rect(Screen.width / 2 - 35, Screen.height / 2 + 10, 70, 24);
 		
-		TouchEventManager.Instance.register(this, TouchPhase.Ended);
+		TransitionGUIFxManager.Instance.register(this, false);
+	}
+	
+	void OnDestroy () {
+		//TransitionGUIFxManager.Instance.remove(this);
 	}
 	
 	/**
@@ -67,6 +71,16 @@ public class OptionQuit : MonoBehaviour, ITouchListener {
 	
 	public void OnEndedTouch (Touch t) {
 		optionSelected();
+	}
+	
+	public TransitionGUIFx[] getTransitions () {
+		return GetComponents<TransitionGUIFx>();
+	}
+	
+	public void onEndTransition (TransitionGUIFx fx) {
+		// register with touch event manager once the transition finishes since the manager
+		// depends on final element's position
+		TouchEventManager.Instance.register(this, TouchPhase.Ended);
 	}
 	
 	public void reset() {

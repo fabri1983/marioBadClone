@@ -1,18 +1,19 @@
 using UnityEngine;
 
-public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable {
+public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransitionListener {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;
 
 	void Awake () {
-		TouchEventManager.Instance.register(this, TouchPhase.Began);
 		PauseGameManager.Instance.register(this);
+		TransitionGUIFxManager.Instance.register(this, false);
 	}
 	
 	void OnDestroy () {
 		TouchEventManager.Instance.removeListener(this);
 		PauseGameManager.Instance.remove(this);
+		//TransitionGUIFxManager.Instance.remove(this);
 	}
 	
 	/**
@@ -58,5 +59,15 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable {
 	
 	public bool isSceneOnly () {
 		return true;
+	}
+	
+	public TransitionGUIFx[] getTransitions () {
+		return GetComponents<TransitionGUIFx>();
+	}
+	
+	public void onEndTransition (TransitionGUIFx fx) {
+		// register with touch event manager once the transition finishes since the manager
+		// depends on final element's position
+		TouchEventManager.Instance.register(this, TouchPhase.Began);
 	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamepadButton : MonoBehaviour, ITouchListener {
+public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	// this modified in inspector window
 	public string buttonLabel = "A";
@@ -12,8 +12,11 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 		if (keepAlive)
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
-
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
+		TransitionGUIFxManager.Instance.register(this, false);
+	}
+	
+	void OnDestroy () {
+		//TransitionGUIFxManager.Instance.remove(this);
 	}
 	
 	/**
@@ -34,6 +37,16 @@ public class GamepadButton : MonoBehaviour, ITouchListener {
 	public Rect getScreenBoundsAA () {
 		// this method called only once since its a non destroyable game object
 		return guiTexture.GetScreenRect(Camera.main);
+	}
+	
+	public TransitionGUIFx[] getTransitions () {
+		return GetComponents<TransitionGUIFx>();
+	}
+	
+	public void onEndTransition (TransitionGUIFx fx) {
+		// register with touch event manager once the transition finishes since the manager
+		// depends on final element's position
+		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
 	}
 	
 	public void OnBeganTouch (Touch t) {
