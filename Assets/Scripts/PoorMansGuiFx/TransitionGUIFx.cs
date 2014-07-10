@@ -47,6 +47,7 @@ public class TransitionGUIFx : MonoBehaviour {
 	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
 	private bool update;
+	private ITransitionListener _listener = null;
 	
 	void Awake ()
 	{
@@ -58,6 +59,7 @@ public class TransitionGUIFx : MonoBehaviour {
 		
 		update = false;
 		prepareTransition();
+		//this.enabled = false;
 	}
 	
 	void OnEnable () {
@@ -71,6 +73,9 @@ public class TransitionGUIFx : MonoBehaviour {
 	void OnDisable () {
 		if (useCoroutine)
 			StopCoroutine("DoCoroutine");
+		// tells the ITransitionListener that this transition is finished
+		if (_listener != null)
+			_listener.onEndTransition(this);
 	}
 	
 	void Update () {
@@ -78,6 +83,10 @@ public class TransitionGUIFx : MonoBehaviour {
 			return;
 		if (update)
 			DoTransition();
+	}
+	
+	public void setListener (ITransitionListener listener) {
+		_listener = listener;
 	}
 	
 	void enableUpdate () {
