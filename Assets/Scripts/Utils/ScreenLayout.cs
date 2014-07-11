@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [ExecuteInEditMode]
-public class ScreenLayout : MonoBehaviour {
+public class ScreenLayout : MonoBehaviour, IScreenLayout {
 	
 	public bool allowResize = false;
 	public Vector2 offset = Vector2.zero;

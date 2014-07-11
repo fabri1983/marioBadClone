@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class ScreenLayoutManager : MonoBehaviour {
 	
-	private List<ScreenLayout> consumers = new List<ScreenLayout>();
+	private List<IScreenLayout> consumers = new List<IScreenLayout>();
 	private float lastScreenWidth, lastScreenHeight;
 	
 	private static ScreenLayoutManager instance = null;
@@ -46,11 +46,11 @@ public class ScreenLayoutManager : MonoBehaviour {
 #endif
     }
 	
-	public void register (ScreenLayout sl) {
+	public void register (IScreenLayout sl) {
 		consumers.Add(sl);
 	}
 	
-	public void remove (ScreenLayout sl) {
+	public void remove (IScreenLayout sl) {
 		consumers.Remove(sl);
 	}
 	

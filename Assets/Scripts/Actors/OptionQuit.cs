@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener {
+public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IScreenLayout {
 	
 	private bool showOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;
@@ -31,16 +31,23 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener {
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		// locate the buttons
-		rectQuit = new Rect(Screen.width / 2 - 25 - 50, Screen.height / 2 - 45, 50, 24);
-		rectBack = new Rect(Screen.width / 2 - 25 + 50, Screen.height / 2 - 45, 50, 24);
-		rectLevelSel = new Rect(Screen.width / 2 - 35, Screen.height / 2 + 10, 70, 24);
-		
+		locateButtons(); // locate the buttons
+		ScreenLayoutManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
 	
 	void OnDestroy () {
 		//TransitionGUIFxManager.Instance.remove(this);
+	}
+	
+	public void updateSizeAndPosition() {
+		locateButtons();
+	}
+	
+	private void locateButtons () {
+		rectQuit.Set(Screen.width / 2 - 25 - 50, Screen.height / 2 - 45, 50, 24);
+		rectBack.Set(Screen.width / 2 - 25 + 50, Screen.height / 2 - 45, 50, 24);
+		rectLevelSel.Set(Screen.width / 2 - 35, Screen.height / 2 + 10, 70, 24);
 	}
 	
 	/**
