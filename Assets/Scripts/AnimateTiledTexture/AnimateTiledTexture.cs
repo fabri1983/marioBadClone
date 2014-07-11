@@ -172,10 +172,10 @@ public class AnimateTiledTexture : MonoBehaviour
 		
 		// Assign the new texture tiling
         // old approach:
-		//renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
+		renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
 		// new approach:
-		renderer.sharedMaterial.SetFloat("_TilingX", _textureTiling.x);
-		renderer.sharedMaterial.SetFloat("_TilingY", _textureTiling.y);
+		/*renderer.sharedMaterial.SetFloat("_TilingX", _textureTiling.x);
+		renderer.sharedMaterial.SetFloat("_TilingY", _textureTiling.y);*/
     }
  
 	public void Play()
@@ -277,11 +277,12 @@ public class AnimateTiledTexture : MonoBehaviour
  
         // Update the material
         //old approach:
-		/*renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);*/
+		renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);
 		//new approach:
-		renderer.sharedMaterial.SetFloat("_OffsetX", offsetTemp.x);
-		renderer.sharedMaterial.SetFloat("_OffsetY", offsetTemp.y);
+		/*renderer.sharedMaterial.SetFloat("_OffsetX", offsetTemp.x);
+		renderer.sharedMaterial.SetFloat("_OffsetY", offsetTemp.y);*/
 		
+		// new approach with calculations of offset in the shader
 		// setupVec1: _index, _maxColsInRows, _rowsTotalInSprite, offsetYStart
 		/*setupVec1.x = _index;
 		setupVec1.y = _maxColsInRows;
