@@ -105,6 +105,7 @@ public class LevelManager : MonoBehaviour {
 			activeLevel = level;
 		
 		player.toogleActivate(false); // deactivate to avoid falling in empty scene
+		player.restoreWalkVel(); // in case the player was colliding a wall
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
 		GC.Collect();
 		Application.LoadLevel(activeLevel); // load scene

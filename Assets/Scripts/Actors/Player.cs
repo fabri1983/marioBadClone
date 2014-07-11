@@ -68,7 +68,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	
 	// Use this for initialization
 	void Start () {
-		// invoke after having got action components
+		// invoke after getting action components
 		resetPlayer();
 	}
 	
@@ -203,7 +203,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		return fireDir;
 	}
 	
-	private void restoreWalkVel () {
+	public void restoreWalkVel () {
 		walkVelocity = walkVelBackup;
 	}
 	
