@@ -3,7 +3,7 @@ using UnityEngine;
 /**
  * Fade the current viewport to and from a given a Texture2D object.
  */
-public class FadeTextureQuad : MonoBehaviour, IFadeable {
+public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
@@ -27,6 +27,8 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable {
 		fadeDir = EnumFadeDirection.FADE_NONE;
 		// disable by default
 		this.enabled = false;
+		
+		ScreenLayoutManager.Instance.register(this);
 	}
 	
 	void Start () {
@@ -42,17 +44,11 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable {
 			fade();
 	}
 	
-	void OnGUI () {
-		if (EventType.Repaint == Event.current.type) {
-			// if resize window, then calculate the new rectangle's size
-			if (Screen.width != rectTex.width || Screen.height != rectTex.height) {
-				rectTex.x = 0f;
-				rectTex.y =	0f;
-				rectTex.width = Screen.width;
-				rectTex.height = Screen.height;
-				//rectTex = new Rect(0f, 0f, Screen.width, Screen.height);
-			}
-		}
+	public void updateSizeAndPosition () {
+		rectTex.x = 0f;
+		rectTex.y =	0f;
+		rectTex.width = Screen.width;
+		rectTex.height = Screen.height;
 	}
 	
 	private void fade () {

@@ -10,7 +10,7 @@ using UnityEngine;
  *  3. Set background to the desired color (black).
  *  4. Set the Clear Flags to "Solid Color", set the Culling Mask to "Nothing".
  */
-public class CamAspectRatio : MonoBehaviour {
+public class CamAspectRatio : MonoBehaviour, IScreenLayout {
 	
 	private Rect screenRect;
 	
@@ -21,23 +21,19 @@ public class CamAspectRatio : MonoBehaviour {
 			return;
 		screenRect = new Rect(0, 0, Screen.width, Screen.height);
 		setAspectRatio();
+		
+		ScreenLayoutManager.Instance.register(this);
 	}
 	
-	void OnGUI () {
+	public void updateSizeAndPosition () {
 		if (!LevelManager.keepAspectRatio)
 			return;
 		
-		if (EventType.Repaint == Event.current.type) {
-			// if resize window, then calculate the new rectangle's size and set again the aspect ratio
-			if (Screen.width != screenRect.width || Screen.height != screenRect.height) {
-				setAspectRatio();
-				screenRect.x = 0f;
-				screenRect.y =	0f;
-				screenRect.width = Screen.width;
-				screenRect.height = Screen.height;
-				//screenRect = new Rect(0f, 0f, Screen.width, Screen.height);
-			}
-		}
+		setAspectRatio();
+		screenRect.x = 0f;
+		screenRect.y =	0f;
+		screenRect.width = Screen.width;
+		screenRect.height = Screen.height;
 	}
 	
 	public void setAspectRatio () {
