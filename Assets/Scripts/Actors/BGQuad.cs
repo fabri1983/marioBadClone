@@ -29,7 +29,8 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 #endif
 	
 	private void fillScreen () {
-		Camera cam = Camera.main;
+		Camera cam = Camera.main; // get the camera in scene named MainCamera
+		
 		float pos = (cam.nearClipPlane + 0.01f);
 		transform.position = cam.transform.position + cam.transform.forward * pos;
 		
