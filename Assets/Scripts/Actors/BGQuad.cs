@@ -3,7 +3,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class BGQuad : MonoBehaviour, IScreenLayout {
 	
-	public Texture bgTexture;
+	public Texture2D bgTexture;
 	
 	void Awake () {
 		if (!bgTexture) {
