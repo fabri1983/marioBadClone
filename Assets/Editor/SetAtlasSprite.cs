@@ -3,6 +3,10 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Usage:
+/// 
+/// </summary>
 public class SetAtlasSprite : EditorWindow
 {
 	//Reference to atlas data game object
@@ -13,6 +17,9 @@ public class SetAtlasSprite : EditorWindow
 	
 	//Popup Index
 	public int PopupIndex = 0;
+	
+	private int AtlasW, AtlasH;
+	
 	
 	//------------------------------------------------
 	[MenuItem ("Window/Atlas Texture Editor")]
@@ -25,10 +32,10 @@ public class SetAtlasSprite : EditorWindow
 	void OnEnable ()
 	{
 	}
+	
 	//------------------------------------------------
 	void OnGUI () 
 	{
-		
 		//Draw Atlas Object Selector
 		GUILayout.Label ("Atlas Generation", EditorStyles.boldLabel);
 		AtlasDataObject = (GameObject) EditorGUILayout.ObjectField("Atlas Object", AtlasDataObject, typeof (GameObject), true);
@@ -38,34 +45,64 @@ public class SetAtlasSprite : EditorWindow
 		
 		AtlasDataComponent = AtlasDataObject.GetComponent<AtlasData>();
 		
+		// if no has a valid AtlasData component then exit drawing GUI, until the game object be the correct one
 		if(!AtlasDataComponent)
 			return;
+		
+		AtlasW = AtlasDataComponent.AtlasTexture.width;
+		AtlasH = AtlasDataComponent.AtlasTexture.height;
 		
 		PopupIndex = EditorGUILayout.Popup(PopupIndex, AtlasDataComponent.TextureNames);
 		
 		if(GUILayout.Button("Select Sprite From Atlas"))
 		{
-			//Update UVs for selected meshes
+			// Selection works when at least one gameObject is selected in the hierarchy
 			if(Selection.gameObjects.Length > 0)
 			{
 				foreach(GameObject Obj in Selection.gameObjects)
 				{
-					//Is this is a mesh object?
-					if(Obj.GetComponent<MeshFilter>()) {
-						UpdateUVs(Obj, AtlasDataComponent.UVs[PopupIndex]);
+					// if sprite frame size is (0,0) means it is not a game object with sprite animation. Update the mesh uvs
+					if (Vector2.zero.Equals(AtlasDataComponent.frameSizePixels[PopupIndex])) {
+						if(Obj.GetComponent<MeshFilter>())
+							UpdateMeshUVs(Obj, AtlasDataComponent.UVs[PopupIndex]);
+					}
+					// its a game object with a sprite anim. Update the animation objects accordingly
+					else {
+						// get AnimateTiledTexture component to update some properties for Atlas configuration
+						AnimateTiledTexture anim = Obj.GetComponentInChildren<AnimateTiledTexture>();
+						// get all AnimateTiledConfig components to update their properties for Atlas configuration
+						AnimateTiledConfig[] configs = Obj.GetComponentsInChildren<AnimateTiledConfig>();
+						
+						// for the AnimateTiledTexture component set the total number of rows in the atlas according to the sprite frame's height
+						//anim._rowsTotalInSprite = ;
+						
+						// for all the AnimateTiledConfig components set the properties accordingly
+						
 					}
 				}
 			}
 		}
 	}
+	
 	//------------------------------------------------
 	void OnInspectorUpdate()
 	{
 		Repaint();
 	}
-	//------------------------------------------------
-	//Function to update UVs of selected mesh object
-	void UpdateUVs(GameObject MeshOject, Rect AtlasUVs, bool Reset = false)
+	
+	/// <summary>
+	/// Function to update mesh UVs of selected mesh object
+	/// </summary>
+	/// <param name='MeshOject'>
+	/// Mesh oject.
+	/// </param>
+	/// <param name='AtlasUVs'>
+	/// Atlas U vs.
+	/// </param>
+	/// <param name='Reset'>
+	/// Reset.
+	/// </param>
+	void UpdateMeshUVs(GameObject MeshOject, Rect AtlasUVs, bool Reset = false)
 	{
 		//Get Mesh Filter Component
 		MeshFilter MFilter = MeshOject.GetComponent<MeshFilter>();
@@ -97,5 +134,5 @@ public class SetAtlasSprite : EditorWindow
 		AssetDatabase.Refresh();
     	AssetDatabase.SaveAssets();
 	}
-	//------------------------------------------------
+
 }

@@ -7,4 +7,6 @@ public class AtlasData : MonoBehaviour
 	public string[] TextureNames;
 	
 	public Rect[] UVs;
+	
+	public Vector2[] frameSizePixels;
 }
