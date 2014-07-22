@@ -71,6 +71,11 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			jump.setForeverJump(false);
 	}
 	
+	private void stopJumping () {
+		jumpInLoop = false;
+		jump.setForeverJump(false);
+	}
+	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
@@ -102,25 +107,33 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			return false; // avoid the collision to continue since this frame
 		}
 		
-		koopa.stop();
 		bool collisionFromAbove = GameObjectTools.isHitFromAbove(koopa.transform.position.y, shape2.body, arbiter);
 		
 		if (collisionFromAbove) {
+			// if koopa was jumping then stop forever jumping
+			if (koopa.jumpInLoop)
+				koopa.stopJumping();
 			// hide the koopa troopa or stop the bouncing of the hidden koopa
-			if (!koopa.dieAnim.isHidden() || koopa.dieAnim.isBouncing())
+			else if (!koopa.dieAnim.isHidden() || koopa.dieAnim.isBouncing()) {
+				koopa.stop();
 				koopa.dieAnim.hide();
+			}
 			// kills the koopa
-			else
+			else {
+				koopa.stop();
 				koopa.die();
+			}
 			// makes the player jumps a little upwards
 			player.forceJump();
 		}
 		// koopa starts bouncing
 		else if (koopa.dieAnim.isHidden() && !koopa.dieAnim.isBouncing()){
+			koopa.stop();
 			koopa.dieAnim.bounce(Mathf.Sign(koopa.transform.position.x - player.transform.position.x));
 		}
 		// kills Player
 		else {
+			koopa.stop();
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			LevelManager.Instance.loseGame(true); // force die animation
 		}
