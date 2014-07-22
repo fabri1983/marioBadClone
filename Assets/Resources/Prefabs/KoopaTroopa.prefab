@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.7528763, y: 2.22660065, z: 0}
+  m_LocalPosition: {x: -72.3946762, y: 2.22660065, z: 0}
   m_LocalScale: {x: 2.79999995, y: 3, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -222,13 +222,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d34eb3178cb2b3408c94725c6d95ea5, type: 1}
   m_Name: 
   animComp: {fileID: 0}
-  animFPS: 1
-  pingPongAnim: 0
-  maxColsAnimInRow: 3
+  animFPS: 7
+  pingPongAnim: 1
+  maxColsAnimInRow: 5
   rowStartAnim: 0
   rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  colStartAnim: 3
+  colLengthAnim: 2
   working: 0
 --- !u!114 &11400018
 MonoBehaviour:
@@ -243,7 +243,7 @@ MonoBehaviour:
   animComp: {fileID: 0}
   animFPS: 1
   pingPongAnim: 0
-  maxColsAnimInRow: 3
+  maxColsAnimInRow: 5
   rowStartAnim: 0
   rowLengthAnim: 1
   colStartAnim: 2
@@ -262,7 +262,7 @@ MonoBehaviour:
   animComp: {fileID: 0}
   animFPS: 7
   pingPongAnim: 1
-  maxColsAnimInRow: 3
+  maxColsAnimInRow: 5
   rowStartAnim: 0
   rowLengthAnim: 1
   colStartAnim: 0
