@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Renders a fullscreen Quad with a texture on it.
+/// On screen redimension the quad z position and scaling is adjusted.
+/// </summary>
 [ExecuteInEditMode]
 public class BGQuad : MonoBehaviour, IScreenLayout {
 	
@@ -10,6 +14,7 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
+		// register this class with ScreenLayoutManager for screen resize event
 		ScreenLayoutManager.Instance.register(this);
 	}
 	
@@ -29,7 +34,7 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 #endif
 	
 	private void fillScreen () {
-		Camera cam = Camera.main; // get the camera in scene named MainCamera
+		Camera cam = Camera.main; // get the scene camera named MainCamera
 		
 		float pos = (cam.nearClipPlane + 0.01f);
 		transform.position = cam.transform.position + cam.transform.forward * pos;

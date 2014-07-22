@@ -138,8 +138,10 @@ public class CreateAtlas : ScriptableWizard
 	/// <summary>
 	/// Extracts from the texture name the size of a sprite frame.
 	/// Eg:
-	///   mario_sprite_32x28.png
-	///   will return Vector2(32,28);
+	///     mario_sprite_2x10.png
+	///   means it has 2 rows and 10 columns
+	///   in atlas texture size is 512*128 (dependen on maxTextureSize)
+	///   return Vector2(51.2, 64.0);
 	/// </summary>
 	/// <returns>
 	/// Size of the sprite frame
@@ -148,17 +150,28 @@ public class CreateAtlas : ScriptableWizard
 	/// Texture path with file name
 	/// </param>
 	private Vector2 getFrameSizeFromTextureName (string texPath) {
+		Texture2D tex2d = AssetDatabase.LoadAssetAtPath(texPath, typeof(Texture2D)) as Texture2D;
+
 		Match match = pattern.Match(texPath);
+		
 		if (!match.Success)
 			return Vector2.zero;
+		
+		string rows = match.Groups[2].Value;
+		string cols = match.Groups[3].Value;
 		string pathAndName = match.Groups[1].Value;
-		string width = match.Groups[2].Value;
-		string height = match.Groups[3].Value;
 		string ext = match.Groups[4].Value;
-		Debug.Log(pathAndName + " - " + width + " - " + height + " - " + ext);
-		int frameW = 0, frameH = 0;
-		int.TryParse(width, out frameW);
-		int.TryParse(height, out frameH);
+		
+		int _rows, _cols;
+		int.TryParse(rows, out _rows);
+		int.TryParse(cols, out _cols);
+		float frameW = (float)tex2d.width / (float)_cols;
+		float frameH = (float)tex2d.height / (float)_rows;
+		
+		Debug.Log(pathAndName + " - " + rows + " - " + cols + " - " + ext 
+			+ ". In Atlas: " + tex2d.width + "x" + tex2d.height + " px"
+			+ ". Frame size in Atlas: " + frameW + "x" + frameH);
+		
 		return new Vector2(frameW, frameH);
 	}
 }
