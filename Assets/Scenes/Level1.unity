@@ -4181,6 +4181,34 @@ Prefab:
       propertyPath: bgTexture
       value: 
       objectReference: {fileID: 2800000, guid: 7c26455395b0639458a5aa3d8a7a206a, type: 1}
+    - target: {fileID: 2300002, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f4bac9cb042c6945aa164659dba0162, type: 2}
+    - target: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: tiling.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: tiling.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: manualOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: levelLenght
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: levelLenght.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
   m_RootGameObject: {fileID: 1912612807}
@@ -6789,11 +6817,11 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 1900399463}
-  - 114: {fileID: 1900399466}
   - 33: {fileID: 1900399465}
   - 23: {fileID: 1900399464}
+  - 114: {fileID: 1900399466}
   m_Layer: 0
-  m_Name: BGQuad
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6846,9 +6874,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1900399462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
+  m_Script: {fileID: 11500000, guid: 90b0ca497d3ec0743b37b53aa3d0411d, type: 1}
   m_Name: 
   bgTexture: {fileID: 2800000, guid: 7c26455395b0639458a5aa3d8a7a206a, type: 1}
+  levelLenght: {x: 0, y: 0}
+  manualStep: {x: 0, y: 0}
+  tiling: {x: 1, y: 1}
 --- !u!1 &1912612807
 GameObject:
   m_ObjectHideFlags: 0

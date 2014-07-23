@@ -21,8 +21,7 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 	void Start () {
 		if (!bgTexture)
 			return;
-		// set the quad to fill the viewport
-		fillScreen();
+		fillScreen(); // set the quad to fill the viewport
 		renderer.sharedMaterial.mainTexture = bgTexture;
 	}
 
@@ -39,24 +38,22 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 		float pos = (cam.nearClipPlane + 0.01f);
 		transform.position = cam.transform.position + cam.transform.forward * pos;
 		
+		float h, w;
 		if(!cam.orthographic) {
-			float h = Mathf.Tan(cam.fov * Mathf.Deg2Rad * 0.5f) * pos * 2f;
-			float w = h * cam.aspect;
-			Vector3 theScale = transform.localScale;
-			theScale.x = w;
-			theScale.y = h;
-			theScale.z = 0f;
-			transform.localScale = theScale;
+			h = Mathf.Tan(cam.fov * Mathf.Deg2Rad * 0.5f) * pos * 2f;
+			w = h * cam.aspect;
 		}
 		else {
-			float h = cam.orthographicSize * 2f;
-			float w = h / Screen.height * Screen.width;
-			Vector3 theScale = transform.localScale;
-			theScale.x = w;
-			theScale.y = h;
-			theScale.z = 0f;
-			transform.localScale = theScale;
+			h = cam.orthographicSize * 2f;
+			w = h / Screen.height * Screen.width;
 		}
+		
+		// scale the game object to adjust it according screen bounds
+		Vector3 theScale = transform.localScale;
+		theScale.x = w;
+		theScale.y = h;
+		theScale.z = 0f;
+		transform.localScale = theScale;
 	}
 	
 	public void updateSizeAndPosition () {
