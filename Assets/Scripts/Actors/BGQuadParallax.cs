@@ -11,6 +11,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	public Texture2D bgTexture;
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
+	public float speed = 1f; // factor to be applied to offset calculation
 	
 	private const float epsilon = 0.09f;
 	private Vector2 oldCamPos = Vector2.zero;
@@ -60,26 +61,26 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	
 	private void updateBGOffset () {
 		Vector2 camPos = Camera.main.transform.position; // get the scene camera position
-		Vector2 diff = camPos - oldCamPos;
 
 		// if manualOffset is not (0,0) then apply a fixed offset according to camera's movement
 		if (!Vector2.zero.Equals(manualStep)) {
-			// cam is going right, then offset to left
+			Vector2 diff = camPos - oldCamPos;
+			// cam is going right, then offset left
 			if (diff.x > epsilon)
-				accumOffset.x += manualStep.x;
-			// cam is going left, then offset to right
+				accumOffset.x += manualStep.x * speed;
+			// cam is going left, then offset right
 			else if (diff.x < -epsilon)
-				accumOffset.x -= manualStep.x;
-			// cam is going up, then offset to down
+				accumOffset.x -= manualStep.x * speed;
+			// cam is going up, then offset downwards
 			if (diff.y > epsilon)
-				accumOffset.y += manualStep.y;
-			// cam is going down, then offset to up
+				accumOffset.y += manualStep.y * speed;
+			// cam is going down, then offset upwards
 			else if (diff.y < -epsilon)
-				accumOffset.y -= manualStep.y;
+				accumOffset.y -= manualStep.y * speed;
 		}
 		else {
-			accumOffset.x = (camPos.x / levelExtent.x);
-			accumOffset.y = (camPos.y / levelExtent.y);
+			accumOffset.x = (camPos.x / levelExtent.x) * speed;
+			accumOffset.y = (camPos.y / levelExtent.y) * speed;
 		}
 		
 		renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset + offset);

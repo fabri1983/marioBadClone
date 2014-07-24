@@ -6883,6 +6883,7 @@ MonoBehaviour:
   bgTexture: {fileID: 2800000, guid: dc38d4a44ab41d2438a53eedc4428704, type: 1}
   manualStep: {x: 0, y: 0}
   tiling: {x: .5, y: 1}
+  speed: 1
 --- !u!1 &1912612807
 GameObject:
   m_ObjectHideFlags: 0
