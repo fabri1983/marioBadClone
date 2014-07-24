@@ -5,17 +5,18 @@ using UnityEngine;
 /// This version has scroll texture option according to camera position or manual offset.
 /// On screen redimension the quad's mesh (vers and UVs) is adjusted to cover the screen.
 /// </summary>
-//[ExecuteInEditMode]
+[ExecuteInEditMode]
 public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 
 	public Texture2D bgTexture;
-	public Vector2 levelLenght = Vector2.zero; // level length in pixels
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
-	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a protion of it
+	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
 	
 	private const float epsilon = 0.09f;
-	private Vector2 oldCamPos = Vector3.zero;
+	private Vector2 oldCamPos = Vector2.zero;
 	private Vector2 accumOffset = Vector2.zero;
+	private Vector2 offset = Vector2.zero; // offset depending on player's spawn position
+	private Vector2 levelExtent = Vector2.zero; // level length according the game objects that define the level extent
 	
 	void Awake () {
 		if (!bgTexture) {
@@ -25,11 +26,9 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 		
 		// register this class with ScreenLayoutManager for screen resize event
 		ScreenLayoutManager.Instance.register(this);
-		
-		if (levelLenght.x == 0f)
-			levelLenght.x = float.PositiveInfinity;
-		if (levelLenght.y == 0f)
-			levelLenght.y = float.PositiveInfinity;
+		// initializes as inifnite to avoid NaN in division operation
+		levelExtent.x = float.PositiveInfinity;
+		levelExtent.y = float.PositiveInfinity;
 	}
 	
 	void Start () {
@@ -55,7 +54,6 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 		}
 	}
 
-	
 	void LateUpdate () {
 		updateBGOffset();
 	}
@@ -80,11 +78,11 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 				accumOffset.y -= manualStep.y;
 		}
 		else {
-			accumOffset.x = (camPos.x / levelLenght.x);
-			accumOffset.y = (camPos.y / levelLenght.y);
+			accumOffset.x = (camPos.x / levelExtent.x);
+			accumOffset.y = (camPos.y / levelExtent.y);
 		}
 		
-		renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset);
+		renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset + offset);
 		oldCamPos.Set(camPos.x, camPos.y);
 	}
 	
@@ -114,5 +112,20 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	
 	public void updateSizeAndPosition () {
 		fillScreen();
+	}
+	
+	/**
+	 * Takes a world position (x,y) and converts it to texture offset.
+	 * Use this to set the initial offset according player's spawn position.
+	 */ 
+	public void setOffsetWorldCoords (float x, float y) {
+		offset.Set(x / levelExtent.x, y / levelExtent.y);
+	}
+	
+	/**
+	 * Set the length and height in world units of the level where the parallax background will scroll.
+	 */ 
+	public void setLevelExtentWorldUnits (float x, float y) {
+		levelExtent.Set(x, y);
 	}
 }
