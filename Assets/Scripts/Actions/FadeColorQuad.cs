@@ -3,12 +3,11 @@ using UnityEngine;
 /**
  * Fade the current viewport to and from a given a color material using a shader.
  */
-public class FadeColorQuad : MonoBehaviour, IFadeable {
+public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
 	public bool fadeOutOnStart = true;
-	public Renderer quadRenderer;
 	
 	private bool doFading;
 	private EnumFadeDirection fadeDir;
@@ -18,9 +17,12 @@ public class FadeColorQuad : MonoBehaviour, IFadeable {
 	
 	// Use this for initialization
 	void Awake () {
-		colorQuad = quadRenderer.sharedMaterial;
+		colorQuad = renderer.sharedMaterial;
 		finishedTransition = false;
 		fadeDir = EnumFadeDirection.FADE_NONE;
+		
+		// register this class with ScreenLayoutManager for screen resize event
+		ScreenLayoutManager.Instance.register(this);
 	}
 	
 	void Start () {
@@ -28,6 +30,7 @@ public class FadeColorQuad : MonoBehaviour, IFadeable {
 			startFading(EnumFadeDirection.FADE_OUT);
 		else
 			stopFading();
+		fillScreen(); // make this game object to fill the viewport
 	}
 	
 	void LateUpdate () {
@@ -82,5 +85,13 @@ public class FadeColorQuad : MonoBehaviour, IFadeable {
 	
 	public EnumFadeDirection getFadingDirection () {
 		return fadeDir;
+	}
+	
+	private void fillScreen () {
+		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject);
+	}
+	
+	public void updateSizeAndPosition () {
+		fillScreen();
 	}
 }

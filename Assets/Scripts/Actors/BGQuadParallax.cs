@@ -9,22 +9,26 @@ using UnityEngine;
 public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 
 	public Texture2D bgTexture;
+	public float speed = 1f; // factor to be applied to offset calculation
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
-	public float speed = 1f; // factor to be applied to offset calculation
+	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 	
-	private const float epsilon = 0.09f;
+	private const float epsilon = 0.09f; // used when getting difference 
 	private Vector2 oldCamPos = Vector2.zero;
 	private Vector2 accumOffset = Vector2.zero;
 	private Vector2 offset = Vector2.zero; // offset depending on player's spawn position
 	private Vector2 levelExtent = Vector2.zero; // level length according the game objects that define the level extent
 	
 	void Awake () {
+		// deactivate the game object if no texture
 		if (!bgTexture) {
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
 		
+		// set texture wrap mode
+		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
 		// register this class with ScreenLayoutManager for screen resize event
 		ScreenLayoutManager.Instance.register(this);
 		// initializes as inifnite to avoid NaN in division operation
@@ -40,7 +44,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 		Vector2 camPos = Camera.main.transform.position;
 		oldCamPos.Set(camPos.x, camPos.y);
 		
-		fillScreen(); // set the quad to fill the viewport
+		fillScreen(); // make this game object to fill the viewport
 		renderer.sharedMaterial.mainTexture = bgTexture;
 		renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 	}
@@ -62,7 +66,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	private void updateBGOffset () {
 		Vector2 camPos = Camera.main.transform.position; // get the scene camera position
 
-		// if manualOffset is not (0,0) then apply a fixed offset according to camera's movement
+		// if manualOffset is not (0,0) then apply a fixed offset if camera is moving
 		if (!Vector2.zero.Equals(manualStep)) {
 			Vector2 diff = camPos - oldCamPos;
 			// cam is going right, then offset left
@@ -78,6 +82,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 			else if (diff.y < -epsilon)
 				accumOffset.y -= manualStep.y * speed;
 		}
+		// apply an offset according 
 		else {
 			accumOffset.x = (camPos.x / levelExtent.x) * speed;
 			accumOffset.y = (camPos.y / levelExtent.y) * speed;
@@ -88,27 +93,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		Camera cam = Camera.main; // get the scene camera named MainCamera
-		
-		float pos = (cam.nearClipPlane + 0.01f);
-		transform.position = cam.transform.position + cam.transform.forward * pos;
-		
-		float h, w;
-		if(!cam.orthographic) {
-			h = Mathf.Tan(cam.fov * Mathf.Deg2Rad * 0.5f) * pos * 2f;
-			w = h * cam.aspect;
-		}
-		else {
-			h = cam.orthographicSize * 2f;
-			w = h / Screen.height * Screen.width;
-		}
-		
-		// scale the game object to adjust it according screen bounds
-		Vector3 theScale = transform.localScale;
-		theScale.x = w;
-		theScale.y = h;
-		theScale.z = 0f;
-		transform.localScale = theScale;
+		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject);
 	}
 	
 	public void updateSizeAndPosition () {

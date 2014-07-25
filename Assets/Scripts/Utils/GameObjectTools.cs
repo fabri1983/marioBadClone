@@ -192,4 +192,30 @@ static public class GameObjectTools
 		//Render the box
 		GUI.Box (r,"");
 	}
+	
+	/**
+	 * Sets position and factor scale (w,h) to a game object, ie a quad, for covering the screen size.
+	 */ 
+	public static void setScreenCoverage (Camera cam, GameObject go) {
+
+		float pos = (cam.nearClipPlane + 0.01f);
+		go.transform.position = cam.transform.position + cam.transform.forward * pos;
+		
+		float h, w;
+		if(!cam.orthographic) {
+			h = Mathf.Tan(cam.fov * Mathf.Deg2Rad * 0.5f) * pos * 2f;
+			w = h * cam.aspect;
+		}
+		else {
+			h = cam.orthographicSize * 2f;
+			w = h / Screen.height * Screen.width;
+		}
+		
+		// scale the game object to adjust it according screen bounds
+		Vector3 theScale = go.transform.localScale;
+		theScale.x = w;
+		theScale.y = h;
+		theScale.z = 0f;
+		go.transform.localScale = theScale;
+	}
 }
