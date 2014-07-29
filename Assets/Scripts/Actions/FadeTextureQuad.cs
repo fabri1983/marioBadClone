@@ -38,6 +38,10 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
 			stopFading();
 	}
 	
+	void OnDestroy () {
+		ScreenLayoutManager.Instance.remove(this);
+	}
+	
 	void LateUpdate () {
 		// do fading?
 		if (fadeDir != EnumFadeDirection.FADE_NONE)

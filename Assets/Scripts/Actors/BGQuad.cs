@@ -26,6 +26,7 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 	}
 
 	void OnDestroy () {
+		ScreenLayoutManager.Instance.remove(this);
 #if UNITY_EDITOR
 		if (bgTexture)
 			renderer.sharedMaterial.mainTexture = bgTexture;

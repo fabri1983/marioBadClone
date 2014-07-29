@@ -50,6 +50,8 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	}
 	
 	void OnDestroy () {
+		ScreenLayoutManager.Instance.remove(this);
+		
 		if (bgTexture) {
 			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #if UNITY_EDITOR

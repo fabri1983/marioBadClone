@@ -37,7 +37,8 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	}
 	
 	void OnDestroy () {
-		//TransitionGUIFxManager.Instance.remove(this);
+		TransitionGUIFxManager.Instance.remove(this);
+		ScreenLayoutManager.Instance.remove(this);
 	}
 	
 	public void updateSizeAndPosition() {

@@ -33,6 +33,10 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 		fillScreen(); // make this game object to fill the viewport
 	}
 	
+	void OnDestroy () {
+		ScreenLayoutManager.Instance.remove(this);
+	}
+	
 	void LateUpdate () {
 		// do fading?
 		if (fadeDir != EnumFadeDirection.FADE_NONE)
