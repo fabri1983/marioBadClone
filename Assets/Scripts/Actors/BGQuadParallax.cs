@@ -13,6 +13,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
+	public Vector2 coverage = Vector2.one;
 	
 	private const float epsilon = 0.09f; // used when getting difference 
 	private Vector2 oldCamPos = Vector2.zero;
@@ -95,7 +96,7 @@ public class BGQuadParallax : MonoBehaviour, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject);
+		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject, coverage);
 	}
 	
 	public void updateSizeAndPosition () {

@@ -6,6 +6,7 @@ using UnityEngine;
 static public class GameObjectTools
 {
 	public static float COS_45 = Mathf.Cos(45);
+	public static float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
 	
 	///////////////////////////////////////////////////////////
 	// Essentially a reimplementation of
@@ -196,14 +197,16 @@ static public class GameObjectTools
 	/**
 	 * Sets position and factor scale (w,h) to a game object, ie a quad, for covering the screen size.
 	 */ 
-	public static void setScreenCoverage (Camera cam, GameObject go) {
-
+	public static void setScreenCoverage (Camera cam, GameObject go, Vector2 coverage) {
+		
+		// position barely ahead from near clip plane
 		float pos = (cam.nearClipPlane + 0.01f);
-		go.transform.position = cam.transform.position + cam.transform.forward * pos;
+		// position the camera in that position (following current orientation)
+		go.transform.position = pos * cam.transform.forward + cam.transform.position;
 		
 		float h, w;
 		if(!cam.orthographic) {
-			h = Mathf.Tan(cam.fov * Mathf.Deg2Rad * 0.5f) * pos * 2f;
+			h = 2f * Mathf.Tan(cam.fov * DEG_2_RAD_0_5) * pos;
 			w = h * cam.aspect;
 		}
 		else {
@@ -213,9 +216,14 @@ static public class GameObjectTools
 		
 		// scale the game object to adjust it according screen bounds
 		Vector3 theScale = go.transform.localScale;
-		theScale.x = w;
-		theScale.y = h;
+		theScale.x = w * Mathf.Abs(coverage.x);
+		theScale.y = h * Mathf.Abs(coverage.y);
 		theScale.z = 0f;
 		go.transform.localScale = theScale;
+		
+		// local position of the game object containing this script
+		Vector3 thePos = go.transform.localPosition;
+		thePos.y = h * 0.5f * (1f - Mathf.Abs(coverage.y)) * Mathf.Sign(coverage.y);
+		go.transform.localPosition = thePos;
 	}
 }

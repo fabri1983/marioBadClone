@@ -8,6 +8,7 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
 	public bool fadeOutOnStart = true;
+	public Vector2 coverage = Vector2.one;
 	
 	private bool doFading;
 	private EnumFadeDirection fadeDir;
@@ -92,7 +93,7 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject);
+		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject, coverage);
 	}
 	
 	public void updateSizeAndPosition () {

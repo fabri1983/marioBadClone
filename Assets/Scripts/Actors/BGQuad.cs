@@ -8,6 +8,7 @@ using UnityEngine;
 public class BGQuad : MonoBehaviour, IScreenLayout {
 	
 	public Texture2D bgTexture;
+	public Vector2 coverage = Vector2.one;
 	
 	void Awake () {
 		if (!bgTexture) {
@@ -34,7 +35,7 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject);
+		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject, coverage);
 	}
 	
 	public void updateSizeAndPosition () {
