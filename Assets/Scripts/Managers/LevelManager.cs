@@ -121,6 +121,7 @@ public class LevelManager : MonoBehaviour {
 		mainCam.GetComponent<CameraFollower>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
 		player.toogleActivate(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
+		setParallaxProperties(); // configure the parallax porperties for a correct scrolling
 		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
@@ -197,7 +198,7 @@ public class LevelManager : MonoBehaviour {
 		return mainCam;
 	}
 	
-	public GameObject getLCameraInFront () {
+	public GameObject getCameraInFront () {
 		return camInFront;
 	}
 	
@@ -207,5 +208,17 @@ public class LevelManager : MonoBehaviour {
 	
 	public void setCamerainFront (GameObject cam) {
 		camInFront = cam;
+	}
+	
+	private void setParallaxProperties () {
+		BGQuadParallax parallax = mainCam.GetComponentInChildren<BGQuadParallax>();
+		StartLevel s = FindObjectOfType(typeof(StartLevel)) as StartLevel;
+		
+		float length = Mathf.Abs(s.min.position.x - s.max.position.x);
+		float height = Mathf.Abs(s.min.position.y - s.max.position.y);
+		parallax.setLevelExtentWorldUnits(length, height);
+		
+		Vector2 playerSpawnPos = spawnPosArray[activeLevel].position;
+		parallax.setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
 	}
 }

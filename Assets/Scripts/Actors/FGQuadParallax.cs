@@ -6,6 +6,6 @@ using UnityEngine;
 /// uses both components BGQuadParallax and FGQuadParallax.
 /// </summary>
 [ExecuteInEditMode]
-public class BGQuadParallax : QuadParallax {
+public class FGQuadParallax : QuadParallax {
 
 }

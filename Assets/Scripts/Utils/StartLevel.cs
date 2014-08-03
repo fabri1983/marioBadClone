@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class StartLevel : MonoBehaviour {
 	
-	// index of the scene to be loaded
-	public int sceneIndex;
+	public int sceneIndex; // index of the scene to be loaded
 	public bool enablePlayer = true;
 	public GameObject mainCam;
 	public GameObject camInFront;
+	public Transform min, max; // min and max extent of the level
 	
 	void Start () {
 		
