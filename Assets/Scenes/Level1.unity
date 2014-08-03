@@ -6894,6 +6894,7 @@ MonoBehaviour:
   timeFactor: 3
   offsetY: 5
   smoothLerp: 1
+  lockY: 0
 --- !u!1 &1915724952
 GameObject:
   m_ObjectHideFlags: 0
@@ -7738,6 +7739,14 @@ Prefab:
     - target: {fileID: 11400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
       propertyPath: lookTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: lockY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
+      propertyPath: offsetY
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}

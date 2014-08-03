@@ -118,7 +118,7 @@ public class LevelManager : MonoBehaviour {
 	public void startLevel (int level, bool playerEnabled) {
 		activeLevel = level;
 		camInFront.SetActiveRecursively(false); // disable in front camera
-		mainCam.GetComponent<CameraFollower>().doInstantMovOneTime(); // move camera instantaneously to where player spawns
+		mainCam.GetComponent<CameraFollower>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
 		player.toogleActivate(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
 		

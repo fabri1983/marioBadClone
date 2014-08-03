@@ -6,6 +6,7 @@ public class CameraFollower : MonoBehaviour {
 	public float timeFactor = 4f;
 	public float offsetY = 3f;
 	public bool smoothLerp = true;
+	public bool lockY = false;
 	
 	private Transform lookAtTarget; // object which this game object will folow to and also look at to
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
@@ -22,6 +23,8 @@ public class CameraFollower : MonoBehaviour {
 		Vector3 thePos = transform.position;
 		thePos.x = lookAtTarget.position.x;
 		thePos.y = lookAtTarget.position.y;
+		if (lockY)
+			 thePos.y += offsetY;
 		transform.position = thePos;
 	}
 	
@@ -44,9 +47,9 @@ public class CameraFollower : MonoBehaviour {
 		Vector3 thePos = transform.position;
 		// get XY position of target and keep Z untouch
 		thePos.x = lookAtTarget.position.x;
-		thePos.y = lookAtTarget.position.y + offsetY;
+		if (!lockY || instantlyOneTime)
+			thePos.y = lookAtTarget.position.y + offsetY;
 		
-		// always follow the pivot
 		if (instantlyOneTime) {
 			transform.position = thePos;
 			instantlyOneTime = false;
@@ -69,7 +72,7 @@ public class CameraFollower : MonoBehaviour {
 			stopAnimation();
 	}
 	
-	public void doInstantMovOneTime () {
+	public void doInstantMoveOneTime () {
 		instantlyOneTime = true;
 	}
 	
