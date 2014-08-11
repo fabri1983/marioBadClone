@@ -1,12 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// Renders a fullscreen Quad with a texture on it.
+/// Scales the game object acording to screen size and user defined coverage.
 /// This version has scroll texture option according to camera position or manual offset.
-/// On screen redimension the quad's mesh (vers and UVs) is adjusted to cover the screen.
+/// On screen redimension the game object is adjusted to cover the screen or part of it.
 /// </summary>
 [ExecuteInEditMode]
-public class QuadParallax : MonoBehaviour, IScreenLayout {
+public class Parallax : MonoBehaviour, IScreenLayout {
 
 	public Texture2D bgTexture;
 	public float speed = 1f; // factor to be applied to offset calculation

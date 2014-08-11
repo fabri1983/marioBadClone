@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using UnityEngine;
 using System.Collections;
      
@@ -94,4 +93,3 @@ public class VertHandleGizmo : MonoBehaviour {
 		Gizmos.DrawCube (transform.position, Vector3.one * CURRENT_SIZE);
 	}
 }
-#endif

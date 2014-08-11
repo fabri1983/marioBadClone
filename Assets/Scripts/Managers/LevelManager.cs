@@ -211,7 +211,7 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	private void setParallaxProperties () {
-		BGQuadParallax parallax = mainCam.GetComponentInChildren<BGQuadParallax>();
+		BGParallax parallax = mainCam.GetComponentInChildren<BGParallax>();
 		StartLevel s = FindObjectOfType(typeof(StartLevel)) as StartLevel;
 		
 		float length = Mathf.Abs(s.min.position.x - s.max.position.x);
