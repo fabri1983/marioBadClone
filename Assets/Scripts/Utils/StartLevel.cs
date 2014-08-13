@@ -9,9 +9,10 @@ public class StartLevel : MonoBehaviour {
 	public Transform min, max; // min and max extent of the level
 	
 	void Start () {
-		
+		// configures current level
 		LevelManager.Instance.setMainCamera(mainCam);
 		LevelManager.Instance.setCamerainFront(camInFront);
-		LevelManager.Instance.startLevel(sceneIndex, enablePlayer);
+		Rect levelExtent = new Rect(min.position.x, min.position.y, max.position.x, max.position.y);
+		LevelManager.Instance.startLevel(sceneIndex, enablePlayer, levelExtent);
 	}
 }

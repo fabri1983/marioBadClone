@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1377023993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90b0ca497d3ec0743b37b53aa3d0411d, type: 1}
+  m_Script: {fileID: 11500000, guid: 0da921b9f1f47e74681672a9743a7acd, type: 1}
   m_Name: 
   bgTexture: {fileID: 2800000, guid: 4d7ecdc6cfef6de44984303646bfd283, type: 1}
   speed: 1
@@ -1313,6 +1313,7 @@ MonoBehaviour:
   timeFactor: 3
   offsetY: 5
   smoothLerp: 1
+  lockY: 0
 --- !u!1001 &1800799199
 Prefab:
   m_ObjectHideFlags: 0

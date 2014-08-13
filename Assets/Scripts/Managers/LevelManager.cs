@@ -111,17 +111,26 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel(activeLevel); // load scene
 	}
 	
-	/**
-	 * This invoked from StartLevel object which has the number of the level.
-	 * It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
-	 */
-	public void startLevel (int level, bool playerEnabled) {
+	/// <summary>
+	/// This invoked from StartLevel object which has the number of the level.
+	/// It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
+	/// </summary>
+	/// <param name='level'>
+	/// Number of scene according Unity's indexing
+	/// </param>
+	/// <param name='playerEnabled'>
+	/// True if player starts being enabled. False if not
+	/// </param>
+	/// <param name='levelExtent'>
+	/// Level dimension in world coordinates
+	/// </param>
+	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
 		activeLevel = level;
 		camInFront.SetActiveRecursively(false); // disable in front camera
 		mainCam.GetComponent<CameraFollower>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
 		player.toogleActivate(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
-		setParallaxProperties(); // configure the parallax porperties for a correct scrolling
+		setParallaxProperties(levelExtent); // configure the parallax properties for a correct scrolling
 		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
@@ -210,15 +219,23 @@ public class LevelManager : MonoBehaviour {
 		camInFront = cam;
 	}
 	
-	private void setParallaxProperties () {
-		BGParallax parallax = mainCam.GetComponentInChildren<BGParallax>();
-		StartLevel s = FindObjectOfType(typeof(StartLevel)) as StartLevel;
+	/// <summary>
+	/// Gets all the Parallax components from the main camera and configure them according to 
+	/// the extension of the level: min world position and max world position.
+	/// </summary>
+	/// <param name='levelExtent'>
+	/// Level dimension in world coordinates. Used to configure the parallax scripts
+	/// </param>
+	private void setParallaxProperties (Rect levelExtent) {
+		Parallax[] parallax = mainCam.GetComponentsInChildren<Parallax>();
 		
-		float length = Mathf.Abs(s.min.position.x - s.max.position.x);
-		float height = Mathf.Abs(s.min.position.y - s.max.position.y);
-		parallax.setLevelExtentWorldUnits(length, height);
-		
+		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
+		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
 		Vector2 playerSpawnPos = spawnPosArray[activeLevel].position;
-		parallax.setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+		
+		for (int i=0,c=parallax.Length; i<c;++i) {
+			parallax[i].setLevelExtentWorldUnits(length, height);
+			parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+		}
 	}
 }
