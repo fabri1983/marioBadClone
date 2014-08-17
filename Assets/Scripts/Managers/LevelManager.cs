@@ -24,7 +24,6 @@ public class LevelManager : MonoBehaviour {
     private static LevelManager instance;
     private int activeLevel;
     private Player player;
-	private TargetFollowerXY camFollower;
 	
 	// used for Mario's die animation
 	private GameObject mainCam, camInFront;
@@ -126,12 +125,9 @@ public class LevelManager : MonoBehaviour {
 	/// Level dimension in world coordinates
 	/// </param>
 	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
-		// get CameraFollower component
-		camFollower = GameObject.FindObjectOfType(typeof(TargetFollowerXY)) as TargetFollowerXY;
-		
 		activeLevel = level;
 		camInFront.SetActiveRecursively(false); // disable in front camera
-		camFollower.doInstantMoveOneTime(); // move camera instantaneously to where player spawns
+		mainCam.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
 		player.toogleActivate(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
 		setParallaxProperties(levelExtent); // configure the parallax properties for a correct scrolling
@@ -188,7 +184,7 @@ public class LevelManager : MonoBehaviour {
 		
 		if (dieAnim) {
 			// stop main camera animation
-			camFollower.stopAnimation();
+			mainCam.GetComponent<PlayerFollowerXY>().stopAnimation();
 			// set camera's position the same position than main camera
 			camInFront.transform.position = mainCam.transform.position;
 			camInFront.transform.forward = mainCam.transform.forward;
@@ -231,7 +227,11 @@ public class LevelManager : MonoBehaviour {
 	/// Level dimension in world coordinates. Used to configure the parallax scripts
 	/// </param>
 	private void setParallaxProperties (Rect levelExtent) {
-		Parallax[] parallax = mainCam.GetComponentsInChildren<Parallax>();
+		GameObject go = GameObject.Find("LayersStruct");
+		if (go == null)
+			return;
+		
+		Parallax[] parallax = go.GetComponentsInChildren<Parallax>();
 		
 		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
 		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);

@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// This script can be asigned to a game object to follow a desired target in XY plane.
 /// </summary>
-public class TargetFollowerXY : MonoBehaviour {
+public class PlayerFollowerXY : MonoBehaviour {
 	
 	public bool lookTarget = true;
 	public float timeFactor = 4f;
@@ -15,10 +15,16 @@ public class TargetFollowerXY : MonoBehaviour {
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private bool stop = false;
 	private float constantTimer = 0.15f;
+	private Transform layersStruct; // this is the container of background and foreground objects
+	
+	void Awake () {
+		GameObject go = GameObject.Find("LayersStruct");
+		if (go != null)
+			layersStruct = go.transform;
+	}
 	
 	// Use this for initialization
 	void Start () {
-
 		lookAtTarget = LevelManager.Instance.getPlayer().transform;
 		instantlyOneTime = false;
 		
@@ -29,6 +35,12 @@ public class TargetFollowerXY : MonoBehaviour {
 		if (lockY)
 			 thePos.y += offsetY;
 		transform.position = thePos;
+
+		// update the layers struct transform
+		if (layersStruct != null) {
+			layersStruct.position = transform.position;
+			layersStruct.rotation = transform.rotation;
+		}
 	}
 	
 	/**
@@ -37,16 +49,15 @@ public class TargetFollowerXY : MonoBehaviour {
 	 */
 	void LateUpdate () {
 		// NOTE: use FixedUpdate() if camera jitters
-		
+
 		if (stop)
 			return;
 
 		// always look at target?
 		if (lookTarget) {
-			Quaternion origRot = transform.rotation;
+			Quaternion origRot = transform.rotation; // save original rotation since lookAtTarget affects it
 			transform.LookAt(lookAtTarget);
-			Quaternion gotoRot = transform.rotation;
-			transform.rotation = Quaternion.Lerp(origRot, gotoRot, Time.deltaTime * timeFactor);
+			transform.rotation = Quaternion.Lerp(origRot, transform.rotation, Time.deltaTime * timeFactor);
 		}
 		
 		Vector3 thePos = transform.position;
@@ -75,6 +86,12 @@ public class TargetFollowerXY : MonoBehaviour {
 		
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
 			stopAnimation();
+
+		// update the layers struct transform
+		if (layersStruct != null) {
+			layersStruct.position = transform.position;
+			layersStruct.rotation = transform.rotation;
+		}
 	}
 	
 	public void doInstantMoveOneTime () {

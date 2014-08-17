@@ -10,12 +10,12 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 	private Transform target;
 	private ITeleportable teleportable;
 	private IFadeable fader;
-	private TargetFollowerXY camFollower;
+	private PlayerFollowerXY camFollower;
 	
 	// Use this for initialization
 	void Start () {
 		fader = (IFadeable)Camera.main.GetComponentInChildren(typeof(IFadeable));
-		camFollower = GameObject.FindObjectOfType(typeof(TargetFollowerXY)) as TargetFollowerXY;
+		camFollower = GameObject.FindObjectOfType(typeof(PlayerFollowerXY)) as PlayerFollowerXY;
 	}
 	
 	void Update () {
