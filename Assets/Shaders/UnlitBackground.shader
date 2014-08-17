@@ -5,7 +5,8 @@ Properties {
 }
 	
 SubShader {
-    Tags { "Queue"="Background" }
+    Tags { "IgnoreProjector"="True" "Queue"="Background" }
+    Cull Off
     ZWrite Off
 	Lighting Off
 	

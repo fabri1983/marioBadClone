@@ -6,18 +6,16 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 	public Vector3 transitionDirIn, transitionDirOut;
 	// where the teleporting will move the target to
 	public Transform endingPos;
-	// main camera
-	public Transform mainCam;
 	
 	private Transform target;
 	private ITeleportable teleportable;
-	private IFadeable camFaderScript;
-	private CameraFollower camFollower;
+	private IFadeable fader;
+	private TargetFollowerXY camFollower;
 	
 	// Use this for initialization
 	void Start () {
-		camFaderScript = (IFadeable)mainCam.GetComponent(typeof(IFadeable));
-		camFollower = mainCam.GetComponent<CameraFollower>();
+		fader = (IFadeable)Camera.main.GetComponentInChildren(typeof(IFadeable));
+		camFollower = GameObject.FindObjectOfType(typeof(TargetFollowerXY)) as TargetFollowerXY;
 	}
 	
 	void Update () {
@@ -26,9 +24,9 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 			return;
 		
 		// if fade in is occurring then wait till finishes and then do the target's transalation
-		if (EnumFadeDirection.FADE_IN.Equals(camFaderScript.getFadingDirection())) {
+		if (EnumFadeDirection.FADE_IN.Equals(fader.getFadingDirection())) {
 
-			if (camFaderScript.isTransitionFinished()) {
+			if (fader.isTransitionFinished()) {
 				Transform targetTemp = target;
 				target = null;
 				// translate
@@ -39,9 +37,9 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 		}
 		else {
 			// if fade out is occurring then only need to reset its state when finishes
-			if (EnumFadeDirection.FADE_OUT.Equals(camFaderScript.getFadingDirection())) {
-				if (camFaderScript.isTransitionFinished()) {
-					camFaderScript.stopFading();
+			if (EnumFadeDirection.FADE_OUT.Equals(fader.getFadingDirection())) {
+				if (fader.isTransitionFinished()) {
+					fader.stopFading();
 				}
 			}
 			// execute animation only if:
@@ -76,7 +74,7 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 			
 			// if the player was teleporting then start the fade out transition
 			if (teleportable.isTeleporting())
-				camFaderScript.startFading(EnumFadeDirection.FADE_OUT);
+				fader.startFading(EnumFadeDirection.FADE_OUT);
 		}
 	}
 	
@@ -92,7 +90,7 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 			// start the fade in only if target is "going"
 			if (!teleportable.isOnJump() && teleportable.isTeleporting()) {
 				teleportable.setOnJump(true);
-				camFaderScript.startFading(EnumFadeDirection.FADE_IN);
+				fader.startFading(EnumFadeDirection.FADE_IN);
 			}
 			// exiting the teleport: deattach all references to the target
 			else if (teleportable.isOnJump() && teleportable.isTeleporting()) {

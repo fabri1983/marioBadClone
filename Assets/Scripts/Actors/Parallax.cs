@@ -27,6 +27,8 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
+		else
+			gameObject.SetActiveRecursively(true);
 		
 		// set texture wrap mode
 		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;

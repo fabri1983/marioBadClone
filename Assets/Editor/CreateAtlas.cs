@@ -97,9 +97,8 @@ public class CreateAtlas : ScriptableWizard
 			string texPath = AssetDatabase.GetAssetPath(Textures[i]);
 			ConfigureForAtlas(texPath, maxTextureSize);
 			AD.TextureNames[i] = texPath;
-			Vector2 frameSize = getFrameSizeFromTextureName(texPath);
-			AD.frameSizePixels[i].x = frameSize.x;
-			AD.frameSizePixels[i].y = frameSize.y;
+			// set frame size in pixels. (0,0) means is not a sprite
+			AD.frameSizePixels[i] = getFrameSizeFromTextureName(texPath);
 		}
 		
 		//Generate Atlas texture

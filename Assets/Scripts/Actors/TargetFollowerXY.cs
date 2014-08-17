@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class CameraFollower : MonoBehaviour {
+/// <summary>
+/// This script can be asigned to a game object to follow a desired target in XY plane.
+/// </summary>
+public class TargetFollowerXY : MonoBehaviour {
 	
 	public bool lookTarget = true;
 	public float timeFactor = 4f;
@@ -28,8 +31,10 @@ public class CameraFollower : MonoBehaviour {
 		transform.position = thePos;
 	}
 	
-	/// LateUpdate is called after all Update functions have been called.
-	/// Dependant objects might have moved during Update.
+	/**
+	 * LateUpdate is called after all Update functions have been called.
+	 * Dependant objects might have moved during Update.
+	 */
 	void LateUpdate () {
 		// NOTE: use FixedUpdate() if camera jitters
 		
