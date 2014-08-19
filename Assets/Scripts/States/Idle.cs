@@ -15,7 +15,7 @@ public class Idle : MonoBehaviour {
 	
 	void Start () {
 		// NOTE: it seems that Awake() from children are executed after parent's Awake()
-		idleAC = GetComponentInChildren<IdleAnimConfig>();
+		idleAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Idle, true);
 	}
 	
 	public void setIdle (bool force) {
@@ -32,7 +32,7 @@ public class Idle : MonoBehaviour {
 		
 		// due to problems on Unity's initialization order there is a use case where the object isn't instantiated
 		if (idleAC == null)
-			idleAC = GetComponentInChildren<IdleAnimConfig>();
+			idleAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Idle, true);
 		if (idleAC != null)
 			idleAC.setupAndPlay();
 	}

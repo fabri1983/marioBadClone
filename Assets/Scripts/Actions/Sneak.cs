@@ -11,7 +11,7 @@ public class Sneak : MonoBehaviour {
 	private AnimateTiledConfig sneakAC;
 	
 	void Awake () {
-		sneakAC = GetComponentInChildren<SneakAnimConfig>();
+		sneakAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Sneak, true);
 	}
 	
 	public void sneak () {

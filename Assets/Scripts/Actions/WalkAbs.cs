@@ -23,7 +23,7 @@ public abstract class WalkAbs : MonoBehaviour {
 		idle = GetComponent<Idle>();
 		crouch = GetComponent<Crouch>();
 		shape = GetComponent<ChipmunkShape>();
-		walkAC = GetComponentInChildren<WalkAnimConfig>();
+		walkAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Walk, true);
 		
 		lookingRight = true;
 		reset();

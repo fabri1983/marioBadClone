@@ -6,12 +6,12 @@
  */
 public enum EnumAnimateTiledName
 {
-	NONE,
-	IDLE,
-	JUMP,
-	WALK,
-	SNEAK,
-	CROUCH,
-	DIE
+	None,
+	Idle,
+	Jump,
+	Walk,
+	Sneak,
+	Crouch,
+	Die
 }
 

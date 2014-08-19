@@ -19,7 +19,7 @@ public class Jump : MonoBehaviour {
 	void Awake () {
 		idle = GetComponent<Idle>();
 		crouch = GetComponent<Crouch>();
-		jumpAC = GetComponentInChildren<JumpAnimConfig>();
+		jumpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Jump, true);
 		body = GetComponent<ChipmunkBody>();
 		reset();
 	}

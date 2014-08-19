@@ -16,7 +16,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	void Awake () {
 		patrol = GetComponent<Patrol>();
 		chase = GetComponent<Chase>();
-		dieAC = GetComponentInChildren<DieAnimConfig>();
+		dieAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Die, true);
 		hidden = false;
 		bouncing = false;
 		

@@ -23,7 +23,7 @@ public class Crouch : MonoBehaviour {
 		jump = GetComponent<Jump>();
 		sneak = GetComponent<Sneak>();
 		move = GetComponent<WalkAbs>();
-		crouchAC = GetComponentInChildren<CrouchAnimConfig>();
+		crouchAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Crouch, true);
 	}
 	
 	// Update is called once per frame
