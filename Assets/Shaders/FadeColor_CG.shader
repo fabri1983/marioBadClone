@@ -5,7 +5,7 @@ Properties {
 }
 
 SubShader {
-	Tags { "Queue"="Overlay+10" "IgnoreProjector"="True" "RenderType"="Transparent" }
+	Tags { "Queue"="Overlay+100" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	Cull Off
 	ZWrite Off
 	Lighting Off
