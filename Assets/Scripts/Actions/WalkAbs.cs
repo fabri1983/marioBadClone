@@ -36,14 +36,8 @@ public abstract class WalkAbs : MonoBehaviour {
 		//NOTE: remember to set the gain property before calling this method from subclasses
 		
 		// set the correct sprite animation
-		if (!walkAC.working && (jump == null || !jump.IsJumping()) && (crouch == null || !crouch.isCrouching())) {
-			walkAC.animComp.setFPS(walkAC.animFPS);
-			walkAC.animComp.setRowLimits(walkAC.rowStartAnim, walkAC.rowLengthAnim);
-			walkAC.animComp.setColLimits(walkAC.maxColsAnimInRow, walkAC.colStartAnim, walkAC.colLengthAnim);
-			walkAC.animComp.setPingPongAnim(walkAC.pingPongAnim);
-			walkAC.animComp.Play();
-			walkAC.working = true;
-		}
+		if (!walkAC.isWorking() && (jump == null || !jump.IsJumping()) && (crouch == null || !crouch.isCrouching()))
+			walkAC.setupAndPlay();
 		
 		walking = true;
 		
@@ -85,7 +79,7 @@ public abstract class WalkAbs : MonoBehaviour {
 	public void stopWalking () {
 		stop = true;
 		walking = false;
-		walkAC.working = false;
+		walkAC.stop();
 	}
 	
 	public void enableWalking () {

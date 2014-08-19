@@ -8,7 +8,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	private Chase chase;
 	private Patrol patrol;
 	private bool hidden, bouncing;
-	private DieAnimConfig dieAC;
+	private AnimateTiledConfig dieAC;
 	private float colliderCenterY, centerOffsetY;
 	private ChipmunkBoxShape box;
 	
@@ -35,15 +35,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 	void Update () {
 		// set the correct sprite animation
 		if (hidden)
-			setAnim();
-	}
-	
-	private void setAnim () {
-		dieAC.animComp.setFPS(dieAC.animFPS);
-		dieAC.animComp.setRowLimits(dieAC.rowStartAnim, dieAC.rowLengthAnim);
-		dieAC.animComp.setColLimits(dieAC.maxColsAnimInRow, dieAC.colStartAnim, dieAC.colLengthAnim);
-		dieAC.animComp.setPingPongAnim(dieAC.pingPongAnim);
-		dieAC.animComp.Play();
+			dieAC.setupAndPlay();
 	}
 	
 	public void die () {
@@ -75,7 +67,7 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		hidden = true;
 		bouncing = false;
 		patrol.stopPatrol();
-		setAnim(); // set correct sprite animation
+		dieAC.setupAndPlay(); // set correct sprite animation
 	}
 	
 	public void bounce (float dir) {
@@ -85,10 +77,8 @@ public class KoopaTroopaDieAnim : MonoBehaviour {
 		patrol.enablePatrol();
 		patrol.setMoveSpeed(kickedSpeed);
 		patrol.setNewDir(dir);
-		setAnim(); // set correct sprite animation
+		dieAC.setupAndPlay(); // set correct sprite animation
 	}
-	
-	
 	
 	public bool isHidden () {
 		return hidden;

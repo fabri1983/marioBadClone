@@ -104,7 +104,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1876878404}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1332247179}
 --- !u!20 &617280120
 Camera:
   m_ObjectHideFlags: 0
@@ -251,12 +251,40 @@ MonoBehaviour:
   tiling: {x: 1, y: 1}
   wrapMode: 0
   coverage: {x: 1, y: 1}
+--- !u!1 &973100541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 973100542}
+  m_Layer: 0
+  m_Name: SceneOnly
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &973100542
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 973100541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1740729748}
+  - {fileID: 1332247179}
+  m_Father: {fileID: 0}
 --- !u!1001 &1202451706
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1332247179}
     m_Modifications:
     - target: {fileID: 400000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
       propertyPath: m_LocalPosition.x
@@ -315,6 +343,33 @@ Prefab:
   m_RootGameObject: {fileID: 617280118}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &1332247178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1332247179}
+  m_Layer: 0
+  m_Name: Misc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1332247179
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1332247178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 617280119}
+  m_Father: {fileID: 973100542}
 --- !u!1 &1740729747
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +397,7 @@ Transform:
   m_Children:
   - {fileID: 1956298219}
   - {fileID: 641617431}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 973100542}
 --- !u!1 &1876878403
 GameObject:
   m_ObjectHideFlags: 0

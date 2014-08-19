@@ -30,16 +30,10 @@ public class Idle : MonoBehaviour {
 		if (crouch != null)
 			crouch.noCrouch();
 		
-		// set the correct sprite animation
+		// due to problems on Unity's initialization order there is a use case where the object isn't instantiated
 		if (idleAC == null)
 			idleAC = GetComponentInChildren<IdleAnimConfig>();
-		if (idleAC != null) {
-			idleAC.animComp.setFPS(idleAC.animFPS);
-			idleAC.animComp.setRowLimits(idleAC.rowStartAnim, idleAC.rowLengthAnim);
-			idleAC.animComp.setColLimits(idleAC.maxColsAnimInRow, idleAC.colStartAnim, idleAC.colLengthAnim);
-			idleAC.animComp.setPingPongAnim(idleAC.pingPongAnim);
-			idleAC.animComp.Play();
-			idleAC.working = true;
-		}
+		if (idleAC != null)
+			idleAC.setupAndPlay();
 	}
 }

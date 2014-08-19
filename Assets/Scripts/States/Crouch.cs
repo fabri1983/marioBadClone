@@ -43,14 +43,14 @@ public class Crouch : MonoBehaviour {
 			if (jumping) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
-					setAnim(); // set crouch anim
+					crouchAC.setupAndPlay();
 				}
 			}
 			// if not jumping and not moving and sneaking: stop sneaking and do crouch
 			else if (!moving) {
 				if (sneak.isSneaking()) {
 					sneak.stopSneaking();
-					setAnim();
+					crouchAC.setupAndPlay();
 				}
 			}
 			// if not jumping and moving: sneak
@@ -74,16 +74,7 @@ public class Crouch : MonoBehaviour {
 		box.center = theCenter;
 		
 		// set the correct sprite animation
-		setAnim();
-	}
-	
-	private void setAnim () {
-		crouchAC.animComp.setFPS(crouchAC.animFPS);
-		crouchAC.animComp.setRowLimits(crouchAC.rowStartAnim, crouchAC.rowLengthAnim);
-		crouchAC.animComp.setColLimits(crouchAC.maxColsAnimInRow, crouchAC.colStartAnim, crouchAC.colLengthAnim);
-		crouchAC.animComp.setPingPongAnim(crouchAC.pingPongAnim);
-		crouchAC.animComp.Play();
-		crouchAC.working = true;
+		crouchAC.setupAndPlay();
 	}
 	
 	public void noCrouch () {
@@ -95,7 +86,7 @@ public class Crouch : MonoBehaviour {
 			return;
 		
 		crouching = false;
-		crouchAC.working = false;
+		crouchAC.stop();
 		
 		// transform the collider
 		Vector3 theCenter = box.center;

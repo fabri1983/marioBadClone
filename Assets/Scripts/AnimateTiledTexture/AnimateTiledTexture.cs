@@ -8,7 +8,7 @@ public class AnimateTiledTexture : MonoBehaviour
 [HideInInspector] public float _framesPerSecond = 1f;	// Frames per second that you want to texture to play at
 [HideInInspector] public bool _pingPongAnim = false;	// True for going forward and backwards in the animation
 	public int _rowsTotalInSprite = 1;					// How much rows the sprite has. This value is defined once
-[HideInInspector] public int _maxColsInRows = 1;		// How much columns the sprite has. This can be changed depending what row/s you want to animate
+	public int _maxColsInRows = 1;		// The greatest number of columns from the rows the anim covers, not the total columns the anim has
 [HideInInspector] public bool _playOnce = false;				// Enable this if you want the animation to only play one time
 [HideInInspector] public bool _disableUponCompletion = false;	// Enable this if you want the texture to disable the renderer when it is finished playing
 [HideInInspector] public bool _enableEvents = false;			// Enable this if you want to register an event that fires when the animation is finished playing
@@ -80,20 +80,11 @@ public class AnimateTiledTexture : MonoBehaviour
 		offsetYStart = 1f - 1f / (_rowsTotalInSprite - start);
 	}
 	
-	public void setColLimits(int maxColsInRow, int start, int length) {
-		bool recalc = false;
-		if (_maxColsInRows != maxColsInRow)
-			recalc = true;
-		
-		_maxColsInRows = maxColsInRow;
+	public void setColLimits(int start, int length) {
 		_colLimits[0] = start;
 		_colLimits[1] = length;
 		_maxIndex = start + length - 1;
 		_index = start;
-		
-		// We need to recalc the texture size since different columns length affects the UV map
-		if (recalc)
-			CalcTextureTiling();
 	}
  
 	public void setFPS (float fps) {

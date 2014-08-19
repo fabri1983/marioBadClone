@@ -129,14 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a737f5d074dc924aa841bd632f12c6f, type: 1}
   m_Name: 
   animComp: {fileID: 0}
+  name: 1
   animFPS: 1
   pingPongAnim: 0
-  maxColsAnimInRow: 2
   rowStartAnim: 0
   rowLengthAnim: 1
   colStartAnim: 0
   colLengthAnim: 1
-  working: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,14 +147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b1edc4db3e46a49bfdc1d8398b87f5, type: 1}
   m_Name: 
   animComp: {fileID: 0}
+  name: 3
   animFPS: 1
   pingPongAnim: 1
-  maxColsAnimInRow: 2
   rowStartAnim: 0
   rowLengthAnim: 1
   colStartAnim: 1
   colLengthAnim: 1
-  working: 0
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

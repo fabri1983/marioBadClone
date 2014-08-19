@@ -42,14 +42,8 @@ public class Jump : MonoBehaviour {
 	
 	public void forceJump (float jumpVel) {
 		// set the correct sprite animation
-		if (crouch == null || !crouch.isCrouching()) {
-			jumpAC.animComp.setFPS(jumpAC.animFPS);
-			jumpAC.animComp.setRowLimits(jumpAC.rowStartAnim, jumpAC.rowLengthAnim);
-			jumpAC.animComp.setColLimits(jumpAC.maxColsAnimInRow, jumpAC.colStartAnim, jumpAC.colLengthAnim);
-			jumpAC.animComp.setPingPongAnim(jumpAC.pingPongAnim);
-			jumpAC.animComp.Play();
-			jumpAC.working = true;
-		}
+		if (crouch == null || !crouch.isCrouching())
+			jumpAC.setupAndPlay();
 		
 		isJumping = true;
 		if (jumpVel != 0f) {
