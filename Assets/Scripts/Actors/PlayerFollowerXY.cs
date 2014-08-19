@@ -18,9 +18,8 @@ public class PlayerFollowerXY : MonoBehaviour {
 	private Transform layersStruct; // this is the container of background and foreground objects
 	
 	void Awake () {
-		GameObject go = GameObject.Find("LayersStruct");
-		if (go != null)
-			layersStruct = go.transform;
+		// get the game object that contains every layer game object for background and foreground
+		layersStruct = LevelManager.Instance.getLayersStruct();
 	}
 	
 	// Use this for initialization

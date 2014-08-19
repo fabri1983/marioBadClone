@@ -219,6 +219,13 @@ public class LevelManager : MonoBehaviour {
 		camInFront = cam;
 	}
 	
+	public Transform getLayersStruct () {
+		Parallax[] parallax = GameObject.FindSceneObjectsOfType(typeof(Parallax)) as Parallax[];
+		if (parallax == null)
+			return null;
+		return parallax[0].transform.parent;
+	}
+	
 	/// <summary>
 	/// Gets all the Parallax components from the main camera and configure them according to 
 	/// the extension of the level: min world position and max world position.
@@ -227,11 +234,9 @@ public class LevelManager : MonoBehaviour {
 	/// Level dimension in world coordinates. Used to configure the parallax scripts
 	/// </param>
 	private void setParallaxProperties (Rect levelExtent) {
-		GameObject go = GameObject.Find("LayersStruct");
-		if (go == null)
+		Parallax[] parallax = GameObject.FindSceneObjectsOfType(typeof(Parallax)) as Parallax[];
+		if (parallax == null)
 			return;
-		
-		Parallax[] parallax = go.GetComponentsInChildren<Parallax>();
 		
 		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
 		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
