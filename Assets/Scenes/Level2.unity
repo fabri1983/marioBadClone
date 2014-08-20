@@ -245,12 +245,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da921b9f1f47e74681672a9743a7acd, type: 1}
   m_Name: 
+  enableOffset: 0
   bgTexture: {fileID: 2800000, guid: c87a66a58a27eec41acbb3ebfff65ad8, type: 1}
   speed: 1
   manualStep: {x: 0, y: 0}
   tiling: {x: 1, y: 1}
   wrapMode: 0
-  coverage: {x: 1, y: 1}
+  screenCoverage: {x: 1, y: 1}
 --- !u!1 &973100541
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,9 +556,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da921b9f1f47e74681672a9743a7acd, type: 1}
   m_Name: 
+  enableOffset: 0
   bgTexture: {fileID: 2800000, guid: da1e62bc4e5d39d43978aa615ba11c3d, type: 1}
   speed: 1
   manualStep: {x: 0, y: 0}
   tiling: {x: 1, y: 1}
   wrapMode: 0
-  coverage: {x: 1, y: 1}
+  screenCoverage: {x: 1, y: 1}

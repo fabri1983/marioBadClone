@@ -7,7 +7,8 @@ using UnityEngine;
 /// </summary>
 [ExecuteInEditMode]
 public class Parallax : MonoBehaviour, IScreenLayout {
-
+	
+	public bool enableOffset = false;
 	public Texture2D bgTexture;
 	public float speed = 1f; // factor to be applied to offset calculation
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
@@ -70,32 +71,35 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	
 	private void updateOffset () {
 		Vector2 camPos = Camera.main.transform.position; // get the scene camera position
-
-		// if manualOffset is not (0,0) then apply a fixed offset if camera is moving
-		if (!Vector2.zero.Equals(manualStep)) {
-			Vector2 diff = camPos - oldCamPos;
-			// cam is going right, then offset left
-			if (diff.x > epsilon)
-				accumOffset.x += manualStep.x;
-			// cam is going left, then offset right
-			else if (diff.x < -epsilon)
-				accumOffset.x -= manualStep.x;
-			// cam is going up, then offset downwards
-			if (diff.y > epsilon)
-				accumOffset.y += manualStep.y;
-			// cam is going down, then offset upwards
-			else if (diff.y < -epsilon)
-				accumOffset.y -= manualStep.y;
-
-			accumOffset += offset;
-		}
-		// apply an offset according player's position inside the level extent
-		else {
-			accumOffset.x = (camPos.x / levelExtent.x);
-			accumOffset.y = (camPos.y / levelExtent.y);
+		
+		if (enableOffset) {
+			// if manualOffset is not (0,0) then apply a fixed offset if camera is moving
+			if (!Vector2.zero.Equals(manualStep)) {
+				Vector2 diff = camPos - oldCamPos;
+				// cam is going right, then offset left
+				if (diff.x > epsilon)
+					accumOffset.x += manualStep.x;
+				// cam is going left, then offset right
+				else if (diff.x < -epsilon)
+					accumOffset.x -= manualStep.x;
+				// cam is going up, then offset downwards
+				if (diff.y > epsilon)
+					accumOffset.y += manualStep.y;
+				// cam is going down, then offset upwards
+				else if (diff.y < -epsilon)
+					accumOffset.y -= manualStep.y;
+	
+				accumOffset += offset;
+			}
+			// apply an offset according player's position inside the level extent
+			else {
+				accumOffset.x = (camPos.x / levelExtent.x);
+				//accumOffset.y = (camPos.y / levelExtent.y);
+			}
+			
+			renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset * speed);
 		}
 		
-		renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset * speed);
 		oldCamPos.Set(camPos.x, camPos.y);
 	}
 	
