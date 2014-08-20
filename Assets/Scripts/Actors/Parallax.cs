@@ -13,9 +13,9 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
-	public Vector2 coverage = Vector2.one;
+	public Vector2 screenCoverage = Vector2.one;
 	
-	private const float epsilon = 0.09f; // used when getting difference 
+	private const float epsilon = 0.01f; // used only when manual step is not (0,0)
 	private Vector2 oldCamPos = Vector2.zero;
 	private Vector2 accumOffset = Vector2.zero;
 	private Vector2 offset = Vector2.zero; // offset depending on player's spawn position
@@ -86,15 +86,13 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 			// cam is going down, then offset upwards
 			else if (diff.y < -epsilon)
 				accumOffset.y -= manualStep.y;
-			
+
 			accumOffset += offset;
 		}
-		// apply an offset according player's position
+		// apply an offset according player's position inside the level extent
 		else {
-			if (tiling.x != 1f)
-				accumOffset.x = (camPos.x / levelExtent.x);
-			if (tiling.y != 1f)
-				accumOffset.y = (camPos.y / levelExtent.y);
+			accumOffset.x = (camPos.x / levelExtent.x);
+			accumOffset.y = (camPos.y / levelExtent.y);
 		}
 		
 		renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset * speed);
@@ -102,7 +100,7 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject, coverage);
+		GameObjectTools.setScreenCoverage(Camera.main, transform, screenCoverage);
 	}
 	
 	public void updateSizeAndPosition () {

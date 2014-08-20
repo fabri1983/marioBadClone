@@ -93,7 +93,7 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject, coverage);
+		GameObjectTools.setScreenCoverage(Camera.main, transform, coverage);
 	}
 	
 	public void updateSizeAndPosition () {

@@ -197,12 +197,12 @@ static public class GameObjectTools
 	/**
 	 * Sets position and factor scale (w,h) to a game object, ie a quad, for covering the screen size.
 	 */ 
-	public static void setScreenCoverage (Camera cam, GameObject go, Vector2 coverage) {
+	public static void setScreenCoverage (Camera cam, Transform tr, Vector2 coverage) {
 		
 		// position barely ahead from near clip plane
 		float pos = (cam.nearClipPlane + 0.01f);
 		// position the camera in that position (following current orientation)
-		go.transform.position = pos * cam.transform.forward + cam.transform.position;
+		tr.position = pos * cam.transform.forward + cam.transform.position;
 		
 		float h, w;
 		if(!cam.orthographic) {
@@ -215,15 +215,15 @@ static public class GameObjectTools
 		}
 		
 		// scale the game object to adjust it according screen bounds
-		Vector3 theScale = go.transform.localScale;
+		Vector3 theScale = tr.localScale;
 		theScale.x = w * Mathf.Abs(coverage.x);
 		theScale.y = h * Mathf.Abs(coverage.y);
 		theScale.z = 0f;
-		go.transform.localScale = theScale;
+		tr.localScale = theScale;
 		
 		// local position of the game object containing this script
-		Vector3 thePos = go.transform.localPosition;
+		Vector3 thePos = tr.localPosition;
 		thePos.y = h * 0.5f * (1f - Mathf.Abs(coverage.y)) * Mathf.Sign(coverage.y);
-		go.transform.localPosition = thePos;
+		tr.localPosition = thePos;
 	}
 }

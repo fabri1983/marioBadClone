@@ -35,7 +35,7 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 	}
 	
 	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, this.gameObject, coverage);
+		GameObjectTools.setScreenCoverage(Camera.main, transform, coverage);
 	}
 	
 	public void updateSizeAndPosition () {
