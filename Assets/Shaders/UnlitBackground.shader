@@ -6,11 +6,12 @@ Properties {
 	
 SubShader {
     Tags { "IgnoreProjector"="True" "Queue"="Background" }
-    Cull Off
     ZWrite Off
 	Lighting Off
 	
     Pass {
+    	Cull Off // here it solves an issue (dunno which issue)
+    	
         SetTexture [_MainTex] { combine texture }
     }
 }

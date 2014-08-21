@@ -6,19 +6,20 @@ Properties {
 
 SubShader {
 	Tags { "Queue"="Overlay+100" "IgnoreProjector"="True" "RenderType"="Transparent" }
-	Cull Off
 	ZWrite Off
 	Lighting Off
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 	
 	Pass {
+		Cull Off // here it solves an issue (donno which issue)
+		
 		CGPROGRAM
 	    #pragma exclude_renderers ps3 xbox360 flash
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
 	    
-	    uniform fixed4 _Color;
+	    uniform fixed4 _Color; // if using fixed4 as type then be sure frag() has fixed4 in its signature
 	    
 	    struct vertexInput
 		{
@@ -37,9 +38,9 @@ SubShader {
 			return o;
 		}
 		
-		half4 frag(fragmentInput i) : COLOR
+		fixed4 frag(fragmentInput i) : COLOR
 		{
-			half4 c = _Color;
+			fixed4 c = _Color;
 			return c;
 		}
 	    ENDCG

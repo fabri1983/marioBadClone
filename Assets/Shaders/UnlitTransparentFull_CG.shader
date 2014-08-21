@@ -9,7 +9,6 @@ Properties {
 
 Category {
 	Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
-	
 	Lighting Off
 	ZWrite Off
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
@@ -28,7 +27,7 @@ Category {
 		struct vertexInput
 		{
 			half4 vertex: POSITION;
-			fixed4 texcoord: TEXCOORD0;
+			fixed2 texcoord: TEXCOORD0;
 		};
 
 		struct fragmentInput
@@ -42,8 +41,10 @@ Category {
 			fragmentInput o;
 			o.pos = mul(UNITY_MATRIX_MVP, i.vertex);
 			
+			// positioning of variables:
 			// _SetupVec1: _index, _maxColsInRows, _rowsTotalInSprite, offsetYStart
 			// _SetupVec2: _textureTiling.x, _textureTiling.y, _offset.x, _offset.y
+			
 			fixed2 _offset;
 			fixed xTemp = _SetupVec1.x / _SetupVec1.y;
 			fixed xTempFloor = floor(_SetupVec1.x / _SetupVec1.y);
@@ -61,10 +62,12 @@ Category {
 	        // If we have scaled the texture, we need to reposition the texture to the center of the object
 	        _offset.x += ((1.0 / _SetupVec1.y) - _SetupVec2.x) / 2.0;
 	        _offset.y += ((1.0 / _SetupVec1.z) - _SetupVec2.y) / 2.0;
-	 
+	 		// try this: _offset.xy = ((fixed2(1.0, 1.0) / _SetupVec1.xy) - _SetupVec2.xy) * 0.5;
+	 		
 	        // Add an additional offset if the user does not want the texture centered
 	        _offset.x += _SetupVec2.z;
 	        _offset.y += _SetupVec2.w;
+	        // try this: _offset.xy += _SetupVec2.zw;
 	        
 			o.uv = i.texcoord.xy * _SetupVec2.xy + _offset;
 			 
@@ -73,7 +76,7 @@ Category {
 
 		half4 frag(fragmentInput i) : COLOR
 		{
-			half4 c = tex2D (_MainTex, i.uv);
+			half4 c = tex2D(_MainTex, i.uv);
 			return c;
 		}
 		ENDCG

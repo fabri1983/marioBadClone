@@ -12,24 +12,26 @@
 // Optimization for Mobile: avoid the use of alpha cut off (Alpha Test)
 
 Shader "Custom/TextureMask" {
-   Properties
-   {
-      _MainTex ("Base (RGB)", 2D) = "white" {}
-      _MaskTex ("Culling Mask", 2D) = "white" {}
-      //_Cutoff ("Alpha cutoff", Range (0,1)) = 0.1
-   }
-   SubShader
-   {
-      Tags {"Queue"="Transparent"}
-      Lighting Off
-      ZWrite Off
-      Blend SrcAlpha OneMinusSrcAlpha
-      //AlphaTest GEqual [_Cutoff]
-      
-      Pass
-      {
-         SetTexture [_MaskTex] {combine texture}
-         SetTexture [_MainTex] {combine texture, previous}
-      }
-   }
+
+Properties
+{
+	_MainTex ("Base (RGB)", 2D) = "white" {}
+	_MaskTex ("Culling Mask", 2D) = "white" {}
+	//_Cutoff ("Alpha cutoff", Range (0,1)) = 0.1
+}
+
+SubShader {
+	Tags {"Queue"="Transparent"}
+	Lighting Off
+	ZWrite Off
+	Blend SrcAlpha OneMinusSrcAlpha
+	//AlphaTest GEqual [_Cutoff]
+
+	Pass {
+		Cull Off // here it solves an issue (dunno which issue)
+		
+		SetTexture [_MaskTex] {combine texture}
+		SetTexture [_MainTex] {combine texture, previous}
+	}
+}
 }
