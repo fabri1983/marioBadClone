@@ -1,13 +1,14 @@
-Shader "Custom/Unlit Background mirror" {
+Shader "Custom/Unlit Foreground Transparent Mirror" {
 
 Properties {
-	_MainTex ("Base (RGB)", 2D) = "white" {}
+	_MainTex ("Base (RGB) A(alpha)", 2D) = "white" {}
 }
 	
 SubShader {
-    Tags { "IgnoreProjector"="True" "Queue"="Background" }
+    Tags { "IgnoreProjector"="True" "Queue"="Overlay" "RenderType"="Transparent" }
     ZWrite Off
 	Lighting Off
+	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 	
 	Pass {
 		Cull Off // here it solves an issue (donno which issue)
@@ -26,7 +27,7 @@ SubShader {
 			half4 vertex: POSITION;
 			fixed2 texcoord: TEXCOORD0;
 		};
-
+	
 		struct fragmentInput
 		{
 			half4 pos: SV_POSITION;

@@ -32,7 +32,8 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 			gameObject.SetActiveRecursively(true);
 		
 		// set texture wrap mode
-		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
+		renderer.sharedMaterial.mainTexture.wrapMode = TextureWrapMode.Repeat;
+
 		// register this class with ScreenLayoutManager for screen resize event
 		ScreenLayoutManager.Instance.register(this);
 		// initializes as inifnite to avoid NaN in division operation
@@ -64,7 +65,7 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 #endif
 		}
 	}
-
+	
 	void LateUpdate () {
 		updateOffset();
 	}
