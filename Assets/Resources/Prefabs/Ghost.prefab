@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
   m_Name: 
   animComp: {fileID: 0}
-  name: 1
+  actionName: 1
   animFPS: 1
   pingPongAnim: 0
   rowStartAnim: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
   m_Name: 
   animComp: {fileID: 0}
-  name: 3
+  actionName: 3
   animFPS: 1
   pingPongAnim: 1
   rowStartAnim: 0

@@ -40,6 +40,7 @@ GameObject:
   - 114: {fileID: 11400024}
   - 114: {fileID: 11400022}
   - 114: {fileID: 11400028}
+  - 114: {fileID: 11400030}
   m_Layer: 8
   m_Name: KoopaTroopa
   m_TagString: Untagged
@@ -173,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311ba107db55a3c40b883cfe7e22a75c, type: 1}
   m_Name: 
   kickedSpeed: 20
-  hideColliderProportion: .800000012
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
   m_Name: 
   animComp: {fileID: 0}
-  name: 2
+  actionName: 2
   animFPS: 7
   pingPongAnim: 1
   rowStartAnim: 0
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
   m_Name: 
   animComp: {fileID: 0}
-  name: 6
+  actionName: 7
   animFPS: 1
   pingPongAnim: 0
   rowStartAnim: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
   m_Name: 
   animComp: {fileID: 0}
-  name: 3
+  actionName: 3
   animFPS: 7
   pingPongAnim: 1
   rowStartAnim: 0
@@ -314,6 +314,17 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5fd291e55c029b4ea5438c99f3fdede, type: 1}
   m_Name: 
+--- !u!114 &11400030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc64c64e38d8d04a9d03f866737c16f, type: 1}
+  m_Name: 
+  hideColliderProportion: .800000012
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

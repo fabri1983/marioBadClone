@@ -61,12 +61,18 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #if UNITY_EDITOR
 			// this is in case this script is used in editor mode
-			renderer.sharedMaterial.mainTexture = bgTexture;
+			if (!bgTexture)
+				renderer.sharedMaterial.mainTexture = bgTexture;
 #endif
 		}
 	}
 	
-	void LateUpdate () {
+	void Update () {
+#if UNITY_EDITOR
+		// if in editor mode we change the texture this will update the material
+		if (!bgTexture.name.Equals(renderer.sharedMaterial.mainTexture.name))
+			renderer.sharedMaterial.mainTexture = bgTexture;
+#endif
 		updateOffset();
 	}
 	

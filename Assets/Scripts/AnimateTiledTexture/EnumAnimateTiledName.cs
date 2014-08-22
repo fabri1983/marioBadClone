@@ -12,6 +12,7 @@ public enum EnumAnimateTiledName
 	Walk,
 	Sneak,
 	Crouch,
-	Die
+	Die,
+	Hide
 }
 

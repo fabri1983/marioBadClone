@@ -5,17 +5,19 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	public bool jumpInLoop = false;
 	public float jumpSpeed = 20f;
 
-	private KoopaTroopaDieAnim dieAnim;
+	private Bounce bounce;
 	private Patrol patrol;
 	private Chase chase;
 	private Jump jump;
+	private Hide _hide;
 	private ChipmunkShape shape;
 
 	void Awake () {
 		jump = GetComponent<Jump>();
-		dieAnim = GetComponent<KoopaTroopaDieAnim>();
+		bounce = GetComponent<Bounce>();
 		patrol = GetComponent<Patrol>();
 		chase = GetComponent<Chase>();
+		_hide = GetComponent<Hide>();
 		shape = GetComponent<ChipmunkShape>();
 		
 		PauseGameManager.Instance.register(this);
@@ -53,22 +55,27 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		return true;
 	}
 	
-	private void die () {
+	private void hide () {
 		stop();
-		dieAnim.die();
-		destroy();
-	}
-	
-	public void dieWhenFalling () {
-		stop();
-		destroy();
+		chase.setOperable(false); // chase is not allowed to work anymore
+		_hide.hide();
 	}
 	
 	private void stop () {
+		bounce.stop();
 		chase.stopChasing();
 		patrol.stopPatrol();
 		if (jump != null)
 			jump.setForeverJump(false);
+	}
+	
+	private void die () {
+		stop();
+		destroy();
+	}
+	
+	public void dieWhenFalling () {
+		die();
 	}
 	
 	private void stopJumping () {
@@ -84,11 +91,13 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		PowerUp powerUp = shape2.GetComponent<PowerUp>();
 		
 		powerUp.Invoke("destroy", 0f); // a replacement for Destroy
+		koopa.stop();
+		
 		// hide or kill the koopa
-		if (koopa.dieAnim.isHidden())
+		if (koopa._hide.isHidden())
 			koopa.die();
 		else
-			koopa.dieAnim.hide();
+			koopa.hide();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.
@@ -114,22 +123,19 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			if (koopa.jumpInLoop)
 				koopa.stopJumping();
 			// hide the koopa troopa or stop the bouncing of the hidden koopa
-			else if (!koopa.dieAnim.isHidden() || koopa.dieAnim.isBouncing()) {
-				koopa.stop();
-				koopa.dieAnim.hide();
-			}
+			else if (!koopa._hide.isHidden() || koopa.bounce.isBouncing())
+				koopa.hide();
 			// kills the koopa
 			else {
-				koopa.stop();
 				koopa.die();
 			}
 			// makes the player jumps a little upwards
 			player.forceJump();
 		}
 		// koopa starts bouncing
-		else if (koopa.dieAnim.isHidden() && !koopa.dieAnim.isBouncing()){
+		else if (koopa._hide.isHidden() && !koopa.bounce.isBouncing()){
 			koopa.stop();
-			koopa.dieAnim.bounce(Mathf.Sign(koopa.transform.position.x - player.transform.position.x));
+			koopa.bounce.bounce(Mathf.Sign(koopa.transform.position.x - player.transform.position.x));
 		}
 		// kills Player
 		else {
@@ -149,10 +155,10 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		
 		KoopaTroopa koopa1 = shape1.GetComponent<KoopaTroopa>();
 		KoopaTroopa koopa2 = shape2.GetComponent<KoopaTroopa>();
-		bool hidden1 = koopa1.dieAnim.isHidden();
-		bool hidden2 = koopa2.dieAnim.isHidden();
-		bool bouncing1 = koopa1.dieAnim.isBouncing();
-		bool bouncing2 = koopa2.dieAnim.isBouncing();
+		bool hidden1 = koopa1._hide.isHidden();
+		bool hidden2 = koopa2._hide.isHidden();
+		bool bouncing1 = koopa1.bounce.isBouncing();
+		bool bouncing2 = koopa2.bounce.isBouncing();
 		
 		// avoid koopa1 pushes hidden koopa2
 		Chase chase = shape1.GetComponent<Chase>();

@@ -11,7 +11,7 @@ public class AnimateTiledConfig : MonoBehaviour {
 	[HideInInspector] // hide because I want this be asigned thru script
 	public AnimateTiledTexture animComp; // component which has all the animation tiled logic
 	
-	public EnumAnimateTiledName name = EnumAnimateTiledName.None; // this used to reference the correct animate tiled configuration component
+	public EnumAnimateTiledName actionName = EnumAnimateTiledName.None; // this used to reference the correct animate tiled configuration component
 	public float animFPS = 1; // sprite animation's fps
 	public bool pingPongAnim = false; // true for going forward and backwards in the animation
 	public int rowStartAnim = 0; // the absolute row position where the anim starts
@@ -54,7 +54,7 @@ public class AnimateTiledConfig : MonoBehaviour {
 			anims = go.GetComponents<AnimateTiledConfig>();
 		
 		for (int i=0,c=anims.Length; i<c; ++i) {
-			if (name.Equals(anims[i].name))
+			if (name.Equals(anims[i].actionName))
 				return anims[i];
 		}
 		
