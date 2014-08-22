@@ -18,6 +18,7 @@ SubShader {
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
+	    #pragma glsl_no_auto_normalization
 	    
 	    uniform fixed4 _Color; // if using fixed4 as type then be sure frag() has fixed4 in its signature
 	    

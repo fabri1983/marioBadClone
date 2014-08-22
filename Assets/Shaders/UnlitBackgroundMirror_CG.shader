@@ -1,14 +1,14 @@
-Shader "Custom/Unlit Foreground Transparent Mirror" {
+Shader "Custom/Unlit Background Mirror CG" {
 
 Properties {
-	_MainTex ("Base (RGB) A(alpha)", 2D) = "white" {}
+	_MainTex ("Base (RGB)", 2D) = "white" {}
 }
 	
 SubShader {
-    Tags { "IgnoreProjector"="True" "Queue"="Overlay" "RenderType"="Transparent" }
+    Tags { "IgnoreProjector"="True" "Queue"="Background" }
     ZWrite Off
 	Lighting Off
-	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
+	Blend Off
 	
 	Pass {
 		Cull Off // here it solves an issue (donno which issue)
@@ -18,6 +18,7 @@ SubShader {
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
+	    #pragma glsl_no_auto_normalization
 	    
 	    uniform sampler2D _MainTex;
 	    uniform fixed4 _MainTex_ST; // The texture name + _ST is needed to get the tiling & offset. ST: Scale+Transform
@@ -27,7 +28,7 @@ SubShader {
 			half4 vertex: POSITION;
 			fixed2 texcoord: TEXCOORD0;
 		};
-	
+
 		struct fragmentInput
 		{
 			half4 pos: SV_POSITION;

@@ -20,7 +20,8 @@ Category {
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
-
+		#pragma glsl_no_auto_normalization
+		
 		uniform sampler2D _MainTex;
 		uniform fixed4 _SetupVec1, _SetupVec2;
 		

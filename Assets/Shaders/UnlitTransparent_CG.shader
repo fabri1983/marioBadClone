@@ -21,6 +21,7 @@ Subshader {
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
+		#pragma glsl_no_auto_normalization
 
 		uniform sampler2D _MainTex;
 		//uniform fixed4 _MainTex_ST; // The texture name + _ST is needed to get the tiling & offset. ST: Scale+Transform
