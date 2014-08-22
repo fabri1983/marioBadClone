@@ -17,7 +17,7 @@ Subshader {
 
 	Pass {
 		CGPROGRAM
-		#pragma exclude_renderers ps3 xbox360 flash
+		#pragma exclude_renderers ps3 xbox360 flash glesdesktop opengl
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
