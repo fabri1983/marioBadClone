@@ -113,9 +113,14 @@ public class Jump : MonoBehaviour {
 		return true;
 	}
 
-	public static void endCollision (ChipmunkArbiter arbiter) {
-		/*ChipmunkShape shape1, shape2;
+	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);*/
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		// if exiting from Scenery then assume the component is in the air
+		Jump jump = shape2.GetComponent<Jump>();
+		if (jump != null)
+			jump.isJumping = true;
 	}
 }
