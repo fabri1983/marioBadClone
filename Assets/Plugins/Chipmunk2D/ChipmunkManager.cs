@@ -15,8 +15,18 @@ public class ChipmunkManager : MonoBehaviour {
 	protected void FixedUpdate(){
 		_space._Step(Time.fixedDeltaTime);	
 		
-		foreach(ChipmunkBody b in _space.bodies){
-			b.transform.position = (Vector3) b.position + (Vector3.forward * b._savedZ);
+		for (int i=0,c=_space.bodies.Count; i<c; ++i){
+			ChipmunkBody b = _space.bodies[i];
+			
+			//b.transform.position = (Vector3) b.position + (Vector3.forward * b._savedZ);
+			// do the same than above
+			Vector3 thePos = b.transform.position;
+			thePos.x = b.position.x;
+			thePos.y = b.position.y;
+			thePos.z = b._savedZ;
+			b.transform.position = thePos;
+			
+			// next rotation operaiton seems to be the fastest, since it immediately executes internal call to engine api
 			b.transform.rotation = Quaternion.AngleAxis(b.angle*Mathf.Rad2Deg, Vector3.forward);
 		}
 	}

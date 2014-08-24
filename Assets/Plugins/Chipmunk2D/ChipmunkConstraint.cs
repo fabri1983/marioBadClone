@@ -142,7 +142,7 @@ public abstract class ChipmunkConstraint : ChipmunkBinding.Base {
 	
 	// Most constraints do nothing on transform changes.
 	public override ChipmunkBody _UpdatedTransform(){
-		var bodyA = this.GetComponentUpwards<ChipmunkBody>();
+		ChipmunkBody bodyA = this.GetComponentUpwards<ChipmunkBody>();
 		UpdateConstraint();
 		
 		return null;
