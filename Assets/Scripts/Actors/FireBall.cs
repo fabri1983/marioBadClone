@@ -17,16 +17,17 @@ public class FireBall : MonoBehaviour, IPausable {
 		PauseGameManager.Instance.register(this);
 	}
 	
-	void Update () {
-		applyRotation();
-	}
-	
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this);
 	}
+	
+	void Update () {
+		applyTransform();
+	}
 
-	private void applyRotation () {
-        // usar body y dir aca
+	private void applyTransform () {
+		body.transform.rotation = Quaternion.AngleAxis(rotAnimGrades * Mathf.Rad2Deg, Vector3.forward);;
+        body.ApplyImpulse(dir, Vector2.zero);
 	}
 	
 	/**

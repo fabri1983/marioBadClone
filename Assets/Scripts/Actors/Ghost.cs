@@ -78,7 +78,6 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	
 	// Update is called once per frame
 	void Update () {
-		
 		// disable chasing if target is facing the ghost
 		if (chase.getTarget() == null || isTargetFacingMe())
 			stop();

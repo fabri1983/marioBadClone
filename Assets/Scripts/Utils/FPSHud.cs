@@ -39,7 +39,7 @@ public class FPSHud : MonoBehaviour
 	}
  
 	void Update() {
-    	accum += Time.timeScale/ Time.deltaTime;
+    	accum += Time.timeScale / Time.deltaTime;
     	++frames;
 		if (!useCoroutine && (Time.time - updateTime) > frequency) {
 			calculateFPS();
@@ -58,13 +58,13 @@ public class FPSHud : MonoBehaviour
  
 	private void calculateFPS () {
 		// Update the FPS
-	    float fps = accum/frames;
+	    float fps = accum / frames;
 	    sFPS = fps.ToString( "f" + Mathf.Clamp( nbDecimal, 0, 10 ) );
 
 		//Update the color
 		color = (fps >= 25) ? Color.green : ((fps > 10) ? Color.yellow : Color.red);
 
-        accum = 0.0F;
+        accum = 0.0f;
         frames = 0;
 	}
 	
