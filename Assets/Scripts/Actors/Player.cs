@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private Idle idle;
 	private Teleportable teleportable;
 	private PowerUp powerUp;
+	private LookUpwards lookUpwards;
 	private bool ableToPause;
 	
 	/// the position where the bullets start firing
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		dieAnim = GetComponent<PlayerDieAnim>();
 		crouch = GetComponent<Crouch>();
 		idle = GetComponent<Idle>();
-		
+		lookUpwards = GetComponent<LookUpwards>();
 		body = GetComponent<ChipmunkBody>();
 		
 		walkVelBackup = walkVelocity;
@@ -75,10 +76,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	void OnDestroy () {
 		GameObjectTools.ChipmunkBodyDestroy(body);
 		PauseGameManager.Instance.remove(this);
-#if UNITY_EDITOR
-#else
 		instance = null;
-#endif
 	}
 	
 	public void pause () {
@@ -144,6 +142,14 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			}
 			else
 				crouch.noCrouch();
+			
+			// look upwards
+			if ((Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) && !walk.isWalking() && !jump.IsJumping()) {
+				lookUpwards.lookUpwards();
+				isIdle = false;
+			}
+			else
+				lookUpwards.stop();
 			
 			if (isIdle)
 				idle.setIdle(false);

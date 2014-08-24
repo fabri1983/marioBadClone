@@ -20,6 +20,7 @@ GameObject:
   - 114: {fileID: 11400028}
   - 114: {fileID: 11400032}
   - 114: {fileID: 11400034}
+  - 114: {fileID: 11400038}
   m_Layer: 10
   m_Name: Mario
   m_TagString: Untagged
@@ -58,6 +59,7 @@ GameObject:
   - 114: {fileID: 11400022}
   - 114: {fileID: 11400020}
   - 114: {fileID: 11400018}
+  - 114: {fileID: 11400036}
   m_Layer: 0
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
@@ -157,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   walkVelocity: 10
   lightJumpVelocity: 40
-  gainJumpFactor: 1.39999998
+  gainJumpFactor: 1.29999995
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,6 +384,36 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5fd291e55c029b4ea5438c99f3fdede, type: 1}
   m_Name: 
+--- !u!114 &11400036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  actionName: 8
+  animFPS: 1
+  pingPongAnim: 0
+  rowStartAnim: 0
+  rowLengthAnim: 1
+  colStartAnim: 10
+  colLengthAnim: 1
+--- !u!114 &11400038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed590ab5fdd6424f8cecbfdf8e76bb2, type: 1}
+  m_Name: 
+  camDisplacement: 10
+  speedFactor: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

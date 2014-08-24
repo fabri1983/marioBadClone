@@ -3,15 +3,9 @@ using UnityEngine;
 /// <summary>
 /// This script can be asigned to a game object to follow a desired target in XY plane.
 /// </summary>
-public class PlayerFollowerXY : MonoBehaviour {
+public class PlayerFollowerXY : PlayerFollowerXYConfig {
 	
-	public bool lookTarget = true;
-	public float timeFactor = 4f;
-	public float offsetY = 3f;
-	public bool smoothLerp = true;
-	public bool lockY = false;
-	
-	private Transform lookAtTarget; // object which this game object will folow to and also look at to
+	private Transform lookAtTarget; // object which this game object will folow and look at to
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private bool stop = false;
 	private float constantTimer = 0.15f;
