@@ -175,7 +175,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
@@ -1127,6 +1127,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: cf686093653e64e55b3189a1aed00661, type: 2}
+      propertyPath: _collisionType
+      value: water
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf686093653e64e55b3189a1aed00661, type: 2}
   m_RootGameObject: {fileID: 793451583}
@@ -1895,7 +1899,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: oneway
+  _collisionType: 6f6e65776179
   _collisionGroup: 
   _radius: .0500000007
   _center: {x: 0, y: 0}
@@ -2544,7 +2548,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: bumpable
   _collisionGroup: 
   _center: {x: -.000115712486, y: -.0992094725}
   _size: {x: 1.0002315, y: .792462051}
@@ -3142,6 +3146,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
   m_RootGameObject: {fileID: 1794979135}
@@ -3404,6 +3412,10 @@ Prefab:
     - target: {fileID: 400002, guid: a987dd13476824d309c5eadcfb963086, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a987dd13476824d309c5eadcfb963086, type: 2}
+      propertyPath: _collisionType
+      value: oneway
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a987dd13476824d309c5eadcfb963086, type: 2}
@@ -3921,6 +3933,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a987dd13476824d309c5eadcfb963086, type: 2}
+      propertyPath: _collisionType
+      value: oneway
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a987dd13476824d309c5eadcfb963086, type: 2}
   m_RootGameObject: {fileID: 871863330}
@@ -4114,6 +4130,10 @@ Prefab:
     - target: {fileID: 400002, guid: 18161bdbe817c434f9793ba841949443, type: 2}
       propertyPath: m_LocalScale.x
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
@@ -4431,6 +4451,10 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 465
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a3000856fbe984e04b449f46bcbf7fc9, type: 2}
+      propertyPath: _collisionType
+      value: pit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a3000856fbe984e04b449f46bcbf7fc9, type: 2}
   m_RootGameObject: {fileID: 131972205}
@@ -4517,6 +4541,10 @@ Prefab:
     - target: {fileID: 400002, guid: 174db5284f54e48a9bcd6e744f3d3b32, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 174db5284f54e48a9bcd6e744f3d3b32, type: 2}
+      propertyPath: _collisionType
+      value: jumpshroom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 174db5284f54e48a9bcd6e744f3d3b32, type: 2}
@@ -4681,7 +4709,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: bumpable
   _collisionGroup: 
   _center: {x: -.000115712486, y: -.0992094725}
   _size: {x: 1.0002315, y: .792462051}
@@ -4877,6 +4905,10 @@ Prefab:
     - target: {fileID: 100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
@@ -5239,6 +5271,10 @@ Prefab:
     - target: {fileID: 400002, guid: 991724ff2cdde4fdc8abcf0e6ff5b16f, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 991724ff2cdde4fdc8abcf0e6ff5b16f, type: 2}
+      propertyPath: _collisionType
+      value: bumpable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991724ff2cdde4fdc8abcf0e6ff5b16f, type: 2}
@@ -5924,6 +5960,10 @@ Prefab:
     - target: {fileID: 100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
@@ -7381,6 +7421,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
   m_RootGameObject: {fileID: 903709827}
@@ -7640,6 +7684,10 @@ Prefab:
       propertyPath: _center.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: fb61040da7ac7498f9640e2412e17b8d, type: 2}
+      propertyPath: _collisionType
+      value: bumpable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb61040da7ac7498f9640e2412e17b8d, type: 2}
   m_RootGameObject: {fileID: 1449802969}
@@ -7706,7 +7754,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
@@ -7816,7 +7864,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
@@ -9764,6 +9812,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
   m_RootGameObject: {fileID: 1600806800}
@@ -9953,6 +10005,22 @@ Prefab:
     - target: {fileID: 400004, guid: f7b01b80c8ca343d3a0a591e72a82e4a, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: f7b01b80c8ca343d3a0a591e72a82e4a, type: 2}
+      propertyPath: runButton
+      value: Fire1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: f7b01b80c8ca343d3a0a591e72a82e4a, type: 2}
+      propertyPath: jumpButton
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: f7b01b80c8ca343d3a0a591e72a82e4a, type: 2}
+      propertyPath: directionAxis
+      value: Horizontal
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: f7b01b80c8ca343d3a0a591e72a82e4a, type: 2}
+      propertyPath: _collisionType
+      value: player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7b01b80c8ca343d3a0a591e72a82e4a, type: 2}
@@ -10373,6 +10441,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 991724ff2cdde4fdc8abcf0e6ff5b16f, type: 2}
+      propertyPath: _collisionType
+      value: bumpable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991724ff2cdde4fdc8abcf0e6ff5b16f, type: 2}
   m_RootGameObject: {fileID: 891924042}
@@ -10594,7 +10666,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
@@ -10834,6 +10906,10 @@ Prefab:
     - target: {fileID: 100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
@@ -11427,7 +11503,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
@@ -11685,6 +11761,10 @@ Prefab:
     - target: {fileID: 100002, guid: 18161bdbe817c434f9793ba841949443, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
+      propertyPath: _collisionType
+      value: crate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18161bdbe817c434f9793ba841949443, type: 2}
@@ -11967,7 +12047,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
@@ -12137,6 +12217,10 @@ Prefab:
     - target: {fileID: 400002, guid: fb61040da7ac7498f9640e2412e17b8d, type: 2}
       propertyPath: m_LocalRotation.w
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: fb61040da7ac7498f9640e2412e17b8d, type: 2}
+      propertyPath: _collisionType
+      value: bumpable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb61040da7ac7498f9640e2412e17b8d, type: 2}
@@ -12688,7 +12772,7 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: crate
+  _collisionType: 6372617465
   _collisionGroup: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
