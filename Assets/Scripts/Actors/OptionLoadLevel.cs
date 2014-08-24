@@ -13,7 +13,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	void OnDestroy () {
 		TouchEventManager.Instance.removeListener(this);
 		PauseGameManager.Instance.remove(this);
-		//TransitionGUIFxManager.Instance.remove(this);
+		TransitionGUIFxManager.Instance.remove(this);
 	}
 	
 	/**

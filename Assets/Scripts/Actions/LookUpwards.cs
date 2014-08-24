@@ -25,7 +25,7 @@ public class LookUpwards : MonoBehaviour {
 			return;
 		
 		// get follower script
-		PlayerFollowerXY playerFollower = LevelManager.Instance.getMainCamera().GetComponent<PlayerFollowerXY>();
+		PlayerFollowerXY playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
 		// copy state
 		playerFollowerConfig.setStateFrom(playerFollower);
 		// apply changes
@@ -44,7 +44,7 @@ public class LookUpwards : MonoBehaviour {
 			return;
 		
 		// get follower script
-		PlayerFollowerXY playerFollower = LevelManager.Instance.getMainCamera().GetComponent<PlayerFollowerXY>();
+		PlayerFollowerXY playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
 		// set back state to player follower component
 		playerFollower.setStateFrom(playerFollowerConfig);
 		

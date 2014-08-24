@@ -2543,43 +2543,6 @@ MonoBehaviour:
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: 0
---- !u!1 &885765822
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 885765823}
-  - 114: {fileID: 885765824}
-  m_Layer: 0
-  m_Name: ScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &885765823
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 885765822}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &885765824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 885765822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
 --- !u!1 &901954882
 GameObject:
   m_ObjectHideFlags: 0
@@ -6903,7 +6866,7 @@ Prefab:
     - target: {fileID: 11400000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
       propertyPath: mainCam
       value: 
-      objectReference: {fileID: 1912612807}
+      objectReference: {fileID: 1912612809}
     - target: {fileID: 11400000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
       propertyPath: camInFront
       value: 
@@ -6936,6 +6899,10 @@ Prefab:
       propertyPath: enablePlayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
+      propertyPath: inFrontCam
+      value: 
+      objectReference: {fileID: 125215094}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
   m_RootGameObject: {fileID: 1978660287}
@@ -7207,6 +7174,43 @@ Transform:
   - {fileID: 2119660813}
   - {fileID: 26674469}
   m_Father: {fileID: 1698630139}
+--- !u!1 &1978016974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1978016975}
+  - 114: {fileID: 1978016976}
+  m_Layer: 0
+  m_Name: ScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1978016975
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1978016974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1978016976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1978016974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
 --- !u!1 &1978660287
 GameObject:
   m_ObjectHideFlags: 0
@@ -7250,8 +7254,7 @@ MonoBehaviour:
   m_Name: 
   sceneIndex: 2
   enablePlayer: 1
-  mainCam: {fileID: 1912612807}
-  camInFront: {fileID: 125215092}
+  inFrontCam: {fileID: 125215094}
   min: {fileID: 157166555}
   max: {fileID: 1238963384}
 --- !u!114 &1978660290

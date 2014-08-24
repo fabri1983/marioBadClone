@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Renders a fullscreen Quad with a texture on it.
+/// Set the game object in such way that covers all the sreen.
 /// On screen redimension the quad z position and scaling is adjusted.
 /// </summary>
 [ExecuteInEditMode]
@@ -15,6 +15,9 @@ public class BGQuad : MonoBehaviour, IScreenLayout {
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
+		else
+			gameObject.SetActiveRecursively(true);
+		
 		// register this class with ScreenLayoutManager for screen resize event
 		ScreenLayoutManager.Instance.register(this);
 	}

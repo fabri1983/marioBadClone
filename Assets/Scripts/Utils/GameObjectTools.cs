@@ -113,12 +113,12 @@ static public class GameObjectTools
 	/**
 	 * Returns the Axis Alligned rect in screen space this bound is covering.
 	 * Doesn't considers rotation and scale.
-	 * It uses Camera.main for screen space conversion.
+	 * It uses the camera passed by argument for screen space conversion.
 	 */
-	public static Rect BoundsToScreenRectAA(Bounds bounds) {
+	public static Rect BoundsToScreenRectAA(Bounds bounds, Camera cam) {
 	    // Get mesh origin and farthest extent (this works best with simple convex meshes)
-	    Vector3 origin = Camera.main.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.max.y, bounds.center.z)); // maybe use 0f in z
-	    Vector3 extent = Camera.main.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, bounds.center.z)); // maybe use 0f in z
+	    Vector3 origin = cam.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.max.y, bounds.center.z)); // maybe use 0f in z
+	    Vector3 extent = cam.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, bounds.center.z)); // maybe use 0f in z
 	     
 	    // Create rect in screen space and return - does not account for camera perspective
 	    return new Rect(origin.x, Screen.height - origin.y, extent.x - origin.x, origin.y - extent.y);
@@ -127,7 +127,7 @@ static public class GameObjectTools
 	/**
 	 * Returns the Rect in screen space the bounds is covering.
 	 * Better implementation that accounts for rotation and scale.
-	 * It uses Camera.main for screen space conversion.
+	 * It uses camera passed by argument for screen space conversion.
 	 */
 	public static Rect BoundsToScreenRect(Bounds bounds, Camera cam) {
 		Vector3 cen = bounds.center;

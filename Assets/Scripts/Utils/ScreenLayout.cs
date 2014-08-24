@@ -26,7 +26,7 @@ public class ScreenLayout : MonoBehaviour, IScreenLayout {
 	}
 
 #if UNITY_EDITOR
-	// this only execute for Editor mode so any change in offset or enum layout is applied in real time
+	// only for Editor mode so any change in offset or enum layout is applied in real time
 	void Update () {
 		if (Application.isPlaying)
 			return;

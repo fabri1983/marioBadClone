@@ -38,12 +38,9 @@ public class ScreenLayoutManager : MonoBehaviour {
 		lastScreenHeight = Screen.height;
 	}
 
-	void OnApplicationQuit() {
+	void OnDestroy() {
 		consumers.Clear();
-#if UNITY_EDITOR
-#else
 		instance = null;
-#endif
     }
 	
 	public void register (IScreenLayout sl) {

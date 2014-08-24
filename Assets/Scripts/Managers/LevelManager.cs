@@ -25,9 +25,6 @@ public class LevelManager : MonoBehaviour {
     private int activeLevel;
     private Player player;
 	
-	// used for Mario's die animation
-	private GameObject mainCam, camInFront;
-	
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
 	/**
@@ -44,12 +41,14 @@ public class LevelManager : MonoBehaviour {
     }
 	
 	void Awake () {
-		if (instance != null && instance != this)
+		if (instance != null && instance != this) {
 			Destroy(this.gameObject);
+		}
 		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
+
 		initialize();
 	}
 	
@@ -70,12 +69,8 @@ public class LevelManager : MonoBehaviour {
 		// NOTE: here is the place where able to load a stored saved game: get latest level and spawn position, stats, powerups, etc
 	}
 	
-	void OnApplicationQuit() {
-#if UNITY_EDITOR
-#else
-		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
+	void OnDestroy() {
 		instance = null;
-#endif
     }
 	
     public int getLevel() {
@@ -126,8 +121,8 @@ public class LevelManager : MonoBehaviour {
 	/// </param>
 	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
 		activeLevel = level;
-		camInFront.SetActiveRecursively(false); // disable in front camera
-		mainCam.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
+		CameraManager.Instance.getInFrontCam().gameObject.SetActiveRecursively(false); // disable in front camera
+		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
 		player.toogleActivate(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
 		setParallaxProperties(levelExtent); // configure the parallax properties for a correct scrolling
@@ -183,13 +178,14 @@ public class LevelManager : MonoBehaviour {
 	public void loseGame (bool dieAnim) {
 		
 		if (dieAnim) {
+			Camera camInFront = CameraManager.Instance.getInFrontCam();
 			// stop main camera animation
-			mainCam.GetComponent<PlayerFollowerXY>().stopAnimation();
+			Camera.main.GetComponent<PlayerFollowerXY>().stopAnimation();
 			// set camera's position the same position than main camera
-			camInFront.transform.position = mainCam.transform.position;
-			camInFront.transform.forward = mainCam.transform.forward;
+			camInFront.transform.position = Camera.main.transform.position;
+			camInFront.transform.forward = Camera.main.transform.forward;
 			// enable the camera so it renders mario game object in front of all
-			camInFront.SetActiveRecursively(true);
+			camInFront.gameObject.SetActiveRecursively(true);
 			// execute Mario's die animation
 			player.die();
 			
@@ -201,22 +197,6 @@ public class LevelManager : MonoBehaviour {
 			// re load current level
 			loadLevel(activeLevel);
 		}
-	}
-	
-	public GameObject getMainCamera () {
-		return mainCam;
-	}
-	
-	public GameObject getCameraInFront () {
-		return camInFront;
-	}
-	
-	public void setMainCamera (GameObject cam) {
-		mainCam = cam;
-	}
-	
-	public void setCamerainFront (GameObject cam) {
-		camInFront = cam;
 	}
 	
 	public Transform getLayersStruct () {
