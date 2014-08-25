@@ -24,9 +24,12 @@ public class RenderQueue : MonoBehaviour {
 	
 #if UNITY_EDITOR
 	void Update () {
-		if (mat)
+		// if no Editor Mode then exit
+		if (Application.isPlaying)
+			return;
+		
+		if (mat != null)
 			mat.renderQueue = (int)baseQueue + offset;
-		Debug.Log((int)baseQueue + offset);
 	}
 #endif
 }
