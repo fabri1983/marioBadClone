@@ -199,13 +199,22 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 	
-	public Transform getLayersStruct () {
-		Parallax[] parallax = GameObject.FindSceneObjectsOfType(typeof(Parallax)) as Parallax[];
-		if (parallax == null)
+	/// <summary>
+	/// Gets the game object that contains all the GUI elements in the scene.
+	/// Important: this only works if there is all Parallax scripts are parented by one game object.
+	/// </summary>
+	/// <returns>
+	/// The Transform component.
+	/// </returns>
+	public Transform getGUILayers () {
+		GameObject guiLayers = GameObject.Find("GUI_Layers");
+		
+		if (guiLayers == null) {
+			Debug.LogWarning("Couldn't find game object named GUI_Layers");
 			return null;
-		if (parallax.Length == 0)
-			return null;
-		return parallax[0].transform.parent;
+		}
+		
+		return guiLayers.transform;
 	}
 	
 	/// <summary>
@@ -216,7 +225,7 @@ public class LevelManager : MonoBehaviour {
 	/// Level dimension in world coordinates. Used to configure the parallax scripts
 	/// </param>
 	private void setParallaxProperties (Rect levelExtent) {
-		Transform t = getLayersStruct();
+		Transform t = getGUILayers();
 		if (t == null)
 			return;
 		

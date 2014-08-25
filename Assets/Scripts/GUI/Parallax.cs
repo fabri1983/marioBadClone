@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Scales the game object acording to screen size and user defined coverage.
-/// This version has scroll texture option according to camera position or manual offset.
-/// On screen redimension the game object is adjusted to cover the screen or part of it.
+/// Scales the game object according to screen size and user defined coverage to act as a GUI element.
+/// It has scroll texture option according to camera position or manual offset.
+/// On screen redimension the game object's z position and its scale are adjusted.
 /// </summary>
 [ExecuteInEditMode]
 public class Parallax : MonoBehaviour, IScreenLayout {
@@ -14,7 +14,7 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
-	public Vector2 screenCoverage = Vector2.one;
+	public Vector2 size = Vector2.one;
 	
 	private const float epsilon = 0.01f; // used only when manual step is not (0,0)
 	private Vector2 oldCamPos = Vector2.zero;
@@ -49,22 +49,20 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 		Vector2 camPos = Camera.main.transform.position;
 		oldCamPos.Set(camPos.x, camPos.y);
 		
-		fillScreen(); // make this game object to fill the viewport
+		locateInScreen(); // make this game object to fill the viewport
 		renderer.sharedMaterial.mainTexture = bgTexture;
 		renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 	}
 	
 	void OnDestroy () {
 		ScreenLayoutManager.Instance.remove(this);
-		
-		if (bgTexture) {
+		if (bgTexture)
 			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #if UNITY_EDITOR
-			// this is in case this script is used in editor mode
-			if (!bgTexture)
-				renderer.sharedMaterial.mainTexture = bgTexture;
+		// this is in case this script is used in editor mode
+		if (!bgTexture)
+			renderer.sharedMaterial.mainTexture = bgTexture;
 #endif
-		}
 	}
 	
 	void Update () {
@@ -72,6 +70,9 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 		// if in editor mode we change the texture this will update the material
 		if (!bgTexture.name.Equals(renderer.sharedMaterial.mainTexture.name))
 			renderer.sharedMaterial.mainTexture = bgTexture;
+		// only in Editor Mode: update in case any change from Inspector
+		if (!Application.isPlaying)
+			locateInScreen();
 #endif
 		updateOffset();
 	}
@@ -110,12 +111,12 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 		oldCamPos.Set(camPos.x, camPos.y);
 	}
 	
-	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, transform, screenCoverage);
+	private void locateInScreen () {
+		GameObjectTools.setScreenLocation(Camera.main, transform, size);
 	}
 	
 	public void updateSizeAndPosition () {
-		fillScreen();
+		locateInScreen();
 	}
 	
 	/// <summary>

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 [ExecuteInEditMode]
 public class ScreenLayout : MonoBehaviour, IScreenLayout {
@@ -22,7 +21,10 @@ public class ScreenLayout : MonoBehaviour, IScreenLayout {
 		if (allowResize)
 			ScreenLayoutManager.adjustSize(guiTexture);
 		// then apply position correction
-		ScreenLayoutManager.adjustPos(guiTexture, offset, layout);
+		if (guiTexture != null)
+			ScreenLayoutManager.adjustPos(guiTexture, offset, layout);
+		else
+			ScreenLayoutManager.adjustPos(transform, renderer.sharedMaterial.mainTexture, offset, layout);
 	}
 
 #if UNITY_EDITOR

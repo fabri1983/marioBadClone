@@ -37,6 +37,11 @@ public class TransitionGUIFxManager : MonoBehaviour {
 			transitions[i].enabled = true;
 	}
 	
+	void OnDestroy () {
+		transitions.Clear();
+		instance = null;
+	}
+	
 	public void register (ITransitionListener fx, bool managerDoStart) {
 		TransitionGUIFx[] arr = fx.getTransitions();
 		if (arr == null)

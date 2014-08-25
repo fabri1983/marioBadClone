@@ -1,7 +1,9 @@
 using UnityEngine;
 
 /**
- * Fade the current viewport to and from a given a Texture2D object.
+ * Fade the current viewport to and from a given a color using a GUI texture created internally.
+ * Since it uses Unity's GUI.DrawTexture then there is no need to assign correct render queue 
+ * neither locate the game object in front of the screen.
  */
 public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	

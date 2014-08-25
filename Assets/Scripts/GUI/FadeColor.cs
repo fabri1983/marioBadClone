@@ -1,9 +1,13 @@
 using UnityEngine;
 
 /**
- * Fade the current viewport to and from a given a color material using a shader.
+ * Fade the current game object's material to and from a given a color.
+ * The expected material is one having the shader FadeColor_CG.
+ * It doesn't matter the mesh the game object has for render.
+ * The FadeColor_CG shader has it's own render queue assigned in such way it will overlay 
+ * all materials, except Unity's GUI.
  */
-public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
+public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 	
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
@@ -14,11 +18,11 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	private EnumFadeDirection fadeDir;
 	private float alphaFadeValue;
 	private bool finishedTransition; // true if the fade could finish
-	private Material colorQuad;
+	private Material fadeMat;
 	
 	// Use this for initialization
 	void Awake () {
-		colorQuad = renderer.sharedMaterial;
+		fadeMat = renderer.sharedMaterial;
 		finishedTransition = false;
 		fadeDir = EnumFadeDirection.FADE_NONE;
 		
@@ -31,7 +35,7 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 			startFading(EnumFadeDirection.FADE_OUT);
 		else
 			stopFading();
-		fillScreen(); // make this game object to fill the viewport
+		locateInScreen(); // make this game object to be located correctly in viewport
 	}
 	
 	void OnDestroy () {
@@ -47,7 +51,7 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	private void fade () {
 		// set the alpha color
 		fadeColor.a = alphaFadeValue;
-		colorQuad.SetColor("_Color", fadeColor);
+		fadeMat.SetColor("_Color", fadeColor);
 		
 		if (fadeDir.Equals(EnumFadeDirection.FADE_IN)) {
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue + (Time.deltaTime * fadeTimeFactor));
@@ -92,11 +96,11 @@ public class FadeColorQuad : MonoBehaviour, IFadeable, IScreenLayout {
 		return fadeDir;
 	}
 	
-	private void fillScreen () {
-		GameObjectTools.setScreenCoverage(Camera.main, transform, coverage);
+	private void locateInScreen () {
+		GameObjectTools.setScreenLocation(Camera.main, transform, coverage);
 	}
 	
 	public void updateSizeAndPosition () {
-		fillScreen();
+		locateInScreen();
 	}
 }

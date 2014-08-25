@@ -52,6 +52,7 @@ public class TransitionGUIFx : MonoBehaviour {
 	void Awake ()
 	{
 		elem = Element.TRANSFORM;
+		// NOTE: by the moment only use transform's modifications, I think because of conflicts with ScreenLayout. Need to test
 		/*if (guiTexture != null)
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)

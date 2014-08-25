@@ -3,17 +3,18 @@ using UnityEngine;
 /// <summary>
 /// This script can be asigned to a game object to follow a desired target in XY plane.
 /// </summary>
-public class PlayerFollowerXY : PlayerFollowerXYConfig {
+public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 	
 	private Transform lookAtTarget; // object which this game object will folow and look at to
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private bool stop = false;
 	private float constantTimer = 0.15f;
-	private Transform layersStruct; // this is the container of background and foreground objects
+	private Transform guiLayers; // this is the container of gui objects (background, foreground, etc)
 	
 	void Awake () {
-		// get the game object that contains every layer game object for background and foreground
-		layersStruct = LevelManager.Instance.getLayersStruct();
+		// get the game object that contains the gui elements
+		// NOTE: this works fine here only if this script is created per scene.
+		guiLayers = LevelManager.Instance.getGUILayers();
 	}
 	
 	// Use this for initialization
@@ -30,9 +31,9 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 		transform.position = thePos;
 
 		// update the layers struct transform
-		if (layersStruct != null) {
-			layersStruct.position = transform.position;
-			layersStruct.rotation = transform.rotation;
+		if (guiLayers != null) {
+			guiLayers.position = transform.position;
+			guiLayers.rotation = transform.rotation;
 		}
 	}
 	
@@ -80,11 +81,8 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
 			stopAnimation();
 
-		// update the layers struct transform
-		if (layersStruct != null) {
-			layersStruct.position = transform.position;
-			layersStruct.rotation = transform.rotation;
-		}
+		// update the game object that contains all the Parallax scripts that depends on this game object's position
+		updateGUILayers();
 	}
 	
 	public void doInstantMoveOneTime () {
@@ -93,5 +91,12 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 	
 	public void stopAnimation () {
 		stop = true;
+	}
+	
+	public void updateGUILayers () {
+		if (guiLayers != null) {
+			guiLayers.position = transform.position;
+			guiLayers.rotation = transform.rotation;
+		}
 	}
 }
