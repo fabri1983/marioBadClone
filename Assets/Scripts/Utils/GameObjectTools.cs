@@ -195,18 +195,24 @@ static public class GameObjectTools
 	}
 	
 	/**
-	 * Sets position and factor scale (w,h) to a game object, ie a quad, for covering the screen size.
+	 * Sets z-position and scale (w,h) to a transform object for positioning in front of 
+	 * camera to act like a GUI component.
+	 * The size parameter scales even more the transform to satisfy a desired size of the 
+	 * transform.
+	 * NOTE: transform is centered on screen.
 	 */ 
-	public static void setScreenCoverage (Camera cam, Transform tr, Vector2 coverage) {
+	public static void setScreenLocation (Camera cam, Transform tr, Vector2 size) {
 		
 		// position barely ahead from near clip plane
-		float pos = (cam.nearClipPlane + 0.01f);
-		// position the camera in that position (following current orientation)
-		tr.position = pos * cam.transform.forward + cam.transform.position;
-		
+		float posAhead = (cam.nearClipPlane + 0.01f);
+		Vector3 newPos = posAhead * cam.transform.forward + cam.transform.position;
+		Vector3 thePos = tr.position;
+		thePos.z = newPos.z;
+		tr.position = thePos;
+
 		float h, w;
 		if(!cam.orthographic) {
-			h = 2f * Mathf.Tan(cam.fov * DEG_2_RAD_0_5) * pos;
+			h = 2f * Mathf.Tan(cam.fov * DEG_2_RAD_0_5) * posAhead;
 			w = h * cam.aspect;
 		}
 		else {
@@ -214,16 +220,17 @@ static public class GameObjectTools
 			w = h / Screen.height * Screen.width;
 		}
 		
-		// scale the game object to adjust it according screen bounds
+		// apply scale to adjust it according screen bounds and user defined size
 		Vector3 theScale = tr.localScale;
-		theScale.x = w * Mathf.Abs(coverage.x);
-		theScale.y = h * Mathf.Abs(coverage.y);
+		theScale.x = w * Mathf.Abs(size.x);
+		theScale.y = h * Mathf.Abs(size.y);
 		theScale.z = 0f;
 		tr.localScale = theScale;
 		
-		// local position of the game object containing this script
-		Vector3 thePos = tr.localPosition;
-		thePos.y = h * 0.5f * (1f - Mathf.Abs(coverage.y)) * Mathf.Sign(coverage.y);
-		tr.localPosition = thePos;
+		// modify local position (not world position)
+		/*Vector3 theLocalPos = tr.localPosition;
+		// x position doesn't work yet
+		theLocalPos.y = h * 0.5f * (1f - Mathf.Abs(size.y)) * Mathf.Sign(size.y);
+		tr.localPosition = theLocalPos;*/
 	}
 }
