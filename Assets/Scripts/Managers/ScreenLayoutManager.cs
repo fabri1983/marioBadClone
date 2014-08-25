@@ -109,6 +109,52 @@ public class ScreenLayoutManager : MonoBehaviour {
 		gt.pixelInset = p;
 	}
 	
+	public static void adjustPos (Transform tr, Texture tex, Vector2 offset, EnumScreenLayout layout) {
+		Vector3 p = tr.localPosition;
+		
+		switch (layout) {
+		case EnumScreenLayout.TOP_LEFT: {
+			p.x = offset.x;
+			p.y = Screen.height - tex.height + offset.y;
+			break; }
+		case EnumScreenLayout.TOP: {
+			p.x = Screen.width/2 - tex.width/2 + offset.x;
+			p.y = Screen.height - tex.height + offset.y;
+			break; }
+		case EnumScreenLayout.TOP_RIGHT: {
+			p.x = Screen.width - tex.width + offset.x;
+			p.y = Screen.height - tex.height + offset.y;
+			break; }
+		case EnumScreenLayout.CENTER_LEFT: {
+			p.x = offset.x;
+			p.y = Screen.height/2 - tex.height/2 + offset.y;
+			break; }
+		case EnumScreenLayout.CENTER: {
+			p.x = Screen.width/2 - tex.width/2 + offset.x;
+			p.y = Screen.height/2 - tex.height/2 + offset.y;
+			break; }
+		case EnumScreenLayout.CENTER_RIGHT: {
+			p.x = Screen.width - tex.width + offset.x;
+			p.y = Screen.height/2 - tex.height/2 + offset.y;
+			break; }
+		case EnumScreenLayout.BOTTOM_LEFT: {
+			p.x = offset.x;
+			p.y = offset.y;
+			break; }
+		case EnumScreenLayout.BOTTOM: {
+			p.x = Screen.width/2 - tex.width + offset.x;
+			p.y = offset.y;
+			break; }
+		case EnumScreenLayout.BOTTOM_RIGHT: {
+			p.x = Screen.width - tex.width + offset.x;
+			p.y = offset.y;
+			break; }
+		default: break;
+		}
+		
+		tr.localPosition = p;
+	}
+	
 	public static void adjustSize (GUITexture gt) {
 		/*float lastScreenWidth = Instance.lastScreenWidth;
 		float lastScreenHeight = Instance.lastScreenHeight;
