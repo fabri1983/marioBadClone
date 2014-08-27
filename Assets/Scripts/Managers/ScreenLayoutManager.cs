@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class ScreenLayoutManager : MonoBehaviour {
 	
-	private List<IScreenLayout> consumers = new List<IScreenLayout>();
+	private List<IScreenLayout> listeners = new List<IScreenLayout>();
 	private float lastScreenWidth, lastScreenHeight;
 	
 	private static ScreenLayoutManager instance = null;
@@ -39,30 +39,46 @@ public class ScreenLayoutManager : MonoBehaviour {
 	}
 
 	void OnDestroy() {
-		consumers.Clear();
+		listeners.Clear();
+#if UNITY_EDITOR
+#else
 		instance = null;
+#endif
     }
 	
 	public void register (IScreenLayout sl) {
-		consumers.Add(sl);
+		listeners.Add(sl);
 	}
 	
 	public void remove (IScreenLayout sl) {
-		consumers.Remove(sl);
+		listeners.Remove(sl);
 	}
 	
 	void OnGUI () {
-		// if screen is resized then need to change background texture size
+		// if screen is resized then need to notice all listeners
 		if (EventType.Repaint == Event.current.type) {
 			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight) {
-				for (int i=0, c=consumers.Count; i<c; ++i)
-					consumers[i].updateSizeAndPosition();
+				for (int i=0, c=listeners.Count; i<c; ++i)
+					listeners[i].updateSizeAndPosition();
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
 			}
 		}
 	}
 	
+	/// <summary>
+	/// Locates the GUITexture element in the screen according the layout value.
+	/// It modifies the GUITexture's pixel inset.
+	/// </summary>
+	/// <param name='gt'>
+	/// Gt. Unity'sGUITexture
+	/// </param>
+	/// <param name='offset'>
+	/// Offset
+	/// </param>
+	/// <param name='layout'>
+	/// Layout
+	/// </param>
 	public static void adjustPos (GUITexture gt, Vector2 offset, EnumScreenLayout layout) {
 		Rect p = gt.pixelInset;
 		
@@ -109,13 +125,37 @@ public class ScreenLayoutManager : MonoBehaviour {
 		gt.pixelInset = p;
 	}
 	
-	public static void adjustPos (Transform tr, Texture tex, Vector2 offset, EnumScreenLayout layout) {
+	/// <summary>
+	/// Locates the transform element in the screen according the layout value.
+	/// It depends on the way the transform originally was z-located and xy-scaled to act as a GUI element.
+	/// </summary>
+	/// <param name='tr'>
+	/// Tr. Transform
+	/// </param>
+	/// <param name='tex'>
+	/// Tex. Texture used to consider actual size
+	/// </param>
+	/// <param name='offset'>
+	/// Offset.
+	/// </param>
+	/// <param name='layout'>
+	/// Layout.
+	/// </param>
+	public static void adjustPos (Transform tr, Texture tex, Vector2 offset, EnumScreenLayout layout)
+	{
 		Vector3 p = tr.localPosition;
+		Vector3 temp;
+		// gets z-position and width and height for a GUI element
+		Vector3 guiPosAndDim = GameObjectTools.getZLocationAndDimensionForGUI(Camera.main);
 		
 		switch (layout) {
 		case EnumScreenLayout.TOP_LEFT: {
-			p.x = offset.x;
-			p.y = Screen.height - tex.height + offset.y;
+			temp.x = offset.x + tex.width/2;
+			temp.y = Screen.height - tex.height + offset.y;
+			temp.z = p.z;
+			temp = Camera.main.ScreenToWorldPoint(temp);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP: {
 			p.x = Screen.width/2 - tex.width/2 + offset.x;
