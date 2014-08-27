@@ -14,19 +14,14 @@ public class PlayerWalk : WalkAbs {
 		if (stop)
 			return;
 		
+		gain = 1f; // by default;
 		float velX = base.shape.body.velocity.x;
 		
 		// when jumping and trying to move in opposite direction, just lessen current velocity
-		if (jump.IsJumping() && (velX * velocity) < 0f) {
+		if (jump.IsJumping() && (velX * velocity) < 0f)
 			velocity = velX * 0.75f;
-			gain = 1f; // reset gain because of weird issues in velocity
-		}
-		else if (Gamepad.isB() || (Input.GetButton("Fire1") && Input.touchCount == 0)) {
+		else if (Gamepad.isB() || (Input.GetButton("Fire1") && Input.touchCount == 0))
 			gain = speedUpFactor;
-		}
-		else {
-			gain = 1f;
-		}
 		
 		base._walk(velocity);
 		walkAC.animComp.setFPS(walkAC.animFPS * gain);
