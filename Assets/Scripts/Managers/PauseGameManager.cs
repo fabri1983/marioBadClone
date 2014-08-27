@@ -27,7 +27,7 @@ public class PauseGameManager : MonoBehaviour {
 		}
 	}
 	
-	void OnApplicationQuit () {
+	void OnDestroy () {
 		sceneOnly.Clear();
 		durables.Clear();
 		instance = null;

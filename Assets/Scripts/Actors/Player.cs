@@ -48,7 +48,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		PauseGameManager.Instance.register(this);
 		
 		// deactivate to avoid falling in empty scene
-		toogleActivate(false);
+		setActive(false);
 		
 		// action components
 		jump = GetComponent<Jump>();
@@ -161,7 +161,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		LevelManager.Instance.loseGame(false);
 	}
 	
-	public void toogleActivate (bool active) {
+	public void setActive (bool active) {
 		gameObject.SetActiveRecursively(active);
 		ableToPause = active;
 	}

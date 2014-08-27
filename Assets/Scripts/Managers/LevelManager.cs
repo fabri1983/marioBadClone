@@ -99,7 +99,7 @@ public class LevelManager : MonoBehaviour {
 		else
 			activeLevel = level;
 		
-		player.toogleActivate(false); // deactivate to avoid falling in empty scene
+		player.setActive(false); // deactivate to avoid falling in empty scene
 		player.restoreWalkVel(); // in case the player was colliding a wall
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
 		GC.Collect();
@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour {
 		activeLevel = level;
 		CameraManager.Instance.getInFrontCam().gameObject.SetActiveRecursively(false); // disable in front camera
 		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
-		player.toogleActivate(playerEnabled); // activate the player's game object
+		player.setActive(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
 		setParallaxProperties(levelExtent); // configure the parallax properties for a correct scrolling
 		
