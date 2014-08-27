@@ -1,14 +1,14 @@
-Shader "Custom/Unlit Background Mirror CG" {
+Shader "Custom/Unlit Foreground Transparent CG" {
 
 Properties {
-	_MainTex ("Base (RGB)", 2D) = "white" {}
+	_MainTex ("Base (RGB) A(alpha)", 2D) = "white" {}
 }
 	
 SubShader {
-    Tags { "IgnoreProjector"="True" "Queue"="Background" }
+    Tags { "IgnoreProjector"="True" "Queue"="Overlay" "RenderType"="Transparent" }
     ZWrite Off
 	Lighting Off
-	Blend Off
+	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 	
 	Pass {
 		Cull Off // here it solves an issue (donno which issue)
@@ -28,7 +28,7 @@ SubShader {
 			half4 vertex: POSITION;
 			fixed2 texcoord: TEXCOORD0;
 		};
-
+	
 		struct fragmentInput
 		{
 			half4 pos: SV_POSITION;
@@ -47,12 +47,7 @@ SubShader {
 		
 		half4 frag(fragmentInput i) : COLOR
 		{
-			// mirroring: makes the UV repeat between its tilling values 0.0 and 2.0
-    		fixed2 t = frac(i.uv * 0.5) * 2.0; // frac(x): returns x - floor(x)
-    		fixed2 length = {1.0, 1.0};
-    		fixed2 mirrorTexCoords = length - abs(t - length);
-
-			half4 c = tex2D(_MainTex, mirrorTexCoords);
+			half4 c = tex2D(_MainTex, i.uv);
 			return c;
 		}
 	    ENDCG

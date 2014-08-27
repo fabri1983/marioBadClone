@@ -47,7 +47,7 @@ SubShader {
 		
 		half4 frag(fragmentInput i) : COLOR
 		{
-			// makes the UV repeat between its tilling values 0.0 and 2.0
+			// mirroring: makes the UV repeat between its tilling values 0.0 and 2.0
     		fixed2 t = frac(i.uv * 0.5) * 2.0; // frac(x): returns x - floor(x)
     		fixed2 length = {1.0, 1.0};
     		fixed2 mirrorTexCoords = length - abs(t - length);
