@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class CollisionLayersCP : MonoBehaviour {
 	
-	private const int LAYERS = 17; // set here what is the max layer slot you defined on Unity's Layers window
+	private const int LAYERS = 16; // set here what is the max layer slot you defined on Unity's Layers window
 	
 	// add from the Inspector all the layers you want this game object belongs to
 	public int[] otherLayersBelongTo;

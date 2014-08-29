@@ -15,10 +15,11 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private PowerUp powerUp;
 	private LookUpwards lookUpwards;
 	private bool ableToPause;
+	private bool exitedFromScenery = false;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
-	private Vector3 rightFireDir, leftFireDir, fireDir;
+	private Vector2 rightFireDir, leftFireDir, fireDir;
 	
 	private ChipmunkBody body;
 	private float walkVelBackup, signCollision;
@@ -62,8 +63,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		body = GetComponent<ChipmunkBody>();
 		
 		walkVelBackup = walkVelocity;
-		rightFireDir = new Vector3(1f, -0.5f, 0f);
-		leftFireDir = new Vector3(-1f, -0.5f, 0f);
+		rightFireDir.x = 1f;
+		rightFireDir.y = -0.5f;
+		leftFireDir.x = -1f;
+		leftFireDir.y = -0.5f;
 		fireDir = rightFireDir;
 	}
 	
@@ -96,64 +99,70 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	// Update is called once per frame
 	void Update () {
 		
-		if (teleportable == null || !teleportable.isTeleporting()) {
-
-			bool isIdle = true;
-			
-			// jump
-			if (Gamepad.isA() || Input.GetButton("Jump")) {
-				jump.jump(lightJumpVelocity);
-				// apply gain jump power. Only once per jump (handled in Jump component)
-				if (Gamepad.isHardPressed(Gamepad.BUTTONS.A))
-					jump.applyGain(gainJumpFactor); 
-				isIdle = false;
-			}
-			
-			// power up action
-			if (powerUp != null && powerUp.ableToUse())
-				powerUp.action(gameObject);
-			
-			// move
-			walk.enableWalking();
-			if (Gamepad.isLeft() || Input.GetAxis("Horizontal") < -0.1f) {
-				walk.walk(-walkVelocity);
-				fireDir = leftFireDir;
-				isIdle = false;
-				// enable move speed after a wall collision if intended moving direction changes
-				if (signCollision > 0f)
-					restoreWalkVel();
-			}
-			else if (Gamepad.isRight() || Input.GetAxis("Horizontal") > 0.1f) {
-				walk.walk(walkVelocity);
-				fireDir = rightFireDir;
-				isIdle = false;
-				// enable move speed after a wall collision if intended moving direction changes
-				if (signCollision < 0f)
-					restoreWalkVel();
-			}
-			else
-				// if no movement input then set correct internal status
-				walk.stopWalking();
-			
-			// crouch
-			if (Gamepad.isDown() || Input.GetAxis("Vertical") < -0.1f) {
-				crouch.crouch();
-				isIdle = false;
-			}
-			else
-				crouch.noCrouch();
-			
-			// look upwards
-			if ((Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) && !walk.isWalking() && !jump.IsJumping()) {
-				lookUpwards.lookUpwards();
-				isIdle = false;
-			}
-			else
-				lookUpwards.stop();
-			
-			if (isIdle)
-				idle.setIdle(false);
+		/*if (exitedFromScenery) {
+			ChipmunkNearestPointQueryInfo info;
+			// if there is no shape below us then we are floating
+			Chipmunk.NearestPointQueryNearest(body.position, 3f, (uint)(1 << gameObject.layer), "", out info);
+			Debug.Log(info.distance + " " + info.gradient + " " + info._shapeHandle);
+			//jump.resetStatus();
+			exitedFromScenery = false;
+		}*/
+		
+		bool isIdle = true;
+		
+		// jump
+		if (Gamepad.isA() || Input.GetButton("Jump")) {
+			jump.jump(lightJumpVelocity);
+			// apply gain jump power. Only once per jump (handled in Jump component)
+			if (Gamepad.isHardPressed(Gamepad.BUTTONS.A))
+				jump.applyGain(gainJumpFactor); 
+			isIdle = false;
 		}
+		
+		// power up action
+		if (powerUp != null && powerUp.ableToUse())
+			powerUp.action(gameObject);
+		
+		// move
+		walk.enableWalking();
+		if (Gamepad.isLeft() || Input.GetAxis("Horizontal") < -0.1f) {
+			walk.walk(-walkVelocity);
+			fireDir = leftFireDir;
+			isIdle = false;
+			// enable move speed after a wall collision if intended moving direction changes
+			if (signCollision > 0f)
+				restoreWalkVel();
+		}
+		else if (Gamepad.isRight() || Input.GetAxis("Horizontal") > 0.1f) {
+			walk.walk(walkVelocity);
+			fireDir = rightFireDir;
+			isIdle = false;
+			// enable move speed after a wall collision if intended moving direction changes
+			if (signCollision < 0f)
+				restoreWalkVel();
+		}
+		else
+			// if no movement input then set correct internal status
+			walk.stopWalking();
+		
+		// crouch
+		if (Gamepad.isDown() || Input.GetAxis("Vertical") < -0.1f) {
+			crouch.crouch();
+			isIdle = false;
+		}
+		else
+			crouch.noCrouch();
+		
+		// look upwards
+		if ((Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) && !walk.isWalking() && !jump.IsJumping()) {
+			lookUpwards.lookUpwards();
+			isIdle = false;
+		}
+		else
+			lookUpwards.stop();
+		
+		if (isIdle)
+			idle.setIdle(false);
 	}
 	
 	public void dieWhenFalling () {
@@ -191,7 +200,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		if (teleportable != null)
 			teleportable.teleportReset();
 		setPowerUp(null);
-		jump.reset();
+		jump.resetStatus();
 		walk.reset();
 		body.velocity = Vector2.zero;
 		walkVelocity = walkVelBackup;
@@ -247,7 +256,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
 		/*ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);*/
+	    arbiter.GetShapes(out shape1, out shape2);
+		
+		shape2.GetComponent<Player>().exitedFromScenery = true;*/
 	}
 	
 	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
