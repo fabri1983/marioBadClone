@@ -21,7 +21,7 @@ public class Jump : MonoBehaviour {
 		crouch = GetComponent<Crouch>();
 		jumpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Jump, true);
 		body = GetComponent<ChipmunkBody>();
-		reset();
+		resetStatus();
 	}
 	
 	void LateUpdate () {
@@ -68,7 +68,7 @@ public class Jump : MonoBehaviour {
 		}
 	}
 	
-	public void reset () {
+	public void resetStatus () {
 		isJumping = true; // initialized as true in case the object is spawned in the air
 		gainApplied = true;
 	}
@@ -114,13 +114,8 @@ public class Jump : MonoBehaviour {
 	}
 
 	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
-		ChipmunkShape shape1, shape2;
+		/*ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
-		
-		// if exiting from Scenery then assume the component is in the air
-		Jump jump = shape2.GetComponent<Jump>();
-		if (jump != null)
-			jump.isJumping = true;
+	    arbiter.GetShapes(out shape1, out shape2);*/
 	}
 }

@@ -91,7 +91,7 @@ static public class GameObjectTools
 	 * Set the layer to the shape and also ot their chidlren shapes. So only considers two levels of deep.
 	 */
 	public static void setLayerForShapes (GameObject go, uint mask) {
-		// first: sets game object's shape layer 
+		// first: set game object's shape layer 
 		ChipmunkShape s = go.GetComponent<ChipmunkShape>();
 		if (s != null)
 			s.layers = mask;

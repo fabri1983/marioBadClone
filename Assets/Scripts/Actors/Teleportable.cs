@@ -89,7 +89,7 @@ public class Teleportable : MonoBehaviour, ITeleportable {
 		if (val) {
 			Jump jump = GetComponent<Jump>();
 			if (jump != null)
-				jump.reset();
+				jump.resetStatus();
 		}
 	}
 	

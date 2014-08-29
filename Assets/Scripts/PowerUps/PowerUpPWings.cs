@@ -35,7 +35,7 @@ public class PowerUpPWings : PowerUp {
 			}
 			if (targetJump) {
 				targetJump.enabled = true;
-				targetJump.reset();
+				targetJump.resetStatus();
 				targetJump = null;
 			}
 			return;
@@ -68,7 +68,7 @@ public class PowerUpPWings : PowerUp {
 	public override void ownAction (GameObject go) {
 
 		if (fly != null && rateOfFly <= 0f) {
-			targetJump.reset();
+			targetJump.resetStatus();
 			fly.fly();
 			// restore rate of fly
 			rateOfFly = timeBetweenFly;
