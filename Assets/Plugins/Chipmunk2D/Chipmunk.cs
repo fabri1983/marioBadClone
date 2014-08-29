@@ -51,7 +51,7 @@ public static class Chipmunk {
 	public static ChipmunkInterpolationManager _interpolationManager;
 	
 	private static ChipmunkManager CreateManager(){
-		var manager = GetManager();
+		ChipmunkManager manager = GetManager();
 		
 //		Debug.Log("Configuring new space.");
 		if(manager._space != null) Debug.LogError("Space was already set?");
@@ -66,7 +66,7 @@ public static class Chipmunk {
 	}
 	
 	private static ChipmunkManager GetManager(){
-		var go = GameObject.Find("ChipmunkManager");
+		GameObject go = GameObject.Find("ChipmunkManager");
 		ChipmunkManager manager;
 		
 		if(go == null){
@@ -163,10 +163,10 @@ public static class Chipmunk {
 	/// Unity doesn't provide notification events for when a transform is modified.
 	/// Unfortunately that means that you need to call this to let Chipmunk know when you modify a transform.
 	public static void UpdatedTransform(GameObject root){
-		var bodies = new HashSet<ChipmunkBody>();
+		HashSet<ChipmunkBody> bodies = new HashSet<ChipmunkBody>();
 		
 		foreach(var component in root.GetComponentsInChildren<ChipmunkBinding.Base>()){
-			var affectedBody = component._UpdatedTransform();
+			ChipmunkBody affectedBody = component._UpdatedTransform();
 			if(affectedBody != null) bodies.Add(affectedBody);
 		}
 		
@@ -185,7 +185,7 @@ public static class Chipmunk {
 	/// Iterate all the shapes within 'maxDist' of 'point' by calling 'del' for each.
 	/// Shapes are filtered using the group and layers in the same way as collisions.
 	public static void NearestPointQuery(Vector2 point, float maxDist, uint layers, string group, NearestPointQueryDelegate del){
-		var handle = manager._space._handle;
+		IntPtr handle = manager._space._handle;
 		_NearestPointQuery(handle, point, maxDist, layers, ChipmunkBinding.InternString(group), del);
 	}
 	
@@ -200,7 +200,7 @@ public static class Chipmunk {
 	/// Return only information about the nearest shape to the query point.
 	/// Shapes are filtered using the group and layers in the same way as collisions.
 	public static ChipmunkShape NearestPointQueryNearest(Vector2 point, float maxDistance, uint layers, string group, out ChipmunkNearestPointQueryInfo info){
-		var handle = manager._space._handle;
+		IntPtr handle = manager._space._handle;
 		return ChipmunkShape._FromHandle(cpSpaceNearestPointQueryNearest(handle, point, maxDistance, layers, ChipmunkBinding.InternString(group), out info));
 	}
 	
@@ -221,7 +221,7 @@ public static class Chipmunk {
 	/// Find all shapes overlapping the segment with the given start and end points.
 	/// Shapes are filtered using the group and layers in the same way as collisions.
 	public static void SegmentQuery(Vector2 start, Vector2 end, uint layers, string group, SegmentQueryDelegate del){
-		var handle = manager._space._handle;
+		IntPtr handle = manager._space._handle;
 		_SegmentQuery(handle, start, end, layers, ChipmunkBinding.InternString(group), del);
 	}
 	
