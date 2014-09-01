@@ -46,7 +46,7 @@ public partial class ChipmunkSpace {
 		_staticBody = IntPtr.Zero;
 		
 		// Free the GCHandles for the collision handlers.
-		foreach(var kvp in handlers){
+		foreach(KeyValuePair<TypePair, GCHandle> kvp in handlers){
 			kvp.Value.Free();
 		}
 	}
@@ -239,7 +239,7 @@ public partial class ChipmunkSpace {
 				string typeA = match.Groups[2].Value;
 				string typeB = match.Groups[3].Value;
 			
-				var typePair = new TypePair(typeA, typeB);
+				TypePair typePair = new TypePair(typeA, typeB);
 				Handler handler = new Handler();
 				handler.typePair = typePair;
 				GCHandle gch;

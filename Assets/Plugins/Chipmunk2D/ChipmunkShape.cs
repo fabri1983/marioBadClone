@@ -69,7 +69,7 @@ public abstract partial class ChipmunkShape : ChipmunkBinding.Base {
 		set {
 			_collisionType = value;
 			
-			var id = ChipmunkBinding.InternString(value);
+			int id = ChipmunkBinding.InternString(value);
 			if(_handle != IntPtr.Zero) CP._cpShapeSetCollisionType(_handle, id);
 		}
 	}
@@ -83,7 +83,7 @@ public abstract partial class ChipmunkShape : ChipmunkBinding.Base {
 		set {
 			_collisionGroup = value;
 			
-			var id = ChipmunkBinding.InternString(value);
+			int id = ChipmunkBinding.InternString(value);
 			if(_handle != IntPtr.Zero) CP._cpShapeSetGroup(this.handle, id);
 		}
 	}
@@ -144,13 +144,13 @@ public abstract partial class ChipmunkShape : ChipmunkBinding.Base {
 			return;
 		}
 		
-		var gch = GCHandle.FromIntPtr(CP._cpShapeGetUserData(_handle));
+		GCHandle gch = GCHandle.FromIntPtr(CP._cpShapeGetUserData(_handle));
 		if(gch.Target != this) Debug.Log("ChipmunkShape handle does not match");
 		gch.Free();
 	}
 	
 	protected void UpdateParentBody(){
-		var body = this.GetComponentUpwards<ChipmunkBody>();
+		ChipmunkBody body = this.GetComponentUpwards<ChipmunkBody>();
 		if(body != this.body && space != null){
 			space._Remove(this);
 			CP.cpShapeSetBody(_handle, body == null ? space._staticBody : body.handle);

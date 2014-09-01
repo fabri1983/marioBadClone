@@ -84,7 +84,7 @@ public partial class ChipmunkBody : ChipmunkBinding.Base {
 //		Debug.Log ("ChipmunkBody Awake: " + gameObject.name);
 		
 		_handle = CP.cpBodyNew(0f, 0f);
-		var gch = GCHandle.Alloc(this);
+		GCHandle gch = GCHandle.Alloc(this);
 		CP._cpBodySetUserData(_handle, GCHandle.ToIntPtr(gch));
 		
 		_UpdatedTransform();
@@ -149,7 +149,7 @@ public partial class ChipmunkBody : ChipmunkBinding.Base {
 		CP.cpBodySetMoment(_handle, 0f);
 		this.cogOffset = Vector2.zero;
 		
-		foreach(var shape in GetComponentsInChildren<ChipmunkShape>()){
+		foreach(ChipmunkShape shape in GetComponentsInChildren<ChipmunkShape>()){
 			// Only add the mass contribution if the shape is actuall attached to this body.
 			if(this == shape.body) _AddMassForShape(shape);
 		}
@@ -178,7 +178,7 @@ public partial class ChipmunkBody : ChipmunkBinding.Base {
 			return;
 		}
 		
-		var gch = GCHandle.FromIntPtr(CP._cpBodyGetUserData(_handle));
+		GCHandle gch = GCHandle.FromIntPtr(CP._cpBodyGetUserData(_handle));
 		if(gch.Target != this) Debug.Log("ChipmunkBody handle does not match");
 		gch.Free();
 	}
@@ -332,7 +332,7 @@ public partial class ChipmunkBody : ChipmunkBinding.Base {
 	/// Apply (accumulate) a force on the body at the given point in the transform's local coords.
 	public void ApplyForce( Vector2 force, Vector2 localPosition){
 		if(_handle != IntPtr.Zero){
-			var offset = _transform.TransformDirection(localPosition);
+			Vector3 offset = _transform.TransformDirection(localPosition);
 			CP.cpBodyApplyForce(_handle, force, offset);
 		}
 	}
@@ -340,20 +340,20 @@ public partial class ChipmunkBody : ChipmunkBinding.Base {
 	/// Apply an impulse on the body at the given point in the transform's local coords.
 	public void ApplyImpulse(Vector2 impulse, Vector2 localPosition){
 		if(_handle != IntPtr.Zero){
-			var offset = _transform.TransformDirection(localPosition);
+			Vector3 offset = _transform.TransformDirection(localPosition);
 			CP.cpBodyApplyImpulse(_handle, impulse, offset);
 		}
 	}
 	
 	/// Get the velocity of a specific point on the rigid body as specified in world coords.
 	public Vector2 VelocityAtWorldPoint(Vector2 position){
-		var offset = Vector2.Scale(_transform.InverseTransformPoint(position), _transform.localScale);
+		Vector2 offset = Vector2.Scale(_transform.InverseTransformPoint(position), _transform.localScale);
 		return (_handle != IntPtr.Zero ? CP.cpBodyGetVelAtWorldPoint(_handle, offset) : Vector2.zero);
 	}
 	
 	/// Get the velocity of a specific point on the rigid body as specified in the transform's local coords.
 	public Vector2 VelocityAtLocalPoint(Vector2 localPosition){
-		var offset = Vector2.Scale(localPosition, _transform.localScale);
+		Vector2 offset = Vector2.Scale(localPosition, _transform.localScale);
 		return (_handle != IntPtr.Zero ? CP.cpBodyGetVelAtLocalPoint(_handle, offset) : Vector2.zero);
 	}
 	

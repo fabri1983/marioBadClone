@@ -131,7 +131,7 @@ public abstract class ChipmunkConstraint : ChipmunkBinding.Base {
 			return;
 		}
 		
-		var gch = GCHandle.FromIntPtr(CP._cpConstraintGetUserData(_handle));
+		GCHandle gch = GCHandle.FromIntPtr(CP._cpConstraintGetUserData(_handle));
 		if(gch.Target != this) Debug.Log("ChipmunkConstaint handle does not match");
 		gch.Free();
 	}

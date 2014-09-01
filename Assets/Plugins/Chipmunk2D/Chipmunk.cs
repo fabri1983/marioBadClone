@@ -165,13 +165,13 @@ public static class Chipmunk {
 	public static void UpdatedTransform(GameObject root){
 		HashSet<ChipmunkBody> bodies = new HashSet<ChipmunkBody>();
 		
-		foreach(var component in root.GetComponentsInChildren<ChipmunkBinding.Base>()){
+		foreach(ChipmunkBinding.Base component in root.GetComponentsInChildren<ChipmunkBinding.Base>()){
 			ChipmunkBody affectedBody = component._UpdatedTransform();
 			if(affectedBody != null) bodies.Add(affectedBody);
 		}
 		
 		// Update the mass properties of the bodies.
-		foreach(var body in bodies) body._RecalculateMass();
+		foreach(ChipmunkBody body in bodies) body._RecalculateMass();
 	}
 	
 	//MARK: Nearest Point Query
