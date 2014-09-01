@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private PowerUp powerUp;
 	private LookUpwards lookUpwards;
 	private bool ableToPause;
-	private bool exitedFromScenery = false;
+	private bool exitedFromScenery;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
@@ -99,14 +99,15 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	// Update is called once per frame
 	void Update () {
 		
-		/*if (exitedFromScenery) {
-			ChipmunkNearestPointQueryInfo info;
+		if (exitedFromScenery && !jump.IsJumping()) {
 			// if there is no shape below us then we are floating
-			Chipmunk.NearestPointQueryNearest(body.position, 3f, (uint)(1 << gameObject.layer), "", out info);
-			Debug.Log(info.distance + " " + info.gradient + " " + info._shapeHandle);
-			//jump.resetStatus();
-			exitedFromScenery = false;
-		}*/
+			ChipmunkSegmentQueryInfo qinfo;
+			Vector2 end = body.position + Vector2.up * -3.2f;
+			Chipmunk.SegmentQueryFirst(body.position, end, (uint)(1 << gameObject.layer), "", out qinfo);
+			Debug.Log(qinfo.t + " " + qinfo.normal + " " + (qinfo.shape?qinfo.shape.name:""));
+			if (System.IntPtr.Zero == qinfo._shapeHandle)
+				jump.resetStatus();
+		}
 		
 		bool isIdle = true;
 		
@@ -231,7 +232,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		/*if (player.isDying())
 			return false; // stop collision with scenery since this frame*/
 		
+		player.exitedFromScenery = false;
+		
 		// avoid ground penetration (Y axis)
+		// NOTE: to solve this Chipmunk has the property collisionBias and/or minPenetrationForPenalty
 		Vector2 thePos = player.body.position;
 		thePos.y += -arbiter.GetDepth(0);
 		player.body.position = thePos;
@@ -254,11 +258,11 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	}
 	
 	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
-		/*ChipmunkShape shape1, shape2;
+		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		shape2.GetComponent<Player>().exitedFromScenery = true;*/
+		shape2.GetComponent<Player>().exitedFromScenery = true;
 	}
 	
 	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
