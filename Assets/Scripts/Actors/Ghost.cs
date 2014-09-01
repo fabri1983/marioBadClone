@@ -9,8 +9,7 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	private Chase chase;
 	private ChipmunkBody body;
 	private ChipmunkShape shape;
-	private float velScape;
-	private float stillPosY;
+	private WalkAbs targetWalkComp;
 	
 	// Use this for initialization
 	void Awake () {
@@ -20,11 +19,10 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		shape = GetComponent<ChipmunkShape>();
 		
 		PauseGameManager.Instance.register(this);
-		velScape = Mathf.Sqrt(body.mass * -Chipmunk.gravity.y);
-		stillPosY = body.position.y;
 	}
 	
 	void Start () {
+		body.Sleep();
 		fly.setAutomaticFly(true, flyRange);
 		fly.setSpeed(flySpeed);
 	}
@@ -56,12 +54,12 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	}
 	
 	private void die () {
-		chase.stopChasing();
-		fly.stopFlying();
+		stop();
 		destroy();
 	}
 	
 	private void stop () {
+		targetWalkComp = null;
 		chase.stopChasing();
 		fly.stopFlying();
 	}
@@ -70,39 +68,26 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		die();
 	}
 	
-	void FixedUpdate () {
-		// avoid falling down when idle
-		if (chase.getTarget() == null || isTargetFacingMe())
-			still();
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		// disable chasing if target is facing the ghost
-		if (chase.getTarget() == null || isTargetFacingMe())
+		if (chase.getTarget() == null || isTargetFacingMe()) {
 			stop();
+			body.Sleep();
+		}
 		else {
+			body.Activate();
 			chase.enableChasing();
 			fly.fly();
-			stillPosY = body.position.y;
 		}
 	}
 	
-	private void still () {
-		// cancel gravity force
-		Vector2 v = body.velocity;
-		v.y = velScape * Time.fixedDeltaTime;
-		body.velocity = v;
-		// set back last position
-		Vector2 p = body.position;
-		p.y = stillPosY;
-		body.position = p;
-	}
-	
 	public bool isTargetFacingMe () {
-		// if player is walking to the ghost then Dot product will be < 0
-		Vector2 ghostVector = chase.getTarget().position - transform.position;
-		return Vector2.Dot(chase.getTarget().GetComponent<WalkAbs>().getLookingDir(), ghostVector) <= 0f;
+		// if player is facing to the ghost then Dot product will be < 0. Only considers X coordinate
+		Vector2 towardTarget = chase.getTarget().position - transform.position;
+		if (targetWalkComp == null)
+			targetWalkComp = chase.getTarget().GetComponent<WalkAbs>();
+		return (targetWalkComp.getLookingDir().x * towardTarget.x) <= 0f;
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {
