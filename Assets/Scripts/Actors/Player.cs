@@ -99,12 +99,13 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	// Update is called once per frame
 	void Update () {
 		
+		// this set the correct jump status when the player without jumping enters on free fall state
 		if (exitedFromScenery && !jump.IsJumping()) {
-			// if there is no shape below us then we are floating
+			// check if there is no shape below us
 			ChipmunkSegmentQueryInfo qinfo;
 			Vector2 end = body.position + Vector2.up * -3.2f;
 			Chipmunk.SegmentQueryFirst(body.position, end, (uint)(1 << gameObject.layer), "", out qinfo);
-			Debug.Log(qinfo.t + " " + qinfo.normal + " " + (qinfo.shape?qinfo.shape.name:""));
+			// if no handler it means no hit
 			if (System.IntPtr.Zero == qinfo._shapeHandle)
 				jump.resetStatus();
 		}

@@ -1234,15 +1234,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1979397788}
   m_GameObject: {fileID: 382492090}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
---- !u!1 &398360002
+--- !u!1 &409429581
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 3
   m_Component:
-  - 4: {fileID: 398360003}
-  - 114: {fileID: 398360004}
+  - 4: {fileID: 409429582}
+  - 114: {fileID: 409429583}
   m_Layer: 0
   m_Name: ScreenLayoutManager
   m_TagString: Untagged
@@ -1250,23 +1250,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &398360003
+--- !u!4 &409429582
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 398360002}
+  m_GameObject: {fileID: 409429581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &398360004
+--- !u!114 &409429583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 398360002}
+  m_GameObject: {fileID: 409429581}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeTimeFactor: 1.39999998
   fadeOutOnStart: 1
-  coverage: {x: 1, y: 1}
+  size: {x: 1, y: 1}
 --- !u!1 &478539234
 GameObject:
   m_ObjectHideFlags: 0
