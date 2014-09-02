@@ -112,7 +112,7 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	}
 	
 	private void locateInScreen () {
-		GameObjectTools.setScreenLocation(Camera.main, transform, size);
+		ScreenLayoutManager.worldToScreenForGUI(transform, size, false);
 	}
 	
 	public void updateSizeAndPosition () {

@@ -1,12 +1,13 @@
 using UnityEngine;
 
 /// <summary>
-/// Game object tools.
+/// Utilitary static class.
+/// It's like a bag of useful functions.
+/// Refactor in case it turns into a god class.
 /// </summary>
 static public class GameObjectTools
 {
 	public static float COS_45 = Mathf.Cos(45);
-	public static float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
 	
 	///////////////////////////////////////////////////////////
 	// Essentially a reimplementation of
@@ -192,81 +193,5 @@ static public class GameObjectTools
 		 
 		//Render the box
 		GUI.Box (r,"");
-	}
-	
-	/// <summary>
-	/// Gets the z-position and (width,height) dimension for a game object which wants to be 
-	/// transformed as a GUI element.
-	/// NOTE: the virtual plane for locating the game object is centered on screen.
-	/// </summary>
-	/// <returns>
-	/// Vector3. X,Y = Width,Height of the virtual GUI. Z = transform position for that axis.
-	/// </returns>
-	/// <param name='cam'>
-	/// Cam. The camera where a game object will be rendered as GUI
-	/// </param>
-	public static Vector3 getZLocationAndDimensionForGUI (Camera cam)
-	{
-		Vector3 result;
-		
-		// position barely ahead from near clip plane
-		float posAhead = (cam.nearClipPlane + 0.01f);
-		// consider current cameras's facing direction (it can be rotated)
-		// here we store the vector 3 result however we're only interesting in z coordinate
-		result = posAhead * cam.transform.forward + cam.transform.position;
-		
-		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + 0.01f
-		float h, w;
-		if (!cam.orthographic) {
-			h = 2f * Mathf.Tan(cam.fov * DEG_2_RAD_0_5) * posAhead;
-			w = h * cam.aspect;
-		}
-		else {
-			h = cam.orthographicSize * 2f;
-			w = h / Screen.height * Screen.width;
-		}
-		// keep z untouch (z-position of the GUI element), set width and height
-		result.x = w;
-		result.y = h;
-		
-		return result;
-	}
-	
-	/// <summary>
-	/// Sets z-position and scale (w,h) to a transform object for positioning in front of 
-	/// camera to act like a GUI element.
-	/// The size parameter scales even more the transform to satisfy a desired size of the transform.
-	/// NOTE: transform will be centered on screen.
-	/// </summary>
-	/// <param name='cam'>
-	/// Cam. The camera where a game object will be rendered as GUI
-	/// </param>
-	/// <param name='tr'>
-	/// Tr. Transform of the game object to be modified for being a GUI element
-	/// </param>
-	/// <param name='size'>
-	/// Size. Proportion of X and Y you want the object cover in the screen.
-	/// </param>
-	public static void setScreenLocation (Camera cam, Transform tr, Vector2 size)
-	{
-		// gets z-position and width and height for a GUI element
-		Vector3 guiPosAndDim = getZLocationAndDimensionForGUI(cam);
-		
-		Vector3 thePos = tr.position;
-		thePos.z = guiPosAndDim.z;
-		tr.position = thePos;
-		
-		// apply scale to adjust it according screen bounds and user defined size
-		Vector3 theScale = tr.localScale;
-		theScale.x = guiPosAndDim.x * size.x;
-		theScale.y = guiPosAndDim.y * size.y;
-		theScale.z = 0f;
-		tr.localScale = theScale;
-		
-		// modify local position (not world position)
-		/*Vector3 theLocalPos = tr.localPosition;
-		// x position doesn't work yet
-		theLocalPos.y = locAndDim.y * 0.5f * (1f - Mathf.Abs(size.y)) * Mathf.Sign(size.y);
-		tr.localPosition = theLocalPos;*/
 	}
 }

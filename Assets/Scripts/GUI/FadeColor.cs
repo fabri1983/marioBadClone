@@ -12,7 +12,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
 	public bool fadeOutOnStart = true;
-	public Vector2 coverage = Vector2.one;
+	public Vector2 size = Vector2.one;
 	
 	private bool doFading;
 	private EnumFadeDirection fadeDir;
@@ -97,7 +97,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 	}
 	
 	private void locateInScreen () {
-		GameObjectTools.setScreenLocation(Camera.main, transform, coverage);
+		ScreenLayoutManager.worldToScreenForGUI(transform, size, false);
 	}
 	
 	public void updateSizeAndPosition () {

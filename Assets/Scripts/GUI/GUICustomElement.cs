@@ -7,11 +7,12 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class GUICustomElement : MonoBehaviour, IScreenLayout {
 	
-	public Texture2D bgTexture;
-	public Vector2 size = Vector2.one;
+	public Texture2D texture;
+	public Vector2 size = Vector2.one; // pixels or proportion
+	public bool sizeAsPixels = false;
 	
 	void Awake () {
-		if (!bgTexture) {
+		if (!texture) {
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
@@ -23,26 +24,26 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 	}
 	
 	void Start () {
-		if (!bgTexture)
+		if (!texture)
 			return;
 		locateInScreen(); // make this game object to be located correctly in viewport
-		renderer.sharedMaterial.mainTexture = bgTexture;
+		renderer.sharedMaterial.mainTexture = texture;
 	}
 
 	void OnDestroy () {
 		ScreenLayoutManager.Instance.remove(this);
 #if UNITY_EDITOR
 		// this is in case this script is used in editor mode
-		if (!bgTexture)
-			renderer.sharedMaterial.mainTexture = bgTexture;
+		if (!texture)
+			renderer.sharedMaterial.mainTexture = texture;
 #endif
 	}
 
 #if UNITY_EDITOR
 	void Update () {
 		// if in editor mode we change the texture this will update the material
-		if (bgTexture && !bgTexture.name.Equals(renderer.sharedMaterial.mainTexture.name))
-			renderer.sharedMaterial.mainTexture = bgTexture;
+		if (texture && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
+			renderer.sharedMaterial.mainTexture = texture;
 		// only in Editor Mode: update in case any change from Inspector
 		if (!Application.isPlaying)
 			locateInScreen();
@@ -50,7 +51,7 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 #endif
 	
 	private void locateInScreen () {
-		GameObjectTools.setScreenLocation(Camera.main, transform, size);
+		ScreenLayoutManager.worldToScreenForGUI(transform, size, sizeAsPixels);
 	}
 	
 	public void updateSizeAndPosition () {
