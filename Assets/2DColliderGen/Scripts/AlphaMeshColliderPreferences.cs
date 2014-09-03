@@ -35,7 +35,7 @@ public class AlphaMeshColliderPreferences
 	int mDefaultColliderPointCount;
 	int mColliderPointCountSliderMaxValue;
 	bool mDefaultConvex;
-	float mDefaultAbsoluteColliderThickness;
+	float mDefaultAbsoluteColliderThickness=1f;
 #if UNITY_4_3_AND_LATER
 	AlphaMeshCollider.TargetColliderType mDefaultTargetColliderType = AlphaMeshCollider.TargetColliderType.PolygonCollider2D;
 #endif	
@@ -140,7 +140,7 @@ public class AlphaMeshColliderPreferences
 		mDefaultColliderPointCount = EditorPrefs.GetInt("AlphaMeshCollider_DefaultColliderPointCount", 20);
 		mColliderPointCountSliderMaxValue = EditorPrefs.GetInt("AlphaMeshCollider_ColliderPointCountSliderMaxValue", 100);
 		mDefaultConvex = EditorPrefs.GetBool("AlphaMeshCollider_DefaultConvex", false);
-		mDefaultAbsoluteColliderThickness = EditorPrefs.GetFloat("AlphaMeshCollider_DefaultAbsoluteColliderThickness", 2.0f);
+		mDefaultAbsoluteColliderThickness = EditorPrefs.GetFloat("AlphaMeshCollider_DefaultAbsoluteColliderThickness", 1.0f);
 #if UNITY_4_3_AND_LATER
 		mDefaultTargetColliderType = (AlphaMeshCollider.TargetColliderType) EditorPrefs.GetInt("AlphaMeshCollider_DefaultTargetColliderType", 1); // defaults to 1 == PolygonCollider2D
 #endif
