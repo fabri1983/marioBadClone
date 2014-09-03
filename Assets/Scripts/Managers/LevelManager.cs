@@ -229,7 +229,7 @@ public class LevelManager : MonoBehaviour {
 		if (t == null)
 			return;
 		
-		Parallax[] parallax = t.GetComponentsInChildren<Parallax>();
+		GUIParallax[] parallax = t.GetComponentsInChildren<GUIParallax>();
 		
 		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
 		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);

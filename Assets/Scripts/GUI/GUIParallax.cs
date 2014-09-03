@@ -1,20 +1,21 @@
 using UnityEngine;
 
 /// <summary>
-/// Scales the game object according to screen size and user defined coverage to act as a GUI element.
-/// It has scroll texture option according to camera position or manual offset.
-/// On screen redimension the game object's z position and its scale are adjusted.
+/// Scrolls a texture according to: 
+/// - manual: a user defined offset.
+/// - automatically: camera position and level extents
 /// </summary>
 [ExecuteInEditMode]
-public class Parallax : MonoBehaviour, IScreenLayout {
+public class GUIParallax : MonoBehaviour, IScreenLayout {
+	
+	public Texture2D texture;
+	public Vector2 size = Vector2.one;
 	
 	public bool enableOffset = false;
-	public Texture2D bgTexture;
 	public float speed = 1f; // factor to be applied to offset calculation
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
-	public Vector2 size = Vector2.one;
 	
 	private const float epsilon = 0.01f; // used only when manual step is not (0,0)
 	private Vector2 oldCamPos = Vector2.zero;
@@ -24,7 +25,7 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	
 	void Awake () {
 		// deactivate the game object if no texture
-		if (!bgTexture) {
+		if (!texture) {
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
@@ -42,7 +43,7 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 	}
 	
 	void Start () {
-		if (!bgTexture)
+		if (!texture)
 			return;
 		
 		// set current camera position
@@ -50,26 +51,27 @@ public class Parallax : MonoBehaviour, IScreenLayout {
 		oldCamPos.Set(camPos.x, camPos.y);
 		
 		locateInScreen(); // make this game object to fill the viewport
-		renderer.sharedMaterial.mainTexture = bgTexture;
+		renderer.sharedMaterial.mainTexture = texture;
 		renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 	}
 	
 	void OnDestroy () {
 		ScreenLayoutManager.Instance.remove(this);
-		if (bgTexture)
+		if (texture)
 			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #if UNITY_EDITOR
 		// this is in case this script is used in editor mode
-		if (!bgTexture)
-			renderer.sharedMaterial.mainTexture = bgTexture;
+		if (!texture)
+			renderer.sharedMaterial.mainTexture = texture;
 #endif
 	}
 	
 	void Update () {
 #if UNITY_EDITOR
 		// if in editor mode we change the texture this will update the material
-		if (!bgTexture.name.Equals(renderer.sharedMaterial.mainTexture.name))
-			renderer.sharedMaterial.mainTexture = bgTexture;
+		if (!texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
+			renderer.sharedMaterial.mainTexture = texture;
+		
 		// only in Editor Mode: update in case any change from Inspector
 		if (!Application.isPlaying)
 			locateInScreen();

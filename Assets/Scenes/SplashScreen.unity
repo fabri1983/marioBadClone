@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da921b9f1f47e74681672a9743a7acd, type: 1}
   m_Name: 
   enableOffset: 0
-  bgTexture: {fileID: 2800000, guid: 4d7ecdc6cfef6de44984303646bfd283, type: 1}
+  texture: {fileID: 2800000, guid: 4d7ecdc6cfef6de44984303646bfd283, type: 1}
   speed: 1
   manualStep: {x: 0, y: 0}
   tiling: {x: 1, y: 1}

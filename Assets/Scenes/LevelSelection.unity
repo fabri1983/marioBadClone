@@ -129,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 459115771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: .310000002}
-  m_LocalScale: {x: .536935747, y: .357957155, z: 0}
+  m_LocalScale: {x: .578324556, y: .357957155, z: 0}
   m_Children: []
   m_Father: {fileID: 912851602}
 --- !u!23 &459115773
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da921b9f1f47e74681672a9743a7acd, type: 1}
   m_Name: 
   enableOffset: 0
-  bgTexture: {fileID: 2800000, guid: ec8b99c26aad78d45980a97393b0c1a6, type: 1}
+  texture: {fileID: 2800000, guid: ec8b99c26aad78d45980a97393b0c1a6, type: 1}
   speed: 1
   manualStep: {x: 0, y: 0}
   tiling: {x: 1, y: 1}

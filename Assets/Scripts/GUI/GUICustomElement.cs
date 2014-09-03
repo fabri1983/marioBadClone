@@ -12,6 +12,7 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 	public bool sizeAsPixels = false;
 	
 	void Awake () {
+		// deactivate the game object if no texture
 		if (!texture) {
 			gameObject.SetActiveRecursively(false);
 			return;
@@ -42,7 +43,7 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 #if UNITY_EDITOR
 	void Update () {
 		// if in editor mode we change the texture this will update the material
-		if (texture && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
+		if (texture != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
 			renderer.sharedMaterial.mainTexture = texture;
 		
 		// only in Editor Mode: update in case any change from Inspector
