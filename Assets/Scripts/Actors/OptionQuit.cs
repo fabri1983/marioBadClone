@@ -41,7 +41,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 		ScreenLayoutManager.Instance.remove(this);
 	}
 	
-	public void updateSizeAndPosition() {
+	public void updateForGUI() {
 		locateButtons();
 	}
 	

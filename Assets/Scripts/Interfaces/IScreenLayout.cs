@@ -1,5 +1,5 @@
 
 public interface IScreenLayout {
 	
-	void updateSizeAndPosition();
+	void updateForGUI();
 }

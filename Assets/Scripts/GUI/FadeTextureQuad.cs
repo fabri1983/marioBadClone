@@ -50,7 +50,7 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
 			fade();
 	}
 	
-	public void updateSizeAndPosition () {
+	public void updateForGUI () {
 		rectTex.x = 0f;
 		rectTex.y =	0f;
 		rectTex.width = Screen.width;

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BackgroundMat
-  m_Shader: {fileID: 4800000, guid: f7c5848d83fe9d7469902f526abb5a6f, type: 1}
+  m_Shader: {fileID: 4800000, guid: 7be4e5039c2cedf408ce7047b71d327d, type: 1}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:

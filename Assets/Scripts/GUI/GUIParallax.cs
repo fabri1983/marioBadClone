@@ -6,17 +6,14 @@ using UnityEngine;
 /// - automatically: camera position and level extents
 /// </summary>
 [ExecuteInEditMode]
-public class GUIParallax : MonoBehaviour, IScreenLayout {
-	
-	public Texture2D texture;
-	public Vector2 size = Vector2.one;
+public class GUIParallax : MonoBehaviour {
 	
 	public bool enableOffset = false;
 	public float speed = 1f; // factor to be applied to offset calculation
 	public Vector2 manualStep = Vector2.zero; // use 0 if you want the scroll happens according main cam movement
 	public Vector2 tiling = Vector2.one; // this scales the texture if you want to show just a portion of it
-	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 	
+	private GUICustomElement guiElem;
 	private const float epsilon = 0.01f; // used only when manual step is not (0,0)
 	private Vector2 oldCamPos = Vector2.zero;
 	private Vector2 accumOffset = Vector2.zero;
@@ -24,57 +21,38 @@ public class GUIParallax : MonoBehaviour, IScreenLayout {
 	private Vector2 levelExtent = Vector2.zero; // level length according the game objects that define the level extent
 	
 	void Awake () {
-		// deactivate the game object if no texture
-		if (!texture) {
-			gameObject.SetActiveRecursively(false);
-			return;
-		}
-		else
-			gameObject.SetActiveRecursively(true);
-		
-		// set texture wrap mode
-		renderer.sharedMaterial.mainTexture.wrapMode = TextureWrapMode.Repeat;
-
-		// register this class with ScreenLayoutManager for screen resize event
-		ScreenLayoutManager.Instance.register(this);
 		// initializes as inifnite to avoid NaN in division operation
 		levelExtent.x = float.PositiveInfinity;
 		levelExtent.y = float.PositiveInfinity;
+		
+		guiElem = GetComponent<GUICustomElement>();
 	}
 	
 	void Start () {
-		if (!texture)
+		if (!guiElem.texture)
 			return;
+		
+		// setup shader: correct tiling
+		renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 		
 		// set current camera position
 		Vector2 camPos = Camera.main.transform.position;
 		oldCamPos.Set(camPos.x, camPos.y);
-		
-		locateInScreen(); // make this game object to fill the viewport
-		renderer.sharedMaterial.mainTexture = texture;
-		renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 	}
 	
 	void OnDestroy () {
-		ScreenLayoutManager.Instance.remove(this);
-		if (texture)
-			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #if UNITY_EDITOR
-		// this is in case this script is used in editor mode
-		if (!texture)
-			renderer.sharedMaterial.mainTexture = texture;
+		// only in Editor Mode: restore offset
+		if (!Application.isPlaying && guiElem.texture != null)
+			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #endif
 	}
 	
 	void Update () {
 #if UNITY_EDITOR
-		// if in editor mode we change the texture this will update the material
-		if (!texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
-			renderer.sharedMaterial.mainTexture = texture;
-		
 		// only in Editor Mode: update in case any change from Inspector
-		if (!Application.isPlaying)
-			locateInScreen();
+		if (!Application.isPlaying && guiElem.texture != null)
+			renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 #endif
 		updateOffset();
 	}
@@ -111,14 +89,6 @@ public class GUIParallax : MonoBehaviour, IScreenLayout {
 		}
 		
 		oldCamPos.Set(camPos.x, camPos.y);
-	}
-	
-	private void locateInScreen () {
-		ScreenLayoutManager.worldToScreenForGUI(transform, size, false);
-	}
-	
-	public void updateSizeAndPosition () {
-		locateInScreen();
 	}
 	
 	/// <summary>

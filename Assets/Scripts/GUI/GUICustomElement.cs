@@ -8,6 +8,7 @@ using UnityEngine;
 public class GUICustomElement : MonoBehaviour, IScreenLayout {
 	
 	public Texture2D texture;
+	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 	public Vector2 size = Vector2.one; // pixels or proportion
 	public bool sizeAsPixels = false;
 	
@@ -22,13 +23,15 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 		
 		// register this class with ScreenLayoutManager for screen resize event
 		ScreenLayoutManager.Instance.register(this);
+		
+		renderer.sharedMaterial.mainTexture = texture;
+		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
 	}
 	
 	void Start () {
 		if (!texture)
 			return;
-		locateInScreen(); // make this game object to be located correctly in viewport
-		renderer.sharedMaterial.mainTexture = texture;
+		updateForGUI(); // make this game object to be located correctly in viewport
 	}
 
 	void OnDestroy () {
@@ -48,15 +51,11 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 		
 		// only in Editor Mode: update in case any change from Inspector
 		if (!Application.isPlaying)
-			locateInScreen();
+			updateForGUI();
 	}
 #endif
 	
-	private void locateInScreen () {
+	public void updateForGUI () {
 		ScreenLayoutManager.worldToScreenForGUI(transform, size, sizeAsPixels);
-	}
-	
-	public void updateSizeAndPosition () {
-		locateInScreen();
 	}
 }

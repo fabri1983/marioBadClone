@@ -100,7 +100,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 		ScreenLayoutManager.worldToScreenForGUI(transform, size, false);
 	}
 	
-	public void updateSizeAndPosition () {
+	public void updateForGUI () {
 		locateInScreen();
 	}
 }

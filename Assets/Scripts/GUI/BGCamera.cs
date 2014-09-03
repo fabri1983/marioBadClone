@@ -10,7 +10,7 @@ public class BGCamera : MonoBehaviour, IScreenLayout {
 		ScreenLayoutManager.Instance.remove(this);
 	}
 	
-	public void updateSizeAndPosition () {
+	public void updateForGUI () {
 		Rect theRect = guiTexture.pixelInset;
 		theRect.x = 0f;
 		theRect.y =	0f;

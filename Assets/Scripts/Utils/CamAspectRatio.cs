@@ -29,7 +29,7 @@ public class CamAspectRatio : MonoBehaviour, IScreenLayout {
 		ScreenLayoutManager.Instance.remove(this);
 	}
 	
-	public void updateSizeAndPosition () {
+	public void updateForGUI () {
 		if (!LevelManager.keepAspectRatio)
 			return;
 		

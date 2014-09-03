@@ -60,7 +60,7 @@ public class ScreenLayoutManager : MonoBehaviour {
 			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight) {
 				// notify to all listeners
 				for (int i=0, c=listeners.Count; i<c; ++i)
-					listeners[i].updateSizeAndPosition();
+					listeners[i].updateForGUI();
 				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
@@ -210,45 +210,24 @@ public class ScreenLayoutManager : MonoBehaviour {
 	}
 	
 	public static void adjustSize (GUITexture gt) {
-		/*float lastScreenWidth = Instance.lastScreenWidth;
-		float lastScreenHeight = Instance.lastScreenHeight;
-		float textureHeight = gt.pixelInset.height;
-		float textureWidth = gt.pixelInset.width;
-		float screenHeight = Screen.height;
-		float screenWidth = Screen.width;
 		
-		// NOTE: only works when size increases
-		float screenAspectRatio = screenHeight / screenWidth;
-		float wChange = (screenWidth - lastScreenWidth) / screenWidth;
-		float hChange = (screenHeight - lastScreenHeight) / screenHeight;
-		int scaledWidth, scaledHeight;
-		if (screenAspectRatio <= 1f) {
-			float factor = screenAspectRatio * Mathf.Max(Mathf.Abs(wChange), Mathf.Abs(hChange));
-			scaledWidth = (int)(textureWidth * (1f + Mathf.Sign(wChange)*factor));
-			scaledHeight = (int)(textureHeight * (1f + Mathf.Sign(hChange)*factor));
-		}
-		else {
-			scaledWidth = (int)(textureWidth / screenAspectRatio);
-			scaledHeight = (int)(textureHeight / screenAspectRatio);
-		}
+	}
+	
+	public static void adjustSize (GUICustomElement gui) {
 		
-		Rect p = gt.pixelInset;
-		p.width = scaledWidth;
-		p.height = scaledHeight;
-		gt.pixelInset = p;*/
 	}
 	
 	/// <summary>
-	/// Gets the z-pos and (w,h) dimension for a custom GUI positioning in screen. 
+	/// Gets the z-pos and (w,h) scale factors for a custom GUI positioning in screen. 
 	/// The game object which wants to be transformed as a GUI element needs to be positioned to the Z xoordinate 
 	/// and be scaled as this method return values specify.
 	/// NOTE: the virtual plane for locating the game object is centered on screen and located in z = nearClipPlane + 0.01f.
-	/// It's a box with coordinates (-w/2, -h/2) to (w/2, h/2)
+	/// It's a virtual box with coordinates (-w/2, -h/2) to (w/2, h/2).
 	/// </summary>
 	/// <returns>
-	/// Vector3. x,y = Width,Height of the virtual GUI. z = transform position for that axis.
+	/// Vector3. x,y = Width,Height factors. z = transform position for that axis.
 	/// </returns>
-	private static Vector3 getZLocationAndDimensionForGUI ()
+	private static Vector3 getZLocationAndScaleForGUI ()
 	{
 		Vector3 result;
 		
@@ -289,7 +268,7 @@ public class ScreenLayoutManager : MonoBehaviour {
 	/// </param>
 	public static Vector2 screenToWorldForGUI (float pixelX, float pixelY)
 	{
-		Vector3 guiZposAndDimension = getZLocationAndDimensionForGUI();
+		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
 		
 		Vector2 result;
 		float w = guiZposAndDimension.x;
@@ -319,7 +298,7 @@ public class ScreenLayoutManager : MonoBehaviour {
 	/// </param>
 	public static void worldToScreenForGUI (Transform tr, Vector2 size, bool sizeAsPixels)
 	{
-		Vector3 guiZposAndDimension = getZLocationAndDimensionForGUI();
+		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
 		
 		Vector3 thePos = tr.position;
 		thePos.z = guiZposAndDimension.z;

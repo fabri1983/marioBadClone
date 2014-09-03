@@ -113,7 +113,7 @@ GameObject:
   - 4: {fileID: 459115772}
   - 33: {fileID: 459115774}
   - 23: {fileID: 459115773}
-  - 114: {fileID: 459115775}
+  - 114: {fileID: 459115776}
   m_Layer: 0
   m_Name: Background1
   m_TagString: Untagged
@@ -129,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 459115771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: .310000002}
-  m_LocalScale: {x: .578324556, y: .357957155, z: 0}
+  m_LocalScale: {x: .536935747, y: .357957155, z: 0}
   m_Children: []
   m_Father: {fileID: 912851602}
 --- !u!23 &459115773
@@ -157,7 +157,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 459115771}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
---- !u!114 &459115775
+--- !u!114 &459115776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -165,15 +165,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 459115771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da921b9f1f47e74681672a9743a7acd, type: 1}
+  m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
-  enableOffset: 0
   texture: {fileID: 2800000, guid: ec8b99c26aad78d45980a97393b0c1a6, type: 1}
-  speed: 1
-  manualStep: {x: 0, y: 0}
-  tiling: {x: 1, y: 1}
   wrapMode: 0
   size: {x: 1, y: 1}
+  sizeAsPixels: 0
 --- !u!1 &623272389
 GameObject:
   m_ObjectHideFlags: 0
