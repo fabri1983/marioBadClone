@@ -19,10 +19,19 @@ Features implemented:
 	The pause action set the MonoBehavior as enabled=false hence no Update() neither FixedUpdate() function is invoked over it.
 
 - Custom GUI implementation
-	In Unity 3.5 the GUI components aren't efficiency for rendering, so here is a custom implementation of GUI components that depends on transform operations.
+	In Unity 3.5 the GUI components aren't efficient for rendering, so I decided to design and implement a custom implementation of GUI components that depends on transform operations.
+	It let's you set the mesh, texture, size in pixels or proportional, and the possibility of resizing if screen size changes.
+
+- Parallax motion for GUI components
+	Added the possibility to apply a displacement to a material so giving the impression of motion.
+	Background and foreground components with their respectively shaders. Highly customizable: size, speed, manual or automatic offset, mirroring.
+	
+- GUI screen layout :
+	Locate a GUI component in screen selecting one from nine pre defined locations: top-center, top-left, top-right, middle-center, center-left, center-right, bottom-center, bottom-left, bottom-right.
+	It lets you apply manual offsets.
 	
 - GUI Transition Effects:
-	Extending the PoorsManGUIFX implementation for GUI elements transition, this own version handles transform component additionally to the Unity's GUITexture and GUIText.
+	Extending the PoorsManGUIFX implementation for GUI elements transition, this own version handles transform component additionally to the Unity's GUITexture and GUIText. Basic transition effects.
 	
 - CollisionGen 2D and Harry Plotter
 	Using these two third party APIs you can generate a mesh from an alpha channel texture that acts as a collider, and you have the possibility to modify it directly from the Editor Scene View.
@@ -35,4 +44,4 @@ Features implemented:
 	You will provide more vertices/triangles to the pipeline, and less fragments to process.
 	
 - CG Shaders
-	Every material has its own CG shader with specific optimizations targeting android platform. This allow to remove some assumptions that Unity adds when compiles a shaderlab shader.
+	Every material has its own CG shader with specific optimizations targeting android platform. This allow to remove some assumptions that Unity adds when compiles a shader.
