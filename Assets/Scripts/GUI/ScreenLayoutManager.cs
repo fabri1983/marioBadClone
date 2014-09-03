@@ -43,10 +43,7 @@ public class ScreenLayoutManager : MonoBehaviour {
 
 	void OnDestroy() {
 		listeners.Clear();
-#if UNITY_EDITOR
-#else
 		instance = null;
-#endif
     }
 	
 	public void register (IScreenLayout sl) {
@@ -61,8 +58,10 @@ public class ScreenLayoutManager : MonoBehaviour {
 		if (EventType.Repaint == Event.current.type) {
 			// if screen is resized then need to notice all listeners
 			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight) {
+				// notify to all listeners
 				for (int i=0, c=listeners.Count; i<c; ++i)
 					listeners[i].updateSizeAndPosition();
+				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
 			}
@@ -163,24 +162,31 @@ public class ScreenLayoutManager : MonoBehaviour {
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP: {
-			p.x = Screen.width/2 - tex.x/2 + offset.x;
-			p.y = Screen.height - tex.y + offset.y;
+			Vector2 temp = screenToWorldForGUI(Screen.width/2 + offset.x, Screen.height - tex.y/2f + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP_RIGHT: {
-			p.x = Screen.width - tex.x + offset.x;
-			p.y = Screen.height - tex.y + offset.y;
+			Vector2 temp = screenToWorldForGUI(Screen.width + offset.x - tex.x/2f, Screen.height - tex.y/2f + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER_LEFT: {
-			p.x = offset.x;
-			p.y = Screen.height/2 - tex.y/2 + offset.y;
+			Vector2 temp = screenToWorldForGUI(offset.x + tex.x/2f, Screen.height/2 + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER: {
 			p.x = Screen.width/2 - tex.x/2 + offset.x;
 			p.y = Screen.height/2 - tex.y/2 + offset.y;
+			Vector2 temp = screenToWorldForGUI(Screen.width/2 + offset.x, Screen.height/2 + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER_RIGHT: {
-			p.x = Screen.width - tex.x + offset.x;
-			p.y = Screen.height/2 - tex.y/2 + offset.y;
+			Vector2 temp = screenToWorldForGUI(Screen.width + offset.x - tex.x/2f, Screen.height/2 + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM_LEFT: {
 			Vector2 temp = screenToWorldForGUI(offset.x + tex.x/2f, tex.y/2f + offset.y);
@@ -188,12 +194,14 @@ public class ScreenLayoutManager : MonoBehaviour {
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM: {
-			p.x = Screen.width/2 - tex.x + offset.x;
-			p.y = offset.y;
+			Vector2 temp = screenToWorldForGUI(Screen.width/2 + offset.x, tex.y/2f + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM_RIGHT: {
-			p.x = Screen.width - tex.x + offset.x;
-			p.y = offset.y;
+			Vector2 temp = screenToWorldForGUI(Screen.width + offset.x - tex.x/2f, tex.y/2f + offset.y);
+			p.x = temp.x;
+			p.y = temp.y;
 			break; }
 		default: break;
 		}
@@ -231,23 +239,25 @@ public class ScreenLayoutManager : MonoBehaviour {
 	}
 	
 	/// <summary>
-	/// Gets the z-position and (width,height) dimension for a game object which wants to be 
-	/// transformed as a GUI element.
+	/// Gets the z-pos and (w,h) dimension for a custom GUI positioning in screen. 
+	/// The game object which wants to be transformed as a GUI element needs to be positioned to the Z xoordinate 
+	/// and be scaled as this method return values specify.
 	/// NOTE: the virtual plane for locating the game object is centered on screen and located in z = nearClipPlane + 0.01f.
+	/// It's a box with coordinates (-w/2, -h/2) to (w/2, h/2)
 	/// </summary>
 	/// <returns>
 	/// Vector3. x,y = Width,Height of the virtual GUI. z = transform position for that axis.
 	/// </returns>
-	public static Vector3 getZLocationAndDimensionForGUI ()
+	private static Vector3 getZLocationAndDimensionForGUI ()
 	{
 		Vector3 result;
 		
 		// position barely ahead from near clip plane
-		float posAhead = (Camera.main.nearClipPlane + 0.01f);
+		float posAhead = (Camera.main.nearClipPlane + GUI_NEAR_PLANE_OFFSET);
 		// consider current cameras's facing direction (it can be rotated)
 		// we're only interesting in z coordinate
 		result.z = (posAhead * Camera.main.transform.forward + Camera.main.transform.position).z;
-		
+
 		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + 0.01f
 		float h, w;
 		if (Camera.main.orthographic) {
@@ -265,26 +275,27 @@ public class ScreenLayoutManager : MonoBehaviour {
 		return result;
 	}
 	
+	/// <summary>
+	/// Converts pixel (x,y) coordinates from screen to custom GUI viewport.
+	/// </summary>
+	/// <returns>
+	/// The x,y coordinates to locate a transform component as a GUI element
+	/// </returns>
+	/// <param name='pixelX'>
+	/// Pixel x coordinate.
+	/// </param>
+	/// <param name='pixelY'>
+	/// Pixel y coordinate.
+	/// </param>
 	public static Vector2 screenToWorldForGUI (float pixelX, float pixelY)
 	{
+		Vector3 guiZposAndDimension = getZLocationAndDimensionForGUI();
+		
 		Vector2 result;
+		float w = guiZposAndDimension.x;
+		float h = guiZposAndDimension.y;
 		
-		// position barely ahead from near clip plane
-		float posAhead = (Camera.main.nearClipPlane + 0.01f);
-		
-		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + 0.01f
-		float h, w;
-		if (Camera.main.orthographic) {
-			h = Camera.main.orthographicSize * 2f;
-			w = h / Screen.height * Screen.width;
-		}
-		else {
-			h = 2f * Mathf.Tan(Camera.main.fov * DEG_2_RAD_0_5) * posAhead;
-			w = h * Camera.main.aspect;
-		}
-
-		// Convert to a box with coordinates (-0.5,-0.5) to (0.5,0.5)
-		// Then scale to world units
+		// maps pixel coordinate to a box with coordinates (-w/2, -h/2) to (w/2, h/2). This is the custom GUI viewport
 		result.x = (pixelX / Screen.width * w) - w/2f;
 		result.y = (pixelY / Screen.height * h) - h/2f;
 
@@ -308,24 +319,23 @@ public class ScreenLayoutManager : MonoBehaviour {
 	/// </param>
 	public static void worldToScreenForGUI (Transform tr, Vector2 size, bool sizeAsPixels)
 	{
-		// gets z-position and width and height for a GUI element
-		Vector3 guiPosAndDim = getZLocationAndDimensionForGUI();
+		Vector3 guiZposAndDimension = getZLocationAndDimensionForGUI();
 		
 		Vector3 thePos = tr.position;
-		thePos.z = guiPosAndDim.z;
+		thePos.z = guiZposAndDimension.z;
 		tr.position = thePos;
 		
 		// apply scale to adjust it according screen bounds and user defined size
 		Vector3 theScale = tr.localScale;
-		theScale.x = guiPosAndDim.x * size.x / (sizeAsPixels? Screen.width : 1f);
-		theScale.y = guiPosAndDim.y * size.y / (sizeAsPixels? Screen.height : 1f);
+		theScale.x = guiZposAndDimension.x * size.x / (sizeAsPixels? Screen.width : 1f);
+		theScale.y = guiZposAndDimension.y * size.y / (sizeAsPixels? Screen.height : 1f);
 		theScale.z = 0f;
 		tr.localScale = theScale;
 		
 		// modify local position (not world position)
 		/*Vector3 theLocalPos = tr.localPosition;
 		// x position doesn't work yet
-		theLocalPos.y = locAndDim.y * 0.5f * (1f - Mathf.Abs(size.y)) * Mathf.Sign(size.y);
+		theLocalPos.y = guiZposAndDimension.y * 0.5f * (1f - Mathf.Abs(size.y)) * Mathf.Sign(size.y);
 		tr.localPosition = theLocalPos;*/
 	}
 }

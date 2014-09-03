@@ -251,15 +251,15 @@ MonoBehaviour:
   acceleration: 1
   easingType: 4
   useCoroutine: 0
---- !u!1 &735619292
+--- !u!1 &713123669
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 3
   m_Component:
-  - 4: {fileID: 735619293}
-  - 114: {fileID: 735619294}
+  - 4: {fileID: 713123670}
+  - 114: {fileID: 713123671}
   m_Layer: 0
   m_Name: ScreenLayoutManager
   m_TagString: Untagged
@@ -267,23 +267,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &735619293
+--- !u!4 &713123670
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 735619292}
+  m_GameObject: {fileID: 713123669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &735619294
+--- !u!114 &713123671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 735619292}
+  m_GameObject: {fileID: 713123669}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
@@ -602,7 +602,7 @@ MonoBehaviour:
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeTimeFactor: 1.39999998
   fadeOutOnStart: 1
-  coverage: {x: 1, y: 1}
+  size: {x: 1, y: 1}
 --- !u!114 &2122884583
 MonoBehaviour:
   m_ObjectHideFlags: 0
