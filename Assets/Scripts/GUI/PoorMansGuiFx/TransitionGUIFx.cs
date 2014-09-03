@@ -49,7 +49,7 @@ public class TransitionGUIFx : MonoBehaviour {
 	private bool update;
 	private ITransitionListener _listener = null;
 	
-	void Awake ()
+	void Start ()
 	{
 		elem = Element.TRANSFORM;
 		// NOTE: by the moment only use transform's modifications, I think because of conflicts with ScreenLayout. Need to test
@@ -100,14 +100,14 @@ public class TransitionGUIFx : MonoBehaviour {
 			steps = (int)Mathf.Sign(steps) * 2;
 		
 		// set final position
-		finalPos.Set(transform.position.x, transform.position.y);
+		finalPos.Set(transform.localPosition.x, transform.localPosition.y);
 		
 		if (elem == Element.TRANSFORM)
-			startPos.Set(transform.position.x + startOffsetTransform.x, transform.position.y + startOffsetTransform.y);
-		else if (elem == Element.GUI_TEXT)
+			startPos.Set(transform.localPosition.x + startOffsetTransform.x, transform.localPosition.y + startOffsetTransform.y);
+		/*else if (elem == Element.GUI_TEXT)
 			startPos.Set(guiText.pixelOffset.x + startOffsetTransform.x, guiText.pixelOffset.y + startOffsetTransform.y);
 		else if (elem == Element.GUI_TEXTURE)
-			startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);
+			startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);*/
 		
 		// calculate automatic offsets
 		switch (_transition)
@@ -140,25 +140,28 @@ public class TransitionGUIFx : MonoBehaviour {
 				offsetY = 0;
 				break;
 		}
-
+		
 		// set initial object position
-		if (elem == Element.TRANSFORM) {
-			Vector3 pos = transform.position;
+		switch (elem)
+		{
+		case Element.TRANSFORM:
+			Vector3 pos = transform.localPosition;
 			pos.x = startPos.x + offsetX;
 			pos.y = startPos.y + offsetY;
-			transform.position = pos;
-		}
-		else if (elem == Element.GUI_TEXT) {
+			transform.localPosition = pos;
+			break;
+		/*case Element.GUI_TEXT:
 			Vector2 pOffset = guiText.pixelOffset;
 			pOffset.x = startPos.x + offsetX;
 			pOffset.y = startPos.y + offsetY;
 			guiText.pixelOffset = pOffset;
-		}
-		else if (elem == Element.GUI_TEXTURE) {
+			break;
+		case Element.GUI_TEXTURE:
 			Rect pInset = guiTexture.pixelInset;
 			pInset.x = startPos.x + offsetX;
 			pInset.y = startPos.y + offsetY;
 			guiTexture.pixelInset = pInset;
+			break;*/
 		}
 	}
 	
@@ -181,7 +184,7 @@ public class TransitionGUIFx : MonoBehaviour {
 		{
 			transition(currentStep);
 			++currentStep;
-			if (finalPos.x == transform.position.x && finalPos.y == transform.position.y)
+			if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
 				break;
             yield return null;
 		}
@@ -192,8 +195,8 @@ public class TransitionGUIFx : MonoBehaviour {
 	private void DoTransition ()
 	{
 		// main transition/easing loop
-		//if (currentStep >= steps)
-		if (finalPos.x == transform.position.x && finalPos.y == transform.position.y) {
+		//if (currentStep >= steps) {
+		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y) {
 			this.enabled = false;
 			return;
 		}
@@ -212,6 +215,7 @@ public class TransitionGUIFx : MonoBehaviour {
 		{
 		case Direction.Up:
 			newX=startPos.x + offsetX; newY=startPos.y + offsetY + e;
+			// don't exceed the final position
 			if (newY > finalPos.y) newY = finalPos.y;
 			break;
 		case Direction.Down:
@@ -234,12 +238,12 @@ public class TransitionGUIFx : MonoBehaviour {
 		switch (elem)
 		{
 		case Element.TRANSFORM:
-			Vector3 pos = transform.position;
+			Vector3 pos = transform.localPosition;
 			pos.x = newX;
 			pos.y = newY;
-			transform.position = pos;
+			transform.localPosition = pos;
 			break;
-		case Element.GUI_TEXT:
+		/*case Element.GUI_TEXT:
 			Vector2 pOffset = guiText.pixelOffset;
 			pOffset.x = newX;
 			pOffset.y = newY;
@@ -250,8 +254,7 @@ public class TransitionGUIFx : MonoBehaviour {
 			pInset.x = newX;
 			pInset.y = newY;
 			guiTexture.pixelInset = pInset;
-			break;
+			break;*/
 		}
 	}
-	
-} // class
+}
