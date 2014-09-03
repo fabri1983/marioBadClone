@@ -22,7 +22,7 @@ Features implemented:
 	In Unity 3.5 the GUI components aren't efficiency for rendering, so here is a custom implementation of GUI components that depends on transform operations.
 	
 - GUI Transition Effects:
-	Extending the PoorsmanGUI FX implementation for GUI elements transition, this own version handles transform component additionally to the Unity's GUITexture and GUIText.
+	Extending the PoorsManGUIFX implementation for GUI elements transition, this own version handles transform component additionally to the Unity's GUITexture and GUIText.
 	
 - CollisionGen 2D and Harry Plotter
 	Using these two third party APIs you can generate a mesh from an alpha channel texture that acts as a collider, and you have the possibility to modify it directly from the Editor Scene View.
