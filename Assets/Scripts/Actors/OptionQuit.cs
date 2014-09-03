@@ -55,6 +55,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	 * This only fired on PC
 	 */
 	void OnMouseUpAsButton () {
+		Debug.Log("---------------------");
 		optionSelected();
 	}
 	
@@ -68,7 +69,12 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	
 	public Rect getScreenBoundsAA () {
 		// this method called only once since its a non destroyable game object
-		return guiTexture.GetScreenRect(Camera.main);
+		if (guiTexture != null)
+			return guiTexture.GetScreenRect(Camera.main);
+		else {
+			Bounds b = renderer.bounds;
+			return new Rect(b.min.x, b.min.y, b.max.x, b.max.y);
+		}
 	}
 	
 	public void OnBeganTouch (Touch t) {
