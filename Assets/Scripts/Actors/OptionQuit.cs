@@ -68,12 +68,20 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// this method called only once since its a non destroyable game object
+		// This method called only once since its a non destroyable game object
+		
+		// if used with a Unity's GUITexture
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
+		// here I suppose this game object has attached a GUICustomElement
 		else {
-			Bounds b = renderer.bounds;
-			return new Rect(b.min.x, b.min.y, b.max.x, b.max.y);
+			GUICustomElement guiElem = GetComponent<GUICustomElement>();
+			Vector3 guiPos = transform.localPosition; // GUI custom element uses localPosition
+			Vector2 sizeInGUI = guiElem.getSizeInGUI();
+			Vector2 sizeInPixels = guiElem.getSizeInPixels();
+			Vector2 pixelMin = GUIScreenLayoutManager.guiToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);
+			Rect rect = new Rect(pixelMin.x, pixelMin.y, sizeInPixels.x, sizeInPixels.y);
+			return rect;
 		}
 	}
 	
