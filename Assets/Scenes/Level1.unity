@@ -1304,7 +1304,7 @@ MonoBehaviour:
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeTimeFactor: 1.39999998
   fadeOutOnStart: 1
-  size: {x: 1, y: 1}
+  sizeFactor: {x: 1, y: 1}
 --- !u!1 &478539234
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,43 +2023,30 @@ MonoBehaviour:
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: 0
---- !u!1 &665338631
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+--- !u!21 &642103776
+Material:
   serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 665338632}
-  - 114: {fileID: 665338633}
-  m_Layer: 0
-  m_Name: ScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &665338632
-Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 665338631}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &665338633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 665338631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
+  m_Name: BackgroundMirrorMat
+  m_Shader: {fileID: 4800000, guid: 7be4e5039c2cedf408ce7047b71d327d, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: cd8ba37483f632a4bad198b7e2cfecdd, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &696674326
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,7 +2441,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a2b2fb7a56ee33f4a92ffe08aca65866, type: 2}
+  - {fileID: 642103776}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2495,6 +2482,7 @@ MonoBehaviour:
   wrapMode: 0
   size: {x: 1, y: 1}
   sizeAsPixels: 0
+  newMaterialInstance: 0
 --- !u!1 &823940588
 GameObject:
   m_ObjectHideFlags: 0
@@ -4168,7 +4156,7 @@ Transform:
   m_GameObject: {fileID: 1318567354}
   m_LocalRotation: {x: -2.8165033e-07, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: .13602373, z: .309999466}
-  m_LocalScale: {x: .536935747, y: .0859097168, z: 0}
+  m_LocalScale: {x: .536935747, y: .0859097093, z: 0}
   m_Children: []
   m_Father: {fileID: 985764691}
 --- !u!23 &1318567356
@@ -4183,7 +4171,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a34b78cdf39de814f9898a4a011d1454, type: 2}
+  - {fileID: 1511935299}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4224,6 +4212,7 @@ MonoBehaviour:
   wrapMode: 0
   size: {x: 1, y: .239999995}
   sizeAsPixels: 0
+  newMaterialInstance: 0
 --- !u!114 &1318567360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5229,6 +5218,30 @@ Transform:
   - {fileID: 1799292821}
   - {fileID: 901954883}
   m_Father: {fileID: 1698630139}
+--- !u!21 &1511935299
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMirrorMat
+  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1559767183
 GameObject:
   m_ObjectHideFlags: 0
@@ -5541,6 +5554,43 @@ Transform:
   - {fileID: 1801379778}
   - {fileID: 2028569808}
   m_Father: {fileID: 1698630139}
+--- !u!1 &1605446590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1605446591}
+  - 114: {fileID: 1605446592}
+  m_Layer: 0
+  m_Name: ScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1605446591
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1605446590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1605446592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1605446590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
 --- !u!1001 &1617991174
 Prefab:
   m_ObjectHideFlags: 0

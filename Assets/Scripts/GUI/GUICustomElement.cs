@@ -11,6 +11,7 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 	public Vector2 size = Vector2.one; // pixels or proportion
 	public bool sizeAsPixels = false;
+	public bool newMaterialInstance = false; // currently no atlas usage, so every game object instance has its own material instance
 	
 	void Awake () {
 		// deactivate the game object if no texture
@@ -24,8 +25,15 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this);
 		
-		renderer.material.mainTexture = texture;
-		renderer.material.mainTexture.wrapMode = wrapMode;
+		if (newMaterialInstance) {
+            // create the new material
+            Material newMat = new Material(renderer.sharedMaterial);
+            // assign it to the renderer
+            renderer.sharedMaterial = newMat;
+        }
+		
+		renderer.sharedMaterial.mainTexture = texture;
+		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
 	}
 	
 	void Start () {
@@ -39,15 +47,15 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 #if UNITY_EDITOR
 		// this is in case this script is used in editor mode
 		if (!texture)
-			renderer.material.mainTexture = texture;
+			renderer.sharedMaterial.mainTexture = texture;
 #endif
 	}
 
 #if UNITY_EDITOR
 	void Update () {
 		// if in editor mode we change the texture this will update the material
-		if (texture != null && !texture.name.Equals(renderer.material.mainTexture.name))
-			renderer.material.mainTexture = texture;
+		if (texture != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
+			renderer.sharedMaterial.mainTexture = texture;
 		
 		// only in Editor Mode: update in case any change from Inspector
 		if (!Application.isPlaying)
