@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Shake : MonoBehaviour
 {
-	// controls is the amount that shake_intensity is decremented each update. It determines if the shake is long or short
+	// controls the amount that shake_intensity is decremented each update. It determines if the shake is long or short
 	public float shake_decay = 0.5f;
-	// determines the initial intensity of the shaking — how much variance to allow in the object position
+	// determines the initial intensity of the shaking — how much variance to allow in the object's position
 	public float shake_intensity = 4f;
 	// true if you want also shake rotation of game object
 	public bool allowRotation = false;
@@ -16,11 +16,12 @@ public class Shake : MonoBehaviour
 #endif
 	
 	private float tempDecay, tempIntensity;
-	private Vector3 originPosition;
-	private Quaternion originRotation;
+	private Vector3 origPosition;
+	private Quaternion origRotation;
 	private bool allowShake = false;
+	private Quaternion quatTemp;
 	
-	void Awake () {
+	void Start () {
 		if (startDelaySecs > 0f)
 			Invoke("reset", startDelaySecs);
 	}
@@ -44,30 +45,33 @@ public class Shake : MonoBehaviour
 	
 	public void reset ()
 	{
-		allowShake = true;
 		tempDecay = shake_decay;
 		tempIntensity = shake_intensity;
-		originPosition = transform.position;
-		originRotation = transform.rotation;
+		// for GUI Custom elements use localPosition
+		origPosition = transform.localPosition;
+		origRotation = transform.rotation;
+		allowShake = true;
 	}
 	
 	public void shake ()
 	{
 		if (tempIntensity > 0) {
-			transform.position = originPosition + Random.insideUnitSphere * tempIntensity;
+			transform.localPosition = origPosition + Random.insideUnitSphere * tempIntensity;
 			if (allowRotation) {
-				transform.rotation = new Quaternion (
-					originRotation.x + Random.Range (-tempIntensity, tempIntensity) * .2f,
-					originRotation.y + Random.Range (-tempIntensity, tempIntensity) * .2f,
-					originRotation.z + Random.Range (-tempIntensity, tempIntensity) * .2f,
-					originRotation.w + Random.Range (-tempIntensity, tempIntensity) * .2f);
+				quatTemp.Set(
+					origRotation.x + Random.Range (-tempIntensity, tempIntensity) * .2f,
+					origRotation.y + Random.Range (-tempIntensity, tempIntensity) * .2f,
+					origRotation.z + Random.Range (-tempIntensity, tempIntensity) * .2f,
+					origRotation.w + Random.Range (-tempIntensity, tempIntensity) * .2f);
+				transform.rotation = quatTemp;
 			}
 			tempIntensity -= tempDecay;
 		}
-		// once the effect finishes reset some behavior
+		// once the effect finishes reset to original transform
 		else {
-			transform.position = originPosition;
-			transform.rotation = originRotation;
+			// for GUI Custom elements use localPosition
+			transform.localPosition = origPosition;
+			transform.rotation = origRotation;
 			allowShake = false;
 		}
 	}
