@@ -20,7 +20,7 @@ public enum Direction
 
 enum Element
 {
-	// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with pixels
+	// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
 	TRANSFORM, GUI_TEXT, GUI_TEXTURE
 }
 
