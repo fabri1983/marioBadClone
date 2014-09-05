@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour {
 	
 	void Awake () {
 		if (instance != null && instance != this) {
-			Destroy(this.gameObject);
+			Destroy(gameObject);
 		}
 		else {
 			instance = this;
@@ -200,17 +200,17 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	/// <summary>
-	/// Gets the game object that contains all the GUI elements in the scene.
-	/// Important: this only works if there is all Parallax scripts are parented by one game object.
+	/// Gets the transform of the game object named GUI_Layers_nd which contains all the 
+	/// GUI elements in the scene that aren't destroyable.
 	/// </summary>
 	/// <returns>
-	/// The Transform component.
+	/// A Transform element for applying any operation on it
 	/// </returns>
-	public Transform getGUILayers () {
-		GameObject guiLayers = GameObject.Find("GUI_Layers");
+	public static Transform getGUILayersNonDestroyable () {
+		GameObject guiLayers = GameObject.Find("GUI_Layers_nd");
 		
 		if (guiLayers == null) {
-			Debug.LogWarning("Couldn't find game object named GUI_Layers");
+			Debug.LogWarning("Couldn't find game object named GUI_Layers_nd. If you are using GUI custom elements you forgot to consolidate them in a game object named GUI_Layers_nd");
 			return null;
 		}
 		
@@ -218,26 +218,50 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	/// <summary>
-	/// Gets all the Parallax components from the main camera and configure them according to 
+	/// Gets the transform of the game object named GUI_Layers_so which contains all the 
+	/// GUI elements in the scene that only exist during the liveness of the scene (destroyables).
+	/// </summary>
+	/// <returns>
+	/// A Transform element for applying any operation on it
+	/// </returns>
+	public static Transform getGUILayersSceneOnly () {
+		GameObject guiLayers = GameObject.Find("GUI_Layers_so");
+		
+		if (guiLayers == null) {
+			Debug.LogWarning("Couldn't find game object named GUI_Layers_so. If you are using GUI custom elements you forgot to consolidate them in a game object named GUI_Layers_so");
+			return null;
+		}
+		
+		return guiLayers.transform;
+	}
+	
+	/// <summary>
+	/// Gets all the GUIParallax components in the scene and configure them according to 
 	/// the extension of the level: min world position and max world position.
 	/// </summary>
 	/// <param name='levelExtent'>
 	/// Level dimension in world coordinates. Used to configure the parallax scripts
 	/// </param>
 	private void setParallaxProperties (Rect levelExtent) {
-		Transform t = getGUILayers();
-		if (t == null)
-			return;
+		Transform t1 = getGUILayersSceneOnly();
+		Transform t2 = getGUILayersNonDestroyable();
 		
-		GUIParallax[] parallax = t.GetComponentsInChildren<GUIParallax>();
-		
-		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
-		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
-		Vector2 playerSpawnPos = spawnPosArray[activeLevel].position;
-		
-		for (int i=0,c=parallax.Length; i<c;++i) {
-			parallax[i].setLevelExtentWorldUnits(length, height);
-			parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+		for (int k=0; k<2; ++k) {
+			// get the GUIParallax components
+			GUIParallax[] parallax = null;
+			if (k==0)
+				parallax = t1.GetComponentsInChildren<GUIParallax>();
+			else
+				parallax = t2.GetComponentsInChildren<GUIParallax>();
+			
+			float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
+			float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
+			Vector2 playerSpawnPos = spawnPosArray[activeLevel].position;
+			
+			for (int i=0,c=parallax.Length; i<c;++i) {
+				parallax[i].setLevelExtentWorldUnits(length, height);
+				parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class ScreenLayoutManager : MonoBehaviour {
+public class GUIScreenLayoutManager : MonoBehaviour {
 	
 	private List<IScreenLayout> listeners = new List<IScreenLayout>();
 	private float lastScreenWidth, lastScreenHeight;
@@ -10,15 +10,15 @@ public class ScreenLayoutManager : MonoBehaviour {
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
 	
-	private static ScreenLayoutManager instance = null;
+	private static GUIScreenLayoutManager instance = null;
 
-	public static ScreenLayoutManager Instance {
+	public static GUIScreenLayoutManager Instance {
         get {
             if (instance == null) {
-				instance = FindObjectOfType(typeof(ScreenLayoutManager)) as ScreenLayoutManager;
+				instance = FindObjectOfType(typeof(GUIScreenLayoutManager)) as GUIScreenLayoutManager;
 				if (instance == null) {
 					// creates a game object with this script component
-					instance = new GameObject("ScreenLayoutManager").AddComponent<ScreenLayoutManager>();
+					instance = new GameObject("ScreenLayoutManager").AddComponent<GUIScreenLayoutManager>();
 				}
 			}
             return instance;
@@ -157,49 +157,49 @@ public class ScreenLayoutManager : MonoBehaviour {
 		
 		switch (layout) {
 		case EnumScreenLayout.TOP_LEFT: {
-			Vector2 temp = screenToWorldForGUI(offset.x + tex.x/2f, Screen.height - tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(offset.x + tex.x/2f, Screen.height - tex.y/2f + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP: {
-			Vector2 temp = screenToWorldForGUI(Screen.width/2 + offset.x, Screen.height - tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width/2 + offset.x, Screen.height - tex.y/2f + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP_RIGHT: {
-			Vector2 temp = screenToWorldForGUI(Screen.width + offset.x - tex.x/2f, Screen.height - tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width + offset.x - tex.x/2f, Screen.height - tex.y/2f + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER_LEFT: {
-			Vector2 temp = screenToWorldForGUI(offset.x + tex.x/2f, Screen.height/2 + offset.y);
+			Vector2 temp = screenToGUI(offset.x + tex.x/2f, Screen.height/2 + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER: {
 			p.x = Screen.width/2 - tex.x/2 + offset.x;
 			p.y = Screen.height/2 - tex.y/2 + offset.y;
-			Vector2 temp = screenToWorldForGUI(Screen.width/2 + offset.x, Screen.height/2 + offset.y);
+			Vector2 temp = screenToGUI(Screen.width/2 + offset.x, Screen.height/2 + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER_RIGHT: {
-			Vector2 temp = screenToWorldForGUI(Screen.width + offset.x - tex.x/2f, Screen.height/2 + offset.y);
+			Vector2 temp = screenToGUI(Screen.width + offset.x - tex.x/2f, Screen.height/2 + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM_LEFT: {
-			Vector2 temp = screenToWorldForGUI(offset.x + tex.x/2f, tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(offset.x + tex.x/2f, tex.y/2f + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM: {
-			Vector2 temp = screenToWorldForGUI(Screen.width/2 + offset.x, tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width/2 + offset.x, tex.y/2f + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM_RIGHT: {
-			Vector2 temp = screenToWorldForGUI(Screen.width + offset.x - tex.x/2f, tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width + offset.x - tex.x/2f, tex.y/2f + offset.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
@@ -255,10 +255,10 @@ public class ScreenLayoutManager : MonoBehaviour {
 	}
 	
 	/// <summary>
-	/// Converts pixel (x,y) coordinates from screen to custom GUI viewport.
+	/// Converts pixel (x,y) coordinates from screen to custom GUI space.
 	/// </summary>
 	/// <returns>
-	/// The x,y coordinates to locate a transform component as a GUI element
+	/// The x,y pixel coordinates where a transform component is located to as a GUI element.
 	/// </returns>
 	/// <param name='pixelX'>
 	/// Pixel x coordinate.
@@ -266,18 +266,57 @@ public class ScreenLayoutManager : MonoBehaviour {
 	/// <param name='pixelY'>
 	/// Pixel y coordinate.
 	/// </param>
-	public static Vector2 screenToWorldForGUI (float pixelX, float pixelY)
+	public static Vector2 screenToGUI (float pixelX, float pixelY)
 	{
 		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
-		
 		Vector2 result;
-		float w = guiZposAndDimension.x;
-		float h = guiZposAndDimension.y;
+		float guiW = guiZposAndDimension.x;
+		float guiH = guiZposAndDimension.y;
 		
 		// maps pixel coordinate to a box with coordinates (-w/2, -h/2) to (w/2, h/2). This is the custom GUI viewport
-		result.x = (pixelX / Screen.width * w) - w/2f;
-		result.y = (pixelY / Screen.height * h) - h/2f;
+		result.x = guiW * (pixelX / Screen.width - 0.5f);
+		result.y = guiH * (pixelY / Screen.height - 0.5f);
 
+		return result;
+	}
+	
+	/// <summary>
+	/// Maps a GUI (x,y) coordinate to a (x,y) screen pixel coordinate.
+	/// </summary>
+	/// <returns>
+	/// Vector2. Screen pixel X,Y
+	/// </returns>
+	/// <param name='guiX'>
+	/// GUI x. X Coordinate in GUI space
+	/// </param>
+	/// <param name='guiY'>
+	/// GUI y. Y Coordinate in GUI space
+	/// </param>
+	public static Vector2 guiToScreen (float guiX, float guiY)
+	{
+		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
+		Vector2 result;
+		float guiW = guiZposAndDimension.x;
+		float guiH = guiZposAndDimension.y;
+		
+		// maps GUI coordinate to screen pixels
+		result.x = (guiX/guiW + 0.5f) * Screen.width;
+		result.y = (guiY/guiH + 0.5f) * Screen.height;
+		
+		return result;
+	}
+	
+	public static Vector2 sizeInGUI (Vector2 size, bool isInPixels)
+	{
+		// get z position and GUI space coordinates. The GUI coordinates act as scale factors
+		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
+		// imagine the size in pixels as a rect with min = (0,0) and max = size (in pixels)
+		// and convert it to GUI space
+		Vector2 result = screenToGUI(isInPixels? size.x : size.x * (float)Screen.width, isInPixels? size.y : size.y * (float)Screen.height);
+		// the GUI space is a box with its (0,0) centered in screen, so we need to correct that
+		result.x += guiZposAndDimension.x / 2f;
+		result.y += guiZposAndDimension.y / 2f;
+		
 		return result;
 	}
 	
@@ -290,31 +329,29 @@ public class ScreenLayoutManager : MonoBehaviour {
 	/// <param name='tr'>
 	/// Transform of the game object to be modified for being a GUI element
 	/// </param>
-	/// <param name='size'>
+	/// <param name='sizeInPixels'>
 	/// Size the texture covers in screen
 	/// </param>
-	/// <param name='sizeAsPixels'>
-	/// Treats the size argument as pixels or a proportion to keep in screen.
-	/// </param>
-	public static void worldToScreenForGUI (Transform tr, Vector2 size, bool sizeAsPixels)
+	public static void locateForGUI (Transform tr, Vector2 sizeInPixels)
 	{
+		// get z position and GUI space coordinates. The GUI coordinates act as scale factors
 		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
 		
 		Vector3 thePos = tr.position;
 		thePos.z = guiZposAndDimension.z;
 		tr.position = thePos;
 		
-		// apply scale to adjust it according screen bounds and user defined size
+		// apply scale to locate in GUI space. Consider user defined size
 		Vector3 theScale = tr.localScale;
-		theScale.x = guiZposAndDimension.x * size.x / (sizeAsPixels? Screen.width : 1f);
-		theScale.y = guiZposAndDimension.y * size.y / (sizeAsPixels? Screen.height : 1f);
+		theScale.x = guiZposAndDimension.x * sizeInPixels.x / Screen.width;
+		theScale.y = guiZposAndDimension.y * sizeInPixels.y / Screen.height;
 		theScale.z = 0f;
 		tr.localScale = theScale;
 		
 		// modify local position (not world position)
 		/*Vector3 theLocalPos = tr.localPosition;
 		// x position doesn't work yet
-		theLocalPos.y = guiZposAndDimension.y * 0.5f * (1f - Mathf.Abs(size.y)) * Mathf.Sign(size.y);
+		theLocalPos.y = guiZposAndDimension.y * 0.5f * (1f - Mathf.Abs(sizeInPixels.y)) * Mathf.Sign(sizeInPixels.y);
 		tr.localPosition = theLocalPos;*/
 	}
 }

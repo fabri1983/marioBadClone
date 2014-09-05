@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11400006}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
+  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: GUI_Quit
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .267908573, y: .157724872, z: .309999466}
+  m_LocalPosition: {x: .247214168, y: .157724872, z: .309999466}
   m_LocalScale: {x: .0425074138, y: .0425074138, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,8 +110,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
   texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
+  wrapMode: 0
   size: {x: 38, y: 38}
   sizeAsPixels: 1
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76baa6085128714f9fe09b208bdaa05, type: 1}
+  m_Name: 
+  baseQueue: 4000
+  offset: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

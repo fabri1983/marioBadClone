@@ -22,10 +22,10 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 			gameObject.SetActiveRecursively(true);
 		
 		// register this class with ScreenLayoutManager for screen resize event
-		ScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this);
 		
-		renderer.sharedMaterial.mainTexture = texture;
-		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
+		renderer.material.mainTexture = texture;
+		renderer.material.mainTexture.wrapMode = wrapMode;
 	}
 	
 	void Start () {
@@ -35,19 +35,19 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 	}
 
 	void OnDestroy () {
-		ScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this);
 #if UNITY_EDITOR
 		// this is in case this script is used in editor mode
 		if (!texture)
-			renderer.sharedMaterial.mainTexture = texture;
+			renderer.material.mainTexture = texture;
 #endif
 	}
 
 #if UNITY_EDITOR
 	void Update () {
 		// if in editor mode we change the texture this will update the material
-		if (texture != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
-			renderer.sharedMaterial.mainTexture = texture;
+		if (texture != null && !texture.name.Equals(renderer.material.mainTexture.name))
+			renderer.material.mainTexture = texture;
 		
 		// only in Editor Mode: update in case any change from Inspector
 		if (!Application.isPlaying)
@@ -56,6 +56,23 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 #endif
 	
 	public void updateForGUI () {
-		ScreenLayoutManager.worldToScreenForGUI(transform, size, sizeAsPixels);
+		GUIScreenLayoutManager.locateForGUI(transform, getSizeInPixels());
+	}
+	
+	/// <summary>
+	/// Gets the size in GUI space.
+	/// </summary>
+	/// <returns>
+	/// The size in GUI space
+	/// </returns>
+	public Vector2 getSizeInGUI () {
+		return GUIScreenLayoutManager.sizeInGUI(size, sizeAsPixels);
+	}
+	
+	public Vector2 getSizeInPixels () {
+		Vector2 result;
+		result.x = sizeAsPixels? size.x : Screen.width * size.x;
+		result.y = sizeAsPixels? size.y : Screen.height * size.y;
+		return result;
 	}
 }

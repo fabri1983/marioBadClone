@@ -9,12 +9,15 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private bool stop = false;
 	private float constantTimer = 0.15f;
-	private Transform guiLayers; // this is the container of gui objects (background, foreground, etc)
+	
+	// containers for GUI cusotm elements (background, foreground, buttons, text, etc)
+	private Transform guiLayers_so;  // scene only GUI container
+	private Transform guiLayers_nd;  // non destroyable GUI container
 	
 	void Awake () {
-		// get the game object that contains the gui elements
 		// NOTE: this works fine here only if this script is created per scene.
-		guiLayers = LevelManager.Instance.getGUILayers();
+		guiLayers_so = LevelManager.getGUILayersSceneOnly();
+		guiLayers_nd = LevelManager.getGUILayersNonDestroyable();
 	}
 	
 	// Use this for initialization
@@ -30,11 +33,8 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 			 thePos.y += offsetY;
 		transform.position = thePos;
 
-		// update the layers struct transform
-		if (guiLayers != null) {
-			guiLayers.position = transform.position;
-			guiLayers.rotation = transform.rotation;
-		}
+		// update the GUI transforms since they depend on the camera position and rotation
+		updateGUILayers();
 	}
 	
 	/**
@@ -81,7 +81,6 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
 			stopAnimation();
 
-		// update the game object that contains all the Parallax scripts that depends on this game object's position
 		updateGUILayers();
 	}
 	
@@ -93,10 +92,17 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 		stop = true;
 	}
 	
+	/// <summary>
+	/// Updates the GUILayers transform since they depend on the camera position and rotation.
+	/// </summary>
 	public void updateGUILayers () {
-		if (guiLayers != null) {
-			guiLayers.position = transform.position;
-			guiLayers.rotation = transform.rotation;
+		if (guiLayers_so != null) {
+			guiLayers_so.position = transform.position;
+			guiLayers_so.rotation = transform.rotation;
+		}
+		if (guiLayers_nd != null) {
+			guiLayers_nd.position = transform.position;
+			guiLayers_nd.rotation = transform.rotation;
 		}
 	}
 }

@@ -3,11 +3,11 @@ using UnityEngine;
 public class BGCamera : MonoBehaviour, IScreenLayout {
 	
 	void Awake () {
-		ScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this);
 	}
 	
 	void OnDestroy () {
-		ScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this);
 	}
 	
 	public void updateForGUI () {

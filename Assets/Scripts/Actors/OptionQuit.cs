@@ -32,13 +32,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 		}
 		
 		locateButtons(); // locate the buttons
-		ScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
 	
 	void OnDestroy () {
 		TransitionGUIFxManager.Instance.remove(this);
-		ScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this);
 	}
 	
 	public void updateForGUI() {

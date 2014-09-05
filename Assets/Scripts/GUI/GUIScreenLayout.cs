@@ -14,7 +14,7 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 		guiElem = GetComponent<GUICustomElement>();
 		
 		// register this class with ScreenLayoutManager for screen resize event
-		ScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this);
 	}
 	
 	void Start () {
@@ -22,23 +22,23 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 	}
 	
 	void OnDestroy () {
-		ScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this);
 	}
 	
 	public void updateForGUI () {
 		if (guiTexture != null) {
 			// first resize
 			if (allowResize)
-				ScreenLayoutManager.adjustSize(guiTexture);
+				GUIScreenLayoutManager.adjustSize(guiTexture);
 			// then apply position correction
-			ScreenLayoutManager.adjustPos(guiTexture, offset, layout);
+			GUIScreenLayoutManager.adjustPos(guiTexture, offset, layout);
 		}
 		else if (guiElem != null) {
 			// first resize
 			if (allowResize)
-				ScreenLayoutManager.adjustSize(guiElem);
+				GUIScreenLayoutManager.adjustSize(guiElem);
 			// then apply position correction
-			ScreenLayoutManager.adjustPos(transform, guiElem, offset, layout);
+			GUIScreenLayoutManager.adjustPos(transform, guiElem, offset, layout);
 		}
 	}
 

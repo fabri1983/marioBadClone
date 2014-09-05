@@ -422,6 +422,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1740729748}
   - {fileID: 1332247179}
   m_Father: {fileID: 0}
 --- !u!1 &1108956439
@@ -638,7 +639,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1740729748}
   m_Layer: 0
-  m_Name: GUI_Layers
+  m_Name: GUI_Layers_so
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,7 +657,7 @@ Transform:
   m_Children:
   - {fileID: 1956298219}
   - {fileID: 641617431}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 973100542}
 --- !u!1 &1876878403
 GameObject:
   m_ObjectHideFlags: 0

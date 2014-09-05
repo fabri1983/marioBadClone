@@ -12,7 +12,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
 	public bool fadeOutOnStart = true;
-	public Vector2 size = Vector2.one;
+	public Vector2 sizeFactor = Vector2.one;
 	
 	private bool doFading;
 	private EnumFadeDirection fadeDir;
@@ -27,7 +27,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 		fadeDir = EnumFadeDirection.FADE_NONE;
 		
 		// register this class with ScreenLayoutManager for screen resize event
-		ScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this);
 	}
 	
 	void Start () {
@@ -35,11 +35,12 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 			startFading(EnumFadeDirection.FADE_OUT);
 		else
 			stopFading();
+		
 		locateInScreen(); // make this game object to be located correctly in viewport
 	}
 	
 	void OnDestroy () {
-		ScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this);
 	}
 	
 	void LateUpdate () {
@@ -97,7 +98,10 @@ public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
 	}
 	
 	private void locateInScreen () {
-		ScreenLayoutManager.worldToScreenForGUI(transform, size, false);
+		Vector2 sizeInPixels;
+		sizeInPixels.x = sizeFactor.x * Screen.width;
+		sizeInPixels.y = sizeFactor.y * Screen.height;
+		GUIScreenLayoutManager.locateForGUI(transform, sizeInPixels);
 	}
 	
 	public void updateForGUI () {

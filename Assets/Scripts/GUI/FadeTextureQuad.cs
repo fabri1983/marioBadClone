@@ -30,7 +30,7 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
 		// disable by default
 		this.enabled = false;
 		
-		ScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this);
 	}
 	
 	void Start () {
@@ -41,7 +41,7 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
 	}
 	
 	void OnDestroy () {
-		ScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this);
 	}
 	
 	void LateUpdate () {
