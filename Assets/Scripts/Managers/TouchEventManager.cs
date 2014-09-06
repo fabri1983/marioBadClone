@@ -113,11 +113,13 @@ public class TouchEventManager : MonoBehaviour {
 			return;
 
 #if UNITY_EDITOR
-		for (int i=0; i < Input.touchCount; ++i)
-			Debug.Log(Input.touchCount + ": " + Input.touches[i].phase + " -> finger " + Input.touches[i].fingerId);
+		for (int i=0; i < Input.touchCount; ++i) {
+			Touch tch = Input.touches[i];
+			Debug.Log(Input.touchCount + ": " + tch.phase + " -> finger " + tch.fingerId);
+		}
 #endif
 		// send events to listeners
-		for (int i=0; i < Input.touchCount; ++i) {
+		for (int i=0,c=Input.touchCount; i < c; ++i) {
 			Touch t = Input.touches[i];
 			// static listeners
 			if (sendEvent(t, staticQuadTree.traverse(t.position)))
@@ -131,57 +133,81 @@ public class TouchEventManager : MonoBehaviour {
 		if (ll == null)
 			return false;
 		
-		// NOTE: traverse the lists and ask if something hitten in the correct order: Began, Stationary/Move, Ended, Canceled
+		// NOTE: traverse the lists and ask if something hitten in the correct order: 
+		//    Began, Stationary/Move, Ended, Canceled
 		
 		List<ITouchListener> list = null;
 		
 		// which lists to traverse? according to touch phase
-		if (TouchPhase.Began.Equals(t.phase))
-			list = ll.beganListeners;
-		else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase))
-			list = ll.stationaryListeners;
-		else if (TouchPhase.Ended.Equals(t.phase) || TouchPhase.Canceled.Equals(t.phase))
-			list = ll.endedListeners;
-		// add here if else for other touch phases
+		switch (t.phase) {
+			case TouchPhase.Began:
+				list = ll.beganListeners;
+				break;
+			case TouchPhase.Stationary:
+			case TouchPhase.Moved:
+				list = ll.stationaryListeners;
+				break;
+			default:
+				// Ended and Canceled
+				list = ll.endedListeners;
+				break;
+			// add here if else for other touch phases
+		}
+		
+		if (list == null)
+			return false;
 		
 		// one loop for scene only, another loop for global
 		bool atLeastOneHit = false;
 			
-		for (int i=0; list != null && i < list.Count; ++i) {
+		for (int i=0,c=list.Count; i < c; ++i) {
 			
 			ITouchListener listener = list[i];
-			if (listener == null)
-				continue;
+			/*if (listener == null)
+				continue;*/
 			
 			GameObject go = listener.getGameObject();
 			bool hitInner = false;
 			
 			// check for GUI Texture
-			if (go.guiTexture != null && go.guiTexture.HitTest(t.position))
-				hitInner = true;
+			if (go.guiTexture != null)
+				hitInner = go.guiTexture.HitTest(t.position);
 			// check for GUI Text
-			else if (go.guiText != null && go.guiText.HitTest(t.position))
-				hitInner = true;
+			else if (go.guiText != null)
+				hitInner = go.guiText.HitTest(t.position);
 			// check for game object
 			else {
 				// use detection as in chipmunk platformer, since here I don't use physx colliders
 				// or use cpShapeQuerySegment (see online documentation from release, cpShape class)
+				Ray ray = Camera.mainCamera.ScreenPointToRay(t.position);
+				Vector3 origin = go.transform.InverseTransformPoint(ray.origin);
+				Vector3 direction = go.transform.InverseTransformDirection(ray.direction);
+				Vector3 zeroCross = origin - direction*(origin.z/direction.z);
+				hitInner = zeroCross.magnitude < 0.5f;
 			}
 			
-			// hitten? then invoke callback
-			if (hitInner) {
-				if (TouchPhase.Began.Equals(t.phase))
+			if (!hitInner)
+				continue;
+			
+			// invoke callback
+			switch (t.phase) {
+				case TouchPhase.Began:
 					list[i].OnBeganTouch(t);
-				else if (TouchPhase.Stationary.Equals(t.phase) || TouchPhase.Moved.Equals(t.phase))
+					break;
+				case TouchPhase.Stationary:
+				case TouchPhase.Moved:
 					list[i].OnStationaryTouch(t);
-				else if (TouchPhase.Ended.Equals(t.phase))
+					break;
+				// Ended and Canceled
+				default:
 					list[i].OnEndedTouch(t);
+					break;
 				// add here if else for other methods depending on touch phases
-				
-				if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS)
-					return true;
-				atLeastOneHit = true;
 			}
+			
+			if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS)
+				return true;
+			atLeastOneHit = true;
 		}
 		
 		if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS && atLeastOneHit)

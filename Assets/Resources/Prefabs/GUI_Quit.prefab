@@ -29,8 +29,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .247214168, y: .157724872, z: .309999466}
-  m_LocalScale: {x: .0425074138, y: .0425074138, z: 0}
+  m_LocalPosition: {x: .244976938, y: .155487642, z: .309999466}
+  m_LocalScale: {x: .0469818786, y: .0469818749, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &2300000
@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
   wrapMode: 0
-  size: {x: 38, y: 38}
+  size: {x: 42, y: 42}
   sizeAsPixels: 1
-  newMaterialInstance: 0
+  newMaterialInstance: 1
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -46,7 +46,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	public void onEndTransition (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary, TouchPhase.Ended);
+		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -57,9 +57,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		optionSelected();
 	}
 	
-	public void OnEndedTouch (Touch t) {
-		optionSelected();
-	}
+	public void OnEndedTouch (Touch t) {}
 	
 	private void optionSelected() {
 #if UNITY_EDITOR

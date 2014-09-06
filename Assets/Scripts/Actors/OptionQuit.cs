@@ -74,15 +74,8 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
 		// here I suppose this game object has attached a GUICustomElement
-		else {
-			GUICustomElement guiElem = GetComponent<GUICustomElement>();
-			Vector3 guiPos = transform.localPosition; // GUI custom element uses localPosition
-			Vector2 sizeInGUI = guiElem.getSizeInGUI();
-			Vector2 sizeInPixels = guiElem.getSizeInPixels();
-			Vector2 pixelMin = GUIScreenLayoutManager.guiToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);
-			Rect rect = new Rect(pixelMin.x, pixelMin.y, sizeInPixels.x, sizeInPixels.y);
-			return rect;
-		}
+		else
+			return GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -102,7 +95,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	public void onEndTransition (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Ended);
+		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
 	}
 	
 	public void reset() {

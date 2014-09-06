@@ -320,6 +320,15 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		return result;
 	}
 	
+	public static Rect positionInScreen (GUICustomElement guiElem)
+	{
+		Vector3 guiPos = guiElem.transform.localPosition; // GUI custom element uses localPosition
+		Vector2 sizeInGUI = guiElem.getSizeInGUI();
+		Vector2 sizeInPixels = guiElem.getSizeInPixels();
+		Vector2 pixelMin = guiToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);
+		return new Rect(pixelMin.x, pixelMin.y, sizeInPixels.x, sizeInPixels.y);
+	}
+	
 	/// <summary>
 	/// Sets z-position and scale (w,h) to a transform object for positioning in front of 
 	/// camera to act like a GUI element.
