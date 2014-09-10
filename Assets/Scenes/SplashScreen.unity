@@ -285,7 +285,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 870467091}
+  - {fileID: 429067708}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -549,7 +549,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2004634981}
+  - {fileID: 1349413730}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -800,12 +800,36 @@ Prefab:
     - target: {fileID: 2300000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 870467091}
+      objectReference: {fileID: 429067708}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
   m_RootGameObject: {fileID: 46351032}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &429067708
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &628859076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,30 +1058,6 @@ MonoBehaviour:
   acceleration: 1
   easingType: 4
   useCoroutine: 0
---- !u!21 &870467091
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &887412645
 Prefab:
   m_ObjectHideFlags: 0
@@ -1253,6 +1253,30 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 335493302}
+--- !u!21 &1349413730
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 62944c71b10a47a45b6244c7af6188d6, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1372889264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1665,30 +1689,6 @@ MonoBehaviour:
   rowLengthAnim: 1
   colStartAnim: 10
   colLengthAnim: 1
---- !u!21 &2004634981
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 62944c71b10a47a45b6244c7af6188d6, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2036001926
 GameObject:
   m_ObjectHideFlags: 0
