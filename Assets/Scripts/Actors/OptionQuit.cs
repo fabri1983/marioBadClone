@@ -31,7 +31,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		locateButtons(); // locate the buttons
+		setupButtons(); // locate the buttons
 		GUIScreenLayoutManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
@@ -42,21 +42,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	}
 	
 	public void updateForGUI() {
-		locateButtons();
+		setupButtons();
 	}
 	
-	private void locateButtons () {
+	private void setupButtons () {
 		rectQuit.Set(Screen.width / 2 - 25 - 50, Screen.height / 2 - 45, 50, 24);
 		rectBack.Set(Screen.width / 2 - 25 + 50, Screen.height / 2 - 45, 50, 24);
 		rectLevelSel.Set(Screen.width / 2 - 35, Screen.height / 2 + 10, 70, 24);
-	}
-	
-	/**
-	 * This only fired on PC
-	 */
-	void OnMouseUpAsButton () {
-		Debug.Log("---------------------");
-		optionSelected();
 	}
 	
 	public bool isStatic () {
@@ -112,7 +104,16 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 		showOptions = true;
 	}
 	
-	void OnGUI () {
+	void OnGUI () {	
+#if UNITY_EDITOR
+		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
+		// is caught, so we need to manually check for the event and fire it here
+		Event e = Event.current;
+		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
+			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
+				optionSelected();
+		}
+#endif
 		if (!showOptions)
 			return;
 		

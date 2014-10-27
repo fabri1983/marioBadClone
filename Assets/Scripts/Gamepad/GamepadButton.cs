@@ -19,13 +19,6 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		//TransitionGUIFxManager.Instance.remove(this);
 	}
 	
-	/**
-	 * This only fired on PC
-	 */
-	void OnMouseDown () {
-		optionSelected();
-	}
-	
 	public bool isStatic () {
 		return isStaticRuntime;
 	}
@@ -69,4 +62,16 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		else if ("B".Equals(buttonLabel))
 			Gamepad.fireButton(Gamepad.BUTTONS.B);
 	}
+
+#if UNITY_EDITOR
+	void OnGUI () {
+		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
+		// is caught, so we need to manually check for the event and fire it here
+		Event e = Event.current;
+		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
+			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
+				optionSelected();
+		}
+	}
+#endif
 }

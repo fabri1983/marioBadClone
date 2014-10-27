@@ -23,8 +23,6 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	// absolute screen position of gui
 	private static Vector2 guiPos;
-	// auxiliar variables
-	private Vector2 vec2;
 	
 	void Awake () {
 		if (keepAlive) {
@@ -58,16 +56,21 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 				GUI.Box(rTarget, GUIContent.none);
 			}
 		}
+		
+		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
+		// is caught, so we need to manually check for the event and fire it here
+		Event e = Event.current;
+		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
+			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition)) {
+				Vector2 mousePosInverted;
+				mousePosInverted.x = e.mousePosition.x;
+				// mouse position is in GUI space which has inverted Y axis
+				mousePosInverted.y = Screen.height - e.mousePosition.y;
+				optionSelected(mousePosInverted);
+			}
+		}
 	}
 #endif
-	
-	/**
-	 * This only fired on PC
-	 */
-	void OnMouseDown () {
-		vec2.Set(Input.mousePosition.x, Input.mousePosition.y);
-		optionSelected(vec2);
-	}
 	
 	public bool isStatic () {
 		return isStaticRuntime;

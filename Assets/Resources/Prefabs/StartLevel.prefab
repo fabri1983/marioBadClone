@@ -30,7 +30,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!1 &100004
 GameObject:
@@ -45,7 +45,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &400000
 Transform:
@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 99.2773514, y: 24.5153275, z: 0}
+  m_LocalPosition: {x: 120.27475, y: 29.0346527, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -78,7 +78,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -96.683609, y: -12.5616226, z: 0}
+  m_LocalPosition: {x: -117.434959, y: -14.7851715, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -94,10 +94,9 @@ MonoBehaviour:
   m_Name: 
   sceneIndex: 2
   enablePlayer: 1
-  mainCam: {fileID: 0}
-  camInFront: {fileID: 0}
-  min: {fileID: 0}
-  max: {fileID: 0}
+  inFrontCam: {fileID: 0}
+  min: {fileID: 400004}
+  max: {fileID: 400002}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

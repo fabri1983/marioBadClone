@@ -194,4 +194,51 @@ static public class GameObjectTools
 		//Render the box
 		GUI.Box (r,"");
 	}
+	
+	/// <summary>
+	/// Tests the hit from screen position to a given transform.
+	/// </summary>
+	/// <returns>
+	/// True if hit from screen position.
+	/// </returns>
+	/// <param name='t'>
+	/// The target transform to test hit against to.
+	/// </param>
+	/// <param name='screenPos'>
+	/// Screen position in pixel coordinates.
+	/// </param>
+	public static bool testHitFromScreenPos (Transform t, Vector2 screenPos)
+	{
+		Ray ray = Camera.mainCamera.ScreenPointToRay(screenPos);
+		Vector3 origin = t.InverseTransformPoint(ray.origin);
+		Vector3 direction = t.InverseTransformDirection(ray.direction);
+		Vector3 zeroCross = origin - direction * (origin.z/direction.z);
+		return zeroCross.magnitude < 0.5f;
+	}
+	
+	/// <summary>
+	/// Tests the hit from mouse screen position to a given transform.
+	/// Mouse position is inverted in Y axis. This method takes care of it.
+	/// </summary>
+	/// <returns>
+	/// True if hit from mouse screen position.
+	/// </returns>
+	/// <param name='t'>
+	/// The target transform to test hit against to.
+	/// </param>
+	/// <param name='mouseScreenPos'>
+	/// Mouse sreen position in pixel coordinates.
+	/// </param>
+	public static bool testHitFromMousePos (Transform t, Vector2 mouseScreenPos)
+	{
+		Vector2 mousePosInverted;
+		mousePosInverted.x = mouseScreenPos.x;
+		// mouse position is in GUI space which has inverted Y axis
+		mousePosInverted.y = Screen.height - mouseScreenPos.y;
+		Ray ray = Camera.mainCamera.ScreenPointToRay(mousePosInverted);
+		Vector3 origin = t.InverseTransformPoint(ray.origin);
+		Vector3 direction = t.InverseTransformDirection(ray.direction);
+		Vector3 zeroCross = origin - direction * (origin.z/direction.z);
+		return zeroCross.magnitude < 0.5f;
+	}
 }

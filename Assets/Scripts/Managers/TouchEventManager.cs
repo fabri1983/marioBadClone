@@ -176,15 +176,10 @@ public class TouchEventManager : MonoBehaviour {
 			else if (go.guiText != null)
 				hitInner = go.guiText.HitTest(t.position);
 			// check for game object
-			else {
+			else
 				// use detection as in chipmunk platformer, since here I don't use physx colliders
 				// or use cpShapeQuerySegment (see online documentation from release, cpShape class)
-				Ray ray = Camera.mainCamera.ScreenPointToRay(t.position);
-				Vector3 origin = go.transform.InverseTransformPoint(ray.origin);
-				Vector3 direction = go.transform.InverseTransformDirection(ray.direction);
-				Vector3 zeroCross = origin - direction*(origin.z/direction.z);
-				hitInner = zeroCross.magnitude < 0.5f;
-			}
+				hitInner = GameObjectTools.testHitFromScreenPos(go.transform, t.position);
 			
 			if (!hitInner)
 				continue;
