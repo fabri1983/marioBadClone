@@ -15,10 +15,11 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 		
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this);
+		updateForGUI();
 	}
 	
 	void Start () {
-		updateForGUI();
+		// the updateForGUI() method was moved to Awake so it does't interfieres with TransitionGUIFX
 	}
 	
 	void OnDestroy () {
@@ -26,6 +27,7 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 	}
 	
 	public void updateForGUI () {
+		// only if we are still using Unity's gui elements
 		if (guiTexture != null) {
 			// first resize
 			if (allowResize)
@@ -44,6 +46,7 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 
 #if UNITY_EDITOR
 	void Update () {
+		// don't do anything if playing from inside the editor
 		if (Application.isPlaying)
 			return;
 		// only for Editor mode: any change in offset or enum layout is applied in real time

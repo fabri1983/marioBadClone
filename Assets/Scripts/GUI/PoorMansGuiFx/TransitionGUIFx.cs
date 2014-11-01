@@ -26,7 +26,7 @@ enum Element
 
 /// <summary>
 /// This class modifies transform component for doing a transition effect.
-/// When this script in a GUIText or GUITexture element, please consider your actual pixel offset 
+/// When this script is in a GUIText or GUITexture element, please consider your actual pixel offset 
 /// and set the start offset transform property accordingly.
 /// </summary>
 public class TransitionGUIFx : MonoBehaviour {
@@ -52,7 +52,7 @@ public class TransitionGUIFx : MonoBehaviour {
 	void Start ()
 	{
 		elem = Element.TRANSFORM;
-		// NOTE: by the moment only use transform's modifications, I think because of conflicts with ScreenLayout. Need to test
+		// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
 		/*if (guiTexture != null)
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)
@@ -60,7 +60,6 @@ public class TransitionGUIFx : MonoBehaviour {
 		
 		update = false;
 		prepareTransition();
-		//this.enabled = false;
 	}
 	
 	void OnEnable () {
@@ -96,10 +95,12 @@ public class TransitionGUIFx : MonoBehaviour {
 	
 	private void prepareTransition ()
 	{
+		if (gameObject.name == "GUI_SplashImage" || gameObject.name == "GUI_Quit")
+			print("");
 		if (Mathf.Abs(steps) < 2)
 			steps = (int)Mathf.Sign(steps) * 2;
 		
-		// set final position
+		// the final position is the current one
 		finalPos.Set(transform.localPosition.x, transform.localPosition.y);
 		
 		if (elem == Element.TRANSFORM)
