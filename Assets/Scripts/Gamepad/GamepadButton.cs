@@ -16,7 +16,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	}
 	
 	void OnDestroy () {
-		//TransitionGUIFxManager.Instance.remove(this);
+		TransitionGUIFxManager.Instance.remove(this);
 	}
 	
 	public bool isStatic () {
@@ -28,8 +28,14 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// this method called only once since its a non destroyable game object
-		return guiTexture.GetScreenRect(Camera.main);
+		// This method called only once if the gameobject is a non destroyable game object
+		
+		// if used with a Unity's GUITexture
+		if (guiTexture != null)
+			return guiTexture.GetScreenRect(Camera.main);
+		// here I suppose this game object has attached a GUICustomElement
+		else
+			return GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
 	}
 	
 	public TransitionGUIFx[] getTransitions () {

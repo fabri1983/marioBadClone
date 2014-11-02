@@ -53,11 +53,11 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 
 #if UNITY_EDITOR
 	void Update () {
-		// if in editor mode we change the texture this will update the material
+		// in case we change the texture this will update the material
 		if (texture != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
 			renderer.sharedMaterial.mainTexture = texture;
 		
-		// only in Editor Mode: update in case any change from Inspector
+		// if not playing from inside the editor: update in case any change from Inspector
 		if (!Application.isPlaying)
 			updateForGUI();
 	}

@@ -46,11 +46,9 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 
 #if UNITY_EDITOR
 	void Update () {
-		// don't do anything if playing from inside the editor
-		if (Application.isPlaying)
-			return;
-		// only for Editor mode: any change in offset or enum layout is applied in real time
-		updateForGUI();
+		// if not playing from inside the editor: any change in offset or enum layout is applied in real time
+		if (!Application.isPlaying)
+			updateForGUI();
 	}
 #endif
 }

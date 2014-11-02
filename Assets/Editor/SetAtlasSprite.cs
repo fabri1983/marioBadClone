@@ -10,10 +10,10 @@ using System.Collections.Generic;
 public class SetAtlasSprite : EditorWindow
 {
 	//Reference to atlas data game object
-	public GameObject AtlasDataObject = null;
+	public GameObject atlasDataObject = null;
 	
 	//Reference to atlas data
-	public AtlasData AtlasDataComponent = null;
+	public AtlasData atlasDataComponent = null;
 	
 	//Popup Index
 	public int PopupIndex = 0;
@@ -38,21 +38,21 @@ public class SetAtlasSprite : EditorWindow
 	{
 		//Draw Atlas Object Selector
 		GUILayout.Label ("Atlas Generation", EditorStyles.boldLabel);
-		AtlasDataObject = (GameObject) EditorGUILayout.ObjectField("Atlas Object", AtlasDataObject, typeof (GameObject), true);
+		atlasDataObject = (GameObject) EditorGUILayout.ObjectField("Atlas Object", atlasDataObject, typeof (GameObject), true);
 		
-		if(AtlasDataObject == null)
+		if(atlasDataObject == null)
 			return;
 		
-		AtlasDataComponent = AtlasDataObject.GetComponent<AtlasData>();
+		atlasDataComponent = atlasDataObject.GetComponent<AtlasData>();
 		
 		// if no has a valid AtlasData component then exit drawing GUI, until the game object be the correct one
-		if(!AtlasDataComponent)
+		if(!atlasDataComponent)
 			return;
 		
-		AtlasW = AtlasDataComponent.AtlasTexture.width;
-		AtlasH = AtlasDataComponent.AtlasTexture.height;
+		AtlasW = atlasDataComponent.AtlasTexture.width;
+		AtlasH = atlasDataComponent.AtlasTexture.height;
 		
-		PopupIndex = EditorGUILayout.Popup(PopupIndex, AtlasDataComponent.TextureNames);
+		PopupIndex = EditorGUILayout.Popup(PopupIndex, atlasDataComponent.TextureNames);
 		
 		if(GUILayout.Button("Select Sprite From Atlas"))
 		{
@@ -62,9 +62,9 @@ public class SetAtlasSprite : EditorWindow
 				foreach(GameObject Obj in Selection.gameObjects)
 				{
 					// if sprite frame size is (0,0) means it is not a game object with sprite animation. Update the mesh uvs
-					if (Vector2.zero.Equals(AtlasDataComponent.frameSizePixels[PopupIndex])) {
+					if (Vector2.zero.Equals(atlasDataComponent.frameSizePixels[PopupIndex])) {
 						if(Obj.GetComponent<MeshFilter>())
-							UpdateMeshUVs(Obj, AtlasDataComponent.UVs[PopupIndex]);
+							UpdateMeshUVs(Obj, atlasDataComponent.UVs[PopupIndex]);
 					}
 					// its a game object with a sprite anim. Update the animation objects accordingly
 					else {

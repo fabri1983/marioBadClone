@@ -8,6 +8,15 @@ static public class EditorTools
 	private delegate void GetWidthAndHeight(TextureImporter importer, ref float width, ref float height);
     private static GetWidthAndHeight getWidthAndHeightDelegate;
     
+	/// <summary>
+	/// Gets the original texture's size as Unit imports it.
+	/// </summary>
+	/// <returns>
+	/// The original texture size.
+	/// </returns>
+	/// <param name='texture'>
+	/// Texture2D object
+	/// </param>
     public static Vector2 GetOriginalTextureSize(Texture2D texture)
     {
         if (texture == null) {
@@ -29,7 +38,16 @@ static public class EditorTools
      
         return GetOriginalTextureSize(importer);
     }
-     
+    
+	/// <summary>
+	/// Gets the original texture's size as Unit imports it.
+	/// </summary>
+	/// <returns>
+	/// The original texture size.
+	/// </returns>
+	/// <param name='importer'>
+	/// Importer object
+	/// </param>
     public static Vector2 GetOriginalTextureSize(TextureImporter importer)
     {
         if (getWidthAndHeightDelegate == null) {

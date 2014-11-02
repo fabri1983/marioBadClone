@@ -60,7 +60,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// This method called only once since its a non destroyable game object
+		// This method called only once if the gameobject is a non destroyable game object
 		
 		// if used with a Unity's GUITexture
 		if (guiTexture != null)

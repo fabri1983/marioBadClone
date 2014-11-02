@@ -32,10 +32,24 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		
 		TransitionGUIFxManager.Instance.register(this, false);
 		
-		// calculate scaling if current GUI texture dimension is diferent than 64x64
-		float scaleW = guiTexture.pixelInset.width / 64f;
-		float scaleH = guiTexture.pixelInset.height / 64f;
-		// scale the array of arrows because they were defined in a 64x64 basis
+		// calculate scaling if current GUI texture dimension is diferent than 64x64 because
+		// the array of arrows because they were defined in a 64x64 basis
+		float scaleW = 1f;
+		float scaleH = 1f;
+		// support Unity's gui elements
+		if (guiTexture != null) {
+			scaleW = guiTexture.pixelInset.width / 64f;
+			scaleH = guiTexture.pixelInset.height / 64f;
+		}
+		// assuming it has a GUICustomElement
+		else {
+			GUICustomElement guiElem = GetComponent<GUICustomElement>();
+			Vector2 guiElemSize = guiElem.getSizeInPixels();
+			scaleW = guiElemSize.x / 64f;
+			scaleH = guiElemSize.y / 64f;
+		}
+		
+		// apply the scale
 		for (int i=0; i < arrowRects.Length ; ++i) {
 			Rect r = arrowRects[i];
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
@@ -43,7 +57,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	}
 	
 	void OnDestroy () {
-		//TransitionGUIFxManager.Instance.remove(this);
+		TransitionGUIFxManager.Instance.remove(this);
 	}
 	
 #if UNITY_EDITOR
@@ -81,8 +95,14 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// this method called only once since its a non destroyable game object
-		return guiTexture.GetScreenRect(Camera.main);
+		// This method called only once if the gameobject is a non destroyable game object
+		
+		// if used with a Unity's GUITexture
+		if (guiTexture != null)
+			return guiTexture.GetScreenRect(Camera.main);
+		// here I suppose this game object has attached a GUICustomElement
+		else
+			return GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -103,7 +123,13 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
-		guiPos.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
+		// update current gui position cache
+		if (guiTexture != null)
+			guiPos.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
+		else {
+			Rect screenBounds = getScreenBoundsAA();
+			guiPos.Set(screenBounds.x, screenBounds.y);
+		}
 	}
 	
 	private static void optionSelected(Vector2 pos) {

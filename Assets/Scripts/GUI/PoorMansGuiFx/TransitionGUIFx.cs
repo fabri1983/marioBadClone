@@ -95,8 +95,6 @@ public class TransitionGUIFx : MonoBehaviour {
 	
 	private void prepareTransition ()
 	{
-		if (gameObject.name == "GUI_SplashImage" || gameObject.name == "GUI_Quit")
-			print("");
 		if (Mathf.Abs(steps) < 2)
 			steps = (int)Mathf.Sign(steps) * 2;
 		

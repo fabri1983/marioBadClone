@@ -24,11 +24,8 @@ public class RenderQueue : MonoBehaviour {
 	
 #if UNITY_EDITOR
 	void Update () {
-		// if no Editor Mode then exit
-		if (Application.isPlaying)
-			return;
-		
-		if (mat != null)
+		// if not playing from inside the editor: update in case any Inspector property changes
+		if (!Application.isPlaying && mat != null)
 			mat.renderQueue = (int)baseQueue + offset;
 	}
 #endif

@@ -42,7 +42,7 @@ public class GUIParallax : MonoBehaviour {
 	
 	void OnDestroy () {
 #if UNITY_EDITOR
-		// only in Editor Mode: restore offset
+		// if not playing from inside the editor: restore offset
 		if (!Application.isPlaying && guiElem.texture != null)
 			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #endif
@@ -50,7 +50,7 @@ public class GUIParallax : MonoBehaviour {
 	
 	void Update () {
 #if UNITY_EDITOR
-		// only in Editor Mode: update in case any change from Inspector
+		// if not playing from inside the editor: update in case any change from Inspector
 		if (!Application.isPlaying && guiElem.texture != null)
 			renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
 #endif
