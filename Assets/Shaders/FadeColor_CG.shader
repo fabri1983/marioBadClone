@@ -5,7 +5,7 @@ Properties {
 }
 
 SubShader {
-	Tags { "Queue"="Overlay+100" "IgnoreProjector"="True" "RenderType"="Transparent" }
+	Tags { "Queue"="Overlay" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	ZWrite Off
 	Lighting Off
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.

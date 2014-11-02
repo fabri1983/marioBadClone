@@ -5,8 +5,12 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	// index of the scene to be loaded
 	public int sceneIndex;
 	
-	private 
+	private Rect _screenBounds; // cache for the screen bounds this game object covers
+	
 	void Awake () {
+		// initialize the screen bounds cache
+		_screenBounds.x = -1f;
+		
 		PauseGameManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
@@ -27,8 +31,10 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// here I suppose this game object has attached a GUICustomElement
-		return GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
+		if (_screenBounds.x == -1f)
+			// here I suppose this game object has attached a GUICustomElement
+			_screenBounds = GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
+		return _screenBounds;
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -54,6 +60,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	}
 	
 	public bool isSceneOnly () {
+		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}
 	

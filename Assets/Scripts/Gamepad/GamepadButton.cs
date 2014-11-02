@@ -9,9 +9,10 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	public bool isStaticRuntime = true;
 	
 	void Awake () {
+		// should we keep this game object alive between scenes
 		if (keepAlive)
-			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
+		
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
 	

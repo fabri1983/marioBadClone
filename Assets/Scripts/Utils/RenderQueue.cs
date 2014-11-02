@@ -5,7 +5,7 @@ using System;
 [ExecuteInEditMode]
 public class RenderQueue : MonoBehaviour {
 	
-	public EnumRenderQueue baseQueue = EnumRenderQueue.Background;
+	public EnumRenderQueue baseQueue = EnumRenderQueue.Unaffected_0;
 	public int offset = 0;
 	
 #if UNITY_EDITOR

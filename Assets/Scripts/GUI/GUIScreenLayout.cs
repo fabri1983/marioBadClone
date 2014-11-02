@@ -27,7 +27,7 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 	}
 	
 	public void updateForGUI () {
-		// only if we are still using Unity's gui elements
+		// only if we are still using Unity's GUITexture elements
 		if (guiTexture != null) {
 			// first resize
 			if (allowResize)
@@ -35,6 +35,7 @@ public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
 			// then apply position correction
 			GUIScreenLayoutManager.adjustPos(guiTexture, offset, layout);
 		}
+		// we are using GUICustomElement
 		else if (guiElem != null) {
 			// first resize
 			if (allowResize)

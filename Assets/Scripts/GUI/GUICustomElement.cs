@@ -54,7 +54,7 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 #if UNITY_EDITOR
 	void Update () {
 		// in case we change the texture this will update the material
-		if (texture != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
+		if (texture != null && renderer.sharedMaterial != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
 			renderer.sharedMaterial.mainTexture = texture;
 		
 		// if not playing from inside the editor: update in case any change from Inspector

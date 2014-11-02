@@ -33,7 +33,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		TransitionGUIFxManager.Instance.register(this, false);
 		
 		// calculate scaling if current GUI texture dimension is diferent than 64x64 because
-		// the array of arrows because they were defined in a 64x64 basis
+		// the array of arrows were defined in a 64x64 basis
 		float scaleW = 1f;
 		float scaleH = 1f;
 		// support Unity's gui elements

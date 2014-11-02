@@ -49,6 +49,7 @@ public class FireBall : MonoBehaviour, IPausable {
 	}
 	
 	public bool isSceneOnly () {
+		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}
 	

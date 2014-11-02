@@ -93,6 +93,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	}
 	
 	public bool isSceneOnly () {
+		// used for allocation in subscriber lists managed by PauseGameManager
 		return false;
 	}
 	

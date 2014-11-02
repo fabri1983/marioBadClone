@@ -42,6 +42,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 	}
 	
 	public bool isSceneOnly () {
+		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}
 	

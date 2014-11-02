@@ -36,7 +36,8 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	}
 	
 	public bool isSceneOnly () {
-		return true;
+		// used for allocation in subscriber lists managed by PauseGameManager
+		return false; // the power up should be in a pool
 	}
 	
 	/**
