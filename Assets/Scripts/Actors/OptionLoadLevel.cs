@@ -4,26 +4,21 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	
 	// index of the scene to be loaded
 	public int sceneIndex;
-
+	
+	private 
 	void Awake () {
 		PauseGameManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
 	
 	void OnDestroy () {
-		TouchEventManager.Instance.removeListener(this);
 		PauseGameManager.Instance.remove(this);
 		TransitionGUIFxManager.Instance.remove(this);
-	}
-	
-	/**
-	 * This only fired on PC
-	 */
-	void OnMouseUpAsButton () {
-		optionSelected();
+		TouchEventManager.Instance.removeListener(this);
 	}
 	
 	public bool isStatic () {
+		// for event touch listener
 		return true;
 	}
 	
@@ -32,7 +27,8 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	}
 	
 	public Rect getScreenBoundsAA () {
-		return guiText.GetScreenRect(Camera.main);
+		// here I suppose this game object has attached a GUICustomElement
+		return GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -70,4 +66,16 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began);
 	}
+	
+#if UNITY_EDITOR
+	void OnGUI () {
+		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
+		// is caught, so we need to manually check for the event and fire it here
+		Event e = Event.current;
+		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
+			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
+				optionSelected();
+		}
+	}
+#endif
 }

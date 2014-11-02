@@ -87,6 +87,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 #endif
 	
 	public bool isStatic () {
+		// for event touch listener
 		return isStaticRuntime;
 	}
 	
@@ -123,6 +124,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
+		
 		// update current gui position cache
 		if (guiTexture != null)
 			guiPos.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);

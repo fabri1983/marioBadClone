@@ -52,6 +52,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	}
 	
 	public bool isStatic () {
+		// for event touch listener
 		return true;
 	}
 	

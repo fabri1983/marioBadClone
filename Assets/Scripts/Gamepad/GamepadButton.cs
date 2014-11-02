@@ -20,6 +20,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	}
 	
 	public bool isStatic () {
+		// for event touch listener
 		return isStaticRuntime;
 	}
 	
