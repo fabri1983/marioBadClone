@@ -5,7 +5,7 @@ Properties {
 }
 	
 SubShader {
-    Tags { "IgnoreProjector"="True" "Queue"="Background" }
+    Tags { "Queue"="Background" "IgnoreProjector"="True" "RenderType"="Opaque" }
     ZWrite Off
 	Lighting Off
 	Blend Off

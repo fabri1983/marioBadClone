@@ -21,7 +21,7 @@ Properties
 }
 
 SubShader {
-	Tags {"Queue"="Transparent"}
+	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Opaque" }
 	Lighting Off
 	ZWrite Off
 	Blend SrcAlpha OneMinusSrcAlpha
