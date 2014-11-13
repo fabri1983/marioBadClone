@@ -8,8 +8,6 @@ using UnityEngine;
  */
 public class CameraManager : MonoBehaviour {
 	
-	private Camera inFrontCam;
-	
 	private static CameraManager instance = null;
 	
 	public static CameraManager Instance {
@@ -32,15 +30,6 @@ public class CameraManager : MonoBehaviour {
 	}
 	
 	void OnDestroy () {
-		inFrontCam = null;
 		instance = null;
-	}
-
-	public void setInFrontCam (Camera cam) {
-		inFrontCam = cam;
-	}
-	
-	public Camera getInFrontCam () {
-		return inFrontCam;
 	}
 }

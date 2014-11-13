@@ -7,7 +7,6 @@ public class LevelManager : MonoBehaviour {
 	public static int LAYER_TELEPORT;
 	public static int LAYER_POWERUP;
 	public static int LAYER_PLAYER;
-	public static int LAYER_CAMERA_IN_FRONT;
 	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
@@ -55,7 +54,6 @@ public class LevelManager : MonoBehaviour {
 	private void initialize() {
 		
 		LAYER_TELEPORT = LayerMask.NameToLayer("TeleportTrig");
-		LAYER_CAMERA_IN_FRONT = LayerMask.NameToLayer("CameraInFront");
 		LAYER_POWERUP = LayerMask.NameToLayer("PowerUp");
 		LAYER_PLAYER = LayerMask.NameToLayer("Player");
 
@@ -121,7 +119,6 @@ public class LevelManager : MonoBehaviour {
 	/// </param>
 	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
 		activeLevel = level;
-		CameraManager.Instance.getInFrontCam().gameObject.SetActiveRecursively(false); // disable in front camera
 		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
 		player.setActive(playerEnabled); // activate the player's game object
 		setPlayerPosition(level); // set Mario spawn position for this level
@@ -178,18 +175,10 @@ public class LevelManager : MonoBehaviour {
 	public void loseGame (bool dieAnim) {
 		
 		if (dieAnim) {
-			Camera camInFront = CameraManager.Instance.getInFrontCam();
 			// stop main camera animation
 			Camera.main.GetComponent<PlayerFollowerXY>().stopAnimation();
-			// set camera's position the same position than main camera
-			camInFront.transform.position = Camera.main.transform.position;
-			camInFront.transform.forward = Camera.main.transform.forward;
-			// enable the camera so it renders mario game object in front of all
-			camInFront.gameObject.SetActiveRecursively(true);
 			// execute Mario's die animation
 			player.die();
-			
-			// not need to enable main camera animation neither disabled in front camera because the level is reloaded
 		}
 		else {
 			// reset mario properties
