@@ -62,10 +62,10 @@ Features implemented:
 
 TODO list:
 ----------
-	* Atlas Texture. Integration with current sprite animation solution.
-	* Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Unite 2013 - Optimizing Unity Games for Mobile Platforms.
-	* Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
-	* Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching
-	* Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts.
+- Atlas Texture. Integration with current sprite animation solution.
+- Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Unite 2013 - Optimizing Unity Games for Mobile Platforms.
+- Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
+- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching
+- Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts.
 	
 	
