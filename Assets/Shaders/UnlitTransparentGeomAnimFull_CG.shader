@@ -1,5 +1,5 @@
-// Same as Custom/UnlitTransparentCG however this shader runs all the offset operations in the vertex shader
-Shader "Custom/Unlit Transparent Full CG" {
+// Same as Custom/UnlitTransparentGeomAnimCG however this shader runs all the offset operations in the vertex shader
+Shader "Custom/Unlit Transparent Geom Anim Full CG" {
 
 Properties {
 	_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}

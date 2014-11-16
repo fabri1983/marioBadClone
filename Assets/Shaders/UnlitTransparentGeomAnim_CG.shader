@@ -1,5 +1,5 @@
 // Same as Unlit/Transparent however this shader seems to be a little faster.
-Shader "Custom/Unlit Transparent CG" {
+Shader "Custom/Unlit Transparent Geom Anim CG" {
 
 Properties {
 	_MainTex ("Base (RGB) Alpha (A)", 2D) = "white" {}

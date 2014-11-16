@@ -1,4 +1,4 @@
-Shader "Custom/Unlit Textured Opaque CG" {
+Shader "Custom/Unlit Opaque Geom CG" {
 
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
