@@ -7,14 +7,15 @@ Properties {
 	_SetupVec2 ("SetupVec2", Vector) = (0,0,0,0)
 }
 
-Category {
+SubShader {
 	Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 	Lighting Off
 	ZWrite Off
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 
-	SubShader {
-		Pass {
+	Pass {
+		Cull Off // here it solves an issue (donno which issue)
+		
 		CGPROGRAM
 		#pragma exclude_renderers ps3 xbox360 flash glesdesktop opengl
 		#pragma fragmentoption ARB_precision_hint_fastest
@@ -81,7 +82,6 @@ Category {
 			return c;
 		}
 		ENDCG
-		}
 	}
 }
 }

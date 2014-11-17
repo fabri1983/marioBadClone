@@ -11,5 +11,7 @@ public class StartLevel : MonoBehaviour {
 		
 		Rect levelExtent = new Rect(min.position.x, min.position.y, max.position.x, max.position.y);
 		LevelManager.Instance.startLevel(sceneIndex, enablePlayer, levelExtent);
+		
+		OptionQuit.Instance.setFaderForMainCamera();
 	}
 }

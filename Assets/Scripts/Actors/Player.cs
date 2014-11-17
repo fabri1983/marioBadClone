@@ -48,9 +48,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		
 		PauseGameManager.Instance.register(this);
 		
-		// deactivate to avoid falling in empty scene
-		setActive(false);
-		
 		// action components
 		jump = GetComponent<Jump>();
 		walk = GetComponent<PlayerWalk>();

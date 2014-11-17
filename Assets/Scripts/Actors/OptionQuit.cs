@@ -95,12 +95,16 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 		showOptions = false;
 	}
 	
+	public void setFaderForMainCamera () {
+		// need to find IFadeable component here because main camera instance changes during scenes
+		fader = (IFadeable)Camera.main.GetComponentInChildren(typeof(IFadeable));
+	}
+	
 	private void optionSelected() {
 		if (showOptions)
 			return;
+		
 		PauseGameManager.Instance.pause();
-		// need to find IFadeable component here because camera can change during scenes
-		fader = (IFadeable)Camera.main.GetComponentInChildren(typeof(IFadeable));
 		fader.startFading(EnumFadeDirection.FADE_IN);
 		showOptions = true;
 	}

@@ -21,6 +21,7 @@ public class LookUpwards : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void lookUpwards () {
+		// avoid re calculation if is already looking upwards
 		if (lookingUp)
 			return;
 		

@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PiranhaFire01Mat
-  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: PiranhaFireMat
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -15,18 +15,10 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 84f0cb232b60b2141b43963d9eef739b, type: 1}
+          m_Texture: {fileID: 2800000, guid: 11c35cc57e3d55b499a48defc29cd793, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
-      data:
-        first:
-          name: _OffsetX
-        second: 0
-      data:
-        first:
-          name: _OffsetY
-        second: 0
       data:
         first:
           name: _TilingX
@@ -35,6 +27,14 @@ Material:
         first:
           name: _TilingY
         second: 1
+      data:
+        first:
+          name: _OffsetX
+        second: 0
+      data:
+        first:
+          name: _OffsetY
+        second: 0
     m_Colors:
       data:
         first:

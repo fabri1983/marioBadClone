@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: MarioSpriteMat
-  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -17,16 +17,8 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 0a74d4a3773a2ea4599ece5ae141e2af, type: 1}
           m_Scale: {x: .0909090936, y: .5}
-          m_Offset: {x: .545454562, y: .5}
+          m_Offset: {x: -1.35465106e-09, y: .5}
     m_Floats:
-      data:
-        first:
-          name: _OffsetX
-        second: -7.45058071e-10
-      data:
-        first:
-          name: _OffsetY
-        second: .5
       data:
         first:
           name: _TilingX
@@ -34,6 +26,14 @@ Material:
       data:
         first:
           name: _TilingY
+        second: .5
+      data:
+        first:
+          name: _OffsetX
+        second: -7.45058071e-10
+      data:
+        first:
+          name: _OffsetY
         second: .5
     m_Colors:
       data:

@@ -16,6 +16,8 @@ Subshader {
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 
 	Pass {
+		Cull Off // here it solves an issue (donno which issue)
+		
 		CGPROGRAM
 		#pragma exclude_renderers ps3 xbox360 flash glesdesktop opengl
 		#pragma fragmentoption ARB_precision_hint_fastest
