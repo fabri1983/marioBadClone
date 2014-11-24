@@ -59,8 +59,8 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	void OnDestroy () {
 		TransitionGUIFxManager.Instance.remove(this);
 	}
-	
-#if UNITY_EDITOR
+
+#if UNITY_STANDALONE || UNITY_EDITOR
 	void OnGUI () {
 		if (debugZones && EventType.Repaint == Event.current.type) {
 			// NOTE: use this with no aspect ratio modification. Set it as false in LevelManager

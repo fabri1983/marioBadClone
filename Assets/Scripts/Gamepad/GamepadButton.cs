@@ -73,7 +73,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 			Gamepad.fireButton(Gamepad.BUTTONS.B);
 	}
 
-#if UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
 	void OnGUI () {
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
 		// is caught, so we need to manually check for the event and fire it here
