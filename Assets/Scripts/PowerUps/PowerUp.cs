@@ -11,6 +11,10 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	protected ChipmunkBody body;
 	protected ChipmunkShape shape;
 	
+	void Awake () {
+		PauseGameManager.Instance.register(this, gameObject);
+	}
+	
 	void Start () {
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
@@ -27,13 +31,9 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 		ownUpdate();
 	}
 	
-	public void pause () {
-		gameObject.SetActiveRecursively(false);
-	}
+	public void pause () {}
 	
-	public void resume () {
-		gameObject.SetActiveRecursively(true);
-	}
+	public void resume () {}
 	
 	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager

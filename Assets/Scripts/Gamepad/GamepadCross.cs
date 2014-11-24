@@ -85,7 +85,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		}
 	}
 #endif
-	
+
 	public bool isStatic () {
 		// for event touch listener
 		return isStaticRuntime;
@@ -135,6 +135,8 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	}
 	
 	private static void optionSelected(Vector2 pos) {
+		if (PauseGameManager.Instance.isPaused())
+			return;
 #if UNITY_EDITOR
 		//Debug.Log(pos + " -- " + guiPos);
 #endif

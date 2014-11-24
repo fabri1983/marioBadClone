@@ -16,7 +16,8 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
-		PauseGameManager.Instance.register(this);
+		
+		PauseGameManager.Instance.register(this, gameObject);
 	}
 	
 	void OnDestroy () {
@@ -33,13 +34,9 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		PauseGameManager.Instance.remove(this);
 	}
 	
-	public void pause () {
-		gameObject.SetActiveRecursively(false);
-	}
+	public void pause () {}
 	
-	public void resume () {
-		gameObject.SetActiveRecursively(true);
-	}
+	public void resume () {}
 	
 	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager

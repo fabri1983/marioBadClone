@@ -14,7 +14,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private Teleportable teleportable;
 	private PowerUp powerUp;
 	private LookUpwards lookUpwards;
-	private bool ableToPause;
 	private bool exitedFromScenery;
 	
 	/// the position where the bullets start firing
@@ -30,9 +29,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
         get {
             if (instance == null) {
 				instance = GameObject.FindObjectOfType(typeof(Player)) as Player;
-				if (instance == null)
+				if (instance == null) {
 					// instantiate the entire prefab. Don't assign to the instance variable because it is then assigned in Awake()
 					GameObject.Instantiate(Resources.Load("Prefabs/Mario"));
+				}
 			}
             return instance;
         }
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			DontDestroyOnLoad(gameObject);
 		}
 		
-		PauseGameManager.Instance.register(this);
+		PauseGameManager.Instance.register(this, gameObject);
 		
 		// action components
 		jump = GetComponent<Jump>();
@@ -79,15 +79,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		instance = null;
 	}
 	
-	public void pause () {
-		if (ableToPause)
-			gameObject.SetActiveRecursively(false);
-	}
+	public void pause () {}
 	
-	public void resume () {
-		if (ableToPause)
-			gameObject.SetActiveRecursively(true);
-	}
+	public void resume () {}
 	
 	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
@@ -170,9 +164,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		LevelManager.Instance.loseGame(false);
 	}
 	
-	public void setActive (bool active) {
-		gameObject.SetActiveRecursively(active);
-		ableToPause = active;
+	public void toogleEnabled (bool val) {
+		gameObject.SetActiveRecursively(val);
 	}
 	
 	public void die () {

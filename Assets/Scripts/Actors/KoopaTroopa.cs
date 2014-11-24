@@ -20,7 +20,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		_hide = GetComponent<Hide>();
 		shape = GetComponent<ChipmunkShape>();
 		
-		PauseGameManager.Instance.register(this);
+		PauseGameManager.Instance.register(this, gameObject);
 		
 		// set forever jumping if enabled
 		if (jumpInLoop && jump != null) {
@@ -43,13 +43,9 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		PauseGameManager.Instance.remove(this);
 	}
 	
-	public void pause () {
-		gameObject.SetActiveRecursively(false);
-	}
+	public void pause () {}
 	
-	public void resume () {
-		gameObject.SetActiveRecursively(true);
-	}
+	public void resume () {}
 	
 	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager

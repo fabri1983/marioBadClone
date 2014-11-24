@@ -61,6 +61,8 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	public void OnEndedTouch (Touch t) {}
 	
 	private void optionSelected() {
+		if (PauseGameManager.Instance.isPaused())
+			return;
 #if UNITY_EDITOR
 		Debug.Log(buttonLabel);
 #endif

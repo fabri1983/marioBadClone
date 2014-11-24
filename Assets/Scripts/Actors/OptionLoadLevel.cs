@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransitionListener {
+public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	// index of the scene to be loaded
 	public int sceneIndex;
@@ -11,12 +11,10 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 		// initialize the screen bounds cache
 		_screenBounds.x = -1f;
 		
-		PauseGameManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
 	}
 	
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this);
 		TransitionGUIFxManager.Instance.remove(this);
 		TouchEventManager.Instance.removeListener(this);
 	}
@@ -48,20 +46,8 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IPausable, ITransi
 	}
 	
 	private void optionSelected() {
-		LevelManager.Instance.loadLevel(sceneIndex);
-	}
-	
-	public void pause () {
-		gameObject.SetActiveRecursively(false);
-	}
-	
-	public void resume () {
-		gameObject.SetActiveRecursively(true);
-	}
-	
-	public bool isSceneOnly () {
-		// used for allocation in subscriber lists managed by PauseGameManager
-		return true;
+		if (!PauseGameManager.Instance.isPaused())
+			LevelManager.Instance.loadLevel(sceneIndex);
 	}
 	
 	public TransitionGUIFx[] getTransitions () {
