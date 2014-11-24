@@ -97,7 +97,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IS
 	
 	public void setFaderForMainCamera () {
 		// need to find IFadeable component here because main camera instance changes during scenes
-		fader = (IFadeable)Camera.main.GetComponentInChildren(typeof(IFadeable));
+		fader = Camera.main.GetComponent<CameraFadeable>().getFader();
 	}
 	
 	private void optionSelected() {

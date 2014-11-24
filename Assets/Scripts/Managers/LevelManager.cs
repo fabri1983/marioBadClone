@@ -176,7 +176,7 @@ public class LevelManager : MonoBehaviour {
 		
 		if (dieAnim) {
 			// stop main camera animation
-			Camera.main.GetComponent<PlayerFollowerXY>().stopAnimation();
+			Camera.main.GetComponent<PlayerFollowerXY>().setEnabled(false);
 			// execute Mario's die animation
 			player.die();
 		}
