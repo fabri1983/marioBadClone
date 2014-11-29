@@ -137,7 +137,7 @@ public class LevelManager : MonoBehaviour {
 	private void setPlayerPosition (int level) {
 		// if spawn position for current level wasn't already set then set it
 		if (spawnPosArray[level].priority == INVALID_PRIORITY) {
-			// get all SpawnPositionTrigger game objects
+			// get all SpawnPositionTrigger game objects from the current scene
 			SpawnPositionTrigger[] arr = (SpawnPositionTrigger[])FindObjectsOfType(typeof(SpawnPositionTrigger));
 			// no triiger game objects? then use default spawn position
 			if (arr == null || arr.Length == 0) {

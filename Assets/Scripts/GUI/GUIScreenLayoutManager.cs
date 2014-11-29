@@ -18,7 +18,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 				instance = FindObjectOfType(typeof(GUIScreenLayoutManager)) as GUIScreenLayoutManager;
 				if (instance == null) {
 					// creates a game object with this script component
-					instance = new GameObject("ScreenLayoutManager").AddComponent<GUIScreenLayoutManager>();
+					instance = new GameObject("GUIScreenLayoutManager").AddComponent<GUIScreenLayoutManager>();
 				}
 			}
             return instance;

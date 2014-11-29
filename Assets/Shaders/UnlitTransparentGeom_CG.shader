@@ -33,7 +33,7 @@ SubShader {
 			half4 pos: SV_POSITION;
 			fixed2 uv: TEXCOORD0;
 		};
-	    
+                
 	    fragmentInput vert(vertexInput i)
 		{
 			fragmentInput o;
