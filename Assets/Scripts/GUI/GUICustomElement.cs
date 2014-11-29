@@ -26,10 +26,11 @@ public class GUICustomElement : MonoBehaviour, IScreenLayout {
 		GUIScreenLayoutManager.Instance.register(this);
 		
 		if (newMaterialInstance) {
-            // create the new material
-            Material newMat = new Material(renderer.sharedMaterial);
-            // assign it to the renderer
-            renderer.sharedMaterial = newMat;
+            // create the new material and assing it to the renderer
+			if (renderer.sharedMaterial == null)
+				renderer.sharedMaterial = new Material(renderer.material);
+			else
+            	renderer.sharedMaterial = new Material(renderer.sharedMaterial);
         }
 		
 		renderer.sharedMaterial.mainTexture = texture;
