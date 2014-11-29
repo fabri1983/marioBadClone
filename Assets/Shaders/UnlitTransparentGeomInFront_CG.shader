@@ -1,17 +1,18 @@
-Shader "Custom/Unlit Opaque Geom CG" {
+// Note: this shader only intended for displaying 2D objects in front of all objects
+Shader "Custom/Unlit Transparent Geom In Froont CG" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
 }
 
 SubShader {
-	Tags { "Queue"="Geometry" "IgnoreProjector"="True" "RenderType"="Opaque" }
-	ZWrite On // is on because some scene game objects are in 3D
+	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
+	ZWrite On
+	ZTest Always
 	Lighting Off
-	Blend Off // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
+	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 	
 	Pass {
-		// next commented because some scene game objects are in 3D
-		//Cull Off // here it solves an issue (donno which issue)
+		Cull Off // here it solves an issue (donno which issue)
 		
 		CGPROGRAM
 	    #pragma exclude_renderers ps3 xbox360 flash glesdesktop opengl
@@ -34,7 +35,7 @@ SubShader {
 			half4 pos: SV_POSITION;
 			fixed2 uv: TEXCOORD0;
 		};
-	    
+                
 	    fragmentInput vert(vertexInput i)
 		{
 			fragmentInput o;

@@ -1,12 +1,14 @@
 using UnityEngine;
 
 public class PlayerDieAnim : MonoBehaviour {
-
+	
+	public Shader shaderForDie;
+	
 	private uint layersCP;
-	private int renderQueue;
 	private bool dying = false;
 	private Jump jump;
 	private AnimateTiledTexture animComp; // used to access its renderer
+	private Shader origShader;
 	
 	void Awake () {
 		jump = GetComponent<Jump>();
@@ -18,7 +20,12 @@ public class PlayerDieAnim : MonoBehaviour {
 		
 		// get original render queue
 		animComp = GetComponentInChildren<AnimateTiledTexture>();
-		renderQueue = animComp.renderer.sharedMaterial.renderQueue;
+		origShader = animComp.renderer.sharedMaterial.shader;
+	}
+	
+	void OnDestroy () {
+		// this because oon Editor mode any change in sharedMaterial seems to be saved
+		setBackOrigShader();
 	}
 	
 	public void startAnimation () {
@@ -28,9 +35,8 @@ public class PlayerDieAnim : MonoBehaviour {
 		layersCP = gameObject.GetComponent<ChipmunkShape>().layers;
 		GameObjectTools.setLayerForShapes(gameObject, 0);
 		
-		// change player's current render layer to one such as it can be drawn in front of all objects except the pause overlay
-		renderQueue = animComp.renderer.sharedMaterial.renderQueue;
-		animComp.renderer.sharedMaterial.renderQueue = (int)EnumRenderQueue.Overlay_4000;
+		// set special shader which will render this game object in front of all layers
+		animComp.renderer.sharedMaterial.shader = shaderForDie;
 		
 		// execute a little jump as dying animation
 		GetComponent<ChipmunkShape>().body.velocity = Vector2.zero;
@@ -39,13 +45,17 @@ public class PlayerDieAnim : MonoBehaviour {
 	
 	public void restorePlayerProps () {
 		dying = false;
+		// set back original shader
+		setBackOrigShader();
 		// set back player's original layer
 		GameObjectTools.setLayerForShapes(gameObject, layersCP);
-		// restore original render layer
-		animComp.renderer.sharedMaterial.renderQueue = renderQueue;
 	}
 	
 	public bool isDying () {
 		return dying;
+	}
+	
+	private void setBackOrigShader () {
+		animComp.renderer.sharedMaterial.shader = origShader;
 	}
 }
