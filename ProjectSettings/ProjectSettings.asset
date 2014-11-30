@@ -62,7 +62,7 @@ PlayerSettings:
   iPhoneBundleIdentifier: org.fabri1983.MarioBadClone
   iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 6
+  AndroidMinSdkVersion: 10
   AndroidPreferredInstallLocation: 0
   aotOptions: 
   apiCompatibilityLevel: 2

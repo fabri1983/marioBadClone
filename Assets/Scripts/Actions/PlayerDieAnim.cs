@@ -26,6 +26,8 @@ public class PlayerDieAnim : MonoBehaviour {
 	void OnDestroy () {
 		// this because oon Editor mode any change in sharedMaterial seems to be saved
 		setBackOrigShader();
+		// remove reference to anim component
+		animComp = null;
 	}
 	
 	public void startAnimation () {
@@ -36,6 +38,7 @@ public class PlayerDieAnim : MonoBehaviour {
 		GameObjectTools.setLayerForShapes(gameObject, 0);
 		
 		// set special shader which will render this game object in front of all layers
+		animComp = GetComponentInChildren<AnimateTiledTexture>();
 		animComp.renderer.sharedMaterial.shader = shaderForDie;
 		
 		// execute a little jump as dying animation
@@ -56,6 +59,7 @@ public class PlayerDieAnim : MonoBehaviour {
 	}
 	
 	private void setBackOrigShader () {
-		animComp.renderer.sharedMaterial.shader = origShader;
+		if (animComp != null)
+			animComp.renderer.sharedMaterial.shader = origShader;
 	}
 }

@@ -197,12 +197,8 @@ public class LevelManager : MonoBehaviour {
 	/// </returns>
 	public static Transform getGUILayersNonDestroyable () {
 		GameObject guiLayers = GameObject.Find("GUI_Layers_nd");
-		
-		if (guiLayers == null) {
-			Debug.LogWarning("Couldn't find game object named GUI_Layers_nd. If you are using GUI custom elements you forgot to consolidate them in a game object named GUI_Layers_nd");
+		if (guiLayers == null)
 			return null;
-		}
-		
 		return guiLayers.transform;
 	}
 	
@@ -215,12 +211,8 @@ public class LevelManager : MonoBehaviour {
 	/// </returns>
 	public static Transform getGUILayersSceneOnly () {
 		GameObject guiLayers = GameObject.Find("GUI_Layers_so");
-		
-		if (guiLayers == null) {
-			Debug.LogWarning("Couldn't find game object named GUI_Layers_so. If you are using GUI custom elements you forgot to consolidate them in a game object named GUI_Layers_so");
+		if (guiLayers == null)
 			return null;
-		}
-		
 		return guiLayers.transform;
 	}
 	
