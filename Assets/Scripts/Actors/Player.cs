@@ -95,7 +95,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		if (exitedFromScenery && !jump.IsJumping()) {
 			// check if there is no shape below us
 			ChipmunkSegmentQueryInfo qinfo;
-			Vector2 end = body.position + Vector2.up * -3.2f;
+			Vector2 end = body.position + Vector2.up * -3.2f; // I guess this number is half the size of Mario plus few units more so the query ratio is the shortest possible
 			Chipmunk.SegmentQueryFirst(body.position, end, (uint)(1 << gameObject.layer), "", out qinfo);
 			// if no handler it means no hit
 			if (System.IntPtr.Zero == qinfo._shapeHandle)

@@ -1,4 +1,7 @@
-// Note: this shader only intended for displaying 2D objects in front of all objects
+// Note: this shader only intended for displaying 2D objects in front of all objects.
+// So it uses:
+//   ZWrite On
+//   ZTest Always (this makes the material being displayed in front of all material under same queue)
 Shader "Custom/Unlit Transparent Geom In Froont CG" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}

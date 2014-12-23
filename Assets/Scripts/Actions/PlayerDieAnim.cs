@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerDieAnim : MonoBehaviour {
 	
+	// Shader Script set from Inspector which is used in replacement of normal shader.
+	// The difference is only the activation of z-testing and its function so the game object is always rendered in front
+	// NOTE: try using conditional compilation for shader
 	public Shader shaderForDie;
 	
 	private uint layersCP;

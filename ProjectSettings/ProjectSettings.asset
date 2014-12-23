@@ -60,7 +60,7 @@ PlayerSettings:
     Others: 1
   debugUnloadMode: 0
   iPhoneBundleIdentifier: org.fabri1983.MarioBadClone
-  iPhoneBundleVersion: 1.0
+  iPhoneBundleVersion: 0.1
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 10
   AndroidPreferredInstallLocation: 0

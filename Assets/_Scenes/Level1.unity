@@ -6997,6 +6997,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: targetY
+      value: 2.55999994
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d8f9c54fb8c45a4396c65ca5285644c, type: 2}
   m_RootGameObject: {fileID: 1912612807}
@@ -7015,6 +7019,7 @@ GameObject:
   - 81: {fileID: 1912612810}
   - 114: {fileID: 1912612812}
   - 114: {fileID: 1912612813}
+  - 114: {fileID: 1912612814}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -7105,6 +7110,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ad280c1ed05d504981cf25d8032e0e4, type: 1}
+  m_Name: 
+--- !u!114 &1912612814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400008, guid: 3d8f9c54fb8c45a4396c65ca5285644c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1906203629}
+  m_GameObject: {fileID: 1912612807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a1b54eee7048a43856b52a02096d83, type: 1}
   m_Name: 
 --- !u!1 &1915724952
 GameObject:
