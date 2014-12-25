@@ -7,8 +7,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 	
 	private Transform lookAtTarget; // object which this game object will folow and look at to
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
-	private bool stop = false;
-	private float constantTimer = 0.15f;
+	private float constantTimer = 0.016f;
 	
 	// containers for GUI cusotm elements (background, foreground, buttons, text, etc)
 	private Transform guiLayers_so;  // scene only GUI container
@@ -44,9 +43,6 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 	void LateUpdate () {
 		// NOTE: use FixedUpdate() if camera jitters
 
-		if (stop)
-			return;
-
 		// always look at target?
 		if (lookTarget) {
 			Quaternion origRot = transform.rotation; // save original rotation since lookAtTarget affects it
@@ -68,7 +64,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 			transform.position = Vector3.Lerp(transform.position, thePos, Time.deltaTime * timeFactor);
 		}
 		else {
-			transform.position = Vector3.Lerp(transform.position, thePos, constantTimer * timeFactor);
+			transform.position = Vector3.Lerp(transform.position, thePos, constantTimer);
 			// Increase or decrease the constant lerp timer
 		    if (thePos == transform.position)
 		        // Go to position1 t = 0.0f
@@ -79,7 +75,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 		}
 		
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
-			stopAnimation();
+			setEnabled(false);
 
 		updateGUILayers();
 	}
@@ -88,8 +84,8 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 		instantlyOneTime = true;
 	}
 	
-	public void stopAnimation () {
-		stop = true;
+	public void setEnabled (bool val) {
+		enabled = val;
 	}
 	
 	/// <summary>

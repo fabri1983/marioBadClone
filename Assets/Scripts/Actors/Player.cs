@@ -180,6 +180,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		return dieAnim.isDying();
 	}
 	
+	public bool isJumping () {
+		return jump.IsJumping();
+	}
+	
 	public void forceJump () {
 		// used when the player kills an enemy from above
 		jump.forceJump(0f); // this set the jumping state as true

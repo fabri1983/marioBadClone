@@ -124,6 +124,11 @@ public class LevelManager : MonoBehaviour {
 		setPlayerPosition(level); // set Mario spawn position for this level
 		setParallaxProperties(levelExtent); // configure the parallax properties for a correct scrolling
 		
+		// Follow the Player Y coordinates until it lands. Then lock the camera's Y coordinate
+		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
+		if (lockYscript)
+			lockYscript.init();
+		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
 		TouchEventManager.warm();
