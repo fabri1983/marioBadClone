@@ -42,6 +42,21 @@ public class AnimateTiledConfig : MonoBehaviour {
 		return working;
 	}
 	
+	/// <summary>
+	/// Searchs for the AnimateTiledConfig instance of a given game object that is associated with the given name.
+	/// </summary>
+	/// <returns>
+	/// The AnimateTiledConfig instance
+	/// </returns>
+	/// <param name='go'>
+	/// The source game object
+	/// </param>
+	/// <param name='name'>
+	/// Enum value which is associated to the animation
+	/// </param>
+	/// <param name='inChildren'>
+	/// If true then traverse down into herarchy
+	/// </param>
 	public static AnimateTiledConfig getByName (GameObject go, EnumAnimateTiledName name, bool inChildren) {
 		if (go == null)
 			return null;
