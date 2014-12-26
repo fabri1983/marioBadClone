@@ -3,20 +3,10 @@ using UnityEngine;
 /// <summary>
 /// This script can be asigned to a game object to follow a desired target in XY plane.
 /// </summary>
-public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
+public class PlayerFollowerXY : PlayerFollowerXYConfig {
 	
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private float constantTimer = 0.016f;
-	
-	// containers for GUI cusotm elements (background, foreground, buttons, text, etc)
-	private Transform guiLayers_so;  // scene only GUI container
-	private Transform guiLayers_nd;  // non destroyable GUI container
-	
-	void Awake () {
-		// NOTE: this works fine here only if this script is created per scene.
-		guiLayers_so = LevelManager.getGUILayersSceneOnly();
-		guiLayers_nd = LevelManager.getGUILayersNonDestroyable();
-	}
 	
 	// Use this for initialization
 	void Start () {
@@ -30,16 +20,9 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 		if (lockY)
 			 thePos.y += offsetY;
 		transform.position = thePos;
-
-		// update the GUI transforms since they depend on the camera position and rotation
-		updateGUILayers();
 	}
 	
-	/**
-	 * LateUpdate is called after all Update functions have been called.
-	 * Dependant objects might have moved during Update.
-	 */
-	void LateUpdate () {
+	void Update () {
 		// NOTE: use FixedUpdate() if camera jitters
 
 		// always look at target?
@@ -75,8 +58,6 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 		
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
 			setEnabled(false);
-
-		updateGUILayers();
 	}
 	
 	public void doInstantMoveOneTime () {
@@ -85,19 +66,5 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 	
 	public void setEnabled (bool val) {
 		enabled = val;
-	}
-	
-	/// <summary>
-	/// Updates the GUILayers transform since they depend on the camera position and rotation.
-	/// </summary>
-	public void updateGUILayers () {
-		if (guiLayers_so != null) {
-			guiLayers_so.position = transform.position;
-			guiLayers_so.rotation = transform.rotation;
-		}
-		if (guiLayers_nd != null) {
-			guiLayers_nd.position = transform.position;
-			guiLayers_nd.rotation = transform.rotation;
-		}
 	}
 }

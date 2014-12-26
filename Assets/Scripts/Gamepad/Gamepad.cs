@@ -76,7 +76,10 @@ public class Gamepad : MonoBehaviour {
 #endif
 	}
 	
-	// LateUpdate is called after all Update functions have been called
+	/**
+	 * LateUpdate is called after all Update functions have been called.
+	 * Dependant objects might have moved during Update.
+	 */
 	void LateUpdate () {
 		updateHardPressed();
 		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
