@@ -8,7 +8,6 @@ public class LookUpwards : MonoBehaviour {
 	private bool lookingUp;
 	private AnimateTiledConfig lookUpAC;
 	private PlayerFollowerXYConfig tempConfig; // for temporal storage
-	private float origPosY;
 	
 	// Use this for initialization
 	void Awake () {
@@ -22,13 +21,8 @@ public class LookUpwards : MonoBehaviour {
 	
 	public void lookUpwards () {
 		// avoid re calculation if is already looking upwards
-		if (lookingUp)
+		if (lookingUp || !Camera.main.GetComponent<RestoreAfterLookUpwards>().isRestored())
 			return;
-		
-		// let us know if the restoring script could completelly set the camera in his original position and properties
-		bool fullyCompleted = Camera.main.GetComponent<RestoreAfterLookUpwards>().wasRestored();
-		if (fullyCompleted)
-			origPosY = transform.localPosition.y;
 		
 		// get follower script
 		PlayerFollowerXY playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
@@ -45,8 +39,8 @@ public class LookUpwards : MonoBehaviour {
 		lookingUp = true;
 	}
 	
-	public void stop () {
-		if (!lookingUp)
+	public void restore () {
+		if (!lookingUp || !Camera.main.GetComponent<RestoreAfterLookUpwards>().isRestored())
 			return;
 		
 		// get follower script
@@ -54,8 +48,7 @@ public class LookUpwards : MonoBehaviour {
 		// set back state as it was previous to look upwards
 		playerFollower.setStateFrom(tempConfig);
 		// start the script that will let the camera moves to correct position
-		if (playerFollower.lockY == true)
-			Camera.main.GetComponent<RestoreAfterLookUpwards>().init(origPosY);
+		Camera.main.GetComponent<RestoreAfterLookUpwards>().init();
 		
 		lookingUp = false;
 	}

@@ -153,7 +153,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			isIdle = false;
 		}
 		else
-			lookUpwards.stop();
+			lookUpwards.restore();
 		
 		if (isIdle)
 			idle.setIdle(false);

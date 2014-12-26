@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerFollowerXYConfig : MonoBehaviour {
 	
+	protected Transform lookAtTarget; // object which this game object will folow and look at to
+	
 	public bool lookTarget = false;
 	public float timeFactor = 3f;
 	public float offsetY = 5f;
@@ -14,5 +16,9 @@ public class PlayerFollowerXYConfig : MonoBehaviour {
 		offsetY = other.offsetY;
 		smoothLerp = other.smoothLerp;
 		lockY = other.lockY;
+	}
+	
+	public float getFinalDisplacement () {
+		return lookAtTarget.position.y + offsetY;
 	}
 }

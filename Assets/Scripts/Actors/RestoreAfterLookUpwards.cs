@@ -7,11 +7,9 @@ using UnityEngine;
 /// </summary>
 public class RestoreAfterLookUpwards : MonoBehaviour {
 	
-	private bool restored;
-	private float prevPosY;
-	private float targetPosY;
 	private PlayerFollowerXYConfig origFollower;
 	private PlayerFollowerXYConfig tempConfig; // for temporal storage
+	private bool restored;
 	
 	void Awake () {
 		// since we cannot create an instance from a MonoBehaviour then do next
@@ -19,41 +17,46 @@ public class RestoreAfterLookUpwards : MonoBehaviour {
 		// disable the dummy component from being updated by Unity3D game loop
 		tempConfig.enabled = false;
 		
-		restored = true;
+		origFollower = GetComponent<PlayerFollowerXYConfig>();
+	
 		enabled = false;
+		restored = true;
 	}
 	
 	void OnDestroy () {
 		origFollower = null;
 	}
 	
-	public void init (float targetYpos) {
-		targetPosY = targetYpos;
-		origFollower = GetComponent<PlayerFollowerXYConfig>();
+	public void init () {
 		tempConfig.setStateFrom(origFollower);
 		
 		// apply changes accordingly to expected effect
 		origFollower.lockY = false;
-		origFollower.smoothLerp = true; // nice lerping
-		origFollower.timeFactor *= 8f;
-		
-		restored = false;
+		origFollower.smoothLerp = false; // abrupt lerping
+
 		enabled = true;
+		restored = false;
 	}
 	
+	/**
+	 * LateUpdate is called after all Update functions have been called.
+	 * Dependant objects might have moved during Update.
+	 */
 	void LateUpdate () {
-		// since the lerping function used with the camera is continues then it will take a little more to 
-		// reach target Y position,so we must use an epsilon
-		float diff = Mathf.Abs(targetPosY - transform.localPosition.y);
-			
+		
+		// difference between current cam's Y position and the final cam's Y position with offset
+		float diff = Mathf.Abs(origFollower.getFinalDisplacement() - transform.position.y);
+		
+		// since the lerping function used with the camera is continued then it will take a little bit more to 
+		// reach the correct displacement from player. So let's use an epsilon value
 		if (diff < 0.01f) {
-			restored = true;
-			enabled = false;
 			origFollower.setStateFrom(tempConfig);
+			enabled = false;
+			restored = true;
 		}
 	}
 	
-	public bool wasRestored () {
+	public bool isRestored () {
 		return restored;
 	}
 }

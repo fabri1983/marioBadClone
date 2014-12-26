@@ -34,6 +34,10 @@ public class LockYWhenPlayerLands : MonoBehaviour {
 		enabled = true;
 	}
 	
+	/**
+	 * LateUpdate is called after all Update functions have been called.
+	 * Dependant objects might have moved during Update.
+	 */
 	void LateUpdate () {
 		// When the level starts the player initial status is jumping.
 		// So when no jumping anymore it means it hit ground and is time to restore original follower config

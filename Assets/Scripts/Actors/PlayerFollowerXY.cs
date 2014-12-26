@@ -5,7 +5,6 @@ using UnityEngine;
 /// </summary>
 public class PlayerFollowerXY : PlayerFollowerXYConfig, IUpdateGUILayers {
 	
-	private Transform lookAtTarget; // object which this game object will folow and look at to
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 	private float constantTimer = 0.016f;
 	
