@@ -7,7 +7,7 @@ using UnityEngine;
  * The FadeColor_CG shader has it's own render queue assigned in such way it will overlay 
  * all materials, except Unity's GUI.
  */
-public class FadeColor : MonoBehaviour, IFadeable, IScreenLayout {
+public class FadeColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;

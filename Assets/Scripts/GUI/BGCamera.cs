@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BGCamera : MonoBehaviour, IScreenLayout {
+public class BGCamera : MonoBehaviour, IGUIScreenLayout {
 	
 	void Awake () {
 		GUIScreenLayoutManager.Instance.register(this);

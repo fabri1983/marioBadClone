@@ -10,7 +10,7 @@ using UnityEngine;
  *  3. Set background to the desired color (black).
  *  4. Set the Clear Flags to "Solid Color", set the Culling Mask to "Nothing".
  */
-public class CamAspectRatio : MonoBehaviour, IScreenLayout {
+public class CamAspectRatio : MonoBehaviour, IGUIScreenLayout {
 	
 	private Rect screenRect;
 	

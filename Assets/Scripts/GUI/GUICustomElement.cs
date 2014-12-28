@@ -5,7 +5,7 @@ using UnityEngine;
 /// On screen redimension the game object's z position and its scale are adjusted.
 /// </summary>
 [ExecuteInEditMode]
-public class GUICustomElement : MonoBehaviour, IScreenLayout {
+public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	
 	public Texture2D texture;
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;

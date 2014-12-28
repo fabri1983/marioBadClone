@@ -92,7 +92,7 @@ public class LevelManager : MonoBehaviour {
 	public void loadLevel (int level) {
 		// fix level index if invalid
 		if (level < 0 || level >= Application.levelCount)
-			activeLevel = 0;
+			activeLevel = 0; // splash screen
 		// update current level index
 		else
 			activeLevel = level;
@@ -100,6 +100,7 @@ public class LevelManager : MonoBehaviour {
 		player.toogleEnabled(false); // deactivate to avoid falling in empty scene, it will be restored with StartLevel script
 		player.restoreWalkVel(); // in case the player was colliding a wall
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
+		
 		GC.Collect();
 		Application.LoadLevel(activeLevel); // load scene
 	}
@@ -119,20 +120,26 @@ public class LevelManager : MonoBehaviour {
 	/// </param>
 	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
 		activeLevel = level;
-		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime(); // move camera instantaneously to where player spawns
-		player.toogleEnabled(playerEnabled); // activate the player's game object
-		setPlayerPosition(level); // set Mario spawn position for this level
-		setParallaxProperties(levelExtent); // configure the parallax properties for a correct scrolling
+		// move camera instantaneously to where player spawns
+		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime();
+		// activate the player's game object
+		player.toogleEnabled(playerEnabled);
+		// set Mario spawn position for this level
+		setPlayerPosition(level);
+		// configure the parallax properties for a correct scrolling of background and foreground images
+		Camera.main.GetComponent<GUISyncWithCamera>().setParallaxProperties(spawnPosArray[activeLevel].position, levelExtent);
 		
-		// Follow the Player Y coordinates until it lands. Then lock the camera's Y coordinate
+		// makes the camera to follow the player's Y axis until it lands. Then lock the camera's Y axis
 		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
 		if (lockYscript)
 			lockYscript.init();
 		
+		// find IFadeable component since main camera instance changes during scenes
+		OptionQuit.Instance.setFaderForMainCamera();
+		
 		// warm other needed elements in case they don't exist yet
 		Gamepad.warm();
 		TouchEventManager.warm();
-		OptionQuit.warm();
 	}
 	
 	public Player getPlayer () {
@@ -175,7 +182,7 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	/**
-	 * Defines behavior when Mario loses game
+	 * Defines behavior when Player loses.
 	 */
 	public void loseGame (bool dieAnim) {
 		
@@ -190,70 +197,6 @@ public class LevelManager : MonoBehaviour {
 			player.resetPlayer();
 			// re load current level
 			loadLevel(activeLevel);
-		}
-	}
-	
-	/// <summary>
-	/// Gets the transform of the game object named GUI_Layers_nd which contains all the 
-	/// GUI elements in the scene that aren't destroyable.
-	/// </summary>
-	/// <returns>
-	/// A Transform element for applying any operation on it
-	/// </returns>
-	public static Transform getGUILayersNonDestroyable () {
-		GameObject guiLayers = GameObject.Find("GUI_Layers_nd");
-		if (guiLayers == null)
-			return null;
-		return guiLayers.transform;
-	}
-	
-	/// <summary>
-	/// Gets the transform of the game object named GUI_Layers_so which contains all the 
-	/// GUI elements in the scene that only exist during the liveness of the scene (destroyables).
-	/// </summary>
-	/// <returns>
-	/// A Transform element for applying any operation on it
-	/// </returns>
-	public static Transform getGUILayersSceneOnly () {
-		GameObject guiLayers = GameObject.Find("GUI_Layers_so");
-		if (guiLayers == null)
-			return null;
-		return guiLayers.transform;
-	}
-	
-	/// <summary>
-	/// Gets all the GUIParallax components in the scene and configure them according to 
-	/// the extension of the level: min world position and max world position.
-	/// </summary>
-	/// <param name='levelExtent'>
-	/// Level dimension in world coordinates. Used to configure the parallax scripts
-	/// </param>
-	private void setParallaxProperties (Rect levelExtent) {
-		Transform t1 = getGUILayersSceneOnly();
-		Transform t2 = getGUILayersNonDestroyable();
-		
-		for (int k=0; k<2; ++k) {
-			// get the GUIParallax components
-			GUIParallax[] parallax = null;
-			if (k==0) {
-				if (t1 == null)
-					continue;
-				parallax = t1.GetComponentsInChildren<GUIParallax>();
-			}
-			else {
-				if (t2 == null)
-					continue;
-				parallax = t2.GetComponentsInChildren<GUIParallax>();
-			}
-			
-			float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
-			float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
-			Vector2 playerSpawnPos = spawnPosArray[activeLevel].position;
-			
-			for (int i=0,c=parallax.Length; i<c;++i) {
-				parallax[i].setLevelExtentWorldUnits(length, height);
-				parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
-			}
 		}
 	}
 }

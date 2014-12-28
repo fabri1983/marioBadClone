@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IScreenLayout {
+public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IGUIScreenLayout {
 	
 	private bool showOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;

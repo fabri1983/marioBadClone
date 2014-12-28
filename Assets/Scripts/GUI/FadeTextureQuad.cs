@@ -5,7 +5,7 @@ using UnityEngine;
  * Since it uses Unity's GUI.DrawTexture then there is no need to assign correct render queue 
  * neither locate the game object in front of the screen.
  */
-public class FadeTextureQuad : MonoBehaviour, IFadeable, IScreenLayout {
+public class FadeTextureQuad : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;

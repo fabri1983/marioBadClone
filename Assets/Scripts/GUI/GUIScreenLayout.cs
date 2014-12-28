@@ -1,7 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// Allows a custom GUI element to be located in any place of the screen given a predefined locations as basis
+/// </summary>.
 [ExecuteInEditMode]
-public class GUIScreenLayout : MonoBehaviour, IScreenLayout {
+public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 	
 	public bool allowResize = false;
 	public Vector2 offset = Vector2.zero;

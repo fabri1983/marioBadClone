@@ -1,10 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Manager singleton which sends update events for GUI elements.
+/// Currently only when an repaint event is fired by Unity.
+/// It also provides a lot of utils for locating and resizing of GUI custom elements.
+/// </summary>
 [ExecuteInEditMode]
 public class GUIScreenLayoutManager : MonoBehaviour {
 	
-	private List<IScreenLayout> listeners = new List<IScreenLayout>();
+	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
 	private float lastScreenWidth, lastScreenHeight;
 	
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
@@ -16,10 +21,9 @@ public class GUIScreenLayoutManager : MonoBehaviour {
         get {
             if (instance == null) {
 				instance = FindObjectOfType(typeof(GUIScreenLayoutManager)) as GUIScreenLayoutManager;
-				if (instance == null) {
+				if (instance == null)
 					// creates a game object with this script component
 					instance = new GameObject("GUIScreenLayoutManager").AddComponent<GUIScreenLayoutManager>();
-				}
 			}
             return instance;
         }
@@ -46,11 +50,11 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		instance = null;
     }
 	
-	public void register (IScreenLayout sl) {
+	public void register (IGUIScreenLayout sl) {
 		listeners.Add(sl);
 	}
 	
-	public void remove (IScreenLayout sl) {
+	public void remove (IGUIScreenLayout sl) {
 		listeners.Remove(sl);
 	}
 	
