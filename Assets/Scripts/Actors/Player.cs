@@ -252,6 +252,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
 			player.body.position = thePos;
 		}
+		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.
 		return true;

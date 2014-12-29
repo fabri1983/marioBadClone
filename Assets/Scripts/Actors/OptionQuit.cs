@@ -10,18 +10,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 	
 	public static OptionQuit Instance {
         get {
-            warm();
+            if (instance == null)
+				// Instantiate the entire prefab. 
+				// Don't assign to the instance variable because it is then assigned in Awake()
+				GameObject.Instantiate(Resources.Load("Prefabs/GUI_Quit"));
             return instance;
         }
     }
-	
-	public static void warm () {
-		// in case the game object wasn't instantiated yet from another script
-		if (instance == null) {
-			// instantiate the entire prefab. Don't assign to the instance variable because it is then assigned in Awake()
-			GameObject.Instantiate(Resources.Load("Prefabs/GUI_Quit"));
-		}
-	}
 	
 	void Awake () {
 		if (instance != null && instance != this)

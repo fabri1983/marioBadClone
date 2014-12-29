@@ -24,6 +24,13 @@ public class LevelManager : MonoBehaviour {
     private int activeLevel;
     private Player player;
 	
+	// Containers for GUI custom elements (background, foreground, buttons, text, etc)
+	// They are only used for organizational purpose of GUI custom elements
+    private static GameObject guiContainer_so = null; // scene only GUI container
+    private static GameObject guiContainer_nd = null; // non destroyable GUI container
+	private const string GUI_container_nd = "GUI_Container_nd";
+	private const string GUI_container_so = "GUI_Container_so";
+	
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
 	/**
@@ -69,6 +76,7 @@ public class LevelManager : MonoBehaviour {
 	
 	void OnDestroy() {
 		instance = null;
+		player = null;
     }
 	
     public int getLevel() {
@@ -76,7 +84,7 @@ public class LevelManager : MonoBehaviour {
     }
 	
 	public int getNextLevel () {
-		// if exceeds max level then return first valid level
+		// if exceeds max level then return splash screen level
 		return activeLevel + 1 >= Application.levelCount ? 0 : activeLevel + 1;
 	}
 	
@@ -100,6 +108,7 @@ public class LevelManager : MonoBehaviour {
 		player.toogleEnabled(false); // deactivate to avoid falling in empty scene, it will be restored with StartLevel script
 		player.restoreWalkVel(); // in case the player was colliding a wall
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
+		guiContainer_so = null; // reset the references of scene only GUI elements container
 		
 		GC.Collect();
 		Application.LoadLevel(activeLevel); // load scene
@@ -126,24 +135,48 @@ public class LevelManager : MonoBehaviour {
 		player.toogleEnabled(playerEnabled);
 		// set Mario spawn position for this level
 		setPlayerPosition(level);
+#if UNITY_EDITOR		
+		// throw error if no GUI container was created
+		if (LevelManager.getGUIContainerNonDestroyable() == null)
+			Debug.LogWarning("Missing " + GUI_container_nd + " game object. Will be created and populated with minimum elements.");
+		if (LevelManager.getGUIContainerSceneOnly() == null)
+			Debug.LogError("Missing " + GUI_container_so + " game object. Please create it.");
+#endif		
+		// if GUI_container_nd doesn't exist then create it and add minimum required game objects
+		setupGUIContainerNonDestroyable();
 		// configure the parallax properties for a correct scrolling of background and foreground images
-		Camera.main.GetComponent<GUISyncWithCamera>().setParallaxProperties(spawnPosArray[activeLevel].position, levelExtent);
-		
+		setParallaxProperties(spawnPosArray[activeLevel].position, levelExtent);
 		// makes the camera to follow the player's Y axis until it lands. Then lock the camera's Y axis
 		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
 		if (lockYscript)
 			lockYscript.init();
-		
+		// warm no GUI dependant elements in case they don't exist yet
+		TouchEventManager.warm();
 		// find IFadeable component since main camera instance changes during scenes
 		OptionQuit.Instance.setFaderForMainCamera();
-		
-		// warm other needed elements in case they don't exist yet
-		Gamepad.warm();
-		TouchEventManager.warm();
 	}
 	
 	public Player getPlayer () {
 		return player;
+	}
+	
+	/// <summary>
+	/// If not exist, then setups the GUI container for non destroyable game objects.
+	/// </summary>
+	private void setupGUIContainerNonDestroyable () {
+		// if GUI_container_nd game object exists then continue normally
+		if (LevelManager.getGUIContainerNonDestroyable() != null)
+			return;
+
+		// create the GUI_container_nd game object
+		guiContainer_nd = new GameObject(GUI_container_nd, typeof(NonDestroyable));
+#if UNITY_EDITOR
+		Debug.Log(GUI_container_nd + " created.");
+#endif		
+		// add Gamepad game object into GUI_container_nd
+		Gamepad.Instance.transform.parent = guiContainer_nd.transform;
+		// add OptionQuit game object into GUI_container_nd
+		OptionQuit.Instance.transform.parent = guiContainer_nd.transform;
 	}
 	
 	private void setPlayerPosition (int level) {
@@ -198,5 +231,67 @@ public class LevelManager : MonoBehaviour {
 			// re load current level
 			loadLevel(activeLevel);
 		}
+	}
+	
+	/// <summary>
+	/// Gets the game object of the game object named GUI_Container_nd which contains all the 
+	/// GUI elements in the scene that aren't destroyable.
+	/// </summary>
+	/// <returns>
+	/// A GameObject element for applying any operation on it
+	/// </returns>
+	public static GameObject getGUIContainerNonDestroyable () {
+		if (guiContainer_nd != null)
+			return guiContainer_nd;
+		// cache the reference. Is the same across all scenes
+	    guiContainer_nd = GameObject.Find(GUI_container_nd);
+	    return guiContainer_nd;
+	}
+	
+	/// <summary>
+	/// Gets the game object of the game object named GUI_Container_so which contains all the 
+	/// GUI elements in the scene that only exist during the liveness of the scene (destroyables).
+	/// </summary>
+	/// <returns>
+	/// A GameObject element for applying any operation on it
+	/// </returns>
+	public static GameObject getGUIContainerSceneOnly () {
+		if (guiContainer_so != null)
+			return guiContainer_so;
+		// cache the reference. Only has sense per scene
+	    guiContainer_so = GameObject.Find(GUI_container_so);
+	    return guiContainer_so;
+	}
+	
+	/// <summary>
+	/// Gets all the GUIParallax registered components and configure them according to 
+	/// the extension of the level: min world position and max world position.
+	/// Not all registered componenets may have a GUIParallax component.
+	/// </summary>
+	/// <param name='playerSpawnPos'>
+	/// Player's current spawn position.
+	/// </param>
+	/// <param name='levelExtent'>
+	/// Level dimension in world coordinates. Used to configure the parallax scripts.
+	/// </param>
+	private void setParallaxProperties (Vector2 playerSpawnPos, Rect levelExtent) {
+		
+		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
+		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
+        GUIParallax[] parallax = null;
+		
+		// setup the GUIParallax components from scene only GUI container
+		parallax = getGUIContainerSceneOnly().GetComponentsInChildren<GUIParallax>();
+		for (int i=0,c=parallax.Length; i<c;++i) {
+            parallax[i].setLevelExtentWorldUnits(length, height);
+            parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+        }
+		
+		// setup the GUIParallax components from non destroyable GUI container
+		parallax = getGUIContainerNonDestroyable().GetComponentsInChildren<GUIParallax>();
+		for (int i=0,c=parallax.Length; i<c;++i) {
+            parallax[i].setLevelExtentWorldUnits(length, height);
+            parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+        }
 	}
 }

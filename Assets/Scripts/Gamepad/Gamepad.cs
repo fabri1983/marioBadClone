@@ -20,18 +20,13 @@ public class Gamepad : MonoBehaviour {
 	
 	public static Gamepad Instance {
         get {
-            warm();
+            if (instance == null)
+				// Instantiate the entire prefab because it has a herarchy. 
+				// Don't assign to the instance variable because it is then assigned in Awake()
+				GameObject.Instantiate(Resources.Load("Prefabs/Gamepad"));
             return instance;
         }
     }
-	
-	public static void warm () {
-		if (instance == null) {
-			// instantiate the entire prefab because it has herarchy. 
-			// Don't assign to the instance variable because it is then assigned in Awake()
-			GameObject.Instantiate(Resources.Load("Prefabs/Gamepad"));
-		}
-	}
 	
 	void Awake () {
 		if (instance != null && instance != this)

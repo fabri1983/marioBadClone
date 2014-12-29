@@ -40,7 +40,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	void Start () {
 		if (!texture)
 			return;
-		updateForGUI(); // make this game object to be located correctly in viewport
+		//updateForGUI(); // make this game object to be located correctly in viewport
 	}
 
 	void OnDestroy () {
