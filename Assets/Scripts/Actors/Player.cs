@@ -23,6 +23,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private ChipmunkBody body;
 	private float walkVelBackup, signCollision;
 	
+	// I guess 3.2f is half the size of Player's renderer plus few units more so the query ratio is the shortest possible
+	private static Vector2 queryOffset = Vector2.up * -3.2f;
+	
 	private static Player instance = null;
 	
 	public static Player Instance {
@@ -95,10 +98,11 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		if (exitedFromScenery && !jump.IsJumping()) {
 			// check if there is no shape below us
 			ChipmunkSegmentQueryInfo qinfo;
-			Vector2 end = body.position + Vector2.up * -3.2f; // I guess this number is half the size of Mario plus few units more so the query ratio is the shortest possible
+			Vector2 end = body.position + queryOffset;
 			Chipmunk.SegmentQueryFirst(body.position, end, (uint)(1 << gameObject.layer), "", out qinfo);
 			// if no handler it means no hit
 			if (System.IntPtr.Zero == qinfo._shapeHandle)
+				// set state as if were jumping
 				jump.resetStatus();
 		}
 		

@@ -85,8 +85,9 @@ public class Crouch : MonoBehaviour {
 		if (!crouching)
 			return;
 		
-		crouching = false;
+		move.stopWalking(); // this force the reset of the sprite animation
 		crouchAC.stop();
+		crouching = false;
 		
 		// transform the collider
 		Vector3 theCenter = box.center;
