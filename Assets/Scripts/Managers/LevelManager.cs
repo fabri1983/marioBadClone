@@ -153,7 +153,7 @@ public class LevelManager : MonoBehaviour {
 		// warm no GUI dependant elements in case they don't exist yet
 		TouchEventManager.warm();
 		// find IFadeable component since main camera instance changes during scenes
-		OptionQuit.Instance.setFaderForMainCamera();
+		OptionQuit.Instance.setFaderFromMainCamera();
 	}
 	
 	public Player getPlayer () {

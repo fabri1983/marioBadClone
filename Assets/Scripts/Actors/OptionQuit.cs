@@ -90,7 +90,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 		showOptions = false;
 	}
 	
-	public void setFaderForMainCamera () {
+	public void setFaderFromMainCamera () {
 		// need to find IFadeable component here because main camera instance changes during scenes
 		fader = Camera.main.GetComponent<CameraFadeable>().getFader();
 	}

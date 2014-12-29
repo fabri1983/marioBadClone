@@ -37,11 +37,11 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
 	}
 	
-	void Start () {
+	/*void Start () {
 		if (!texture)
 			return;
-		//updateForGUI(); // make this game object to be located correctly in viewport
-	}
+		updateForGUI(); // make this game object to be located correctly in viewport
+	}*/
 
 	void OnDestroy () {
 		GUIScreenLayoutManager.Instance.remove(this);
