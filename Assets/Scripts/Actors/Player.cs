@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	
 	// I guess 3.2f is half the size of Player's renderer plus few units more so the query ratio is the shortest possible
 	private static Vector2 queryOffset = Vector2.up * -3.2f;
+	private static string collisionGroupSkip;
 	
 	private static Player instance = null;
 	
@@ -68,6 +69,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		leftFireDir.x = -1f;
 		leftFireDir.y = -0.5f;
 		fireDir = rightFireDir;
+		
+		collisionGroupSkip = GetComponent<ChipmunkShape>().collisionGroup;
 	}
 	
 	// Use this for initialization
@@ -95,11 +98,13 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	void Update () {
 		
 		// this set the correct jump status when the player without jumping enters on free fall state
+		// and also correct a sprite animation flickering when walking because the animation starts again 
+		// constantly after jump.resetStatus()
 		if (exitedFromScenery && !jump.IsJumping()) {
 			// check if there is no shape below us
 			ChipmunkSegmentQueryInfo qinfo;
 			Vector2 end = body.position + queryOffset;
-			Chipmunk.SegmentQueryFirst(body.position, end, (uint)(1 << gameObject.layer), "", out qinfo);
+			Chipmunk.SegmentQueryFirst(body.position, end, unchecked((uint)~(1 << gameObject.layer)), collisionGroupSkip, out qinfo);
 			// if no handler it means no hit
 			if (System.IntPtr.Zero == qinfo._shapeHandle)
 				// set state as if were jumping

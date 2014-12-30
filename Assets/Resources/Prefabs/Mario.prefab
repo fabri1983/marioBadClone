@@ -342,7 +342,7 @@ MonoBehaviour:
   _elasticity: 0
   _isSensor: 0
   _collisionType: Player
-  _collisionGroup: 
+  _collisionGroup: Player
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978
