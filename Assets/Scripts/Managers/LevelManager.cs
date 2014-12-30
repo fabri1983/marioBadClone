@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour {
     private static LevelManager instance;
     private int activeLevel;
     private Player player;
-	
+
 	// Containers for GUI custom elements (background, foreground, buttons, text, etc)
 	// They are only used for organizational purpose of GUI custom elements
     private static GameObject guiContainer_so = null; // scene only GUI container
@@ -133,6 +133,8 @@ public class LevelManager : MonoBehaviour {
 		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime();
 		// activate the player's game object
 		player.toogleEnabled(playerEnabled);
+		// setup some scene only scripts in LookUpwards
+		player.GetComponent<LookUpwards>().setup();
 		// set Mario spawn position for this level
 		setPlayerPosition(level);
 #if UNITY_EDITOR		

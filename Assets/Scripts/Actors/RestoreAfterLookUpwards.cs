@@ -60,4 +60,8 @@ public class RestoreAfterLookUpwards : MonoBehaviour {
 	public bool isRestored () {
 		return restored;
 	}
+	
+	public void setRestored (bool val) {
+		restored = val;
+	}
 }

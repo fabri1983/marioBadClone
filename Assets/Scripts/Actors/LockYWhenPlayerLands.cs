@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// This script needs to be attached to the camera.
-/// It makes the camera follow Player's Y position until it lands.
+/// When the level is started, it makes the camera follow Player's Y position until it lands.
 /// </summary>
 public class LockYWhenPlayerLands : MonoBehaviour {
 	

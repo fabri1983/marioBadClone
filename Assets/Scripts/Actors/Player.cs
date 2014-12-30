@@ -26,6 +26,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	// I guess 3.2f is half the size of Player's renderer plus few units more so the query ratio is the shortest possible
 	private static Vector2 queryOffset = Vector2.up * -3.2f;
 	private static string collisionGroupSkip;
+	private static uint collisionLayers;
 	
 	private static Player instance = null;
 	
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		fireDir = rightFireDir;
 		
 		collisionGroupSkip = GetComponent<ChipmunkShape>().collisionGroup;
+		collisionLayers = unchecked((uint)~(1 << gameObject.layer)); // all layers except Player's layer
 	}
 	
 	// Use this for initialization
@@ -104,7 +106,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			// check if there is no shape below us
 			ChipmunkSegmentQueryInfo qinfo;
 			Vector2 end = body.position + queryOffset;
-			Chipmunk.SegmentQueryFirst(body.position, end, unchecked((uint)~(1 << gameObject.layer)), collisionGroupSkip, out qinfo);
+			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayers, collisionGroupSkip, out qinfo);
 			// if no handler it means no hit
 			if (System.IntPtr.Zero == qinfo._shapeHandle)
 				// set state as if were jumping
@@ -157,13 +159,16 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			crouch.noCrouch();
 		
 		// look upwards
-		if ((Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) && !walk.isWalking() && !jump.IsJumping()) {
-			lookUpwards.lookUpwards();
-			isIdle = false;
+		if (!jump.IsJumping()) {
+			if (Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) {
+				lookUpwards.lookUpwards();
+				isIdle = false;
+			}
+			else
+				lookUpwards.restore();
 		}
-		else
-			lookUpwards.restore();
 		
+		// finally only if no doing any action then set idle state
 		if (isIdle)
 			idle.setIdle(false);
 	}

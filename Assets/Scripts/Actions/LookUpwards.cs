@@ -9,6 +9,8 @@ public class LookUpwards : MonoBehaviour {
 	private bool lookingUp;
 	private AnimateTiledConfig lookUpAC;
 	private PlayerFollowerXYConfig tempConfig; // for temporal storage
+	private RestoreAfterLookUpwards restoreLookUp;
+	private PlayerFollowerXY playerFollower;
 	
 	// Use this for initialization
 	void Awake () {
@@ -20,13 +22,16 @@ public class LookUpwards : MonoBehaviour {
 		tempConfig.enabled = false;
 	}
 	
+	public void setup () {
+		restoreLookUp = Camera.main.GetComponent<RestoreAfterLookUpwards>();
+		playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
+	}
+	
 	public void lookUpwards () {
 		// avoid re calculation if is already looking upwards
-		if (lookingUp || !Camera.main.GetComponent<RestoreAfterLookUpwards>().isRestored())
+		if (lookingUp || !restoreLookUp.isRestored())
 			return;
 		
-		// get follower script
-		PlayerFollowerXY playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
 		// copy state
 		tempConfig.setStateFrom(playerFollower);
 		// apply changes
@@ -35,22 +40,26 @@ public class LookUpwards : MonoBehaviour {
 		playerFollower.offsetY += camDisplacement;
 		playerFollower.timeFactor = speedFactor;
 		
+		restoreLookUp.setRestored(false);
+		
 		// set the correct sprite animation
 		lookUpAC.setupAndPlay();
 		lookingUp = true;
 	}
 	
 	public void restore () {
-		if (!lookingUp || !Camera.main.GetComponent<RestoreAfterLookUpwards>().isRestored())
+		if (!lookingUp || restoreLookUp.isRestored())
 			return;
 		
-		// get follower script
-		PlayerFollowerXY playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
 		// set back state as it was previous to look upwards
 		playerFollower.setStateFrom(tempConfig);
 		// start the script that will let the camera moves to correct position
-		Camera.main.GetComponent<RestoreAfterLookUpwards>().init(restoringSpeed);
+		restoreLookUp.init(restoringSpeed);
 		
 		lookingUp = false;
+	}
+	
+	public bool isLookingUpwards () {
+		return lookingUp;
 	}
 }
