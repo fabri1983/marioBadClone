@@ -27,13 +27,14 @@ public class RestoreAfterLookUpwards : MonoBehaviour {
 		origFollower = null;
 	}
 	
-	public void init () {
+	public void init (float restoreSpeed) {
 		tempConfig.setStateFrom(origFollower);
 		
 		// apply changes accordingly to expected effect
 		origFollower.lockY = false;
-		origFollower.smoothLerp = false; // abrupt lerping
-
+		origFollower.smoothLerp = true; // nice lerping
+		origFollower.timeFactor = restoreSpeed; // speedup the lerping
+		
 		enabled = true;
 		restored = false;
 	}

@@ -4,6 +4,7 @@ public class LookUpwards : MonoBehaviour {
 	
 	public float camDisplacement = 10f;
 	public float speedFactor = 3f;
+	public float restoringSpeed = 20f;
 
 	private bool lookingUp;
 	private AnimateTiledConfig lookUpAC;
@@ -48,7 +49,7 @@ public class LookUpwards : MonoBehaviour {
 		// set back state as it was previous to look upwards
 		playerFollower.setStateFrom(tempConfig);
 		// start the script that will let the camera moves to correct position
-		Camera.main.GetComponent<RestoreAfterLookUpwards>().init();
+		Camera.main.GetComponent<RestoreAfterLookUpwards>().init(restoringSpeed);
 		
 		lookingUp = false;
 	}

@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerFollowerXY : PlayerFollowerXYConfig {
 	
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
-	private float constantTimer = 0.016f;
 	
 	// Use this for initialization
 	void Start () {
@@ -46,14 +45,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 			transform.position = Vector3.Lerp(transform.position, thePos, Time.deltaTime * timeFactor);
 		}
 		else {
-			transform.position = Vector3.Lerp(transform.position, thePos, constantTimer);
-			// Increase or decrease the constant lerp timer
-		    if (thePos == transform.position)
-		        // Go to position1 t = 0.0f
-		        constantTimer = Mathf.Clamp(constantTimer - Time.deltaTime, 0.0f, 1.0f);
-		    else
-		        // Go to position2 t = 1.0f
-		        constantTimer = Mathf.Clamp(constantTimer + Time.deltaTime, 0.0f, 1.0f);
+			transform.position = Vector3.Lerp(transform.position, thePos, 1f);
 		}
 		
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
