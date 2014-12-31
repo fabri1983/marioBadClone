@@ -14,6 +14,7 @@ public enum EnumAnimateTiledName
 	Crouch,
 	Die,
 	Hide,
-	LookUpwards
+	LookUpwards,
+	WalkLookUpwards
 }
 
