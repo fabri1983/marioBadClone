@@ -119,7 +119,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		if (Gamepad.isA() || Input.GetButton("Jump")) {
 			jump.jump(lightJumpVelocity);
 			// apply gain jump power. Only once per jump (handled in Jump component)
-			if (Gamepad.isHardPressed(Gamepad.BUTTONS.A))
+			if (Gamepad.isHardPressed(EnumButton.A))
 				jump.applyGain(gainJumpFactor); 
 			isIdle = false;
 		}

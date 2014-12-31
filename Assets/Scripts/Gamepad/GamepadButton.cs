@@ -4,7 +4,7 @@ using System.Collections;
 public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	// this modified in inspector window
-	public string buttonLabel = "A";
+	public EnumButton buttonId = EnumButton.A;
 	public bool keepAlive = true;
 	public bool isStaticRuntime = true;
 	
@@ -64,16 +64,16 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		if (PauseGameManager.Instance.isPaused())
 			return;
 #if UNITY_EDITOR
-		Debug.Log(buttonLabel);
+		Debug.Log(buttonId.ToString());
 #endif
 		// set the pressed button on GamepadInput manager
-		if ("A".Equals(buttonLabel))
-			Gamepad.fireButton(Gamepad.BUTTONS.A);
-		else if ("B".Equals(buttonLabel))
-			Gamepad.fireButton(Gamepad.BUTTONS.B);
+		if (buttonId == EnumButton.A)
+			Gamepad.fireButton(EnumButton.A);
+		else if (buttonId == EnumButton.B)
+			Gamepad.fireButton(EnumButton.B);
 	}
 
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
 	void OnGUI () {
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
 		// is caught, so we need to manually check for the event and fire it here

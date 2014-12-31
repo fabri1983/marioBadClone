@@ -60,7 +60,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		TransitionGUIFxManager.Instance.remove(this);
 	}
 
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
 	void OnGUI () {
 		if (debugZones && EventType.Repaint == Event.current.type) {
 			// NOTE: use this with no aspect ratio modification. Set it as false in LevelManager
@@ -135,8 +135,10 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	}
 	
 	private static void optionSelected(Vector2 pos) {
+		// no allow interaction when game is on pause
 		if (PauseGameManager.Instance.isPaused())
 			return;
+		
 #if UNITY_EDITOR
 		//Debug.Log(pos + " -- " + guiPos);
 #endif
@@ -146,60 +148,60 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 #if UNITY_EDITOR
 			Debug.Log("up");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.UP);
+			Gamepad.fireButton(EnumButton.UP);
 		}
 		// right?
 		else if (arrowRects[1].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("right");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
+			Gamepad.fireButton(EnumButton.RIGHT);
 		}
 		// down?
 		else if (arrowRects[2].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("down");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
+			Gamepad.fireButton(EnumButton.DOWN);
 		}
 		// left?
 		else if (arrowRects[3].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("left");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
+			Gamepad.fireButton(EnumButton.LEFT);
 		}
 		// up-right?
 		else if (arrowRects[4].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("up-right");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.UP);
-			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
+			Gamepad.fireButton(EnumButton.UP);
+			Gamepad.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
 		else if (arrowRects[5].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("up-left");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.UP);
-			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
+			Gamepad.fireButton(EnumButton.UP);
+			Gamepad.fireButton(EnumButton.LEFT);
 		}
 		// up-left?
 		else if (arrowRects[6].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("down-right");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
-			Gamepad.fireButton(Gamepad.BUTTONS.RIGHT);
+			Gamepad.fireButton(EnumButton.DOWN);
+			Gamepad.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
 		else if (arrowRects[7].Contains(pos - guiPos)) {
 #if UNITY_EDITOR
 			Debug.Log("down-left");
 #endif
-			Gamepad.fireButton(Gamepad.BUTTONS.DOWN);
-			Gamepad.fireButton(Gamepad.BUTTONS.LEFT);
+			Gamepad.fireButton(EnumButton.DOWN);
+			Gamepad.fireButton(EnumButton.LEFT);
 		}
 	}
 }

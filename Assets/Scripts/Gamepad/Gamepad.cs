@@ -4,17 +4,13 @@ using System.Collections;
 
 public class Gamepad : MonoBehaviour {
 	
-	public enum BUTTONS {
-		A, B, UP, RIGHT, DOWN, LEFT
-	}
-	
 	// 5 is ok for mobile 30 fps, 9 for 60 fps
 	public const short HARD_PRESSED_MIN_COUNT = 9;
 	
 	// keeps track of every button's state
-	private static bool[] buttonsState = new bool[System.Enum.GetValues(typeof(BUTTONS)).Length];
+	private static bool[] buttonsState = new bool[System.Enum.GetValues(typeof(EnumButton)).Length];
 	// counts how many game loops the button is being pressed;
-	private static short[] hardPressedCount = new short[System.Enum.GetValues(typeof(BUTTONS)).Length];
+	private static short[] hardPressedCount = new short[System.Enum.GetValues(typeof(EnumButton)).Length];
 	
 	private static Gamepad instance = null;
 	
@@ -53,7 +49,7 @@ public class Gamepad : MonoBehaviour {
 	/// <summary>
 	/// Updates the hard pressed state of every button.
 	/// </summary>
-	private void updateHardPressed () {
+	private static void updateHardPressed () {
 		// increment count for ON buttons. Set to 0 to OFF buttons
 		for (int i=0; i < buttonsState.Length; ++i) {
 			if (buttonsState[i])
@@ -64,11 +60,7 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	void OnDestroy () {
-#if UNITY_EDITOR
-#else
-		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console:
 		instance = null;
-#endif
 	}
 	
 	/**
@@ -85,7 +77,7 @@ public class Gamepad : MonoBehaviour {
 	/// Set the button's state to true (on). If the button does pass the hard pressed test, 
 	/// the Gamepad manager keeps track of the situation.
 	/// </summary>
-	public static void fireButton (BUTTONS button) {
+	public static void fireButton (EnumButton button) {
 		buttonsState[(int)button] = true;
 	}
 	
@@ -99,31 +91,31 @@ public class Gamepad : MonoBehaviour {
 	/// <param name='button'>
 	/// The button enum value
 	/// </param>
-	public static bool isHardPressed (BUTTONS button) {
+	public static bool isHardPressed (EnumButton button) {
 		return hardPressedCount[(int)button] >= HARD_PRESSED_MIN_COUNT;
 	}
 	
 	public static bool isUp() {
-		return buttonsState[(int)BUTTONS.UP];
+		return buttonsState[(int)EnumButton.UP];
 	}
 	
 	public static bool isDown() {
-		return buttonsState[(int)BUTTONS.DOWN];
+		return buttonsState[(int)EnumButton.DOWN];
 	}
 	
 	public static bool isLeft() {
-		return buttonsState[(int)BUTTONS.LEFT];
+		return buttonsState[(int)EnumButton.LEFT];
 	}
 	
 	public static bool isRight() {
-		return buttonsState[(int)BUTTONS.RIGHT];
+		return buttonsState[(int)EnumButton.RIGHT];
 	}
 	
 	public static bool isA() {
-		return buttonsState[(int)BUTTONS.A];
+		return buttonsState[(int)EnumButton.A];
 	}
 	
 	public static bool isB() {
-		return buttonsState[(int)BUTTONS.B];
+		return buttonsState[(int)EnumButton.B];
 	}
 }
