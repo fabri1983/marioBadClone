@@ -167,6 +167,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			else
 				lookUpwards.restore();
 		}
+		else
+			lookUpwards.lockYWhenJumping();
 		
 		// finally only if no doing any action then set idle state
 		if (isIdle)

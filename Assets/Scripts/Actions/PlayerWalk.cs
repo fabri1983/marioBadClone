@@ -4,6 +4,16 @@ public class PlayerWalk : WalkAbs {
 	
 	public float speedUpFactor = 1.9f;
 	
+	private AnimateTiledConfig walkAC_orig;
+	private AnimateTiledConfig walkLookingUpAC;
+	private LookUpwards lookUpwards;
+	
+	void Start () {
+		lookUpwards = GetComponent<LookUpwards>();
+		walkAC_orig = walkAC;
+		walkLookingUpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.WalkLookUpwards, true);
+	}
+	
 	public override void reset () {
 		//if (idle != null) idle.setIdle(true);
 		walking = false;

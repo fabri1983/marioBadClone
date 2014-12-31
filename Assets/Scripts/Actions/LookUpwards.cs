@@ -11,6 +11,7 @@ public class LookUpwards : MonoBehaviour {
 	private PlayerFollowerXYConfig tempConfig; // for temporal storage
 	private RestoreAfterLookUpwards restoreLookUp;
 	private PlayerFollowerXY playerFollower;
+	private PlayerWalk walk;
 	
 	// Use this for initialization
 	void Awake () {
@@ -20,14 +21,24 @@ public class LookUpwards : MonoBehaviour {
 		tempConfig = gameObject.AddComponent<PlayerFollowerXYConfig>();
 		// disable the dummy component from being updated by Unity3D game loop
 		tempConfig.enabled = false;
+		
+		walk = GetComponent<PlayerWalk>();
 	}
 	
+	/// <summary>
+	/// Setup needed per scene, when it is loaded.
+	/// </summary>
 	public void setup () {
 		restoreLookUp = Camera.main.GetComponent<RestoreAfterLookUpwards>();
 		playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
+		lookingUp = false;
 	}
 	
 	public void lookUpwards () {
+		// since is allowed to look upwards and walk at the same time then make sure the correct 
+		// sprite anim is executed when is not walking
+		if (lookingUp && !walk.isWalking())
+			lookUpAC.setupAndPlay();
 		// avoid re calculation if is already looking upwards
 		if (lookingUp || !restoreLookUp.isRestored())
 			return;
@@ -57,6 +68,12 @@ public class LookUpwards : MonoBehaviour {
 		restoreLookUp.init(restoringSpeed);
 		
 		lookingUp = false;
+	}
+	
+	public void lockYWhenJumping () {
+		// when jumping and still looking up, then lock Y axis to avoid a continuing displacement of camera
+		if (lookingUp)
+			playerFollower.lockY = true;
 	}
 	
 	public bool isLookingUpwards () {

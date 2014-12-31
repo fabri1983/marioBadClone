@@ -60,7 +60,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 		TouchEventManager.Instance.register(this, TouchPhase.Began);
 	}
 
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
 	void OnGUI () {
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
 		// is caught, so we need to manually check for the event and fire it here
