@@ -38,6 +38,18 @@ public class PauseGameManager : MonoBehaviour {
 		instance = null;
 	}
 	
+	/**
+	 * Fired by Unity when the app is going to or coming from background.
+	 */
+	void OnApplicationPause(bool pauseStatus) {
+		// is app going into background?
+		if (pauseStatus)
+			pause();
+		// app is brought back to foreground
+		else
+			resume();
+	}
+	
 	public bool isPaused () {
 		return paused;
 	}
@@ -77,7 +89,7 @@ public class PauseGameManager : MonoBehaviour {
 	/// Traverse all registered components to be paused. For each one of them it calls pause() method, 
 	/// and then disables all MonoBehaviour scripts.
 	/// </summary>
-	public void pause() {
+	public void pause () {
 		
 		paused = true;
 		
@@ -99,7 +111,7 @@ public class PauseGameManager : MonoBehaviour {
 	/// Traverse all registered components to be resumed. For each one of them it enables all MonoBehaviour scripts, 
 	/// and then calls resume() method.
 	/// </summary>
-	public void resume() {
+	public void resume () {
 		for (int i=0, c=sceneOnly.Count; i<c; ++i) {
 			MonoBehaviour[] monos = sceneOnlyMonos[i];
 			for (int j=0, cc=monos.Length; j < cc; ++j)
