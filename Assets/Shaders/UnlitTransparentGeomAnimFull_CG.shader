@@ -62,8 +62,8 @@ SubShader {
 	 		_offset.y = (step(1.0, _offset.y) - 1.0) * -1.0 * _offset.y;
 	 		
 	        // If we have scaled the texture, we need to reposition the texture to the center of the object
-	        _offset.x += ((1.0 / _SetupVec1.y) - _SetupVec2.x) / 2.0;
-	        _offset.y += ((1.0 / _SetupVec1.z) - _SetupVec2.y) / 2.0;
+	        _offset.x += ((1.0 / _SetupVec1.y) - _SetupVec2.x) * 0.5;
+	        _offset.y += ((1.0 / _SetupVec1.z) - _SetupVec2.y) * 0.5;
 	 		// try this: _offset.xy = ((fixed2(1.0, 1.0) / _SetupVec1.xy) - _SetupVec2.xy) * 0.5;
 	 		
 	        // Add an additional offset if the user does not want the texture centered

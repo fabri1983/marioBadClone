@@ -14,8 +14,8 @@ public class AnimateTiledTexture : MonoBehaviour
 [HideInInspector] public bool _enableEvents = false;			// Enable this if you want to register an event that fires when the animation is finished playing
 [HideInInspector] public bool _playOnEnable = true;				// The animation will play when the object is enabled
 	public bool _newMaterialInstance = false;					// Set this to true when having more than one game object using same sprite
-[HideInInspector] public Vector2 _scale = new Vector2(1f, 1f);	// scale the texture. This must be a non-zero number. negative scale flips the image.
-[HideInInspector] public Vector2 _offset = Vector2.zero;		// You can use this if you do not want the texture centered. (These are very small numbers .001)
+[HideInInspector] public Vector2 _scale = new Vector2(1f, 1f);	// scale the texture. This must be a non-zero number. Negative scale flips the image.
+[HideInInspector] public Vector2 _offset = Vector2.zero;		// You can use this if you don't want the texture centered. (These are very small numbers .001)
 [HideInInspector] public Vector2 _buffer = Vector2.zero;		// You can use this to buffer frames to hide unwanted grid lines or artifacts
 
 	// these two vars will change depending on the sequence to be displayed.
@@ -55,7 +55,7 @@ public class AnimateTiledTexture : MonoBehaviour
 		_maxIndex = _colLimits[0] + _colLimits[1] - 1;
 		
 		// what is the offset in Y the current animation starts from
-		offsetYStart = 1f - 1f / (_rowsTotalInSprite - _rowLimits[0]);
+		offsetYStart = 1f / (_rowsTotalInSprite - _rowLimits[0]);
     }
  
 	private void OnEnable()
@@ -77,7 +77,7 @@ public class AnimateTiledTexture : MonoBehaviour
 	public void setRowLimits(int start, int numRows) {
 		_rowLimits[0] = start;
 		_rowLimits[1] = numRows;
-		offsetYStart = 1f - 1f / (_rowsTotalInSprite - start);
+		offsetYStart = 1f / (_rowsTotalInSprite - start);
 	}
 	
 	public void setColLimits(int start, int length) {
