@@ -252,11 +252,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 4
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 8
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 8
+  colLength: 2
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,11 +270,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 5
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 7
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 7
+  colLength: 1
 --- !u!114 &11400022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,11 +288,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 1
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -306,11 +306,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 2
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 6
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 6
+  colLength: 1
 --- !u!114 &11400026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -324,11 +324,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 3
+  pingPong: 1
+  rowStart: 0
+  rowLength: 1
+  colStart: 1
+  colLength: 3
 --- !u!114 &11400028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -398,11 +398,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 8
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 1
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 1
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &11400038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -429,11 +429,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 9
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 1
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 3
+  pingPong: 1
+  rowStart: 1
+  rowLength: 1
+  colStart: 1
+  colLength: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

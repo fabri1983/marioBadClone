@@ -131,11 +131,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 1
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,11 +149,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 1
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 1
+  colLength: 1
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

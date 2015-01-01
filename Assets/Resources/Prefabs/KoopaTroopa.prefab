@@ -224,11 +224,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 2
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 3
-  colLengthAnim: 2
+  pingPong: 1
+  rowStart: 0
+  rowLength: 1
+  colStart: 3
+  colLength: 2
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,11 +242,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 7
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 2
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 2
+  colLength: 1
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,11 +260,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 2
+  pingPong: 1
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 2
 --- !u!114 &11400022
 MonoBehaviour:
   m_ObjectHideFlags: 1
