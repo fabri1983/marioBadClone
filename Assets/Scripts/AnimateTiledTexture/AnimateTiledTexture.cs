@@ -7,8 +7,8 @@ public class AnimateTiledTexture : MonoBehaviour
 	public bool _useCoroutine = false;					// Use coroutines for PC targets. For mobile targets WaitForSeconds doesn't work.
 [HideInInspector] public float _framesPerSecond = 1f;	// Frames per second that you want to texture to play at
 [HideInInspector] public bool _pingPongAnim = false;	// True for going forward and backwards in the animation
-	public int _rowsTotalInSprite = 1;					// How much rows the sprite has. This value is defined once
-	public int _maxColsInRows = 1;		// The greatest number of columns from the rows the anim covers, not the total columns the anim has
+	public float _rowsTotalInSprite = 1;					// How much rows the sprite has. This value is defined once
+	public float _maxColsInRows = 1;		// The greatest number of columns from the rows the anim covers, not the total columns the anim has
 [HideInInspector] public bool _playOnce = false;				// Enable this if you want the animation to only play one time
 [HideInInspector] public bool _disableUponCompletion = false;	// Enable this if you want the texture to disable the renderer when it is finished playing
 [HideInInspector] public bool _enableEvents = false;			// Enable this if you want to register an event that fires when the animation is finished playing
@@ -77,7 +77,7 @@ public class AnimateTiledTexture : MonoBehaviour
 	public void setRowLimits(int start, int numRows) {
 		_rowLimits[0] = start;
 		_rowLimits[1] = numRows;
-		offsetYStart = 1f / (_rowsTotalInSprite - start);
+		offsetYStart = (start + 1) / _rowsTotalInSprite; // add 1 since start is 0 based and _rowsTotalInSprite isn't
 	}
 	
 	public void setColLimits(int start, int length) {
@@ -249,18 +249,20 @@ public class AnimateTiledTexture : MonoBehaviour
     }
  
     private void ApplyOffset() {
-		float xTemp = (float)_index / (float)_maxColsInRows;
-		float xTempFloor = _index / _maxColsInRows; // operation beetween ints, then result is saved as float
+		if (AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.WalkLookUpwards, false) != null && LevelManager.Instance.getPlayer().GetComponent<LookUpwards>().isLookingUpwards())
+			print(0);
+		float xTemp = (float)_index / _maxColsInRows;
+		float xTempFloor = _index / (int)_maxColsInRows;
 		float x = xTemp - xTempFloor;
-		float y = 1f - (xTempFloor / (float)_rowsTotalInSprite) - offsetYStart;
+		float y = 1f - (xTempFloor / _rowsTotalInSprite) - offsetYStart;
  
 		// Reset the y offset, if needed
         if (y == 1f)
             y = 0f;
  
         // If we have scaled the texture, we need to reposition the texture to the center of the object
-        x += ((1f / _maxColsInRows) - _textureTiling.x) / 2f;
-        y += ((1f / _rowsTotalInSprite) - _textureTiling.y) / 2f;
+        x += ((1f / _maxColsInRows) - _textureTiling.x) * 0.5f;
+        y += ((1f / _rowsTotalInSprite) - _textureTiling.y) * 0.5f;
  
         // Add an additional offset if the user does not want the texture centered
         offsetTemp.x = x + _offset.x;
