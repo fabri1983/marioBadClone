@@ -13,11 +13,11 @@ public class AnimateTiledConfig : MonoBehaviour {
 	
 	public EnumAnimateTiledName actionName = EnumAnimateTiledName.None; // this used to reference the correct animate tiled configuration component
 	public float animFPS = 1; // sprite animation's fps
-	public bool pingPongAnim = false; // true for going forward and backwards in the animation
-	public int rowStartAnim = 0; // the absolute row position where the anim starts
-	public int rowLengthAnim = 1; // how many rows the anim has?
-	public int colStartAnim = 0; // the column from the starting row where the anim starts
-	public int colLengthAnim = 1; // how total columns the anim has
+	public bool pingPong = false; // true for going forward and backwards in the animation
+	public int rowStart = 0; // the absolute row position where the anim starts
+	public int rowLength = 1; // how many rows this animation has?
+	public int colStart = 0; // the column from the starting row where the animation starts
+	public int colLength = 1; // how total columns this animation has?
 	
 	private bool working = false; // handled from the caller, not from the animate tiled object
 	
@@ -27,9 +27,9 @@ public class AnimateTiledConfig : MonoBehaviour {
 	
 	public void setupAndPlay () {
 		animComp.setFPS(animFPS);
-		animComp.setRowLimits(rowStartAnim, rowLengthAnim);
-		animComp.setColLimits(colStartAnim, colLengthAnim);
-		animComp.setPingPongAnim(pingPongAnim);
+		animComp.setRowLimits(rowStart, rowLength);
+		animComp.setColLimits(colStart, colLength);
+		animComp.setPingPongAnim(pingPong);
 		working = true;
 		animComp.Play();
 	}

@@ -700,11 +700,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 1
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &258322111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,11 +719,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 1
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 1
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!1 &279856457
 GameObject:
   m_ObjectHideFlags: 0
@@ -4213,11 +4213,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 2
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 3
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1326582334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4232,11 +4232,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 7
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 2
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1326582335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4251,11 +4251,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1326582336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4526,43 +4526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
   m_Name: 
   otherLayersBelongTo: 
---- !u!1 &1362834770
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1362834771}
-  - 114: {fileID: 1362834772}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1362834771
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1362834770}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1362834772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1362834770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
 --- !u!1 &1365921892
 GameObject:
   m_ObjectHideFlags: 0
@@ -5307,11 +5270,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1585839226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5326,11 +5289,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 7
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 2
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1585839227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5345,11 +5308,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 2
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 3
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!1001 &1588330224
 Prefab:
   m_ObjectHideFlags: 0
@@ -5591,11 +5554,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1625199376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5610,11 +5573,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 1
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1625199377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6113,6 +6076,43 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1116123940}
   m_GameObject: {fileID: 1737432059}
   m_Mesh: {fileID: 4300000, guid: ed6286d99c4e1784aab66bd49eb7c948, type: 2}
+--- !u!1 &1759166456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1759166457}
+  - 114: {fileID: 1759166458}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1759166457
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1759166456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1759166458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1759166456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
 --- !u!1 &1760765227
 GameObject:
   m_ObjectHideFlags: 0
@@ -6748,11 +6748,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 1
   animFPS: 1
-  pingPongAnim: 0
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 1
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!114 &1809190378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6767,11 +6767,11 @@ MonoBehaviour:
   animComp: {fileID: 0}
   actionName: 3
   animFPS: 7
-  pingPongAnim: 1
-  rowStartAnim: 0
-  rowLengthAnim: 1
-  colStartAnim: 0
-  colLengthAnim: 2
+  pingPong: 0
+  rowStart: 0
+  rowLength: 1
+  colStart: 0
+  colLength: 1
 --- !u!1 &1831810104
 GameObject:
   m_ObjectHideFlags: 0

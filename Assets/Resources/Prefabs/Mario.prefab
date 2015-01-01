@@ -227,7 +227,7 @@ MonoBehaviour:
   _useCoroutine: 0
   _framesPerSecond: 2
   _pingPongAnim: 0
-  _rowsTotalInSprite: 3
+  _rowsTotalInSprite: 4
   _maxColsInRows: 10
   _playOnce: 0
   _disableUponCompletion: 0
@@ -399,7 +399,7 @@ MonoBehaviour:
   actionName: 8
   animFPS: 1
   pingPongAnim: 0
-  rowStartAnim: 2
+  rowStartAnim: 1
   rowLengthAnim: 1
   colStartAnim: 0
   colLengthAnim: 1
@@ -430,7 +430,7 @@ MonoBehaviour:
   actionName: 9
   animFPS: 7
   pingPongAnim: 1
-  rowStartAnim: 2
+  rowStartAnim: 1
   rowLengthAnim: 1
   colStartAnim: 1
   colLengthAnim: 3
