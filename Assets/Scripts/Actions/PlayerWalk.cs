@@ -35,9 +35,9 @@ public class PlayerWalk : WalkAbs {
 			gain = speedUpFactor;
 		
 		// if user is looking upwards then set the correct sprite animation
-		/*if (lookUpwards.isLookingUpwards())
+		if (lookUpwards.isLookingUpwards())
 			walkAC = walkLookingUpAC;
-		else*/
+		else
 			walkAC = walkAC_orig;
 		
 		base._walk(velocity);

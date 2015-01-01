@@ -60,6 +60,7 @@ GameObject:
   - 114: {fileID: 11400020}
   - 114: {fileID: 11400018}
   - 114: {fileID: 11400036}
+  - 114: {fileID: 11400040}
   m_Layer: 0
   m_Name: AnimatedTiledTexture
   m_TagString: Untagged
@@ -226,8 +227,8 @@ MonoBehaviour:
   _useCoroutine: 0
   _framesPerSecond: 2
   _pingPongAnim: 0
-  _rowsTotalInSprite: 2
-  _maxColsInRows: 11
+  _rowsTotalInSprite: 3
+  _maxColsInRows: 10
   _playOnce: 0
   _disableUponCompletion: 0
   _enableEvents: 0
@@ -398,9 +399,9 @@ MonoBehaviour:
   actionName: 8
   animFPS: 1
   pingPongAnim: 0
-  rowStartAnim: 0
+  rowStartAnim: 2
   rowLengthAnim: 1
-  colStartAnim: 10
+  colStartAnim: 0
   colLengthAnim: 1
 --- !u!114 &11400038
 MonoBehaviour:
@@ -414,6 +415,25 @@ MonoBehaviour:
   m_Name: 
   camDisplacement: 10
   speedFactor: 3
+  restoringSpeed: 20
+--- !u!114 &11400040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a1cb4e8e75cd24fb275fac586b1839, type: 1}
+  m_Name: 
+  animComp: {fileID: 0}
+  actionName: 9
+  animFPS: 7
+  pingPongAnim: 1
+  rowStartAnim: 2
+  rowLengthAnim: 1
+  colStartAnim: 1
+  colLengthAnim: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
