@@ -104,6 +104,17 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 		showOptions = true;
 	}
 	
+	void Update () {
+		// back button
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			// if options already shown, then hide them
+			if (showOptions)
+				back();
+			else
+				optionSelected();
+		}
+	}
+	
 	void OnGUI () {	
 #if UNITY_EDITOR
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
@@ -117,24 +128,31 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 		if (!showOptions)
 			return;
 		
-		if(GUI.Button(rectQuit, "Quit")) {
-			Application.Quit(); // doesn't work on Editor mode
+		if (GUI.Button(rectQuit, "Quit"))
+			quit();
+		if (GUI.Button(rectBack, "Back"))
+			back();
+		if (GUI.Button(rectLevelSel, "Levels"))
+			levelSelection();
+	}
+	
+	private void quit () {
+		Application.Quit(); // doesn't work on Editor mode
 #if UNITY_EDITOR
-			showOptions = false;
-			fader.startFading(EnumFadeDirection.FADE_OUT);
-			PauseGameManager.Instance.resume();
+		back();
 #endif
-		}
-		if(GUI.Button(rectBack, "Back")) {
-			showOptions = false;
-			fader.startFading(EnumFadeDirection.FADE_OUT);
-			PauseGameManager.Instance.resume();
-		}
-		if(GUI.Button(rectLevelSel, "Levels")) {
-			showOptions = false;
-			fader.startFading(EnumFadeDirection.FADE_OUT);
-			PauseGameManager.Instance.resume();
-			LevelManager.Instance.loadLevelSelection();
-		}
+	}
+	
+	private void back () {
+		showOptions = false;
+		fader.startFading(EnumFadeDirection.FADE_OUT);
+		PauseGameManager.Instance.resume();
+	}
+	
+	private void levelSelection () {
+		showOptions = false;
+		fader.startFading(EnumFadeDirection.FADE_OUT);
+		PauseGameManager.Instance.resume();
+		LevelManager.Instance.loadLevelSelection();
 	}
 }

@@ -63,7 +63,7 @@ PlayerSettings:
   iPhoneBundleVersion: 0.1
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 10
-  AndroidPreferredInstallLocation: 0
+  AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2
   iPhoneStrippingLevel: 3

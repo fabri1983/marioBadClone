@@ -249,8 +249,7 @@ public class AnimateTiledTexture : MonoBehaviour
     }
  
     private void ApplyOffset() {
-		if (AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.WalkLookUpwards, false) != null && LevelManager.Instance.getPlayer().GetComponent<LookUpwards>().isLookingUpwards())
-			print(0);
+		
 		float xTemp = (float)_index / _maxColsInRows;
 		float xTempFloor = _index / (int)_maxColsInRows;
 		float x = xTemp - xTempFloor;
