@@ -20,7 +20,6 @@ public class LevelManager : MonoBehaviour {
 	/// also when player fires a spawn position trigger
 	private static SpawnPositionSpot[] spawnPosArray = new SpawnPositionSpot[Application.levelCount];
 	
-    private static LevelManager instance;
     private int activeLevel;
     private Player player;
 
@@ -33,9 +32,8 @@ public class LevelManager : MonoBehaviour {
 	
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
-	/**
-	 * Singleton access
-	 */
+	private static LevelManager instance;
+	
 	public static LevelManager Instance {
         get {
             if (instance == null) {

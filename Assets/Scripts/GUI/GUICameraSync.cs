@@ -6,13 +6,10 @@ using System.Collections.Generic;
 /// This script updates all GUI elements which need to be alligned with the Main Camera for correct display.
 /// This only has sense for GUI custom elements.
 /// </summary>
-public class GUISyncWithCamera : MonoBehaviour {
+public class GUICameraSync : MonoBehaviour {
 	
-	/**
-	 * LateUpdate is called after all Update functions have been called.
-	 * Dependant objects might have moved during Update.
-	 */
-	void LateUpdate () {
+	void Update () {
+		// if this is invoked in LateUpdate then some gui custom elements doesn't work with TouchEventManager
 		updateGUITransforms();
 	}
 	
