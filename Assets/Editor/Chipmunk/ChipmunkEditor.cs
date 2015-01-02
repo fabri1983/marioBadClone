@@ -92,8 +92,11 @@ public class ChipmunkMenus : ScriptableObject
 	}
 	
 	public static void AddComponents<T>() where T : Component{
+#if UNITY_4_AND_LATER
+		DestroyObjectImmediate();
+#else
 		Undo.RegisterSceneUndo("add " + typeof(T).Name);
-		
+#endif
 		foreach(GameObject go in Selection.gameObjects){
 			go.AddComponent<T>();
 		}
@@ -186,10 +189,18 @@ public class ChipmunkEditor : Editor {
 	}
 	
 	protected void SetupUndo(string message){
+#if UNITY_4_AND_LATER
+		Undo.RecordObject(target);
+		if(Input.GetMouseButtonDown(0)){
+			Undo.RecordObject(target);
+			Undo.RecordObject(target);
+		}
+#else
 		Undo.SetSnapshotTarget(target, message);
 		if(Input.GetMouseButtonDown(0)){
 			Undo.CreateSnapshot();
 			Undo.RegisterSnapshot();
 		}
+#endif
 	}
 }

@@ -48,7 +48,12 @@ public class PowerUpFireBall : PowerUp {
 			timingFire = rateOfFire;
 			
 			GameObject newGO = GameObject.Instantiate(getArtifact(), player.getFirePivot().position, Quaternion.identity) as GameObject;
-			newGO.active = false; // so it doesn't interact with current game object creator
+			// deactivate it so it doesn't interact with current game object creator
+#if UNITY_4_AND_LATER
+			newGO.SetActive(false);
+#else
+			newGO.active = false; 
+#endif
 			newGO.tag = "PowerUp";
 			FireBall fireball = newGO.GetComponent<FireBall>();
 			fireball.setDestroyTime(getDestroyTime());
@@ -57,7 +62,11 @@ public class PowerUpFireBall : PowerUp {
 			fireball.setSpeed(getPower());
 			fireball.addTargetLayer(LevelManager.LAYER_POWERUP);
 			newGO.transform.parent = null;
+#if UNITY_4_AND_LATER
+			newGO.SetActive(true);
+#else
 			newGO.active = true;
+#endif
 			use();
 		}
 	}

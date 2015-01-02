@@ -127,6 +127,10 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	private void destroy () {
 		body.enabled = false; // makes the body to be removed from the space
 		shape.enabled = false; // makes the shape to be removed from the space
+#if UNITY_4_AND_LATER
+		gameObject.SetActive(false);
+#else
 		gameObject.SetActiveRecursively(false);
+#endif
 	}
 }

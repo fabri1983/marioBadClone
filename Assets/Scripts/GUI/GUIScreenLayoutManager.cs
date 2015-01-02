@@ -248,7 +248,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 			w = h / Screen.height * Screen.width;
 		}
 		else {
-			h = 2f * Mathf.Tan(Camera.main.fov * DEG_2_RAD_0_5) * posAhead;
+			h = 2f * Mathf.Tan(Camera.main.fieldOfView * DEG_2_RAD_0_5) * posAhead;
 			w = h * Camera.main.aspect;
 		}
 		

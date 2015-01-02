@@ -85,7 +85,12 @@ public class PiranhaFire : MonoBehaviour {
 		}
 		
 		GameObject newGO = GameObject.Instantiate(fireBall, firePos, Quaternion.identity) as GameObject;
-		newGO.active = false; // so it doesn't interact with current game object creator
+		// deactivae it so it doesn't interact with current game object creator
+#if UNITY_4_AND_LATER
+		newGO.SetActive(false);
+#else
+		newGO.active = false;
+#endif
 		FireBall fireball = newGO.GetComponent<FireBall>();
 		fireball.setDestroyTime(destroyTime);
 		fireball.setBouncing(false);
@@ -93,7 +98,11 @@ public class PiranhaFire : MonoBehaviour {
 		fireball.setSpeed(firePow);
 		fireball.addTargetLayer(LevelManager.LAYER_PLAYER);
 		newGO.transform.parent = null;
+#if UNITY_4_AND_LATER
+		newGO.SetActive(true);
+#else
 		newGO.active = true;
+#endif
 	}
 	
 	public void setQuad (int val) {

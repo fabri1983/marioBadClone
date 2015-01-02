@@ -13,7 +13,11 @@ public class BrickInvisibleTrigger : MonoBehaviour {
 		if (brickScript.isInvisible) {
 			brickScript.gameObject.collider.enabled = false;
 			brickScript.gameObject.renderer.enabled = false;
-			transform.parent.FindChild("BrickTop").gameObject.active = false;;
+#if UNITY_4_AND_LATER
+			transform.parent.FindChild("BrickTop").gameObject.SetActive(false);
+#else
+			transform.parent.FindChild("BrickTop").gameObject.active = false;
+#endif
 		}
 		// if not then destroy the bottom trigger
 		else

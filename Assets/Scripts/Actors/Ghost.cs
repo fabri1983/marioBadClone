@@ -37,7 +37,11 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	private void destroy () {
 		shape.enabled = false; // makes the shape to be removed from the space
 		GameObjectTools.ChipmunkBodyDestroy(body);
+#if UNITY_4_AND_LATER
+		gameObject.SetActive(false);
+#else
 		gameObject.SetActiveRecursively(false);
+#endif
 		PauseGameManager.Instance.remove(this);
 	}
 	

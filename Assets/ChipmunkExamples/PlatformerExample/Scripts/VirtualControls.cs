@@ -25,7 +25,7 @@ public class VirtualControls : MonoBehaviour {
 	}
 	
 	protected void ProcessTouch(Vector3 point){
-		var ray = Camera.mainCamera.ScreenPointToRay(point);
+		var ray = Camera.main.ScreenPointToRay(point);
 		direction += CheckDirection(ray);
 		jump = jump || CheckJump(ray);
 	}

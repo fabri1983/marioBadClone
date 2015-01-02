@@ -216,7 +216,7 @@ static public class GameObjectTools
 	/// </param>
 	public static bool testHitFromScreenPos (Transform t, Vector2 screenPos)
 	{
-		Ray ray = Camera.mainCamera.ScreenPointToRay(screenPos);
+		Ray ray = Camera.main.ScreenPointToRay(screenPos);
 		Vector3 origin = t.InverseTransformPoint(ray.origin);
 		Vector3 direction = t.InverseTransformDirection(ray.direction);
 		Vector3 zeroCross = origin - direction * (origin.z/direction.z);
@@ -242,7 +242,7 @@ static public class GameObjectTools
 		mousePosInverted.x = mouseScreenPos.x;
 		// mouse position is in GUI space which has inverted Y axis
 		mousePosInverted.y = Screen.height - mouseScreenPos.y;
-		Ray ray = Camera.mainCamera.ScreenPointToRay(mousePosInverted);
+		Ray ray = Camera.main.ScreenPointToRay(mousePosInverted);
 		Vector3 origin = t.InverseTransformPoint(ray.origin);
 		Vector3 direction = t.InverseTransformDirection(ray.direction);
 		Vector3 zeroCross = origin - direction * (origin.z/direction.z);

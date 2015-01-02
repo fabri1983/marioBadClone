@@ -16,12 +16,20 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	void Awake () {
 		// deactivate the game object if no texture
 		if (!texture) {
+#if UNITY_4_AND_LATER
+			gameObject.SetActive(false);
+#else
 			gameObject.SetActiveRecursively(false);
+#endif
 			return;
 		}
-		else
+		else {
+#if UNITY_4_AND_LATER
+			gameObject.SetActive(true);
+#else
 			gameObject.SetActiveRecursively(true);
-		
+#endif
+		}
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this);
 		

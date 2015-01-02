@@ -75,7 +75,11 @@ public class Brick : MonoBehaviour {
 		else {
 			gameObject.collider.enabled = false;
 			// disable the child ("top" game object)
+#if UNITY_4_AND_LATER
+			transform.FindChild("BrickTop").gameObject.SetActive(false);
+#else
 			transform.FindChild("BrickTop").gameObject.active = false;
+#endif
 		}
 	}
 }

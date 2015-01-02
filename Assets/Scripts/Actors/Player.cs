@@ -181,7 +181,11 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	}
 	
 	public void toogleEnabled (bool val) {
+#if UNITY_4_AND_LATER
+		gameObject.SetActive(val);
+#else
 		gameObject.SetActiveRecursively(val);
+#endif
 	}
 	
 	public void die () {

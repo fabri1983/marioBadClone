@@ -34,7 +34,7 @@ public class DragAndDropManager : MonoBehaviour {
 		// or even a perspective camera not perpendicular to the plane of action.
 			
 		// So manually cast a ray to the plane of action.
-		Ray ray = Camera.mainCamera.ScreenPointToRay(mouseOrTouchPosition);
+		Ray ray = Camera.main.ScreenPointToRay(mouseOrTouchPosition);
 		Vector3 worldPos = CastRayToPlane(ray);
 
 		return worldPos;

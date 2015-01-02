@@ -33,7 +33,11 @@ public class GoombaDieAnim : MonoBehaviour {
 		
 		// disable the game object (not children) to avoid ugly upward movement due to
 		// unknown behavior (maybe because its move script continues working?)
+#if UNITY_4_AND_LATER
+		gameObject.SetActive(false);
+#else
 		gameObject.active = false;
+#endif
 	}
 	
 	public bool isDying () {
