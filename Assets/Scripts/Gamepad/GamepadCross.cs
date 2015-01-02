@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	
-	public bool keepAlive = true;
-	public bool isStaticRuntime = true;
+	public bool dontDestroy = true; // true for keeping alive between scenes
+	public bool isStaticRuntime = true; // true if the game object never translate, even when is initialized
 	public bool debugZones = false;
 	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
@@ -25,10 +25,9 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	private static Vector2 guiPos;
 	
 	void Awake () {
-		if (keepAlive) {
+		if (dontDestroy)
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
-		}
 		
 		TransitionGUIFxManager.Instance.register(this, false);
 		

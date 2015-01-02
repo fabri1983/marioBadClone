@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// </summary>
 public class TouchEventManager : MonoBehaviour {
 
-	private static ListenerLists dynamicListeners = new ListenerLists(); // it's a struct, no instancing needed
+	private static ListenerLists dynamicListeners = new ListenerLists();
 	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent();
 	
 	/// If true then you can touch overlapped game objects (in screen)
@@ -57,7 +57,7 @@ public class TouchEventManager : MonoBehaviour {
 	/// All the touch phases you want your gameobject be registered to.
 	/// </param>
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
-
+		
 		if (!listener.isStatic())
 			dynamicListeners.add(listener, touchPhases);
 		else {
