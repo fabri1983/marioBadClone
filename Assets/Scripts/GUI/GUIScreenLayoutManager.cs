@@ -127,7 +127,12 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 			break; }
 		default: break;
 		}
-		
+#if UNITY_EDITOR
+		if (float.IsNegativeInfinity(p.x) || float.IsInfinity(p.x) || float.IsNaN(p.x))
+			p.x = 0f;
+		if (float.IsNegativeInfinity(p.y) || float.IsInfinity(p.y) || float.IsNaN(p.y))
+			p.y = 0f;
+#endif
 		gt.pixelInset = p;
 	}
 	
@@ -209,7 +214,12 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 			break; }
 		default: break;
 		}
-		
+#if UNITY_EDITOR
+		if (float.IsNegativeInfinity(p.x) || float.IsInfinity(p.x) || float.IsNaN(p.x))
+			p.x = 0f;
+		if (float.IsNegativeInfinity(p.y) || float.IsInfinity(p.y) || float.IsNaN(p.y))
+			p.y = 0f;
+#endif
 		tr.localPosition = p;
 	}
 	

@@ -13,8 +13,8 @@ using System.Collections;
 /// 5.5 frames.
 public class FPSHud : MonoBehaviour
 {
-	public bool 	useCoroutine = false;	// Use coroutines for PC targets. For mobile targets WaitForSeconds doesn't work.
-	public Rect		startRect = new Rect( 1, 1, 75, 25 ); // The rect the GUI text is initially displayed at.
+	public bool 	useCoroutine = false; // Use coroutines for PC targets. For mobile targets WaitForSeconds doesn't work.
+	public Rect		startRect = new Rect( 1, 1, 132, 25 ); // The rect the GUI text is initially displayed at.
 	public bool		updateColor = true; // Do you want the color to change if the FPS gets low
 	public float	frequency = 0.33f; // The update frequency of the fps
 	public int		nbDecimal = 1; // How many decimal do you want to display
@@ -73,7 +73,7 @@ public class FPSHud : MonoBehaviour
 			// GUI.color affects both background and text colors, so back it up
 			Color origColor = GUI.color;
 			GUI.color = updateColor ? color : Color.white;
-			GUI.Label(startRect, sFPS + " FPS");
+			GUI.Label(startRect, sFPS + "\t" + Screen.width + "x" + Screen.height);
 			GUI.color = origColor;
 		}
 	}
