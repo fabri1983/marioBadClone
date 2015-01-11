@@ -29,8 +29,11 @@ public class FPSHud : MonoBehaviour
 		// only keep this object if in debug build
 		if (Debug.isDebugBuild)
 			DontDestroyOnLoad(gameObject);
-		else
+		// else destroy it
+		else {
+			enabled = false;
 			Destroy(gameObject);
+		}
 	}
 	
 	void Start () {
@@ -49,8 +52,7 @@ public class FPSHud : MonoBehaviour
  
 	IEnumerator FPS() {
 		// Infinite loop executed every "frenquency" secondes.
-		while( true )
-		{
+		while (true) {
 			calculateFPS();
 			yield return new WaitForSeconds( frequency );
 		}
@@ -70,10 +72,16 @@ public class FPSHud : MonoBehaviour
 	
 	void OnGUI() {
 		if (EventType.Repaint == Event.current.type) {
-			// GUI.color affects both background and text colors, so back it up
+			// GUI.color and other properties affects are global, so save original values temporary
 			Color origColor = GUI.color;
+			TextAnchor origAlign = GUI.skin.box.alignment;
+
 			GUI.color = updateColor ? color : Color.white;
-			GUI.Label(startRect, sFPS + "\t" + Screen.width + "x" + Screen.height);
+			GUI.skin.box.alignment = TextAnchor.UpperLeft;
+			GUI.Box(startRect, sFPS + "\t" + Screen.width + "x" + Screen.height);
+
+			// restore original setup
+			GUI.skin.box.alignment = origAlign;
 			GUI.color = origColor;
 		}
 	}
