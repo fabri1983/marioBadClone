@@ -54,8 +54,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 132
-    height: 25
+    width: 110
+    height: 20
   updateColor: 1
   frequency: .330000013
   nbDecimal: 1
