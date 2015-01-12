@@ -25,7 +25,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-		
+
 		setupButtons(); // locate the buttons
 		GUIScreenLayoutManager.Instance.register(this);
 		TransitionGUIFxManager.Instance.register(this, false);
@@ -35,15 +35,15 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 		TransitionGUIFxManager.Instance.remove(this);
 		GUIScreenLayoutManager.Instance.remove(this);
 	}
-	
+
 	public void updateForGUI() {
-		setupButtons();
+		//setupButtons();
 	}
 	
 	private void setupButtons () {
-		rectQuit.Set(Screen.width / 2 - 25 - 50, Screen.height / 2 - 45, 50, 24);
-		rectBack.Set(Screen.width / 2 - 25 + 50, Screen.height / 2 - 45, 50, 24);
-		rectLevelSel.Set(Screen.width / 2 - 35, Screen.height / 2 + 10, 70, 24);
+		rectQuit.Set(480 / 2 - 25 - 50, 320 / 2 - 45, 50, 24);
+		rectBack.Set(480 / 2 - 25 + 50, 320 / 2 - 45, 50, 24);
+		rectLevelSel.Set(480 / 2 - 35, 320 / 2 + 10, 70, 24);
 	}
 	
 	public bool isStatic () {
@@ -116,7 +116,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 	}
 	
 	void OnGUI () {	
-#if UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
 		// is caught, so we need to manually check for the event and fire it here
 		Event e = Event.current;
@@ -127,7 +127,11 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 #endif
 		if (!showOptions)
 			return;
-		
+
+		// update Unity GUI matrix to allow automatic resizing (only works for Unity GUI elems)
+		// NOTE: this transformation has effect per game loop
+		GUI.matrix = GUIScreenLayoutManager.guiMatrix;
+
 		if (GUI.Button(rectQuit, "Quit"))
 			quit();
 		if (GUI.Button(rectBack, "Back"))

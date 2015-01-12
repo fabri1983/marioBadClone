@@ -8,13 +8,15 @@ using System.Collections.Generic;
 /// </summary>
 [ExecuteInEditMode]
 public class GUIScreenLayoutManager : MonoBehaviour {
-	
+
+	public static Vector2 MIN_RESOLUTION = new Vector2(480f, 320f);
+	public static Matrix4x4 guiMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() use this matrix
+
 	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
 	private float lastScreenWidth, lastScreenHeight;
-	
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
-	
+
 	private static GUIScreenLayoutManager instance = null;
 
 	public static GUIScreenLayoutManager Instance {
@@ -40,7 +42,9 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-		
+
+		// NOTE: set as current resolution so the first OnGUI event isn't a resized event. 
+		// That would cause a callback to all subscribers before correct initialization of them
 		lastScreenWidth = Screen.width;
 		lastScreenHeight = Screen.height;
 	}
@@ -68,10 +72,14 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
+				// update GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
+				float horizRatio = Screen.width / MIN_RESOLUTION.x;
+				float vertRatio = Screen.height / MIN_RESOLUTION.y;
+				guiMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(horizRatio, vertRatio, 1f));
 			}
 		}
 	}
-	
+
 	/// <summary>
 	/// Locates the GUITexture element in the screen according the layout value.
 	/// It modifies the GUITexture's pixel inset.

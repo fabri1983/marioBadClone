@@ -27,8 +27,9 @@ public class FPSHud : MonoBehaviour
 	
 	void Awake () {
 		// only keep this object if in debug build
-		if (Debug.isDebugBuild)
+		if (Debug.isDebugBuild) {
 			DontDestroyOnLoad(gameObject);
+		}
 		// else destroy it
 		else {
 			enabled = false;
@@ -40,7 +41,7 @@ public class FPSHud : MonoBehaviour
 		if (useCoroutine)
 	    	StartCoroutine( FPS() );
 	}
- 
+
 	void Update() {
     	accum += Time.timeScale / Time.deltaTime;
     	++frames;
@@ -69,9 +70,14 @@ public class FPSHud : MonoBehaviour
         accum = 0.0f;
         frames = 0;
 	}
-	
+
 	void OnGUI() {
 		if (EventType.Repaint == Event.current.type) {
+
+			// update Unity GUI matrix to allow automatic resizing (only works for Unity GUI elems)
+			// NOTE: this transformation has effect per game loop
+			GUI.matrix = GUIScreenLayoutManager.guiMatrix;
+
 			// GUI.color and other properties affects are global, so save original values temporary
 			Color origColor = GUI.color;
 			TextAnchor origAlign = GUI.skin.box.alignment;
