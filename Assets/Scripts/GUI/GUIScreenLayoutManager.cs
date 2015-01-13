@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class GUIScreenLayoutManager : MonoBehaviour {
 
 	public static Vector2 MIN_RESOLUTION = new Vector2(480f, 320f);
-	public static Matrix4x4 guiMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() use this matrix
+	public static Matrix4x4 unityGUIMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() that use this matrix
 
 	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
 	private float lastScreenWidth, lastScreenHeight;
@@ -66,16 +66,19 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		if (EventType.Repaint == Event.current.type) {
 			// if screen is resized then need to notice all listeners
 			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight) {
+
+				// update GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
+				float widthRatio = Screen.width / MIN_RESOLUTION.x;
+				float heightRatio = Screen.height / MIN_RESOLUTION.y;
+				unityGUIMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(widthRatio, heightRatio, 1f));
+
 				// notify to all listeners
 				for (int i=0, c=listeners.Count; i<c; ++i)
 					listeners[i].updateForGUI();
+
 				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
-				// update GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
-				float horizRatio = Screen.width / MIN_RESOLUTION.x;
-				float vertRatio = Screen.height / MIN_RESOLUTION.y;
-				guiMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(horizRatio, vertRatio, 1f));
 			}
 		}
 	}
@@ -163,10 +166,10 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static void adjustPos (Transform tr, GUICustomElement guiElem, Vector2 offset, EnumScreenLayout layout)
 	{
 		Vector3 p = tr.localPosition;
-		
+
 		// assume the GUI element has its size as pixels
 		Vector2 tex = guiElem.size;
-		// is GUI element size set as a proportion?
+		// check if GUI element's size is set as a proportion
 		if (!guiElem.sizeAsPixels) {
 			tex.x = Screen.width * guiElem.size.x;
 			tex.y = Screen.height * guiElem.size.y;
@@ -232,11 +235,16 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	}
 	
 	public static void adjustSize (GUITexture gt) {
-		
+		// NOTE: I doubt if I need to change the size here, since using the unityGUIMatrix in OnGUI() method could already do the same,
+		// however some operations depends on the pixelInset values
+		Rect pInset = gt.pixelInset;
+		gt.pixelInset = pInset;
 	}
 	
-	public static void adjustSize (GUICustomElement gui) {
-		
+	public static void adjustSize (GUICustomElement guiElem) {
+		// This does not work since the unityGUIMatrix values are not reset to identity hence is kidn of an accumulation
+		//guiElem.size.x *= unityGUIMatrix.m00;
+		//guiElem.size.y *= unityGUIMatrix.m11;
 	}
 	
 	/// <summary>
@@ -257,22 +265,20 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		float posAhead = (Camera.main.nearClipPlane + GUI_NEAR_PLANE_OFFSET);
 		// consider current cameras's facing direction (it can be rotated)
 		// we're only interesting in z coordinate
-		result.z = (posAhead * Camera.main.transform.forward + Camera.main.transform.position).z;
+		// NOTE: x and y are overwritten on consequent lines
+		result = posAhead * Camera.main.transform.forward + Camera.main.transform.position;
 
 		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + 0.01f
-		float h, w;
+		// keep z untouch (z-position of the GUI element), set width and height
 		if (Camera.main.orthographic) {
-			h = Camera.main.orthographicSize * 2f;
-			w = h / Screen.height * Screen.width;
+			result.y = Camera.main.orthographicSize * 2f;
+			result.x = result.y / Screen.height * Screen.width;
 		}
 		else {
-			h = 2f * Mathf.Tan(Camera.main.fieldOfView * DEG_2_RAD_0_5) * posAhead;
-			w = h * Camera.main.aspect;
+			result.y = 2f * Mathf.Tan(Camera.main.fieldOfView * DEG_2_RAD_0_5) * posAhead;
+			result.x = result.y * Camera.main.aspect;
 		}
-		
-		// keep z untouch (z-position of the GUI element), set width and height
-		result.x = w;
-		result.y = h;
+
 		return result;
 	}
 	
@@ -328,13 +334,13 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		return result;
 	}
 	
-	public static Vector2 sizeInGUI (Vector2 size, bool isInPixels)
+	public static Vector2 sizeInGUI (Vector2 size)
 	{
 		// get z position and GUI space coordinates. The GUI coordinates act as scale factors
 		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
-		// imagine the size in pixels as a rect with min = (0,0) and max = size (in pixels)
+		// imagine the size in pixels as a rect with min = (0,0) and max = size
 		// and convert it to GUI space
-		Vector2 result = screenToGUI(isInPixels? size.x : size.x * (float)Screen.width, isInPixels? size.y : size.y * (float)Screen.height);
+		Vector2 result = screenToGUI(size.x, size.y);
 		// the GUI space is a box with its (0,0) centered in screen, so we need to correct that
 		result.x += guiZposAndDimension.x / 2f;
 		result.y += guiZposAndDimension.y / 2f;

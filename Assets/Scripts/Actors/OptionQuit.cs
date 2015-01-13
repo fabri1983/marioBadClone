@@ -130,7 +130,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 
 		// update Unity GUI matrix to allow automatic resizing (only works for Unity GUI elems)
 		// NOTE: this transformation has effect per game loop
-		GUI.matrix = GUIScreenLayoutManager.guiMatrix;
+		GUI.matrix = GUIScreenLayoutManager.unityGUIMatrix;
 
 		if (GUI.Button(rectQuit, "Quit"))
 			quit();

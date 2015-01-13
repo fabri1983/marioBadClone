@@ -76,7 +76,7 @@ public class FPSHud : MonoBehaviour
 
 			// update Unity GUI matrix to allow automatic resizing (only works for Unity GUI elems)
 			// NOTE: this transformation has effect per game loop
-			GUI.matrix = GUIScreenLayoutManager.guiMatrix;
+			GUI.matrix = GUIScreenLayoutManager.unityGUIMatrix;
 
 			// GUI.color and other properties affects are global, so save original values temporary
 			Color origColor = GUI.color;

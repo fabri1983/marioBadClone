@@ -6,7 +6,8 @@ using UnityEngine;
 /// </summary>
 [ExecuteInEditMode]
 public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
-	
+
+	public bool allowResize = false; // the resizing it self is performed in GUIScreenLayout since it has to be done previous to location of gui elem
 	public Texture2D texture;
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 	public Vector2 size = Vector2.one; // pixels or proportion
@@ -83,7 +84,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	/// The size in GUI space
 	/// </returns>
 	public Vector2 getSizeInGUI () {
-		return GUIScreenLayoutManager.sizeInGUI(size, sizeAsPixels);
+		return GUIScreenLayoutManager.sizeInGUI(getSizeInPixels());
 	}
 	
 	public Vector2 getSizeInPixels () {

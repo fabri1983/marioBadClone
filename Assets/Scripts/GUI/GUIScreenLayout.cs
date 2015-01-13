@@ -5,10 +5,9 @@ using UnityEngine;
 /// </summary>.
 [ExecuteInEditMode]
 public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
-	
-	public bool allowResize = false;
+
 	public Vector2 offset = Vector2.zero;
-	public bool asPercentile = false;
+	public bool asProportion = false;
 	public EnumScreenLayout layout = EnumScreenLayout.BOTTOM_LEFT;
 	
 	private GUICustomElement guiElem; // in case you are using the game object as a GUICustomElement instead as of a GUITexture
@@ -34,7 +33,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 	public void updateForGUI () {
 
 		// if using offset as percentage then convert it as pixels
-		if (asPercentile) {
+		if (asProportion) {
 			offsetCalculation.x = offset.x * Screen.width;
 			offsetCalculation.y = offset.y * Screen.height;
 		}
@@ -46,7 +45,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 		// only if we are still using Unity's GUITexture elements
 		if (guiTexture != null) {
 			// first resize
-			if (allowResize)
+			if (guiElem.allowResize)
 				GUIScreenLayoutManager.adjustSize(guiTexture);
 			// then apply position correction
 			GUIScreenLayoutManager.adjustPos(guiTexture, offsetCalculation, layout);
@@ -54,7 +53,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 		// we are using GUICustomElement
 		else if (guiElem != null) {
 			// first resize
-			if (allowResize)
+			if (guiElem.allowResize)
 				GUIScreenLayoutManager.adjustSize(guiElem);
 			// then apply position correction
 			GUIScreenLayoutManager.adjustPos(transform, guiElem, offsetCalculation, layout);
