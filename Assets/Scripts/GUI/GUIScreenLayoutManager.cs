@@ -16,6 +16,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	private float lastScreenWidth, lastScreenHeight;
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
+	private static Vector2 customGUIratio = Vector2.one; // used only for GUI Custom Element
 
 	private static GUIScreenLayoutManager instance = null;
 
@@ -71,10 +72,16 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 				float widthRatio = Screen.width / MIN_RESOLUTION.x;
 				float heightRatio = Screen.height / MIN_RESOLUTION.y;
 				unityGUIMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(widthRatio, heightRatio, 1f));
+				// for GUI Custom Elements we need to get the new ratio according previous screen size since we add changes in accumulative way
+				customGUIratio.x = (Screen.width / lastScreenWidth);
+				customGUIratio.y = (Screen.height / lastScreenHeight);
 
 				// notify to all listeners
 				for (int i=0, c=listeners.Count; i<c; ++i)
 					listeners[i].updateForGUI();
+
+				// reset ot since in Editor Mode the resizing is always called (to catch every update in the inspector)
+				customGUIratio = Vector2.one;
 
 				// update screen dimension
 				lastScreenWidth = Screen.width;
@@ -242,9 +249,8 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	}
 	
 	public static void adjustSize (GUICustomElement guiElem) {
-		// This does not work since the unityGUIMatrix values are not reset to identity hence is kidn of an accumulation
-		//guiElem.size.x *= unityGUIMatrix.m00;
-		//guiElem.size.y *= unityGUIMatrix.m11;
+		guiElem.size.x *= customGUIratio.x;
+		guiElem.size.y *= customGUIratio.y;
 	}
 	
 	/// <summary>
