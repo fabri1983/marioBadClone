@@ -29,7 +29,15 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 	void OnDestroy () {
 		GUIScreenLayoutManager.Instance.remove(this);
 	}
-	
+
+#if UNITY_EDITOR
+	void Update () {
+		// if not playing from inside the editor: any change in offset or enum layout is applied in real time
+		if (!Application.isPlaying)
+			updateForGUI();
+	}
+#endif
+
 	public void updateForGUI () {
 
 		// if using offset as percentage then convert it as pixels
@@ -59,12 +67,4 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 			GUIScreenLayoutManager.adjustPos(transform, guiElem, offsetCalculation, layout);
 		}
 	}
-
-#if UNITY_EDITOR
-	void Update () {
-		// if not playing from inside the editor: any change in offset or enum layout is applied in real time
-		if (!Application.isPlaying)
-			updateForGUI();
-	}
-#endif
 }

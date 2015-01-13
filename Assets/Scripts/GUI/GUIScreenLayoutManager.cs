@@ -79,10 +79,10 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 				// notify to all listeners
 				for (int i=0, c=listeners.Count; i<c; ++i)
 					listeners[i].updateForGUI();
-
-				// reset ot since in Editor Mode the resizing is always called (to catch every update in the inspector)
+#if UNITY_EDITOR
+				// reset since in Editor Mode the resizing is always called (to catch every update in the inspector). See GUIScreenLayout.Update()
 				customGUIratio = Vector2.one;
-
+#endif
 				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
