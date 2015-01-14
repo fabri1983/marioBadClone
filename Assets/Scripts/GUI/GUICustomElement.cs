@@ -13,7 +13,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	public Vector2 size = Vector2.one; // pixels or proportion
 	public bool sizeAsPixels = false;
 	public bool newMaterialInstance = false; // currently no atlas usage, so every game object instance has its own material instance
-	
+
 	void Awake () {
 		// deactivate the game object if no texture
 		if (!texture) {
@@ -31,6 +31,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 			gameObject.SetActiveRecursively(true);
 #endif
 		}
+
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this);
 		
