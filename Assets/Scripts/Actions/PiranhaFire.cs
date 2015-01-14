@@ -96,7 +96,7 @@ public class PiranhaFire : MonoBehaviour {
 		fireball.setBouncing(false);
 		fireball.setDir(dirFire);
 		fireball.setSpeed(firePow);
-		fireball.addTargetLayer(LevelManager.LAYER_PLAYER);
+		fireball.addTargetLayer(LayerMask.NameToLayer(Layers.PLAYER));
 		newGO.transform.parent = null;
 #if UNITY_4_AND_LATER
 		newGO.SetActive(true);

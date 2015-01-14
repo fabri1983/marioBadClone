@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System;
 
 public class LevelManager : MonoBehaviour {
-	
-	public static int LAYER_TELEPORT;
-	public static int LAYER_POWERUP;
-	public static int LAYER_PLAYER;
+
 	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
@@ -57,11 +54,6 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	private void initialize() {
-		
-		LAYER_TELEPORT = LayerMask.NameToLayer("TeleportTrig");
-		LAYER_POWERUP = LayerMask.NameToLayer("PowerUp");
-		LAYER_PLAYER = LayerMask.NameToLayer("Player");
-
 		// reset spawn positions array
 		for (int i=0; i < Application.levelCount; ++i)
 			spawnPosArray[i].priority = INVALID_PRIORITY;

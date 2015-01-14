@@ -2352,6 +2352,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
+  allowResize: 0
   texture: {fileID: 2800000, guid: cd8ba37483f632a4bad198b7e2cfecdd, type: 1}
   wrapMode: 0
   size: {x: 1, y: 1}
@@ -4082,6 +4083,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
+  allowResize: 0
   texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
   wrapMode: 0
   size: {x: 1, y: .239999995}
@@ -4097,8 +4099,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  allowResize: 0
   offset: {x: 0, y: 0}
+  asProportion: 0
   layout: 1
 --- !u!1001 &1318861329
 Prefab:
@@ -4801,6 +4803,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
   m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &1412437158
 GameObject:
   m_ObjectHideFlags: 0
