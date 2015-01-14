@@ -13,7 +13,8 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static Matrix4x4 unityGUIMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() that use this matrix
 
 	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
-	private float lastScreenWidth, lastScreenHeight;
+	[SerializeField] private float lastScreenWidth;
+	[SerializeField] private float lastScreenHeight;
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
 	private static Vector2 customGUIratio = Vector2.one; // used only for GUI Custom Element

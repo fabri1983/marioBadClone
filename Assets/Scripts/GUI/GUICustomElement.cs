@@ -67,7 +67,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		if (texture != null && renderer.sharedMaterial != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
 			renderer.sharedMaterial.mainTexture = texture;
 		
-		// if not playing from inside the editor: update in case any change from Inspector
+		// when not in Editor Play Mode: update in case any change happens from Inspector or IDE
 		if (!Application.isPlaying)
 			updateForGUI();
 	}
