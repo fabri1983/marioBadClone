@@ -10,13 +10,13 @@ Features implemented:
 ---------------------
 
 - Sprite Tiled Animation:
-	Extended version of the Unity's wiki Animated Tiled Texture script. It allows to display sequence of tiles from a sprite texture.
+	Extended version of the Unity's Wiki Animated Tiled Texture script. It allows to display sequence of tiles from a sprite texture.
 	In this personal implementation I expose the possibility of handling a single sheet with different sizes of animations, and another approach different than co-routines (don't work in mobile).
-	New feature under testing: moving offset calculation to a transparent textured shader
+	New feature under testing: moving offset calculations into the textured shader.
 	
 - Touch Event Manager:
-	It's a manager that acts as an event listener for Unity touch events. 
-	It implements a screen Quadtree solution for fast touch event dispatch according a touch screen position.
+	It's a manager that acts as an event listener for Unity touch events. On screen elements subscribe to the manager in order to receive touch events.
+	It implements a screen Quadtree solution for fast touch event dispatch according the touch screen position.
 	
 - Chipmunk Physics 2D:
 	Using the Unity's binding for Chipmunk Physics API (Howling Moon Software © 2013). This physic API is implemented for many platforms (android, iOS, windows, linux) giving a great solution for future portability of the game.
@@ -25,16 +25,12 @@ Features implemented:
 	
 - Pause Manager:
 	Script components that extend the interface IPausable are attached to the Pause manager component.
-	Any component registers it self against the Pause manager to receive the notification for pause/resume action.
+	Any component registers itself against the Pause manager to receive the notification for pause/resume action.
 	The pause action set the MonoBehavior as enabled=false hence no Update() neither FixedUpdate() function is invoked during game loop.
 
 - Custom GUI implementation:
 	In Unity 3.5 the GUI components are a built-in feature making hard/impossible to extent or modify them, so I decided to design and implement a custom implementation of GUI components that depends on transform operations.
 	It let's you set the mesh, texture, size in pixels or proportional to screen, and the possibility of resizing if screen size changes.
-
-- Parallax motion for GUI components:
-	Added the possibility to apply a displacement operation onto a material so giving the impression of motion.
-	Background and foreground components with their respectively shaders. Highly customizable: size, speed, manual or automatic offset, mirroring (handled in the shader).
 	
 - GUI Screen Layout:
 	Locate a GUI component in screen, selecting one from nine pre defined locations: top-center, top-left, top-right, middle-center, center-left, center-right, bottom-center, bottom-left, bottom-right.
@@ -44,6 +40,10 @@ Features implemented:
 	Extending the PoorsManGUIFX implementation for GUI elements transition, this own version handles transform component of custom GUI solution in addition to Unity's GUITexture and GUIText. 
 	Basic transition effects, extensible to new effects.
 	Visit the project's page: http://unitycoder.com/blog/2014/05/18/gui-transition-effects-open-source/
+	
+- Parallax motion for GUI components:
+	Added the possibility to apply a displacement operation onto a material so giving the impression of motion.
+	Background and foreground components with their respectively shaders. Highly customizable: size, speed, manual or automatic offset, mirroring (handled in the shader).
 	
 - CollisionGen 2D and Harry Plotter:
 	Using these two third party APIs you can generate a mesh from an alpha channel texture and use it as a collider, giving you the possibility to modify it directly from the Editor Scene View.
@@ -65,7 +65,12 @@ TODO list:
 - Atlas Texture. Integration with current sprite animation solution.
 - Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Unite 2013 - Optimizing Unity Games for Mobile Platforms.
 - Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
-- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching
+- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching.
 - Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts.
-	
+
+
+Contact:
+--------
+fabri1983@gmail.com
+
 	
