@@ -8,24 +8,44 @@ using System.Collections.Generic;
 /// </summary>
 [ExecuteInEditMode]
 public class GUICameraSync : MonoBehaviour {
-	
+
+	List<IGUICameraSyncable> listeners = new List<IGUICameraSyncable>(1); // by the moment there is one script that modify the camera's transform
+
+	void OnDestroy () {
+		// since this script lives per scene, then clean the list of subscribers
+		listeners.Clear();
+		listeners = null;
+	}
+
+	public void register (IGUICameraSyncable syncable) {
+		listeners.Add(syncable);
+	}
+
 	// Use Update to avoid wrong Touch Event Manager updates.
 	void Update () {
+
+		// call listeners to update the camera
+		for (int i=0, c=listeners.Count; i < c; ++i)
+			listeners[i].updateCamera();
+
 		// if this is invoked in LateUpdate then some gui custom elements doesn't work with TouchEventManager
-		updateGUITransforms();
+		transformGUIContainers();
 	}
 
 	/// <summary>
 	/// Updates the transform of the GUI containers which depend on the camera position and rotation.
 	/// </summary>
-	public void updateGUITransforms () {
+	public void transformGUIContainers () {
+
 		Vector3 camPos = transform.position;
 		Quaternion camRot = transform.rotation;
 		GameObject guiContainer_so = LevelManager.getGUIContainerSceneOnly();
 		GameObject guiContainer_nd = LevelManager.getGUIContainerNonDestroyable();
+
 		// update according camera's current transform
 		guiContainer_so.transform.position = camPos;
 		guiContainer_so.transform.rotation = camRot;
+
 #if UNITY_EDITOR
 		// /in Editor Mode the game object guiContainer_nd only exists in first scene, so will be null while editing another scene.
 		if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) {

@@ -3,10 +3,15 @@ using UnityEngine;
 /// <summary>
 /// This script can be asigned to a game object to follow a desired target in XY plane.
 /// </summary>
-public class PlayerFollowerXY : PlayerFollowerXYConfig {
+public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 	
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
-	
+
+	void Awake () {
+		// register against the GUICameraSyncable
+		Camera.main.GetComponent<GUICameraSync>().register(this);
+	}
+
 	// Use this for initialization
 	void Start () {
 		lookAtTarget = LevelManager.Instance.getPlayer().transform;
@@ -21,7 +26,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 		transform.position = thePos;
 	}
 	
-	void Update () {
+	public void updateCamera () {
 		applyTransforms();
 	}
 
