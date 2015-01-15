@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 
 /// <summary>
@@ -6,9 +7,10 @@ using System.Collections.Generic;
 /// This script updates all GUI elements which need to be alligned with the Main Camera for correct display.
 /// This only has sense for GUI custom elements.
 /// </summary>
+[ExecuteInEditMode]
 public class GUICameraSync : MonoBehaviour {
 	
-	void Update () {
+	void LateUpdate () {
 		// if this is invoked in LateUpdate then some gui custom elements doesn't work with TouchEventManager
 		updateGUITransforms();
 	}
@@ -19,12 +21,23 @@ public class GUICameraSync : MonoBehaviour {
 	public void updateGUITransforms () {
 		Vector3 camPos = transform.position;
 		Quaternion camRot = transform.rotation;
-		Transform guiContainer_so = LevelManager.getGUIContainerSceneOnly().transform;
-		Transform guiContainer_nd = LevelManager.getGUIContainerNonDestroyable().transform;
+		GameObject guiContainer_so = LevelManager.getGUIContainerSceneOnly();
+		GameObject guiContainer_nd = LevelManager.getGUIContainerNonDestroyable();
 		// update according camera's current transform
-        guiContainer_so.position = camPos;
-        guiContainer_so.rotation = camRot;
-        guiContainer_nd.position = camPos;
-        guiContainer_nd.rotation = camRot;
+		guiContainer_so.transform.position = camPos;
+		guiContainer_so.transform.rotation = camRot;
+#if UNITY_EDITOR
+		// /in Editor Mode the game object guiContainer_nd only exists in first scene, so will be null while editing another scene.
+		// This is made to keep gui objects in sync with camera in Editor Mode only.
+		if (!EditorApplication.isPlayingOrWillChangePlaymode) {
+			if (guiContainer_nd != null) {
+				guiContainer_nd.transform.position = camPos;
+				guiContainer_nd.transform.rotation = camRot;
+			}
+		}
+#else
+		guiContainer_nd.transform.position = camPos;
+		guiContainer_nd.transform.rotation = camRot;
+#endif
 	}
 }
