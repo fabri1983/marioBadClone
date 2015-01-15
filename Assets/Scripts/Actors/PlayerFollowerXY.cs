@@ -22,7 +22,10 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 	}
 	
 	void Update () {
+		applyTransforms();
+	}
 
+	private void applyTransforms () {
 		// always look at target?
 		if (lookTarget) {
 			Quaternion origRot = transform.rotation; // save original rotation since lookAtTarget affects it
@@ -50,7 +53,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
 			setEnabled(false);
 	}
-	
+
 	public void doInstantMoveOneTime () {
 		instantlyOneTime = true;
 	}

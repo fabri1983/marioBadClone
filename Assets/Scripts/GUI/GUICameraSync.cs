@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class GUICameraSync : MonoBehaviour {
 	
 	// Use Update to avoid wrong Touch Event Manager updates.
-	void Update () {
+	void LateUpdate () {
 		// if this is invoked in LateUpdate then some gui custom elements doesn't work with TouchEventManager
 		updateGUITransforms();
 	}
@@ -34,6 +34,11 @@ public class GUICameraSync : MonoBehaviour {
 				guiContainer_nd.transform.position = camPos;
 				guiContainer_nd.transform.rotation = camRot;
 			}
+		}
+		// in Editor Play Mode the GUI container exists so no null check is needed
+		else {
+			guiContainer_nd.transform.position = camPos;
+			guiContainer_nd.transform.rotation = camRot;
 		}
 #else
 		guiContainer_nd.transform.position = camPos;
