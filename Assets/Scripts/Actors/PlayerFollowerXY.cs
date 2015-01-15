@@ -22,7 +22,6 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig {
 	}
 	
 	void Update () {
-		// NOTE: use FixedUpdate() if camera jitters
 
 		// always look at target?
 		if (lookTarget) {
