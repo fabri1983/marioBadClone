@@ -19,7 +19,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 		
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this);
-		updateForGUI();
+		//updateForGUI();
 	}
 	
 	void Start () {
@@ -32,6 +32,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 
 #if UNITY_EDITOR
 	void Update () {
+
 		// when not in Editor Play Mode: any change in offset or enum layout is applied in real time
 		if (!Application.isPlaying)
 			updateForGUI();
@@ -50,21 +51,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 			offsetCalculation.y = offset.y;
 		}
 
-		// only if we are still using Unity's GUITexture elements
-		if (guiTexture != null) {
-			// first resize
-			if (guiElem.allowResize)
-				GUIScreenLayoutManager.adjustSize(guiTexture);
-			// then apply position correction
-			GUIScreenLayoutManager.adjustPos(guiTexture, offsetCalculation, layout);
-		}
-		// we are using GUICustomElement
-		else if (guiElem != null) {
-			// first resize
-			if (guiElem.allowResize)
-				GUIScreenLayoutManager.adjustSize(guiElem);
-			// then apply position correction
-			GUIScreenLayoutManager.adjustPos(transform, guiElem, offsetCalculation, layout);
-		}
+		// then apply position correction
+		GUIScreenLayoutManager.adjustPos(transform, guiElem, offsetCalculation, layout);
 	}
 }

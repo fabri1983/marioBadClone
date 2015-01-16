@@ -17,7 +17,6 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	[SerializeField] private float lastScreenHeight;
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
-	private static Vector2 customGUIratio = Vector2.one; // used only for GUI Custom Element
 
 	private static GUIScreenLayoutManager instance = null;
 
@@ -49,8 +48,11 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		// That would cause a callback to all subscribers before correct initialization of them
 		lastScreenWidth = Screen.width;
 		lastScreenHeight = Screen.height;
-	}
 
+		// update GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
+		setupUnityGUIMatrixForResizing();
+	}
+	
 	void OnDestroy() {
 		listeners.Clear();
 		instance = null;
@@ -63,27 +65,25 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public void remove (IGUIScreenLayout sl) {
 		listeners.Remove(sl);
 	}
-	
+
+	private void setupUnityGUIMatrixForResizing () {
+		float widthRatio = Screen.width / MIN_RESOLUTION.x;
+		float heightRatio = Screen.height / MIN_RESOLUTION.y;
+		unityGUIMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(widthRatio, heightRatio, 1f));
+	}
+
 	void OnGUI () {
 		if (EventType.Repaint == Event.current.type) {
 			// if screen is resized then need to notice all listeners
 			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight) {
 
 				// update GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
-				float widthRatio = Screen.width / MIN_RESOLUTION.x;
-				float heightRatio = Screen.height / MIN_RESOLUTION.y;
-				unityGUIMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(widthRatio, heightRatio, 1f));
-				// for GUI Custom Elements we need to get the new ratio according previous screen size since we add changes in accumulative way
-				customGUIratio.x = (Screen.width / lastScreenWidth);
-				customGUIratio.y = (Screen.height / lastScreenHeight);
+				setupUnityGUIMatrixForResizing();
 
 				// notify to all listeners
 				for (int i=0, c=listeners.Count; i<c; ++i)
 					listeners[i].updateForGUI();
-#if UNITY_EDITOR
-				// reset since in Editor Mode the resizing is always called (to catch every update in the inspector). See GUIScreenLayout.Update()
-				customGUIratio = Vector2.one;
-#endif
+
 				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
@@ -240,18 +240,6 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 			p.y = 0f;
 #endif
 		tr.localPosition = p;
-	}
-	
-	public static void adjustSize (GUITexture gt) {
-		// NOTE: I doubt if I need to change the size here, since using the unityGUIMatrix in OnGUI() method could already do the same,
-		// however some operations depends on the pixelInset values
-		Rect pInset = gt.pixelInset;
-		gt.pixelInset = pInset;
-	}
-	
-	public static void adjustSize (GUICustomElement guiElem) {
-		guiElem.size.x *= customGUIratio.x;
-		guiElem.size.y *= customGUIratio.y;
 	}
 	
 	/// <summary>
