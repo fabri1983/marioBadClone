@@ -29,8 +29,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .244976938, y: .155487642, z: .309999466}
-  m_LocalScale: {x: .0469818786, y: .0469818749, z: 0}
+  m_LocalPosition: {x: .24430576, y: .157501131, z: .309999466}
+  m_LocalScale: {x: .0483242199, y: .0429548547, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &2300000
@@ -45,7 +45,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -78,8 +78,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  allowResize: 0
   offset: {x: 0, y: 0}
+  asProportion: 0
   layout: 2
 --- !u!114 &11400004
 MonoBehaviour:
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
   wrapMode: 0
-  size: {x: 42, y: 42}
-  sizeAsPixels: 1
+  size: {x: .0900000036, y: .119999997}
+  sizeAsPixels: 0
   newMaterialInstance: 1
 --- !u!114 &11400008
 MonoBehaviour:

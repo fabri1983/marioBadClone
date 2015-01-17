@@ -2,14 +2,14 @@
 // So it uses:
 //   ZWrite On
 //   ZTest Always (this makes the material being displayed in front of all material under same queue)
-Shader "Custom/Unlit Transparent Geom In Froont CG" {
+Shader "Custom/Unlit Transparent Geom In Front CG" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
 }
 
 SubShader {
 	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
-	ZWrite On
+	ZWrite On // is On so we can draw it in front of all objects using ZTest=Always
 	ZTest Always
 	Lighting Off
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.

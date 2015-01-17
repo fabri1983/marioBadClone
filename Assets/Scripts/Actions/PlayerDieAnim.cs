@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class PlayerDieAnim : MonoBehaviour {
 	
 	// Shader Script set from Inspector which is used in replacement of normal shader.
@@ -12,7 +13,10 @@ public class PlayerDieAnim : MonoBehaviour {
 	private Jump jump;
 	private AnimateTiledTexture animComp; // used to access its renderer
 	private Shader origShader;
-	
+#if UNITY_EDITOR
+	private bool wasDying = false; // used to keep correct asignment of shader when isDying and exiting from Editor Play Mode
+#endif
+
 	void Awake () {
 		jump = GetComponent<Jump>();
 	}
@@ -32,10 +36,23 @@ public class PlayerDieAnim : MonoBehaviour {
 		// remove reference to anim component
 		animComp = null;
 	}
-	
+
+#if UNITY_EDITOR
+	void Update () {
+		// when in Editor Mode and not Playing keep correct original shader
+		if (wasDying && !UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) {
+			setBackOrigShader();
+			wasDying = false;
+		}
+	}
+#endif
+
 	public void startAnimation () {
+#if UNITY_EDITOR
+		wasDying = true;
+#endif
 		dying = true;
-		
+
 		// change CP shape's current layer so it doesn't collide with any other shape
 		layersCP = gameObject.GetComponent<ChipmunkShape>().layers;
 		GameObjectTools.setLayerForShapes(gameObject, 0);

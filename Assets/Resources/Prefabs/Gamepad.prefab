@@ -89,8 +89,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .161080718, y: -.149894565, z: .309999466}
-  m_LocalScale: {x: .0581680387, y: .0581680387, z: 0}
+  m_LocalPosition: {x: .163765401, y: -.150342003, z: .309999466}
+  m_LocalScale: {x: .0590629317, y: .057273142, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400002
@@ -100,8 +100,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .239383847, y: -.149894565, z: .309999466}
-  m_LocalScale: {x: .0581680387, y: .0581680387, z: 0}
+  m_LocalPosition: {x: .238936409, y: -.150342003, z: .309999466}
+  m_LocalScale: {x: .0590629317, y: .057273142, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400004
@@ -111,8 +111,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.205825374, y: -.116336077, z: .309999466}
-  m_LocalScale: {x: .125285015, y: .125285, z: 0}
+  m_LocalPosition: {x: -.206720263, y: -.118125856, z: .309999466}
+  m_LocalScale: {x: .123495221, y: .121705435, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400006
@@ -141,7 +141,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -159,7 +159,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -177,7 +177,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e23999b8d19e1db44870c998ce778b84, type: 1}
   m_Name: 
-  keepAlive: 1
+  dontDestroy: 1
   isStaticRuntime: 1
   debugZones: 0
 --- !u!114 &11400002
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ad68f1104b8e945a2f1f3f7c8e3ab8, type: 1}
   m_Name: 
   buttonId: 1
-  keepAlive: 1
+  dontDestroy: 1
   isStaticRuntime: 1
 --- !u!114 &11400004
 MonoBehaviour:
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ad68f1104b8e945a2f1f3f7c8e3ab8, type: 1}
   m_Name: 
   buttonId: 0
-  keepAlive: 1
+  dontDestroy: 1
   isStaticRuntime: 1
 --- !u!114 &11400006
 MonoBehaviour:
@@ -263,8 +263,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  allowResize: 0
   offset: {x: 0, y: 0}
+  asProportion: 0
   layout: 8
 --- !u!114 &11400010
 MonoBehaviour:
@@ -276,8 +276,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  allowResize: 0
-  offset: {x: -70, y: 0}
+  offset: {x: -.140000001, y: 0}
+  asProportion: 1
   layout: 8
 --- !u!114 &11400012
 MonoBehaviour:
@@ -289,8 +289,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  allowResize: 0
   offset: {x: 0, y: 0}
+  asProportion: 0
   layout: 6
 --- !u!114 &11400014
 MonoBehaviour:
@@ -393,9 +393,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
   texture: {fileID: 2800000, guid: 984d093ee08c1d3499ff833a8878eedc, type: 1}
-  wrapMode: 0
-  size: {x: 112, y: 112}
-  sizeAsPixels: 1
+  wrapMode: 1
+  size: {x: .230000004, y: .340000004}
+  sizeAsPixels: 0
   newMaterialInstance: 1
 --- !u!114 &11400028
 MonoBehaviour:
@@ -409,8 +409,8 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 1e55bb52ad4e2e149a570440770fb9be, type: 1}
   wrapMode: 0
-  size: {x: 52, y: 52}
-  sizeAsPixels: 1
+  size: {x: .109999999, y: .159999996}
+  sizeAsPixels: 0
   newMaterialInstance: 1
 --- !u!114 &11400030
 MonoBehaviour:
@@ -424,8 +424,8 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 4c7dcf056a8fc5941aa093d9c6889fd6, type: 1}
   wrapMode: 0
-  size: {x: 52, y: 52}
-  sizeAsPixels: 1
+  size: {x: .109999999, y: .159999996}
+  sizeAsPixels: 0
   newMaterialInstance: 1
 --- !u!1001 &100100000
 Prefab:

@@ -1621,15 +1621,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418d10f72cedf574cac856f4c356bfb8, type: 1}
   m_Name: 
   otherLayersBelongTo: 
---- !u!1 &549839488
+--- !u!1 &559626734
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 3
   m_Component:
-  - 4: {fileID: 549839489}
-  - 114: {fileID: 549839490}
+  - 4: {fileID: 559626735}
+  - 114: {fileID: 559626736}
   m_Layer: 0
   m_Name: GUIScreenLayoutManager
   m_TagString: Untagged
@@ -1637,23 +1637,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &549839489
+--- !u!4 &559626735
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 549839488}
+  m_GameObject: {fileID: 559626734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &549839490
+--- !u!114 &559626736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 549839488}
+  m_GameObject: {fileID: 559626734}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
@@ -2391,7 +2391,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
-  allowResize: 0
   texture: {fileID: 2800000, guid: cd8ba37483f632a4bad198b7e2cfecdd, type: 1}
   wrapMode: 0
   size: {x: 1, y: 1}
@@ -4122,7 +4121,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d0565c84f40e55439a057c7d801607d, type: 1}
   m_Name: 
-  allowResize: 0
   texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
   wrapMode: 0
   size: {x: 1, y: .239999995}

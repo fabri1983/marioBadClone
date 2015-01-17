@@ -73,7 +73,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
 		// is caught, so we need to manually check for the event and fire it here
 		Event e = Event.current;
-		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
+		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseDown) {
 			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition)) {
 				Vector2 mousePosInverted;
 				mousePosInverted.x = e.mousePosition.x;

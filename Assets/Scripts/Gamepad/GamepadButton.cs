@@ -5,12 +5,12 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	
 	// this modified in inspector window
 	public EnumButton buttonId = EnumButton.A;
-	public bool keepAlive = true;
+	public bool dontDestroy = true; // true for keeping alive between scenes
 	public bool isStaticRuntime = true;
 	
 	void Awake () {
 		// should we keep this game object alive between scenes
-		if (keepAlive)
+		if (dontDestroy)
 			DontDestroyOnLoad(this.gameObject);
 		
 		TransitionGUIFxManager.Instance.register(this, false);
@@ -78,7 +78,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		// since this game object has a GUICustomElement script attached to it, for strange a reason no mouse event 
 		// is caught, so we need to manually check for the event and fire it here
 		Event e = Event.current;
-		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
+		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.mouseDown) {
 			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
 				optionSelected();
 		}
