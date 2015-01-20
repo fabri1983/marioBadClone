@@ -17,7 +17,7 @@ PlayerSettings:
   defaultScreenHeight: 768
   defaultScreenWidthWeb: 920
   defaultScreenHeightWeb: 768
-  m_RenderingPath: 1
+  m_RenderingPath: 0
   m_ActiveColorSpace: 0
   m_MTRendering: 1
   iosShowActivityIndicatorOnLoading: -1
