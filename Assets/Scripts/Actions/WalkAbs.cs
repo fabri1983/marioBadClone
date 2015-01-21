@@ -9,7 +9,7 @@ public abstract class WalkAbs : MonoBehaviour {
 	
 	private static Vector2 VEC2_RIGHT = Vector2.right;
 	private static Vector2 VEC2_LEFT = -Vector2.right;
-	
+
 	protected bool stop, walking, lookingRight;
 	protected float gain;
 	protected Jump jump;
@@ -49,7 +49,7 @@ public abstract class WalkAbs : MonoBehaviour {
 		// moving left
 		else if (velocity < 0f)
 			lookingRight = false;
-		
+
 		Vector2 v = shape.body.velocity;
 		v.x = gain * velocity;
 		shape.body.velocity = v;

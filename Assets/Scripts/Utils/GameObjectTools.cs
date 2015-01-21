@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 static public class GameObjectTools
 {
-	public static float COS_45 = Mathf.Cos(45);
+	public static float COS_45 = Mathf.Cos(45f);
 	
 	///////////////////////////////////////////////////////////
 	// Essentially a reimplementation of
@@ -52,7 +52,7 @@ static public class GameObjectTools
 		/// If you switch the order of your collision types in the method name, it will flip the normal around.
 		
 		// came from above?
-		if (target.velocity.normalized.y <= -COS_45) {
+		if (target.velocity.normalized.y < -COS_45) {
 			// check collision points to be all above goomba's height
 			for (int i=0, c=arbiter.contactCount; i < c; ++i) {
 				if (sourceMaxY > (arbiter.GetPoint(i).y - arbiter.GetDepth(i)))
@@ -69,7 +69,7 @@ static public class GameObjectTools
 		/// If you switch the order of your collision types in the method name, it will flip the normal around.
 		
 		// if normal.y is near to 1 it means it's a grounded plane
-		if (Mathf.Abs(arbiter.GetNormal(0).y) >= COS_45)
+		if (Mathf.Abs(arbiter.GetNormal(0).y) > COS_45)
 			return true;
 		return false;
 	}
@@ -80,7 +80,7 @@ static public class GameObjectTools
 		/// If you switch the order of your collision types in the method name, it will flip the normal around.
 		
 		// if normal.x is near to 1 it means it's a plane that can be considered as a wall
-		if (Mathf.Abs(arbiter.GetNormal(0).x) >= COS_45)
+		if (Mathf.Abs(arbiter.GetNormal(0).x) > COS_45)
 			return true;
 		return false;
 	}

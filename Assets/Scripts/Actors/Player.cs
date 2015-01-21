@@ -117,6 +117,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		
 		// jump
 		if (Gamepad.isA() || Input.GetButton("Jump")) {
+			walk.stopWalking(); // it resets walk behavior
 			jump.jump(lightJumpVelocity);
 			// apply gain jump power. Only once per jump (handled in Jump component)
 			if (Gamepad.isHardPressed(EnumButton.A))
@@ -263,7 +264,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
 			// move back to the contact point and a little more
-			thePos = player.body.position;
 			thePos = player.body.position;
 			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
 			player.body.position = thePos;

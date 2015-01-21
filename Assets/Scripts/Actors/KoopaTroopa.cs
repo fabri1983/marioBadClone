@@ -21,14 +21,16 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		shape = GetComponent<ChipmunkShape>();
 		
 		PauseGameManager.Instance.register(this, gameObject);
-		
+	}
+
+	void Start () {
 		// set forever jumping if enabled
 		if (jumpInLoop && jump != null) {
 			jump.setForeverJump(true);
 			jump.setForeverJumpSpeed(jumpSpeed);
 		}
 	}
-	
+
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this);
 	}
@@ -58,7 +60,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	
 	private void hide () {
 		stop();
-		chase.setOperable(false); // chase is not allowed to work anymore
+		chase.setOperable(false); // disable chase action
 		_hide.hide();
 	}
 	
@@ -184,11 +186,15 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			return false; // avoid the collision to continue since this frame
 		}
 		// kills koopa 2
-		else if (bouncing1 && !hidden2 && !bouncing2)
-			koopa2.die();
+		else if (bouncing1 && !hidden2 && !bouncing2) {
+			//koopa2.die();
+			koopa2.hide();
+		}
 		// kills koopa 1
-		else if (bouncing2 && !hidden1 && !bouncing1)
-			koopa1.die();
+		else if (bouncing2 && !hidden1 && !bouncing1) {
+			//koopa1.die();
+			koopa1.hide();
+		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next frame.

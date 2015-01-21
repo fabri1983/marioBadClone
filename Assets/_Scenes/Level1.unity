@@ -108,7 +108,7 @@ Transform:
   m_PrefabInternal: {fileID: 2034679161}
   m_GameObject: {fileID: 26674468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -72.3946762, y: 2.22660065, z: 0}
+  m_LocalPosition: {x: -65.9340973, y: 2.22660065, z: 0}
   m_LocalScale: {x: 2.79999995, y: 3, z: 1}
   m_Children:
   - {fileID: 1326582330}
@@ -2357,6 +2357,45 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAsPixels: 0
   newMaterialInstance: 0
+--- !u!1 &795725823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 795725824}
+  - 114: {fileID: 795725825}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &795725824
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 795725823}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &795725825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 795725823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &823940588
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,45 +3709,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1871568608}
   m_GameObject: {fileID: 1198261981}
   m_Mesh: {fileID: 4300000, guid: ed6286d99c4e1784aab66bd49eb7c948, type: 2}
---- !u!1 &1206613540
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1206613541}
-  - 114: {fileID: 1206613542}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1206613541
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1206613540}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1206613542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1206613540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &1235225171
 GameObject:
   m_ObjectHideFlags: 0
@@ -7547,7 +7547,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -72.3946762
+      value: -65.9340973
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7572,6 +7572,10 @@ Prefab:
     - target: {fileID: 400002, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
+      propertyPath: jumpInLoop
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
