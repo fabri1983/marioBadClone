@@ -91,7 +91,7 @@ public class Chase : MonoBehaviour {
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		// if chasing then avoid wall penetration
-		Chase chase = shape2.GetComponent<Chase>();
+		Chase chase = shape1.GetComponent<Chase>();
 		if (chase != null && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
 			chase.stopChasing();
 			chase.enableOperateWhenOutOfSensor();

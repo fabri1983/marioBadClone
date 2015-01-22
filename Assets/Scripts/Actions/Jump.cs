@@ -13,7 +13,6 @@ public class Jump : MonoBehaviour {
 	private Crouch crouch;
 	private AnimateTiledConfig jumpAC;
 	private ChipmunkBody body;
-	private Vector2 velTemp;
 
 	// Use this for initialization
 	void Awake () {
@@ -28,6 +27,21 @@ public class Jump : MonoBehaviour {
 		gainApplied = true;
 	}
 
+	void LateUpdate () {
+		////////////////////////////////////
+		//IMPORTANT: this fixes the crash when assigning the modified velocity to the body along this script
+		if (isJumping)
+			return;
+		Vector2 v = body.velocity;
+		body.velocity = v;
+		////////////////////////////////////
+	}
+
+	public void stop () {
+		gainApplied = false;
+		isJumping = false;
+	}
+
 	public void jump (float jumpVel) {
 		if (isJumping)
 			return;
@@ -40,9 +54,11 @@ public class Jump : MonoBehaviour {
 			jumpAC.setupAndPlay();
 		
 		isJumping = true;
+
 		if (jumpVel != 0f) {
-			velTemp.Set(0f, jumpVel);
-			body.ApplyImpulse(velTemp, body.position);
+			Vector2 v = body.velocity;
+			v.y = jumpVel;
+			body.velocity = v;
 		}
 	}
 		
@@ -54,8 +70,7 @@ public class Jump : MonoBehaviour {
 	/// </param>
 	public void applyGain (float factor) {
 		if (!gainApplied) {
-			velTemp.Set(0f, factor * body.velocity.y);
-			body.ApplyImpulse(velTemp, body.position);
+			forceJump(factor * body.velocity.y);
 			gainApplied = true;
 		}
 	}
@@ -77,20 +92,18 @@ public class Jump : MonoBehaviour {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Jump jump = shape2.GetComponent<Jump>();
+		Jump jump = shape1.GetComponent<Jump>();
 		
 		// if is jumping and hits a wall then continue the collision
-		if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
-			return true;
+		/*if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
+			return true;*/
 		
 		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump)
 				jump.forceJump(jump.foreverJumpVel);
 			// if it was jumping then reset jump behavior
-			else if (jump.isJumping) {
-				jump.gainApplied = false;
-				jump.isJumping = false;
-			}
+			else if (jump.isJumping)
+				jump.stop();
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 

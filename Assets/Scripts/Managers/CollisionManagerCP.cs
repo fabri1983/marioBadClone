@@ -18,7 +18,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	//##################### Goomba #################
-	bool ChipmunkBegin_Scenery_Goomba (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter){
 		return Patrol.beginCollision(arbiter);
 	}
 	
@@ -52,7 +52,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	//##################### KoopaTroopa #################
-	bool ChipmunkBegin_Scenery_KoopaTroopa (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_KoopaTroopa_Scenery (ChipmunkArbiter arbiter){
 		Chase.beginCollisionWithScenery(arbiter);
 		if (!Patrol.beginCollision(arbiter))
 			return false;
@@ -83,13 +83,13 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	//##################### Player #################
-	bool ChipmunkBegin_Scenery_Player (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter){
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
 		return Jump.beginCollisionWithScenery(arbiter);
 	}
 	
-	void ChipmunkSeparate_Scenery_Player (ChipmunkArbiter arbiter){
+	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter){
 		Player.endCollisionWithScenery(arbiter);
 	}
 	

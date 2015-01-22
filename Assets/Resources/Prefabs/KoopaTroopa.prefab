@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
   jumpInLoop: 0
-  jumpSpeed: 35
+  jumpSpeed: 30
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1

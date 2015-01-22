@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
   jumpInLoop: 0
-  jumpSpeed: 35
+  jumpSpeed: 30
 --- !u!114 &26674480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2357,45 +2357,6 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAsPixels: 0
   newMaterialInstance: 0
---- !u!1 &795725823
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 795725824}
-  - 114: {fileID: 795725825}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &795725824
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 795725823}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &795725825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 795725823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &823940588
 GameObject:
   m_ObjectHideFlags: 0
@@ -5465,6 +5426,45 @@ Transform:
   - {fileID: 1801379778}
   - {fileID: 2028569808}
   m_Father: {fileID: 1698630139}
+--- !u!1 &1614583784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1614583785}
+  - 114: {fileID: 1614583786}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1614583785
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1614583784}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1614583786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1614583784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1001 &1617991174
 Prefab:
   m_ObjectHideFlags: 0
@@ -7266,8 +7266,8 @@ Transform:
   - {fileID: 1370795945}
   - {fileID: 1166349959}
   - {fileID: 1760765228}
-  - {fileID: 2119660813}
   - {fileID: 26674469}
+  - {fileID: 2119660813}
   m_Father: {fileID: 1698630139}
 --- !u!1 &1978660287
 GameObject:
@@ -7776,7 +7776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
   jumpInLoop: 0
-  jumpSpeed: 35
+  jumpSpeed: 30
 --- !u!114 &2119660815
 MonoBehaviour:
   m_ObjectHideFlags: 0
