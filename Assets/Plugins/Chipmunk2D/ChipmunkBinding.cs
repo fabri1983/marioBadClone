@@ -11,10 +11,13 @@ using CP = ChipmunkBinding;
 
 public static partial class ChipmunkBinding {
 #if UNITY_EDITOR
+	// Other platforms load plugins dynamically, so pass the name of the plugin's dynamic library.
 	public const string IMPORT = "Chipmunk";
-#elif UNITY_IPHONE
+#elif UNITY_IPHONE || UNITY_XBOX360
+	// On iOS and Xbox 360 plugins are statically linked into the executable, so we have to use __Internal as the library name.
 	public const string IMPORT = "__Internal";
 #else
+	// Other platforms load plugins dynamically, so pass the name of the plugin's dynamic library.
 	public const string IMPORT = "Chipmunk";
 #endif
 	
@@ -64,14 +67,14 @@ public static partial class ChipmunkBinding {
 			return GetComponentUpwardsFrom<T>(this.gameObject);
 		}
 
-    public static T GetComponentUpwardsFrom<T>(GameObject g) where T : Component {
+    	public static T GetComponentUpwardsFrom<T>(GameObject g) where T : Component {
 			for(Transform t = g.transform; t != null; t = t.parent){
 				T component = t.GetComponent<T>();
 				if(component != null) return component;
 			}
 			
 			return null;
-    }
+    	}
 	}
 	
 	// String interning for IDs.
