@@ -10,16 +10,16 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	protected GameObject objectToAnim; // short live gameobject to show when the power up is gained
 	protected ChipmunkBody body;
 	protected ChipmunkShape shape;
-	
+
 	void Awake () {
-		PauseGameManager.Instance.register(this, gameObject);
-	}
-	
-	void Start () {
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
-		// invokes subclass own starting method
-		ownStart();
+	}
+
+	void Start () {
+		PauseGameManager.Instance.register(this, gameObject);
+
+		ownStart(); // invokes subclass own starting method
 	}
 	
 	void Update () {

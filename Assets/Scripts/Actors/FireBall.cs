@@ -14,9 +14,12 @@ public class FireBall : MonoBehaviour, IPausable {
 		patrol = GetComponent<Patrol>();
 		shape = GetComponent<ChipmunkShape>();
 		body = GetComponent<ChipmunkBody>();
+	}
+
+	void Start () {
 		PauseGameManager.Instance.register(this, gameObject);
 	}
-	
+
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this);
 	}

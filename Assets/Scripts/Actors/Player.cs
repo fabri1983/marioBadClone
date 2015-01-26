@@ -50,8 +50,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-		
-		PauseGameManager.Instance.register(this, gameObject);
 
 		jump = GetComponent<Jump>();
 		walk = GetComponent<PlayerWalk>();
@@ -76,8 +74,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	
 	// Use this for initialization
 	void Start () {
-		// invoke after getting action components
-		resetPlayer();
+		resetPlayer(); // invoke after getting action components
+
+		PauseGameManager.Instance.register(this, gameObject);
 	}
 	
 	void OnDestroy () {

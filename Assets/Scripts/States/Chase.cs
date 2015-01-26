@@ -92,7 +92,7 @@ public class Chase : MonoBehaviour {
 		
 		// if chasing then avoid wall penetration
 		Chase chase = shape1.GetComponent<Chase>();
-		if (chase != null && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
+		if (chase != null && chase.enabled && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
 			chase.stopChasing();
 			chase.enableOperateWhenOutOfSensor();
 		}

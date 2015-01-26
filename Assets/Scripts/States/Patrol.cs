@@ -56,9 +56,9 @@ public class Patrol : MonoBehaviour {
 		// change direction of movement whenever hit something like a wall
 		if (GameObjectTools.isWallHit(arbiter)) {
 			Patrol p1 = shape1.GetComponent<Patrol>();
-			if (p1 != null) p1.toogleDir();
+			if (p1 != null && p1.enabled) p1.toogleDir();
 			Patrol p2 = shape2.GetComponent<Patrol>();
-			if (p2 != null) p2.toogleDir();
+			if (p2 != null && p2.enabled) p2.toogleDir();
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 

@@ -17,14 +17,14 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		chase = GetComponent<Chase>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
-		
-		PauseGameManager.Instance.register(this, gameObject);
 	}
 	
 	void Start () {
 		body.Sleep();
 		fly.setAutomaticFly(true, flyRange);
 		fly.setSpeed(flySpeed);
+
+		PauseGameManager.Instance.register(this, gameObject);
 	}
 	
 	void OnDestroy () {

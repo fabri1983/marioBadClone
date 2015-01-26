@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class PauseGameManager : MonoBehaviour {
@@ -53,15 +54,28 @@ public class PauseGameManager : MonoBehaviour {
 	public bool isPaused () {
 		return paused;
 	}
-	
+
+	/// <summary>
+	/// Register the specified gameobject into the pausable components list
+	/// Call this method in Start(). Calling from Awake() will fail to correctly get children componenents.
+	/// </summary>
+	/// <param name="p">IPausable implementation</param>
+	/// <param name="go">gameobject</param>
 	public void register(IPausable p, GameObject go) {
+		// extract all MonoBehaviour components and
+		MonoBehaviour[] comps = go.GetComponents<MonoBehaviour>();
+		MonoBehaviour[] compsChildren = go.GetComponentsInChildren<MonoBehaviour>();
+		MonoBehaviour[] combined = new MonoBehaviour[comps.Length + compsChildren.Length];
+		Array.Copy(comps, 0, combined, 0, comps.Length);
+		Array.Copy(compsChildren, 0, combined, comps.Length, compsChildren.Length);
+
 		if (p.isSceneOnly()) {
 			sceneOnly.Add(p);
-			sceneOnlyMonos.Add(go.GetComponents<MonoBehaviour>());
+			sceneOnlyMonos.Add(combined);
 		}
 		else {
 			durables.Add(p);
-			durablesMonos.Add(go.GetComponents<MonoBehaviour>());
+			durablesMonos.Add(combined);
 		}
 	}
 	
@@ -90,9 +104,7 @@ public class PauseGameManager : MonoBehaviour {
 	/// and then disables all MonoBehaviour scripts.
 	/// </summary>
 	public void pause () {
-		
 		paused = true;
-		
 		for (int i=0, c=sceneOnly.Count; i<c; ++i) {
 			sceneOnly[i].pause();
 			MonoBehaviour[] monos = sceneOnlyMonos[i];

@@ -16,10 +16,12 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
-		
+	}
+
+	void Start () {
 		PauseGameManager.Instance.register(this, gameObject);
 	}
-	
+
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this);
 	}

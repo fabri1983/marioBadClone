@@ -93,12 +93,15 @@ public class Jump : MonoBehaviour {
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		Jump jump = shape1.GetComponent<Jump>();
-		
+		// if no Jump componenet then continue the collision
+		if (jump == null)
+			return true;
+
 		// if is jumping and hits a wall then continue the collision
-		/*if (jump != null && jump.isJumping && GameObjectTools.isWallHit(arbiter))
+		/*if (jump.isJumping && GameObjectTools.isWallHit(arbiter))
 			return true;*/
 		
-		if (jump != null && GameObjectTools.isGrounded(arbiter)) {
+		if (jump.enabled && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump)
 				jump.forceJump(jump.foreverJumpVel);
 			// if it was jumping then reset jump behavior

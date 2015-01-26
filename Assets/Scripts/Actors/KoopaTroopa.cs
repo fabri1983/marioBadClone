@@ -19,8 +19,6 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		chase = GetComponent<Chase>();
 		_hide = GetComponent<Hide>();
 		shape = GetComponent<ChipmunkShape>();
-		
-		PauseGameManager.Instance.register(this, gameObject);
 	}
 
 	void Start () {
@@ -29,6 +27,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			jump.setForeverJump(true);
 			jump.setForeverJumpSpeed(jumpSpeed);
 		}
+
+		PauseGameManager.Instance.register(this, gameObject);
 	}
 
 	void OnDestroy () {
