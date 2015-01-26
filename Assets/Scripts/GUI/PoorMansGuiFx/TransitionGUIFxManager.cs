@@ -1,64 +1,42 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
-/// This class usefull to register for pre and post transitions events
+/// This class usefull to register for pre and post transitions GUI events
 /// </summary>
-public class TransitionGUIFxManager : MonoBehaviour {
-
-	private List<TransitionGUIFx> transitions = new List<TransitionGUIFx>();
+public class TransitionGUIFxManager {
 	
 	private static TransitionGUIFxManager instance = null;
 
 	public static TransitionGUIFxManager Instance {
         get {
             if (instance == null) {
-				instance = FindObjectOfType(typeof(TransitionGUIFxManager)) as TransitionGUIFxManager;
-				if (instance == null) {
-					// creates a game object with this script component
-					instance = new GameObject("TransitionGUIFxManager").AddComponent<TransitionGUIFxManager>();
-				}
+				// creates the innner instance
+				instance = new TransitionGUIFxManager();
 			}
             return instance;
         }
     }
-	
-	void Awake () {
-		if (instance != null && instance != this)
-			Destroy(this.gameObject);
-		else {
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
+
+	private TransitionGUIFxManager () {
 	}
 	
-	void Start () {
-		for (int i=0, c=transitions.Count; i<c; ++i)
-			transitions[i].enabled = true;
-	}
-	
-	void OnDestroy () {
-		transitions.Clear();
+	~TransitionGUIFxManager () {
 		instance = null;
 	}
 	
-	public void register (ITransitionListener fx, bool managerDoStart) {
-		TransitionGUIFx[] arr = fx.getTransitions();
+	public void registerForEndTransitions (ITransitionListener lastTransition) {
+		// get transitions in the order specify by its implementor
+		TransitionGUIFx[] arr = lastTransition.getTransitions();
 		if (arr == null)
 			return;
-		for (int i=0, c=arr.Length; i<c; ++i) {
-			arr[i].setListener(fx);
-			// wheter if the caller chooses to let the manager start its transitions scripts
-			if (managerDoStart)
-				transitions.Add(arr[i]);
-		}
+		// chain all the transitions
+		for (int i=1, c=arr.Length; i<c; ++i)
+			arr[i-1].setNextTransition(arr[i]);
+		// finally add the last transition
+		arr[arr.Length-1].setNextTransition(lastTransition);
 	}
-	
-	public void remove (ITransitionListener fx) {
-		TransitionGUIFx[] arr = fx.getTransitions();
-		if (arr == null)
-			return;
-		for (int i=0, c=arr.Length; i<c; ++i)
-			transitions.Remove(arr[i]);
+
+	public static TransitionGUIFx[] getTransitionsInOrder (GameObject go) {
+		return go.GetComponents<TransitionGUIFx>();
 	}
 }

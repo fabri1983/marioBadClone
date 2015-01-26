@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Shake : MonoBehaviour
+public class Shake : MonoBehaviour, ITransitionListener
 {
 	// controls the amount that shake_intensity is decremented each update. It determines if the shake is long or short
 	public float shake_decay = 0.5f;
@@ -25,7 +25,15 @@ public class Shake : MonoBehaviour
 		if (startDelaySecs > 0f)
 			Invoke("reset", startDelaySecs);
 	}
+
+	public TransitionGUIFx[] getTransitions () {
+		return null;
+	}
 	
+	public void prevTransitionEnd (TransitionGUIFx fx) {
+		this.enabled = true;
+	}
+
 #if UNITY_EDITOR
 	void OnGUI ()
 	{

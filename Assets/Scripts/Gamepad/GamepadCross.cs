@@ -29,7 +29,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 		
-		TransitionGUIFxManager.Instance.register(this, false);
+		TransitionGUIFxManager.Instance.registerForEndTransitions(this);
 		
 		// calculate scaling if current GUI texture dimension is diferent than 64x64 because
 		// the array of arrows were defined in a 64x64 basis
@@ -53,10 +53,6 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 			Rect r = arrowRects[i];
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
 		}
-	}
-	
-	void OnDestroy () {
-		TransitionGUIFxManager.Instance.remove(this);
 	}
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
@@ -116,10 +112,12 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	public void OnEndedTouch (Touch t) {}
 	
 	public TransitionGUIFx[] getTransitions () {
-		return GetComponents<TransitionGUIFx>();
+		// return the transitions in an order set from Inspector.
+		// Note: to return in a custom order get the transitions array and sort it as desired.
+		return TransitionGUIFxManager.getTransitionsInOrder(gameObject);
 	}
 	
-	public void onEndTransition (TransitionGUIFx fx) {
+	public void prevTransitionEnd (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);

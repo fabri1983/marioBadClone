@@ -4,12 +4,12 @@ using System.Collections.Generic;
 /// <summary>
 /// Touch Event Manager.
 /// This class catches the events from touch screen, and call the instances registered to the event trigered.
-/// The class which wants to be called when an event is triggered needs to implement interface IInputListener.
-/// Also it needs to register it self in a desired event type against this input manager.
+/// The class which wants to be called when a touch event is triggered needs to implement interface ITouchListener.
+/// Also it needs to register it self in a desired event type against this manager.
 /// Once the scene is destroyed its game ojects also are destroyed, thus the Input Manager needs to remove the listeners when 
 /// game object is destroyed. For that call removeListener().
 /// </summary>
-public class TouchEventManager : MonoBehaviour {
+public class TouchEventManager {
 
 	private static ListenerLists dynamicListeners = new ListenerLists();
 	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent();
@@ -29,24 +29,24 @@ public class TouchEventManager : MonoBehaviour {
     }
 
 	public static void warm () {
-		// in case the game object wasn't instantiated yet from another script
+		// in case the class wasn't instantiated yet from another script
 		if (instance == null) {
-			// creates a game object with this script component
-			instance = new GameObject("TouchEventManager").AddComponent<TouchEventManager>();
+			// creates the innner instance
+			instance = new TouchEventManager();
 		}
 	}
 	
-	void Awake () {
-		if (instance != null && instance != this)
-			Destroy(this.gameObject);
-		else {
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-		// force to activate multi touch support
-		Input.multiTouchEnabled = true;
+	private TouchEventManager () {
+		// instantiates the game object which will do the updating of Unity touch events
+		GameObject.Instantiate(Resources.Load("Prefabs/TouchEventUnityUpdater"));
 	}
-	
+
+	~TouchEventManager () {
+		dynamicListeners.clear();
+		staticQuadTree.clear();
+		instance = null;
+	}
+
 	/// <summary>
 	/// Register the specified iListener in the adequate list to be processed on every touch event.
 	/// </summary>
@@ -93,21 +93,7 @@ public class TouchEventManager : MonoBehaviour {
 		}
 	}
 	
-	void OnApplicationQuit () {
-		dynamicListeners.clear();
-		staticQuadTree.clear();
-#if UNITY_EDITOR
-#else
-		// NOTE: to avoid !IsPlayingOrAllowExecuteInEditMode error in console
-		instance = null;
-#endif
-	}
-	
-	void Update () {
-		processEvents();
-	}
-	
-	private static void processEvents () {
+	public void processEvents () {
 		
 		if (Input.touchCount == 0)
 			return;
@@ -129,7 +115,7 @@ public class TouchEventManager : MonoBehaviour {
 		}
 	}
 	
-	private static bool sendEvent (Touch t, ListenerLists ll) {
+	private bool sendEvent (Touch t, ListenerLists ll) {
 		if (ll == null)
 			return false;
 		

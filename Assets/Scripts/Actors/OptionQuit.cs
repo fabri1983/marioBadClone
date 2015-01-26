@@ -10,10 +10,11 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 	
 	public static OptionQuit Instance {
         get {
-            if (instance == null)
+            if (instance == null) {
 				// Instantiate the entire prefab. 
 				// Don't assign to the instance variable because it is then assigned in Awake()
 				GameObject.Instantiate(Resources.Load("Prefabs/GUI_Quit"));
+			}
             return instance;
         }
     }
@@ -28,11 +29,10 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 
 		setupButtons(); // locate the buttons
 		GUIScreenLayoutManager.Instance.register(this);
-		TransitionGUIFxManager.Instance.register(this, false);
+		TransitionGUIFxManager.Instance.registerForEndTransitions(this);
 	}
 	
 	void OnDestroy () {
-		TransitionGUIFxManager.Instance.remove(this);
 		GUIScreenLayoutManager.Instance.remove(this);
 	}
 
@@ -77,10 +77,12 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 	}
 	
 	public TransitionGUIFx[] getTransitions () {
-		return GetComponents<TransitionGUIFx>();
+		// return the transitions in an order set from Inspector.
+		// Note: to return in a custom order get the transitions array and sort it as desired.
+		return TransitionGUIFxManager.getTransitionsInOrder(gameObject);
 	}
 	
-	public void onEndTransition (TransitionGUIFx fx) {
+	public void prevTransitionEnd (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);

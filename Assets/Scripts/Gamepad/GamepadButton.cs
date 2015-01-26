@@ -13,11 +13,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		if (dontDestroy)
 			DontDestroyOnLoad(this.gameObject);
 		
-		TransitionGUIFxManager.Instance.register(this, false);
-	}
-	
-	void OnDestroy () {
-		TransitionGUIFxManager.Instance.remove(this);
+		TransitionGUIFxManager.Instance.registerForEndTransitions(this);
 	}
 	
 	public bool isStatic () {
@@ -41,10 +37,12 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	}
 	
 	public TransitionGUIFx[] getTransitions () {
-		return GetComponents<TransitionGUIFx>();
+		// return the transitions in an order set from Inspector.
+		// Note: to return in a custom order get the transitions array and sort it as desired.
+		return TransitionGUIFxManager.getTransitionsInOrder(gameObject);
 	}
 	
-	public void onEndTransition (TransitionGUIFx fx) {
+	public void prevTransitionEnd (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);

@@ -2,5 +2,5 @@
 public interface ITransitionListener {
 
 	TransitionGUIFx[] getTransitions ();
-	void onEndTransition (TransitionGUIFx fx);
+	void prevTransitionEnd (TransitionGUIFx fx);
 }

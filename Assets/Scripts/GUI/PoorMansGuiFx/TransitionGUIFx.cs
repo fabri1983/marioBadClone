@@ -26,15 +26,15 @@ enum Element
 
 /// <summary>
 /// This class modifies transform component for doing a transition effect.
-/// When this script is in a GUIText or GUITexture element, please consider your actual pixel offset 
-/// and set the start offset transform property accordingly.
+/// When this script is in a GUIText or GUITexture game object, please consider your actual 
+/// pixel offset and set the start offset transform property accordingly.
 /// </summary>
-public class TransitionGUIFx : MonoBehaviour {
+public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 	
 	public Vector2 startOffsetTransform = Vector2.zero;
 	public Transition _transition;
 	public Direction direction;
-	public float startDelaySecs=0;
+	public float startDelaySecs = 0f;
 	public int steps = 32;
 	public float acceleration = 1f;
 	public EasingType easingType;
@@ -47,8 +47,12 @@ public class TransitionGUIFx : MonoBehaviour {
 	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
 	private bool update;
-	private ITransitionListener _listener = null;
-	
+	private ITransitionListener nextTransition = null;
+
+	void Awake () {
+		update = false;
+	}
+
 	void Start ()
 	{
 		elem = Element.TRANSFORM;
@@ -57,8 +61,7 @@ public class TransitionGUIFx : MonoBehaviour {
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)
 			elem = Element.GUI_TEXT;*/
-		
-		update = false;
+
 		prepareTransition();
 	}
 	
@@ -73,11 +76,17 @@ public class TransitionGUIFx : MonoBehaviour {
 	void OnDisable () {
 		if (useCoroutine)
 			StopCoroutine("DoCoroutine");
-		// tells the ITransitionListener that this transition is finished
-		if (_listener != null)
-			_listener.onEndTransition(this);
 	}
-	
+
+	public TransitionGUIFx[] getTransitions () {
+		return null;
+	}
+
+	public void prevTransitionEnd (TransitionGUIFx fx) {
+		this.enabled = true;
+		update = true;
+	}
+
 	void Update () {
 		if (useCoroutine)
 			return;
@@ -85,8 +94,8 @@ public class TransitionGUIFx : MonoBehaviour {
 			DoTransition();
 	}
 	
-	public void setListener (ITransitionListener listener) {
-		_listener = listener;
+	public void setNextTransition (ITransitionListener listener) {
+		nextTransition = listener;
 	}
 	
 	void enableUpdate () {
@@ -187,8 +196,9 @@ public class TransitionGUIFx : MonoBehaviour {
 				break;
             yield return null;
 		}
-		
+
 		this.enabled = false;
+		transitionEnded();
 	}
 	
 	private void DoTransition ()
@@ -197,12 +207,19 @@ public class TransitionGUIFx : MonoBehaviour {
 		//if (currentStep >= steps) {
 		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y) {
 			this.enabled = false;
+			transitionEnded();
 			return;
 		}
 		transition(currentStep);
 		++currentStep;
 	}
-	
+
+	private void transitionEnded () {
+		// this transition has finished, then continue with next one if any
+		if (nextTransition != null)
+			nextTransition.prevTransitionEnd(this);
+	}
+
 	private void transition (int step)
 	{
 		// TODO: remap step from 0-steps into 0-1

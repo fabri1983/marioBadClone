@@ -11,11 +11,10 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 		// initialize the screen bounds cache
 		_screenBounds.x = -1f;
 		
-		TransitionGUIFxManager.Instance.register(this, false);
+		TransitionGUIFxManager.Instance.registerForEndTransitions(this);
 	}
 	
 	void OnDestroy () {
-		TransitionGUIFxManager.Instance.remove(this);
 		TouchEventManager.Instance.removeListener(this);
 	}
 	
@@ -29,8 +28,8 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	}
 	
 	public Rect getScreenBoundsAA () {
+		// checks if the cached size has changed
 		if (_screenBounds.x == -1f)
-			// here I suppose this game object has attached a GUICustomElement
 			_screenBounds = GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
 		return _screenBounds;
 	}
@@ -51,10 +50,12 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	}
 	
 	public TransitionGUIFx[] getTransitions () {
-		return GetComponents<TransitionGUIFx>();
+		// return the transitions in an order set from Inspector.
+		// Note: to return in a custom order get the transitions array and sort it as desired.
+		return TransitionGUIFxManager.getTransitionsInOrder(gameObject);
 	}
 	
-	public void onEndTransition (TransitionGUIFx fx) {
+	public void prevTransitionEnd (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began);

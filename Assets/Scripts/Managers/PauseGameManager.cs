@@ -2,7 +2,14 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class PauseGameManager : MonoBehaviour {
+/// <summary>
+/// Pause Game Manager singleton. This can't be a MonoBehaviour subclass since there is an execution order 
+/// when pausable components are destroyed. This manager can't be destroyed before any pausable has executed his
+/// remove() operation. So the solution to that was simply create the manager as non MonoBehaviour subclass, thus 
+/// it won't appear in game hierarchy.
+/// However it creates a non destroyable game object for catching OnApplicationPause().
+/// </summary>
+public class PauseGameManager {
 	
 	private List<IPausable> sceneOnly = new List<IPausable>();
 	private List<IPausable> durables = new List<IPausable>();
@@ -16,39 +23,23 @@ public class PauseGameManager : MonoBehaviour {
 	public static PauseGameManager Instance {
         get {
             if (instance == null) {
-				// creates a game object with this script component.
-				instance = new GameObject("PauseGameManager").AddComponent<PauseGameManager>();
+				// creates the innner instance
+				instance = new PauseGameManager();
 			}
             return instance;
         }
     }
-	
-	void Awake () {
+
+	private PauseGameManager () {
 		paused = false;
-		if (instance != null && instance != this)
-			Destroy(this.gameObject);
-		else {
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
+		// instantiates the game object which will catch OnApplicationPause() event and communicates to this manager
+		GameObject.Instantiate(Resources.Load("Prefabs/PauseGameUnityListener"));
 	}
-	
-	void OnDestroy () {
+
+	~PauseGameManager () {
 		sceneOnly.Clear();
 		durables.Clear();
 		instance = null;
-	}
-	
-	/**
-	 * Fired by Unity when the app is going to or coming from background.
-	 */
-	void OnApplicationPause(bool pauseStatus) {
-		// is app going into background?
-		if (pauseStatus)
-			pause();
-		// app is brought back to foreground
-		else
-			resume();
 	}
 	
 	public bool isPaused () {
