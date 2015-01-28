@@ -35,8 +35,7 @@ public class Shake : MonoBehaviour, ITransitionListener
 	}
 
 #if UNITY_EDITOR
-	void OnGUI ()
-	{
+	void OnGUI () {
 		if (!debug)
 			return;
 		if (GUI.Button (new Rect (20, 40, 80, 20), "Shake"))
