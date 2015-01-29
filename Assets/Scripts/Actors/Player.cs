@@ -301,22 +301,48 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
-		
+
 		// if collision starts from below then proceed to the oneway platform logic
-		if (GameObjectTools.isHitFromBelow(arbiter))
+		if (GameObjectTools.isHitFromBelow(arbiter)) {
+			shape1.GetComponent<ClimbDownOnPlatform>().setTraversingUpwards(true);
 			return true; // return true so the PreSolve condition continues
+		}
+		// collisiion from above, then player is on platform
+		else {
+			shape1.GetComponent<ClimbDownOnPlatform>().handleLanding();
+		}
 
 		// oneway platform logic was not met
 		return false;
 	}
 
 	public static bool presolveCollisionWithOneway (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
+
 		// if collision was from below then continue with oneway platform logic
 		if (GameObjectTools.isHitFromBelow(arbiter)) {
 			arbiter.Ignore();
 			return false;
 		}
+		// if player wants to climb down (once it is over the platform) then disable the collision to start free fall
+		if (shape1.GetComponent<ClimbDownOnPlatform>().isPullingDown()) {
+			arbiter.Ignore();
+			return false;
+		}
 
+		// let the collision happens
 		return true;
+	}
+
+	public static void endCollisionWithOneway (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
+
+		// if was traversing the platform from below then the player is over the platform
+		// correct inner state is treated by the invoked method
+		shape1.GetComponent<ClimbDownOnPlatform>().handleSeparation();
 	}
 }
