@@ -2580,6 +2580,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1006141234}
   m_GameObject: {fileID: 823940588}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
+--- !u!1 &871364093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 871364094}
+  - 114: {fileID: 871364095}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &871364094
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871364093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &871364095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 871364093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &874011695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4130,45 +4169,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1714306696}
   m_GameObject: {fileID: 1289653359}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
---- !u!1 &1298465289
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1298465290}
-  - 114: {fileID: 1298465291}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1298465290
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1298465289}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1298465291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1298465289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1001 &1302228084
 Prefab:
   m_ObjectHideFlags: 0
