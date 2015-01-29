@@ -53,7 +53,7 @@ static public class GameObjectTools
 		
 		// came from above?
 		if (target.velocity.normalized.y < -COS_45) {
-			// check collision points to be all above goomba's height
+			// check collision points to be all above collider's height
 			for (int i=0, c=arbiter.contactCount; i < c; ++i) {
 				if (sourceMaxY > (arbiter.GetPoint(i).y - arbiter.GetDepth(i)))
 					return false;
@@ -62,13 +62,24 @@ static public class GameObjectTools
 		}
 		return false;
 	}
-	
+
+	public static bool isHitFromBelow (ChipmunkArbiter arbiter) {
+		/// The collision normal is the direction of the surfaces where the two objects collided.
+		/// Keep in mind that the normal points out of the first object and into the second. 
+		/// If you switch the order of your collision types in the method name, it will flip the normal around.
+		
+		// if normal.y is NOT near to -1 it means it's a hit from below
+		if (arbiter.GetNormal(0).y > -COS_45)
+			return true;
+		return false;
+	}
+
 	public static bool isGrounded (ChipmunkArbiter arbiter) {
 		/// The collision normal is the direction of the surfaces where the two objects collided.
 		/// Keep in mind that the normal points out of the first object and into the second. 
 		/// If you switch the order of your collision types in the method name, it will flip the normal around.
 		
-		// if normal.y is near to 1 it means it's a grounded plane
+		// if normal.y is near to 1 it means it's a hit from above
 		if (Mathf.Abs(arbiter.GetNormal(0).y) > COS_45)
 			return true;
 		return false;

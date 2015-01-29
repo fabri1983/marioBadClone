@@ -110,7 +110,7 @@ public class Jump : MonoBehaviour {
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
 		return true;
 	}
 

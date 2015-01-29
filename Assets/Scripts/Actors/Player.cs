@@ -240,11 +240,11 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	public void restoreWalkVel () {
 		walkVelocity = walkVelBackup;
 	}
-	
+
 	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
-	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
 		
 		Player player = shape1.GetComponent<Player>();
 		/*if (player.isDying())
@@ -254,10 +254,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		
 		// avoid ground penetration (Y axis)
 		// NOTE: to solve this Chipmunk has the property collisionBias and/or minPenetrationForPenalty
-		Vector2 thePos = player.body.position;
+		/*Vector2 thePos = player.body.position;
 		float depth = arbiter.GetDepth(0);
 		thePos.y -= depth;
-		player.body.position = thePos;
+		player.body.position = thePos;*/
 		
 		// if isn't a grounded surface then stop velocity and avoid getting inside the object
 		if (GameObjectTools.isWallHit(arbiter)) {
@@ -266,20 +266,20 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
 			// move back to the contact point and a little more
-			thePos = player.body.position;
-			thePos.x += player.signCollision * (depth - 0.01f);
+			Vector2 thePos = player.body.position;
+			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
 			player.body.position = thePos;
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
 		return true;
 	}
 	
 	public static void endCollisionWithScenery (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
-	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
 		
 		shape1.GetComponent<Player>().exitedFromScenery = true;
 	}
@@ -293,7 +293,30 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		player.restoreWalkVel();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore() does the same but next frame.
+		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
 		return false;
+	}
+
+	public static bool beginCollisionWithOneway (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
+		
+		// if collision starts from below then proceed to the oneway platform logic
+		if (GameObjectTools.isHitFromBelow(arbiter))
+			return true; // return true so the PreSolve condition continues
+
+		// oneway platform logic was not met
+		return false;
+	}
+
+	public static bool presolveCollisionWithOneway (ChipmunkArbiter arbiter) {
+		// if collision was from below then continue with oneway platform logic
+		if (GameObjectTools.isHitFromBelow(arbiter)) {
+			arbiter.Ignore();
+			return false;
+		}
+
+		return true;
 	}
 }
