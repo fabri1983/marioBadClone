@@ -60,17 +60,23 @@ Features implemented:
 	Every material has its own CG shader with specific optimizations targeting android platform. This allow to remove some assumptions that Unity adds when compiles a shader.
 
 
+Build and Deployment:
+---------------------
+Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the one it was built.
+So for example if you want to build and deploy for an Android device with resolution 480x320 you need to set the same resolution in Unity Editor under Window -> Set Custom Game Window option.
+
+
 TODO list:
 ----------
 - Atlas Texture. Integration with current sprite animation solution.
 - Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Unite 2013 - Optimizing Unity Games for Mobile Platforms.
 - Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
 - Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching.
+- 2-channel textures. Interesting article in texture compression form GPU Pro 5 book.
 - Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts.
+- Environment effects: rain, lightings, snow accumulation.
 
 
 Contact:
 --------
 fabri1983@gmail.com
-
-	
