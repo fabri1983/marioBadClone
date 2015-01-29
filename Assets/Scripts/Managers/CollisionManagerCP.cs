@@ -18,86 +18,102 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	//##################### Goomba #################
-	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter) {
 		return Patrol.beginCollision(arbiter);
 	}
 	
-	bool ChipmunkBegin_Goomba_Goomba (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_Goomba (ChipmunkArbiter arbiter) {
 		return Patrol.beginCollision(arbiter);
 	}
 	
-	bool ChipmunkBegin_Goomba_Ghost (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_Ghost (ChipmunkArbiter arbiter) {
 		return Patrol.beginCollision(arbiter);
 	}
 	
-	bool ChipmunkBegin_Goomba_KoopaTroopa (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_KoopaTroopa (ChipmunkArbiter arbiter) {
 		return Patrol.beginCollision(arbiter);
 	}
 	
-	bool ChipmunkBegin_Goomba_PowerUp (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_PowerUp (ChipmunkArbiter arbiter) {
 		return Goomba.beginCollisionWithPowerUp(arbiter);
 	}
 	
-	bool ChipmunkBegin_Goomba_Player (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Goomba_Player (ChipmunkArbiter arbiter) {
 		return Goomba.beginCollisionWithPlayer(arbiter);
 	}
 	
 	//##################### Ghost #################
-	bool ChipmunkBegin_Ghost_PowerUp (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Ghost_PowerUp (ChipmunkArbiter arbiter) {
 		return Ghost.beginCollisionWithPowerUp(arbiter);
 	}
 	
-	bool ChipmunkBegin_Ghost_Player (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Ghost_Player (ChipmunkArbiter arbiter) {
 		return Ghost.beginCollisionWithPlayer(arbiter);
 	}
 	
 	//##################### KoopaTroopa #################
-	bool ChipmunkBegin_KoopaTroopa_Scenery (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_KoopaTroopa_Scenery (ChipmunkArbiter arbiter) {
 		Chase.beginCollisionWithScenery(arbiter);
 		if (!Patrol.beginCollision(arbiter))
 			return false;
 		return Jump.beginCollisionWithScenery(arbiter);
 	}
 	
-	bool ChipmunkBegin_KoopaTroopa_KoopaTroopa (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_KoopaTroopa_KoopaTroopa (ChipmunkArbiter arbiter) {
 		if (!KoopaTroopa.beginCollisionWithKoopaTroopa(arbiter))
 			return false;
 		return Patrol.beginCollision(arbiter);
 	}
 	
-	bool ChipmunkBegin_KoopaTroopa_PowerUp (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_KoopaTroopa_PowerUp (ChipmunkArbiter arbiter) {
 		return KoopaTroopa.beginCollisionWithPowerUp(arbiter);
 	}
 	
-	bool ChipmunkBegin_KoopaTroopa_Player (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_KoopaTroopa_Player (ChipmunkArbiter arbiter) {
 		return KoopaTroopa.beginCollisionWithPlayer(arbiter);
 	}
 	
 	//##################### ChaseSensor #################
-	bool ChipmunkBegin_ChaseSensor_Player (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_ChaseSensor_Player (ChipmunkArbiter arbiter) {
 		return Chase.beginCollisionWithPlayer(arbiter);
 	}
 	
-	void ChipmunkSeparate_ChaseSensor_Player (ChipmunkArbiter arbiter){
+	void ChipmunkSeparate_ChaseSensor_Player (ChipmunkArbiter arbiter) {
 		Chase.endCollisionWithPlayer(arbiter);
 	}
 	
 	//##################### Player #################
-	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter) {
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
 		return Jump.beginCollisionWithScenery(arbiter);
 	}
 	
-	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter){
+	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter) {
 		Player.endCollisionWithScenery(arbiter);
 	}
 	
-	bool ChipmunkBegin_Player_SpawnPos (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Player_SpawnPos (ChipmunkArbiter arbiter) {
 		return SpawnPositionTrigger.beginCollisionWithPlayer(arbiter);
 	}
 	
-	bool ChipmunkBegin_Player_UnlockSensor (ChipmunkArbiter arbiter){
+	bool ChipmunkBegin_Player_UnlockSensor (ChipmunkArbiter arbiter) {
 		return Player.beginCollisionWithUnlockSensor(arbiter);
+	}
+
+	bool ChipmunkBegin_Player_Oneway (ChipmunkArbiter arbiter) {
+		// if condition for oneway platform was not met then proceed as a begin collision with Scenery
+		if (!Player.beginCollisionWithOneway(arbiter))
+			return ChipmunkBegin_Player_Scenery(arbiter);
+		return true;
+	}
+
+	bool ChipmunkPreSolve_Player_Oneway (ChipmunkArbiter arbiter) {
+		return Player.presolveCollisionWithOneway(arbiter);
+	}
+
+	void ChipmunkSeparate_Player_Oneway (ChipmunkArbiter arbiter) {
+		// proceed as separating from Scenery
+		ChipmunkSeparate_Player_Scenery(arbiter);
 	}
 }
