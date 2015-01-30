@@ -343,9 +343,9 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		return result;
 	}
 	
-	public static Rect positionInScreen (GUICustomElement guiElem)
+	public static Rect getPositionInScreen (GUICustomElement guiElem)
 	{
-		Vector3 guiPos = guiElem.transform.localPosition; // GUI custom element uses localPosition
+		Vector3 guiPos = guiElem.transform.localPosition; // GUI custom element uses localPosition for correctly on screen location
 		Vector2 sizeInGUI = guiElem.getSizeInGUI();
 		Vector2 sizeInPixels = guiElem.getSizeInPixels();
 		Vector2 pixelMin = guiToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);

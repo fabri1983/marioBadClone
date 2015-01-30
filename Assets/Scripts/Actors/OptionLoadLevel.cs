@@ -30,7 +30,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	public Rect getScreenBoundsAA () {
 		// checks if the cached size has changed
 		if (_screenBounds.x == -1f)
-			_screenBounds = GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
 		return _screenBounds;
 	}
 	
