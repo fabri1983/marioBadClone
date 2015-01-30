@@ -254,10 +254,10 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		
 		// avoid ground penetration (Y axis)
 		// NOTE: to solve this Chipmunk has the property collisionBias and/or minPenetrationForPenalty
-		/*Vector2 thePos = player.body.position;
+		Vector2 thePos = player.body.position;
 		float depth = arbiter.GetDepth(0);
 		thePos.y -= depth;
-		player.body.position = thePos;*/
+		player.body.position = thePos;
 		
 		// if isn't a grounded surface then stop velocity and avoid getting inside the object
 		if (GameObjectTools.isWallHit(arbiter)) {
@@ -266,8 +266,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
 			// move back to the contact point and a little more
-			Vector2 thePos = player.body.position;
-			thePos.x += player.signCollision * (arbiter.GetDepth(0) - 0.01f);
+			thePos = player.body.position;
+			thePos.x += player.signCollision * (depth - 0.01f);
 			player.body.position = thePos;
 		}
 		
