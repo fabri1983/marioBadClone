@@ -4,6 +4,21 @@ using System;
 
 public class LevelManager : MonoBehaviour {
 
+	/**
+ 	* Used for sorting the spawn position triggers
+ 	*/
+	private sealed class PriorityComparator : IComparer<SpawnPositionTrigger> {
+		int IComparer<SpawnPositionTrigger>.Compare(SpawnPositionTrigger a, SpawnPositionTrigger b) {
+			int vaPrio = a.getSpawnPos().priority;
+			int vbPrio = b.getSpawnPos().priority;
+			if (vaPrio < vbPrio)
+				return -1;
+			else if (vaPrio > vbPrio)
+				return 1;
+			return 0;
+		}
+	}
+
 	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;

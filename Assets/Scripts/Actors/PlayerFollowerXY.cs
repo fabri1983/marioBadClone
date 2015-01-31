@@ -8,7 +8,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 
 	void Awake () {
-		// register against the GUICameraSyncable
+		// register against the GUICameraSync manager
 		Camera.main.GetComponent<GUICameraSync>().register(this);
 	}
 
@@ -25,7 +25,11 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 			 thePos.y += offsetY;
 		transform.position = thePos;
 	}
-	
+
+	public int getPriority() {
+		return 1; // priority when updating due to GUICameraSync
+	}
+
 	public void updateCamera () {
 		applyTransforms();
 	}
