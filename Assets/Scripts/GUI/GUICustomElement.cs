@@ -79,6 +79,9 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 #endif
 	
 	public void updateForGUI () {
+		// reset the cache since maybe the sice in GUI will be used ahead
+		casheSizeInGUI.x = -1f;
+		// locate GUI element according new screen size (or whatever event fire this method)
 		GUIScreenLayoutManager.locateForGUI(transform, getSizeInPixels());
 	}
 	

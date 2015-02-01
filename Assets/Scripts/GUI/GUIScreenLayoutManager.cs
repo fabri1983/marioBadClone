@@ -351,7 +351,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		Vector2 pixelMin = guiToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);
 		return new Rect(pixelMin.x, pixelMin.y, sizeInPixels.x, sizeInPixels.y);
 	}
-	
+
 	/// <summary>
 	/// Sets z-position and scale (w,h) to a transform object for positioning in front of 
 	/// camera to act like a GUI element.
