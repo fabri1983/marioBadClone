@@ -50,7 +50,12 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	bool ChipmunkBegin_Ghost_Player (ChipmunkArbiter arbiter) {
 		return Ghost.beginCollisionWithPlayer(arbiter);
 	}
-	
+
+	bool ChipmunkBegin_Ghost_Oneway (ChipmunkArbiter arbiter) {
+		// Ghost does not collide with oneway platform
+		return false;
+	}
+
 	//##################### KoopaTroopa #################
 	bool ChipmunkBegin_KoopaTroopa_Scenery (ChipmunkArbiter arbiter) {
 		Chase.beginCollisionWithScenery(arbiter);

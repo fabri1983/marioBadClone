@@ -16,6 +16,8 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	public bool sizeAsPixels = false;
 	public bool newMaterialInstance = false; // currently no atlas usage, so every game object instance has its own material instance
 
+	private Vector2 casheSizeInGUI = -1f * Vector2.one;
+
 	void Awake () {
 		// deactivate the game object if no texture
 		if (!texture) {
@@ -77,6 +79,9 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 #endif
 	
 	public void updateForGUI () {
+		// reset the cache since maybe the sice in GUI will be used ahead
+		casheSizeInGUI.x = -1f;
+		// locate GUI element according new screen size (or whatever event fire this method)
 		GUIScreenLayoutManager.locateForGUI(transform, getSizeInPixels());
 	}
 	
@@ -87,7 +92,10 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	/// The size in GUI space
 	/// </returns>
 	public Vector2 getSizeInGUI () {
-		return GUIScreenLayoutManager.sizeInGUI(getSizeInPixels());
+		// if size was not caluclated yet then proceed and cache it
+		if (casheSizeInGUI.x == -1f)
+			casheSizeInGUI = GUIScreenLayoutManager.sizeInGUI(getSizeInPixels());
+		return casheSizeInGUI;
 	}
 	
 	public Vector2 getSizeInPixels () {

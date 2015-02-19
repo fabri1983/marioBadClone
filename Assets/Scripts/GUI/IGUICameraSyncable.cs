@@ -6,4 +6,5 @@
 public interface IGUICameraSyncable {
 
 	void updateCamera();
+	int getPriority();
 }

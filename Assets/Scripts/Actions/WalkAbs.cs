@@ -31,6 +31,7 @@ public abstract class WalkAbs : MonoBehaviour {
 	
 	public abstract void reset ();
 	public abstract void walk (float velocity);
+	public abstract void stopWalking ();
 	
 	protected void _walk (float velocity) {
 		//NOTE: remember to set the gain property before calling this method from subclasses
@@ -76,7 +77,7 @@ public abstract class WalkAbs : MonoBehaviour {
 		return walking;
 	}
 	
-	public void stopWalking () {
+	protected void _stopWalking () {
 		stop = true;
 		walking = false;
 		walkAC.stop();

@@ -14,7 +14,7 @@ public class Idle : MonoBehaviour {
 	}
 	
 	void Start () {
-		// NOTE: it seems that Awake() from children are executed after parent's Awake()
+		// NOTE: children's Awake() doesn't exist on parent's Awake(), so you must get children components on Start()
 		idleAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Idle, true);
 	}
 	
@@ -31,9 +31,9 @@ public class Idle : MonoBehaviour {
 			crouch.noCrouch();
 		
 		// due to problems on Unity's initialization order there is a use case where the object isn't instantiated
-		if (idleAC == null)
+		/*if (idleAC == null)
 			idleAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Idle, true);
-		if (idleAC != null)
+		if (idleAC != null)*/
 			idleAC.setupAndPlay();
 	}
 }

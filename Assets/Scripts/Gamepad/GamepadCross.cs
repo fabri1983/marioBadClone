@@ -98,7 +98,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 			return guiTexture.GetScreenRect(Camera.main);
 		// here I suppose this game object has attached a GUICustomElement
 		else
-			return GUIScreenLayoutManager.positionInScreen(GetComponent<GUICustomElement>());
+			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
 	}
 	
 	public void OnBeganTouch (Touch t) {

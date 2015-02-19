@@ -13,4 +13,8 @@ public class Walk : WalkAbs {
 		gain = 1f;
 		base._walk(velocity);
 	}
+
+	public override void stopWalking () {
+		base._stopWalking();
+	}
 }

@@ -9,7 +9,23 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class GUICameraSync : MonoBehaviour {
 
-	List<IGUICameraSyncable> listeners = new List<IGUICameraSyncable>(1); // by the moment there is one script that modify the camera's transform
+	/**
+	 * Used for sorting the listeners by priority
+	 */
+	private sealed class PriorityComparator : IComparer<IGUICameraSyncable> {
+		int IComparer<IGUICameraSyncable>.Compare(IGUICameraSyncable synca, IGUICameraSyncable syncb) {
+			int a = synca.getPriority();
+			int b = syncb.getPriority();
+			if (a < b)
+				return -1;
+			else if (a > b)
+				return 1;
+			return 0;
+		}
+	}
+
+	private PriorityComparator comparator = new PriorityComparator();
+	private List<IGUICameraSyncable> listeners = new List<IGUICameraSyncable>();
 
 	void OnDestroy () {
 		// since this script lives per scene, then clean the list of subscribers
@@ -19,6 +35,7 @@ public class GUICameraSync : MonoBehaviour {
 
 	public void register (IGUICameraSyncable syncable) {
 		listeners.Add(syncable);
+		listeners.Sort(comparator);
 	}
 
 	// Use Update to avoid wrong Touch Event Manager updates.
@@ -47,21 +64,18 @@ public class GUICameraSync : MonoBehaviour {
 		guiContainer_so.transform.rotation = camRot;
 
 #if UNITY_EDITOR
-		// /in Editor Mode the game object guiContainer_nd only exists in first scene, so will be null while editing another scene.
+		// in Editor Mode the game object guiContainer_nd only exists in first scene, so will be null while editing in other scene.
 		if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) {
 			if (guiContainer_nd != null) {
 				guiContainer_nd.transform.position = camPos;
 				guiContainer_nd.transform.rotation = camRot;
 			}
 		}
-		// in Editor Play Mode the game object guiContainer_nd exists so no null check is needed
-		else {
+		else
+#endif
+		{
 			guiContainer_nd.transform.position = camPos;
 			guiContainer_nd.transform.rotation = camRot;
 		}
-#else
-		guiContainer_nd.transform.position = camPos;
-		guiContainer_nd.transform.rotation = camRot;
-#endif
 	}
 }
