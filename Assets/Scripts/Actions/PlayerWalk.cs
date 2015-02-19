@@ -43,4 +43,11 @@ public class PlayerWalk : WalkAbs {
 		base._walk(velocity);
 		walkAC.animComp.setFPS(walkAC.animFPS * gain);
 	}
+
+	public override void stopWalking () {
+		base._stopWalking();
+		
+		if (!base.jump.IsJumping() && lookUpwards.isLookingUpwards())
+			base.walkAC = walkAC_orig;
+	}
 }
