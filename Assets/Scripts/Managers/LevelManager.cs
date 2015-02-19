@@ -139,7 +139,7 @@ public class LevelManager : MonoBehaviour {
 		// activate the player's game object
 		player.toogleEnabled(playerEnabled);
 		// setup some scene only scripts in LookUpwards
-		player.GetComponent<LookUpwards>().setup();
+		player.GetComponent<LookDirections>().setup();
 		// set Mario spawn position for this level
 		setPlayerPosition(level);
 #if UNITY_EDITOR		

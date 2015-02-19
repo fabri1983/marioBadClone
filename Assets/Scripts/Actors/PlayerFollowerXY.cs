@@ -41,9 +41,9 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 			transform.LookAt(lookAtTarget);
 			transform.rotation = Quaternion.Lerp(origRot, transform.rotation, Time.deltaTime * timeFactor);
 		}
-		
-		Vector3 thePos = transform.position;
+
 		// get XY position of target and keep Z untouch
+		Vector3 thePos = transform.position;
 		thePos.x = lookAtTarget.position.x;
 		if (!lockY || instantlyOneTime)
 			thePos.y = lookAtTarget.position.y + offsetY;

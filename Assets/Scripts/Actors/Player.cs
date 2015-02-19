@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private Idle idle;
 	private Teleportable teleportable;
 	private PowerUp powerUp;
-	private LookUpwards lookUpwards;
+	private LookDirections lookDirections;
 	private bool exitedFromScenery;
 	
 	/// the position where the bullets start firing
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		dieAnim = GetComponent<PlayerDieAnim>();
 		crouch = GetComponent<Crouch>();
 		idle = GetComponent<Idle>();
-		lookUpwards = GetComponent<LookUpwards>();
+		lookDirections = GetComponent<LookDirections>();
 		body = GetComponent<ChipmunkBody>();
 		
 		walkVelBackup = walkVelocity;
@@ -163,14 +163,14 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		// look upwards
 		if (!jump.IsJumping()) {
 			if (Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) {
-				lookUpwards.lookUpwards();
+				lookDirections.lookUpwards();
 				isIdle = false;
 			}
 			else
-				lookUpwards.restore();
+				lookDirections.restore();
 		}
 		else
-			lookUpwards.lockYWhenJumping();
+			lookDirections.lockYWhenJumping();
 		
 		// finally only if no doing any action then set idle state
 		if (isIdle)
@@ -239,6 +239,9 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	
 	public void restoreWalkVel () {
 		walkVelocity = walkVelBackup;
+	}
+
+	public void climbDown () {
 	}
 
 	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
@@ -328,6 +331,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		}
 		// if player wants to climb down (once it is over the platform) then disable the collision to start free fall
 		if (shape1.GetComponent<ClimbDownOnPlatform>().isPullingDown()) {
+			shape1.GetComponent<Player>().climbDown();
 			arbiter.Ignore();
 			return false;
 		}
