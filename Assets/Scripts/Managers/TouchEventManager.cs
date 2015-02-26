@@ -94,7 +94,6 @@ public class TouchEventManager {
 	}
 	
 	public void processEvents () {
-		
 		if (Input.touchCount == 0)
 			return;
 

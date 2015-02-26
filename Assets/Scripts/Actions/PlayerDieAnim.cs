@@ -16,6 +16,7 @@ public class PlayerDieAnim : MonoBehaviour {
 	private Jump jump;
 	private AnimateTiledTexture animComp; // used to access its renderer
 	private Shader origShader;
+
 #if UNITY_EDITOR
 	private bool wasDying = false; // used to keep correct asignment of shader when isDying and exiting from Editor Play Mode
 #endif
@@ -63,7 +64,7 @@ public class PlayerDieAnim : MonoBehaviour {
 		// set special shader which will render this game object in front of all layers
 		animComp = GetComponentInChildren<AnimateTiledTexture>();
 		animComp.renderer.sharedMaterial.shader = shaderForDie;
-		
+
 		// execute a little jump as dying animation
 		GetComponent<ChipmunkShape>().body.velocity = Vector2.zero;
 		jump.forceJump(GetComponent<Player>().lightJumpVelocity);

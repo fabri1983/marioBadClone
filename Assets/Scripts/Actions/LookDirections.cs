@@ -1,7 +1,9 @@
 using UnityEngine;
 
 public class LookDirections : MonoBehaviour {
-	
+
+	private const float _PERIOD = 5f; // factor used in timing for waiting before look direction action takes effect
+
 	public float camDisplacement = 10f;
 	public float speedFactor = 3f;
 	public float restoringSpeed = 20f;
@@ -12,7 +14,8 @@ public class LookDirections : MonoBehaviour {
 	private RestoreAfterLookDirections restoreLookDir;
 	private PlayerFollowerXY playerFollower;
 	private PlayerWalk walk;
-	
+	private float timing;
+
 	// Use this for initialization
 	void Awake () {
 		lookUpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.LookUpwards, true);
@@ -31,6 +34,7 @@ public class LookDirections : MonoBehaviour {
 		restoreLookDir = Camera.main.GetComponent<RestoreAfterLookDirections>();
 		playerFollower = Camera.main.GetComponent<PlayerFollowerXY>();
 		dirSign = 0f;
+		timing = 0f;
 	}
 
 	public void lookUpwards () {
@@ -38,6 +42,12 @@ public class LookDirections : MonoBehaviour {
 		// sprite anim is executed when is not walking
 		if (dirSign > 0f && !walk.isWalking())
 			lookUpAC.setupAndPlay();
+
+		// if it's not correct timing then exit method
+		if (timing < 1f) {
+			timing += Time.deltaTime * _PERIOD;
+			return;
+		}
 
 		// avoid re calculation if is already looking upwards
 		if (dirSign > 0f || !restoreLookDir.isRestored())
@@ -48,7 +58,7 @@ public class LookDirections : MonoBehaviour {
 	}
 
 	public void lookDownwards () {
-		// avoid re calculation if is already looking downwards
+		// avoid re calculation if is already looking downwards or if it's not correct timing
 		if (dirSign < 0f || !restoreLookDir.isRestored())
 			return;
 
@@ -69,6 +79,8 @@ public class LookDirections : MonoBehaviour {
 	}
 	
 	public void restore () {
+		timing = 0f;
+
 		if (dirSign == 0f || restoreLookDir.isRestored())
 			return;
 		
