@@ -2,13 +2,14 @@
 // So it uses:
 //   ZWrite On
 //   ZTest Always (this makes the material being displayed in front of all material under same queue)
+//   "Queue"="Overlay"
 Shader "Custom/Unlit Transparent Geom In Front CG" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
 }
 
 SubShader {
-	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
+	Tags { "Queue"="Overlay" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	ZWrite On // is On so we can draw it in front of all objects using ZTest=Always
 	ZTest Always
 	Lighting Off
