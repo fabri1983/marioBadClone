@@ -31,7 +31,7 @@ public class PlayerWalk : WalkAbs {
 		if (base.jump.IsJumping() && (velX * velocity) < 0f)
 			velocity = velX * 0.75f;
 		// is speed up button being pressed?
-		else if (Gamepad.isB() || (Input.GetButton("Fire1") && Input.touchCount == 0))
+		else if (Gamepad.isB())
 			base.gain = speedUpFactor;
 		
 		// if user is looking upwards then set the correct sprite animation

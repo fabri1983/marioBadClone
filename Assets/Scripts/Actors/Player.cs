@@ -18,13 +18,13 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private PowerUp powerUp;
 	private LookDirections lookDirections;
 	private bool exitedFromScenery;
+	private ChipmunkSegmentQueryInfo qinfo;
+	private ChipmunkBody body;
+	private float walkVelBackup, signCollision;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
 	private Vector2 rightFireDir, leftFireDir, fireDir;
-	
-	private ChipmunkBody body;
-	private float walkVelBackup, signCollision;
 	
 	// I guess 3.2f is half the size of Player's renderer plus few units more so the query ratio is the shortest possible
 	private static Vector2 queryOffset = Vector2.up * -3.2f;
@@ -105,7 +105,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		// constantly after jump.resetStatus()
 		if (exitedFromScenery && !jump.IsJumping()) {
 			// check if there is no shape below us
-			ChipmunkSegmentQueryInfo qinfo;
 			Vector2 end = body.position + queryOffset;
 			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayers, collisionGroupSkip, out qinfo);
 			// if no handler it means no hit
@@ -117,7 +116,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		bool isIdle = true;
 		
 		// jump
-		if (Gamepad.isA() || Input.GetButton("Jump")) {
+		if (Gamepad.isA()) {
 			walk.stopWalking(); // it resets walk behavior
 			jump.jump(lightJumpVelocity);
 			// apply gain jump power. Only once per jump (handled in Jump component)
@@ -132,7 +131,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		
 		// move
 		walk.enableWalking();
-		if (Gamepad.isLeft() || Input.GetAxis("Horizontal") < -0.1f) {
+		if (Gamepad.isLeft()) {
 			walk.walk(-walkVelocity);
 			fireDir = leftFireDir;
 			isIdle = false;
@@ -140,7 +139,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 			if (signCollision > 0f)
 				restoreWalkVel();
 		}
-		else if (Gamepad.isRight() || Input.GetAxis("Horizontal") > 0.1f) {
+		else if (Gamepad.isRight()) {
 			walk.walk(walkVelocity);
 			fireDir = rightFireDir;
 			isIdle = false;
@@ -151,18 +150,18 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		else
 			// if no movement input then set correct internal status
 			walk.stopWalking();
-		
+
 		// crouch
-		if (Gamepad.isDown() || Input.GetAxis("Vertical") < -0.1f) {
+		if (Gamepad.isDown()) {
 			crouch.crouch();
 			isIdle = false;
 		}
 		else
 			crouch.noCrouch();
 		
-		// look upwards
+		// look upwards/downwards
 		if (!jump.IsJumping()) {
-			if (Gamepad.isUp() || Input.GetAxis("Vertical") > 0.1f) {
+			if (Gamepad.isUp()) {
 				lookDirections.lookUpwards();
 				isIdle = false;
 			}
@@ -172,7 +171,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		else
 			lookDirections.lockYWhenJumping();
 		
-		// finally only if no doing any action then set idle state
+		// finally only if not doing any action then set idle state
 		if (isIdle)
 			idle.setIdle(false);
 	}

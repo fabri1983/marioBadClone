@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Attach this script to the camera game object.
 /// Checks if Player position in Screen Y axis is above or below a threshold in order to 
-/// force the camera to shift and tries to center the Player in Y screen axis.
+/// force the camera to shift up/down and tries to center the Player in Y screen axis.
 /// </summary>
 public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 
@@ -29,16 +29,18 @@ public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 	public void updateCamera () {
 		// check if the player's center screen position is above or below a threshold off the screen
 		Vector3 screenPos = Camera.main.WorldToScreenPoint(player.transform.position);
-		if (screenPos.y < (0.1f * Screen.height) || screenPos.y > (0.95f * Screen.height)) {
-			if (!applied && !player.isDying()) {
+		bool outsideThreshold = (screenPos.y < (0.1f * Screen.height) || screenPos.y > (0.95f * Screen.height));
+		if (outsideThreshold) {
+			if (!applied && !player.isDying() && player.gameObject.active) {
 				// disable the lockY property until the player lands
 				if (screenPos.y > (0.5f * Screen.height)) {
 					xyConfig.lockY = false;
 					lookUpCorrection.enabled = true; // enable the script that will displace the camera upwards
 				}
 				// apply same logic than looking downwards
-				else
+				else {
 					Debug.Log("Missing Implementation");
+				}
 				// set correction applied
 				applied = true;
 			}

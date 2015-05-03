@@ -48,7 +48,6 @@ public class LookDirections : MonoBehaviour {
 			timing += Time.deltaTime * _PERIOD;
 			return;
 		}
-
 		// avoid re calculation if is already looking upwards
 		if (dirSign > 0f || !restoreLookDir.isRestored())
 			return;
@@ -74,7 +73,7 @@ public class LookDirections : MonoBehaviour {
 		playerFollower.smoothLerp = true; // moves the camera with nice lerping
 		playerFollower.offsetY += dirSign * camDisplacement;
 		playerFollower.timeFactor = speedFactor;
-		
+		// set dirty state to the restoring logic
 		restoreLookDir.setRestored(false);
 	}
 	
