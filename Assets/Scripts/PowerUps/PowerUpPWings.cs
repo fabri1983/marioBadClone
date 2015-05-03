@@ -83,7 +83,7 @@ public class PowerUpPWings : PowerUp {
 	}
 	
 	public override bool isAllowedInput () {
-		return Input.GetButtonDown("Jump");
+		return Gamepad.isA();
 	}
 }
 

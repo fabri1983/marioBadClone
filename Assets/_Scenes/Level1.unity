@@ -866,6 +866,52 @@ MonoBehaviour:
   rowLength: 1
   colStart: 1
   colLength: 1
+--- !u!1 &274741561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100024, guid: 741ec0b69dffe5b4eb6529d173bd9873, type: 2}
+  m_PrefabInternal: {fileID: 1714306696}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 274741562}
+  - 114: {fileID: 274741563}
+  m_Layer: 0
+  m_Name: PlayerUnlockSensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &274741562
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400024, guid: 741ec0b69dffe5b4eb6529d173bd9873, type: 2}
+  m_PrefabInternal: {fileID: 1714306696}
+  m_GameObject: {fileID: 274741561}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -35.9429855, y: 7.545331, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 901954883}
+--- !u!114 &274741563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400010, guid: 741ec0b69dffe5b4eb6529d173bd9873,
+    type: 2}
+  m_PrefabInternal: {fileID: 1714306696}
+  m_GameObject: {fileID: 274741561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
+  m_Name: 
+  _friction: .699999988
+  _elasticity: 0
+  _isSensor: 1
+  _collisionType: UnlockSensor
+  _collisionGroup: Scenery
+  _center: {x: 0, y: 0}
+  _size: {x: 1, y: 1}
+  _radius: 0
 --- !u!1 &279856457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2670,6 +2716,8 @@ Transform:
   - {fileID: 2112833450}
   - {fileID: 1689842132}
   - {fileID: 478539235}
+  - {fileID: 955698090}
+  - {fileID: 274741562}
   m_Father: {fileID: 1492969988}
 --- !u!114 &901954884
 MonoBehaviour:
@@ -2750,6 +2798,52 @@ Prefab:
   m_RootGameObject: {fileID: 571054907}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &955698089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100026, guid: 741ec0b69dffe5b4eb6529d173bd9873, type: 2}
+  m_PrefabInternal: {fileID: 1714306696}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 955698090}
+  - 114: {fileID: 955698091}
+  m_Layer: 0
+  m_Name: PlayerUnlockSensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &955698090
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400026, guid: 741ec0b69dffe5b4eb6529d173bd9873, type: 2}
+  m_PrefabInternal: {fileID: 1714306696}
+  m_GameObject: {fileID: 955698089}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 35.8950539, y: 7.545331, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 901954883}
+--- !u!114 &955698091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 741ec0b69dffe5b4eb6529d173bd9873,
+    type: 2}
+  m_PrefabInternal: {fileID: 1714306696}
+  m_GameObject: {fileID: 955698089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
+  m_Name: 
+  _friction: .699999988
+  _elasticity: 0
+  _isSensor: 1
+  _collisionType: UnlockSensor
+  _collisionGroup: Scenery
+  _center: {x: 0, y: 0}
+  _size: {x: 1, y: 1}
+  _radius: 0
 --- !u!1 &977498189
 GameObject:
   m_ObjectHideFlags: 0
@@ -5936,45 +6030,6 @@ MonoBehaviour:
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: 0
---- !u!1 &1636286351
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1636286352}
-  - 114: {fileID: 1636286353}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1636286352
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1636286351}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1636286353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1636286351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1001 &1645078965
 Prefab:
   m_ObjectHideFlags: 0
@@ -8224,3 +8279,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc64c64e38d8d04a9d03f866737c16f, type: 1}
   m_Name: 
   hideColliderProportion: .800000012
+--- !u!1 &2130889815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 2130889816}
+  - 114: {fileID: 2130889817}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2130889816
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2130889815}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &2130889817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2130889815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320

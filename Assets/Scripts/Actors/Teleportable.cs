@@ -25,10 +25,10 @@ public class Teleportable : MonoBehaviour, ITeleportable {
 
 		if (onTeleportTrigger && !teleporting) {
 			
-			if (   (dirEntrance.x < 0 && Input.GetAxis("Horizontal") < -0.1f) 
-				|| (dirEntrance.x > 0 && Input.GetAxis("Horizontal") > 0.1f)
-				|| (dirEntrance.y < 0 && Input.GetAxis("Vertical") < -0.1f)
-				|| (dirEntrance.y > 0 && Input.GetAxis("Vertical") > 0.1f) ) {
+			if (   (dirEntrance.x < 0 && Gamepad.isLeft()) 
+			    || (dirEntrance.x > 0 && Gamepad.isRight())
+			    || (dirEntrance.y < 0 && Gamepad.isDown())
+			    || (dirEntrance.y > 0 && Gamepad.isUp()) ) {
 				
 				// keep this game object's current layer
 				originalLayer = gameObject.layer;

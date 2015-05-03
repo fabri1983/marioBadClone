@@ -96,26 +96,26 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	public static bool isUp() {
-		return buttonsState[(int)EnumButton.UP];
+		return buttonsState[(int)EnumButton.UP] || Input.GetAxis("Vertical") > 0.1f;
 	}
 	
 	public static bool isDown() {
-		return buttonsState[(int)EnumButton.DOWN];
+		return buttonsState[(int)EnumButton.DOWN] || Input.GetAxis("Vertical") < -0.1f;
 	}
 	
 	public static bool isLeft() {
-		return buttonsState[(int)EnumButton.LEFT];
+		return buttonsState[(int)EnumButton.LEFT] || Input.GetAxis("Horizontal") < -0.1f;
 	}
 	
 	public static bool isRight() {
-		return buttonsState[(int)EnumButton.RIGHT];
+		return buttonsState[(int)EnumButton.RIGHT] || Input.GetAxis("Horizontal") > 0.1f;
 	}
 	
 	public static bool isA() {
-		return buttonsState[(int)EnumButton.A];
+		return buttonsState[(int)EnumButton.A] || Input.GetButton("Jump");
 	}
 	
 	public static bool isB() {
-		return buttonsState[(int)EnumButton.B];
+		return buttonsState[(int)EnumButton.B] || (Input.GetButton("Fire1") && Input.touchCount == 0);
 	}
 }

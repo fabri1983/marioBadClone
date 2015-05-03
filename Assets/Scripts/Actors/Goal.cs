@@ -10,10 +10,10 @@ public class Goal : MonoBehaviour {
 	void Update () {
 	
 		if (isInside &&
-			((dirEntrance.x < 0 && Input.GetAxis("Horizontal") < -0.2f) 
-			|| (dirEntrance.x > 0 && Input.GetAxis("Horizontal") > 0.2f)
-			|| (dirEntrance.y < 0 && Input.GetAxis("Vertical") < -0.2f)
-			|| (dirEntrance.y > 0 && Input.GetAxis("Vertical") > 0.2f)) ) {
+			((dirEntrance.x < 0 && Gamepad.isLeft()) 
+		 || (dirEntrance.x > 0 && Gamepad.isRight())
+		 || (dirEntrance.y < 0 && Gamepad.isDown())
+		 || (dirEntrance.y > 0 && Gamepad.isUp())) ) {
 			
 			isInside = false;
 			LevelManager.Instance.loadNextLevel();
