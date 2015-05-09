@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 
+	public int camSyncPriority = 0; // priority when updated by GUICameraSync
+
 	private PlayerFollowerXYConfig xyConfig;
 	private Player player;
 	private bool applied;
@@ -23,7 +25,7 @@ public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 	}
 
 	public int getPriority() {
-		return 0; // priority when updated by GUICameraSync
+		return camSyncPriority;
 	}
 
 	public void updateCamera () {
