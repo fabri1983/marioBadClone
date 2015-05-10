@@ -31,17 +31,18 @@ public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 	public void updateCamera () {
 		// check if the player's center screen position is above or below a threshold off the screen
 		Vector3 screenPos = Camera.main.WorldToScreenPoint(player.transform.position);
-		bool outsideThreshold = (screenPos.y < (0.1f * Screen.height) || screenPos.y > (0.95f * Screen.height));
+		bool outsideThreshold = (screenPos.y < (0.2f * Screen.height) || screenPos.y > (0.9f * Screen.height));
 		if (outsideThreshold) {
 			if (!applied && !player.isDying() && player.gameObject.active) {
-				// disable the lockY property until the player lands
+				// player is in top half screen
 				if (screenPos.y > (0.5f * Screen.height)) {
 					xyConfig.lockY = false;
 					lookUpCorrection.enabled = true; // enable the script that will displace the camera upwards
 				}
-				// apply same logic than looking downwards
+				// player is in bottom half screen
 				else {
-					Debug.Log("Missing Implementation");
+					xyConfig.lockY = false;
+					// TODO: hacer script LockYWhenPlayerOnCenter y hacerlo parecido al de LockYWhenPlayerLands
 				}
 				// set correction applied
 				applied = true;

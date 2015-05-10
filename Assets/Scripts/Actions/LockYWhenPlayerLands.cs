@@ -10,28 +10,21 @@ public class LockYWhenPlayerLands : MonoBehaviour {
 	private PlayerFollowerXYConfig origFollower;
 	private Player player;
 	
-	void Start () {
-		enabled = false;
-	}
-	
 	void OnDestroy () {
 		player = null;
 	}
 	
 	public void init () {
 		origFollower = GetComponent<PlayerFollowerXYConfig>();
-		
 		// copy current Main Camera configuration
 		origSmoothLerp = origFollower.smoothLerp;
-		
 		// set new Main Camera's follower script configuration according to the effect we want to achieve
 		origFollower.lockY = false; // follow the player
 		origFollower.smoothLerp = false; // instant movement along the player's movement
-		
 		// get player instance's transform
 		player = LevelManager.Instance.getPlayer();
 		
-		enabled = true;
+		this.enabled = true;
 	}
 	
 	/**
@@ -41,15 +34,15 @@ public class LockYWhenPlayerLands : MonoBehaviour {
 	void LateUpdate () {
 		// When the level starts the player initial status is jumping.
 		// So when no jumping anymore it means it hit ground and is time to restore original follower config
-		if (!player.isJumping()) {
-			enabled = false;
-			origFollower.lockY = true;
+		if (player != null && !player.isJumping()) {
+			this.enabled = false;
 			restoreConfig();
 		}
 	}
 	
-	public void restoreConfig () {
+	private void restoreConfig () {
 		// restore Main Camera's follower script configuration
+		origFollower.lockY = true;
 		origFollower.smoothLerp = origSmoothLerp;
 	}
 }

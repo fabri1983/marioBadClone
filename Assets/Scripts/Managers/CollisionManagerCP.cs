@@ -3,6 +3,9 @@ using System.Collections;
 
 public class CollisionManagerCP : ChipmunkCollisionManager {
 
+	//private const int MAX_UNFINISHED_C0LLISIONS_CALLBACKS = 10;
+	//private UnFinishedCollisionDelegate noFinishedCollisiions = new UnFinishedCollisionDelegate[10];
+
 	void Start(){
 		// NOTE: applying changes from Wake() will ignore base.Awake() method which is the 
 		// one who adds this manager instance to chipmunk API. So apply changes on Start().
@@ -16,7 +19,16 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		Chipmunk.gravity = new Vector2(0f, -100f);	
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
-	
+
+	/*void FixedUpdate() {
+		/// This provides while colliding functionality to those components who need it
+		for (int i=0; i < MAX_UNFINISHED_C0LLISIONS_CALLBACKS; ++i) {
+			UnFinishedCollisionDelegate callback = noFinishedCollisiions[i];
+			if (callback != null)
+				callback.unfinishCollision();
+		}
+	}*/
+
 	//##################### Goomba #################
 	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter) {
 		return Patrol.beginCollision(arbiter);
