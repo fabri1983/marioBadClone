@@ -4,7 +4,9 @@ using UnityEngine;
 /// This script can be asigned to a game object to follow a desired target in XY plane.
 /// </summary>
 public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
-	
+
+	public int camSyncPriority = 1; // priority when updated by GUICameraSync
+
 	private bool instantlyOneTime = false; // if true then the camera will not use Lerp to move to location. Valid to use one time
 
 	void Awake () {
@@ -27,7 +29,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 	}
 
 	public int getPriority() {
-		return 1; // priority when updating due to GUICameraSync
+		return camSyncPriority; // priority when updating due to GUICameraSync
 	}
 
 	public void updateCamera () {
