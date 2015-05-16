@@ -12,10 +12,10 @@ public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 	private PlayerFollowerXYConfig xyConfig;
 	private Player player;
 	private bool applied;
-	private LockYWhenPlayerLands lookUpCorrection;
-
+	private LockYWhenPlayerOnTarget camPosYCorrection;
+	
 	void Awake () {
-		lookUpCorrection = GetComponent<LockYWhenPlayerLands>();
+		camPosYCorrection = GetComponent<LockYWhenPlayerOnTarget>();
 		xyConfig = GetComponent<PlayerFollowerXYConfig>();
 		// register against the GUICameraSync manager
 		Camera.main.GetComponent<GUICameraSync>().register(this);
@@ -29,22 +29,13 @@ public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 	}
 
 	public void updateCamera () {
-		// check if the player's center screen position is above or below a threshold off the screen
 		Vector3 screenPos = Camera.main.WorldToScreenPoint(player.transform.position);
-		bool outsideThreshold = (screenPos.y < (0.2f * Screen.height) || screenPos.y > (0.9f * Screen.height));
-		if (outsideThreshold) {
+		// check if the player's center screen position is above or below a threshold off the screen
+		bool outsideArea = (screenPos.y < (0.2f * Screen.height) || screenPos.y > (0.9f * Screen.height));
+		if (outsideArea) {
 			if (!applied && !player.isDying() && player.gameObject.active) {
-				// player is in top half screen
-				if (screenPos.y > (0.5f * Screen.height)) {
-					xyConfig.lockY = false;
-					lookUpCorrection.enabled = true; // enable the script that will displace the camera upwards
-				}
-				// player is in bottom half screen
-				else {
-					xyConfig.lockY = false;
-					// TODO: hacer script LockYWhenPlayerOnCenter y hacerlo parecido al de LockYWhenPlayerLands
-				}
-				// set correction applied
+				xyConfig.lockY = false;
+				camPosYCorrection.correctPosY();
 				applied = true;
 			}
 		}
