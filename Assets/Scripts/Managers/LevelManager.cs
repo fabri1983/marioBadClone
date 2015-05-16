@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour {
 		// makes the camera to follow the player's Y axis until it lands. Then lock the camera's Y axis
 		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
 		if (lockYscript)
-			lockYscript.init();
+			lockYscript.enableCorrection();
 		// warm no GUI dependant elements in case they don't exist yet
 		TouchEventManager.warm();
 		// find IFadeable component since main camera instance changes during scenes
