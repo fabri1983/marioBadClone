@@ -87,13 +87,13 @@ public class Jump : MonoBehaviour {
 		foreverJumpVel = pJumpSpeed;
 	}
 	
-	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
+	public static bool beginCollisionWithAny (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
 		Jump jump = shape1.GetComponent<Jump>();
-		// if no Jump componenet then continue the collision
+		// if no Jump component then continue the collision
 		if (jump == null)
 			return true;
 

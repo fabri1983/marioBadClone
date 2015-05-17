@@ -31,19 +31,15 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 
 	//##################### Goomba #################
 	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter) {
-		return Patrol.beginCollision(arbiter);
+		return Patrol.beginCollisionWithAny(arbiter);
 	}
 	
 	bool ChipmunkBegin_Goomba_Goomba (ChipmunkArbiter arbiter) {
-		return Patrol.beginCollision(arbiter);
+		return Patrol.beginCollisionWithAny(arbiter);
 	}
 	
 	bool ChipmunkBegin_Goomba_Ghost (ChipmunkArbiter arbiter) {
-		return Patrol.beginCollision(arbiter);
-	}
-	
-	bool ChipmunkBegin_Goomba_KoopaTroopa (ChipmunkArbiter arbiter) {
-		return Patrol.beginCollision(arbiter);
+		return Patrol.beginCollisionWithAny(arbiter);
 	}
 	
 	bool ChipmunkBegin_Goomba_PowerUp (ChipmunkArbiter arbiter) {
@@ -70,16 +66,30 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 
 	//##################### KoopaTroopa #################
 	bool ChipmunkBegin_KoopaTroopa_Scenery (ChipmunkArbiter arbiter) {
-		Chase.beginCollisionWithScenery(arbiter);
-		if (!Patrol.beginCollision(arbiter))
+		Chase.beginCollisionWithAny(arbiter);
+		if (!Patrol.beginCollisionWithAny(arbiter))
 			return false;
-		return Jump.beginCollisionWithScenery(arbiter);
+		return Jump.beginCollisionWithAny(arbiter);
+	}
+	
+	bool ChipmunkBegin_KoopaTroopa_Oneway (ChipmunkArbiter arbiter) {
+		Chase.beginCollisionWithAny(arbiter);
+		if (!Patrol.beginCollisionWithAny(arbiter))
+			return false;
+		return Jump.beginCollisionWithAny(arbiter);
+	}
+	
+	bool ChipmunkBegin_KoopaTroopa_Goomba (ChipmunkArbiter arbiter) {
+		Chase.beginCollisionWithAny(arbiter);
+		if (!Patrol.beginCollisionWithAny(arbiter))
+			return false;
+		return Jump.beginCollisionWithAny(arbiter);
 	}
 	
 	bool ChipmunkBegin_KoopaTroopa_KoopaTroopa (ChipmunkArbiter arbiter) {
 		if (!KoopaTroopa.beginCollisionWithKoopaTroopa(arbiter))
 			return false;
-		return Patrol.beginCollision(arbiter);
+		return Patrol.beginCollisionWithAny(arbiter);
 	}
 	
 	bool ChipmunkBegin_KoopaTroopa_PowerUp (ChipmunkArbiter arbiter) {
@@ -103,7 +113,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter) {
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
-		return Jump.beginCollisionWithScenery(arbiter);
+		return Jump.beginCollisionWithAny(arbiter);
 	}
 	
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter) {

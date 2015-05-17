@@ -85,7 +85,7 @@ public class Chase : MonoBehaviour {
 		}
 	}
 	
-	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
+	public static bool beginCollisionWithAny (ChipmunkArbiter arbiter) {
 		ChipmunkShape shape1, shape2;
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
