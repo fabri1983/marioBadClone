@@ -6,7 +6,6 @@ public class Goal : MonoBehaviour {
 	
 	private bool isInside = false;
 	
-	// Update is called once per frame
 	void Update () {
 	
 		if (isInside &&
