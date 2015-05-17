@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerWalk : WalkAbs {
 	
 	public float speedUpFactor = 1.9f;
+	public bool lessenOnJump = true;
 	
 	private AnimateTiledConfig walkAC_orig;
 	private AnimateTiledConfig walkLookingUpAC;
@@ -28,7 +29,7 @@ public class PlayerWalk : WalkAbs {
 		float velX = base.shape.body.velocity.x;
 		
 		// when jumping and trying to move in opposite direction, just lessen current velocity
-		if (base.jump.IsJumping() && (velX * velocity) < 0f)
+		if (lessenOnJump && base.jump.IsJumping() && (velX * velocity) < 0f)
 			velocity = velX * 0.75f;
 		// is speed up button being pressed?
 		else if (Gamepad.isB())

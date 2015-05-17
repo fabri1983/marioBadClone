@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.9340773, y: 6.88840485, z: 0}
+  m_LocalPosition: {x: 36.3205032, y: 12.7331314, z: 0}
   m_LocalScale: {x: 8, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   _collisionType: Oneway
   _collisionGroup: Oneway
   _center: {x: 0, y: -.0399999991}
-  _size: {x: .920000017, y: .899999976}
+  _size: {x: .970000029, y: .899999976}
   _radius: 0
 --- !u!114 &11400004
 MonoBehaviour:

@@ -25,8 +25,9 @@ public class LockYWhenPlayerOnTarget : MonoBehaviour {
 	 * Dependant objects might have moved during Update.
 	 */
 	void LateUpdate () {
-		int screenPosY = (int)(Camera.main.WorldToScreenPoint(player.transform.position).y + 0.5f);
-		if (player.isDying() || (!player.isJumping() && (screenPosY + origFollower.offsetY) == (Screen.height / 2))) {
+		float screenPosY = Camera.main.WorldToScreenPoint(player.transform.position).y;
+		float diff = Mathf.Abs(screenPosY - (Screen.height / 2));
+		if (player.isDying() || (!player.isJumping() && diff < 2f)) {
 			this.enabled = false;
 			restoreConfig();
 		}

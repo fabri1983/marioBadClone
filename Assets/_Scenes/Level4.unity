@@ -1310,6 +1310,45 @@ Transform:
   m_Children:
   - {fileID: 1802194401}
   m_Father: {fileID: 1322199153}
+--- !u!1 &270320212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 270320213}
+  - 114: {fileID: 270320214}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &270320213
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 270320212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &270320214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 270320212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &278184070
 GameObject:
   m_ObjectHideFlags: 0
@@ -6528,6 +6567,7 @@ GameObject:
   - 114: {fileID: 1386583434}
   - 114: {fileID: 1386583436}
   - 114: {fileID: 1386583431}
+  - 114: {fileID: 1386583437}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -6657,6 +6697,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe487c3c5fc1e5419f3075cbc33e3cb, type: 1}
   m_Name: 
   camSyncPriority: 0
+--- !u!114 &1386583437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400016, guid: 3d8f9c54fb8c45a4396c65ca5285644c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1762605786}
+  m_GameObject: {fileID: 1386583427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a1b54eee7048a43856b52a02096d83, type: 1}
+  m_Name: 
 --- !u!1 &1387044315
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,45 +7054,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1717666069}
   m_GameObject: {fileID: 1470167851}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
---- !u!1 &1474151808
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1474151809}
-  - 114: {fileID: 1474151810}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1474151809
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1474151808}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1474151810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1474151808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1001 &1512920879
 Prefab:
   m_ObjectHideFlags: 0
