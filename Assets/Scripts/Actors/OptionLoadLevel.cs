@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListener {
 	
-	// index of the scene to be loaded
-	public int sceneIndex;
+	public int sceneIndex; // index of the scene to be loaded
 	
 	private Rect _screenBounds; // cache for the screen bounds this game object covers
 	
