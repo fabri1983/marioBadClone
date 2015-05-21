@@ -117,7 +117,6 @@ public class LevelManager : MonoBehaviour {
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
 		guiContainer_so = null; // reset the references of scene only GUI elements container
 		
-		GC.Collect();
 		Application.LoadLevel(activeLevel); // load scene
 	}
 	
