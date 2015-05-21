@@ -344,8 +344,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 
-		// if was traversing the platform from below then the player is over the platform
-		// correct inner state is treated by the invoked method
+		// If was traversing the platform from below then the player is over the platform.
+		// Correct inner state is treated by the invoked method
 		shape1.GetComponent<ClimbDownOnPlatform>().handleSeparation();
 	}
 }

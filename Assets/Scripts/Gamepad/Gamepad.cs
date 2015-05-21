@@ -96,19 +96,19 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	public static bool isUp() {
-		return buttonsState[(int)EnumButton.UP] || Input.GetAxis("Vertical") > 0.8f;
+		return buttonsState[(int)EnumButton.UP] || Input.GetAxis("Vertical") > 0.1f;
 	}
 	
 	public static bool isDown() {
-		return buttonsState[(int)EnumButton.DOWN] || Input.GetAxis("Vertical") < -0.8f;
+		return buttonsState[(int)EnumButton.DOWN] || Input.GetAxis("Vertical") < -0.1f;
 	}
 	
 	public static bool isLeft() {
-		return buttonsState[(int)EnumButton.LEFT] || Input.GetAxis("Horizontal") < -0.8f;
+		return buttonsState[(int)EnumButton.LEFT] || Input.GetAxis("Horizontal") < -0.1f;
 	}
 	
 	public static bool isRight() {
-		return buttonsState[(int)EnumButton.RIGHT] || Input.GetAxis("Horizontal") > 0.8f;
+		return buttonsState[(int)EnumButton.RIGHT] || Input.GetAxis("Horizontal") > 0.1f;
 	}
 	
 	public static bool isA() {

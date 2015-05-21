@@ -144,4 +144,12 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		// proceed as separating from Scenery
 		ChipmunkSeparate_Player_Scenery(arbiter);
 	}
+	
+	bool ChipmunkBegin_Goal_Player (ChipmunkArbiter arbiter) {
+		return Goal.beginCollisionWithPlayer(arbiter);
+	}
+	
+	void ChipmunkSeparate_Goal_Player (ChipmunkArbiter arbiter) {
+		Goal.endCollisionWithPlayer(arbiter);
+	}
 }

@@ -29,7 +29,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 
 		setupButtons(); // locate the buttons
 		GUIScreenLayoutManager.Instance.register(this);
-		TransitionGUIFxManager.Instance.registerForEndTransitions(this);
+		TransitionGUIFxManager.Instance.registerForEndTransition(this);
 	}
 	
 	void OnDestroy () {
@@ -72,17 +72,15 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 	
 	public void OnStationaryTouch (Touch t) {}
 	
-	public void OnEndedTouch (Touch t) {
-		optionSelected();
-	}
+	public void OnEndedTouch (Touch t) {}
 	
 	public TransitionGUIFx[] getTransitions () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject);
+		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
 	}
 	
-	public void prevTransitionEnd (TransitionGUIFx fx) {
+	public void prevTransitionEnds (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);

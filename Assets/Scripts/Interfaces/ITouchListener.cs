@@ -35,20 +35,20 @@ public interface ITouchListener
 	/// <summary>
 	/// Returns the game object that implement this interface.
 	/// </summary>
-	/// <returns>
-	/// The game object.
-	/// </returns>
+	/// <returns>The game object.</returns>
 	GameObject getGameObject ();
 	
 	/// <summary>
 	/// Gets the screen Rect element representing the bounds of the listener's game object.
 	/// The Rect element is Axis Aligned, so it's like a square in screen with no rotation.
 	/// </summary>
+	/// <returns>The screen bounds.</returns>
 	Rect getScreenBoundsAA ();
 	
 	/// <summary>
 	/// Since in Runtime (no Editor mode) the gameObject.isStatic property isn't valid, use this 
 	/// method to define if listener's gameObject is static.
 	/// </summary>
+	/// <returns>boolean</returns>
 	bool isStatic ();
 }
