@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
+	public const int SCENE_MAIN_INDEX = 0;
+	public const int SCENE_SELECTION_INDEX = 1;
 	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
@@ -70,7 +72,7 @@ public class LevelManager : MonoBehaviour {
 	
 	private void initialize() {
 		// reset spawn positions array
-		for (int i=0; i < Application.levelCount; ++i)
+		for (int i=SCENE_MAIN_INDEX; i < Application.levelCount; ++i)
 			spawnPosArray[i].priority = INVALID_PRIORITY;
 		
 		// get Mario's game object reference.
@@ -89,7 +91,7 @@ public class LevelManager : MonoBehaviour {
     }
 	
 	public int getNextLevel () {
-		// if exceeds max level then return splash screen level
+		// if exceeds max level then return scene index 0
 		return activeLevel + 1 >= Application.levelCount ? 0 : activeLevel + 1;
 	}
 	
@@ -99,13 +101,13 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	public void loadLevelSelection () {
-		loadLevel(1);
+		loadLevel(SCENE_SELECTION_INDEX);
 	}
 	
 	public void loadLevel (int level) {
 		// fix level index if invalid
-		if (level < 0 || level >= Application.levelCount)
-			activeLevel = 0; // splash screen
+		if (level < SCENE_MAIN_INDEX || level >= Application.levelCount)
+			activeLevel = SCENE_MAIN_INDEX; // splash screen
 		// update current level index
 		else
 			activeLevel = level;
@@ -142,13 +144,13 @@ public class LevelManager : MonoBehaviour {
 		player.GetComponent<LookDirections>().setup();
 		// set Mario spawn position for this level
 		setPlayerPosition(level);
-#if UNITY_EDITOR		
+		
 		// throw error if no GUI container was created
 		if (LevelManager.getGUIContainerNonDestroyable() == null)
 			Debug.LogWarning("Missing " + GUI_container_nd + " game object. Will be created and populated with minimum elements.");
 		if (LevelManager.getGUIContainerSceneOnly() == null)
 			Debug.LogError("Missing " + GUI_container_so + " game object. Please create it.");
-#endif		
+	
 		// if GUI_container_nd doesn't exist then create it and add minimum required game objects
 		setupGUIContainerNonDestroyable();
 		// configure the parallax properties for a correct scrolling of background and foreground images
@@ -157,8 +159,10 @@ public class LevelManager : MonoBehaviour {
 		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
 		if (lockYscript)
 			lockYscript.enableCorrection();
-		// warm no GUI dependant elements in case they don't exist yet
+		// warm up no GUI dependant elements in case they don't exist yet
 		TouchEventManager.warm();
+		// warm up Pause manager
+		PauseGameManager.warm();
 		// find IFadeable component since main camera instance changes during scenes
 		OptionQuit.Instance.setFaderFromMainCamera();
 	}

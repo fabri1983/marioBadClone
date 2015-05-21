@@ -4,17 +4,20 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	
 	public int sceneIndex; // index of the scene to be loaded
 	
+	private bool selected = false;
 	private Rect _screenBounds; // cache for the screen bounds this game object covers
 	
 	void Awake () {
-		// initialize the screen bounds cache
-		_screenBounds.x = -1f;
-		
-		TransitionGUIFxManager.Instance.registerForEndTransitions(this);
+		_screenBounds.x = -1f; // initialize the screen bounds cache
+		TransitionGUIFxManager.Instance.registerForEndTransition(this);
 	}
 	
 	void OnDestroy () {
 		TouchEventManager.Instance.removeListener(this);
+	}
+	
+	void Update () {
+		optionSelected();
 	}
 	
 	public bool isStatic () {
@@ -34,16 +37,23 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	}
 	
 	public void OnBeganTouch (Touch t) {
-		optionSelected();
+		doAction();
 	}
 	
 	public void OnStationaryTouch (Touch t) {}
 	
-	public void OnEndedTouch (Touch t) {
-		optionSelected();
+	public void OnEndedTouch (Touch t) {}
+	
+	public void setSelected (bool value) {
+		selected = value;
 	}
 	
 	private void optionSelected() {
+		if (selected && Gamepad.isA())
+			doAction();
+	}
+	
+	private void doAction () {
 		if (!PauseGameManager.Instance.isPaused())
 			LevelManager.Instance.loadLevel(sceneIndex);
 	}
@@ -51,10 +61,10 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	public TransitionGUIFx[] getTransitions () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject);
+		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
 	}
 	
-	public void prevTransitionEnd (TransitionGUIFx fx) {
+	public void prevTransitionEnds (TransitionGUIFx fx) {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began);
@@ -67,7 +77,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 		Event e = Event.current;
 		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
 			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
-				optionSelected();
+				doAction();
 		}
 	}
 #endif

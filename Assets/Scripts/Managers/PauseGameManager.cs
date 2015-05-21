@@ -22,14 +22,19 @@ public class PauseGameManager {
 	
 	public static PauseGameManager Instance {
         get {
-            if (instance == null) {
-				// creates the innner instance
-				instance = new PauseGameManager();
-			}
+			warm();
             return instance;
         }
     }
 
+	public static void warm () {
+		// in case the class wasn't instantiated yet from another script
+		if (instance == null) {
+			// creates the innner instance
+			instance = new PauseGameManager();
+		}
+	}
+	
 	private PauseGameManager () {
 		paused = false;
 		// instantiates the game object which will catch OnApplicationPause() event and communicates to this manager

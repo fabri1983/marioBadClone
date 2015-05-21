@@ -1376,45 +1376,6 @@ Transform:
   m_Children:
   - {fileID: 1802194401}
   m_Father: {fileID: 1322199153}
---- !u!1 &270320212
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 270320213}
-  - 114: {fileID: 270320214}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &270320213
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 270320212}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &270320214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 270320212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &278184070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,11 +1650,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 22.4087601
+      value: -11.7347574
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 10.2637339
+      value: 3.22070384
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 1e30db8ee94b4b745b54bf29e9b0f0c0, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4109,6 +4070,45 @@ Prefab:
   m_RootGameObject: {fileID: 1633568713}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &864930904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 864930905}
+  - 114: {fileID: 864930906}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &864930905
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 864930904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &864930906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 864930904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &868588463
 GameObject:
   m_ObjectHideFlags: 0
@@ -7861,7 +7861,7 @@ Transform:
   m_PrefabInternal: {fileID: 332329939}
   m_GameObject: {fileID: 1561468556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.4087601, y: 10.2637339, z: 0}
+  m_LocalPosition: {x: -11.7347574, y: 3.22070384, z: 0}
   m_LocalScale: {x: 2.79999995, y: 3, z: 1}
   m_Children:
   - {fileID: 727750450}

@@ -1,7 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// This class usefull to register for pre and post transitions GUI events
+/// This class is intended to register listeners for post transitions effects.
+/// The goal is to attach your ITransitionListener script at the end of a current transition effect.
 /// </summary>
 public class TransitionGUIFxManager {
 	
@@ -24,19 +25,20 @@ public class TransitionGUIFxManager {
 		instance = null;
 	}
 	
-	public void registerForEndTransitions (ITransitionListener lastTransition) {
+	public void registerForEndTransition (ITransitionListener listener) {
 		// get transitions in the order specify by its implementor
-		TransitionGUIFx[] arr = lastTransition.getTransitions();
+		TransitionGUIFx[] arr = listener.getTransitions();
 		if (arr == null)
 			return;
-		// chain all the transitions
-		for (int i=1, c=arr.Length; i<c; ++i)
-			arr[i-1].setNextTransition(arr[i]);
-		// finally add the last transition
-		arr[arr.Length-1].setNextTransition(lastTransition);
+		// TODO get the transition with latest priority because it will be the last one
+		TransitionGUIFx last = arr[arr.Length-1];
+		// add the transition listener
+		last.addNextTransition(listener);
 	}
 
-	public static TransitionGUIFx[] getTransitionsInOrder (GameObject go) {
+	public static TransitionGUIFx[] getTransitionsInOrder (GameObject go, bool inChildren) {
+		if (inChildren)
+			return go.GetComponentsInChildren<TransitionGUIFx>();
 		return go.GetComponents<TransitionGUIFx>();
 	}
 }

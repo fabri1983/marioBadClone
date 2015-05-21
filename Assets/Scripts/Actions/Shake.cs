@@ -30,7 +30,7 @@ public class Shake : MonoBehaviour, ITransitionListener
 		return null;
 	}
 	
-	public void prevTransitionEnd (TransitionGUIFx fx) {
+	public void prevTransitionEnds (TransitionGUIFx fx) {
 		this.enabled = true;
 	}
 

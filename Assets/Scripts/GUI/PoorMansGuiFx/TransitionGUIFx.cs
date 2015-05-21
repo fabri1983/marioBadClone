@@ -3,6 +3,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum Transition
 {
@@ -47,7 +48,7 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
 	private bool update;
-	private ITransitionListener nextTransition = null;
+	private List<ITransitionListener> nextTransitions = null;
 
 	void Awake () {
 		update = false;
@@ -82,7 +83,7 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 		return null;
 	}
 
-	public void prevTransitionEnd (TransitionGUIFx fx) {
+	public void prevTransitionEnds (TransitionGUIFx fx) {
 		this.enabled = true;
 		update = true;
 	}
@@ -94,8 +95,10 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 			DoTransition();
 	}
 	
-	public void setNextTransition (ITransitionListener listener) {
-		nextTransition = listener;
+	public void addNextTransition (ITransitionListener listener) {
+		if (nextTransitions == null)
+			nextTransitions = new List<ITransitionListener>();
+		nextTransitions.Add(listener);
 	}
 	
 	void enableUpdate () {
@@ -215,9 +218,11 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 	}
 
 	private void transitionEnded () {
-		// this transition has finished, then continue with next one if any
-		if (nextTransition != null)
-			nextTransition.prevTransitionEnd(this);
+		// this transition has finished, then continue with next one (if any)
+		if (nextTransitions != null) {
+			for (int i=0, c=nextTransitions.Count; i < c; ++i)
+				nextTransitions[i].prevTransitionEnds(this);
+		}
 	}
 
 	private void transition (int step)
