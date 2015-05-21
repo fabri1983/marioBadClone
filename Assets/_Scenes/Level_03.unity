@@ -1197,7 +1197,7 @@ Transform:
   m_GameObject: {fileID: 151981550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.15296841, y: 13.2644806, z: 0}
-  m_LocalScale: {x: 4.1095891, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
   m_Children: []
   m_Father: {fileID: 2015580447}
 --- !u!114 &151981552
@@ -2874,7 +2874,7 @@ Transform:
   m_GameObject: {fileID: 398413540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -82.4749069, y: 17.8402328, z: 0}
-  m_LocalScale: {x: 4.1095891, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
   m_Children: []
   m_Father: {fileID: 2015580447}
 --- !u!114 &398413542
@@ -5080,7 +5080,7 @@ Transform:
   m_GameObject: {fileID: 735301192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 115.0401, y: 34.6780701, z: 0}
-  m_LocalScale: {x: 4.1095891, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
   m_Children: []
   m_Father: {fileID: 2015580447}
 --- !u!114 &735301194
@@ -5160,45 +5160,6 @@ MonoBehaviour:
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: 0
---- !u!1 &750558872
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 750558873}
-  - 114: {fileID: 750558874}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &750558873
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 750558872}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &750558874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 750558872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &772585640
 GameObject:
   m_ObjectHideFlags: 0
@@ -8668,7 +8629,7 @@ Transform:
   m_GameObject: {fileID: 1287683782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 38.2495918, y: 21.6266022, z: 0}
-  m_LocalScale: {x: 4.1095891, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
   m_Children: []
   m_Father: {fileID: 2015580447}
 --- !u!114 &1287683784
@@ -11098,7 +11059,7 @@ Transform:
   m_GameObject: {fileID: 1680517701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -26.2084255, y: 22.8878403, z: 0}
-  m_LocalScale: {x: 4.1095891, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
   m_Children: []
   m_Father: {fileID: 2015580447}
 --- !u!114 &1680517703
@@ -11242,6 +11203,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1289216035}
   m_GameObject: {fileID: 1691438747}
   m_Mesh: {fileID: 4300000, guid: 56556d759b75e8e449ff86b186eab8b9, type: 2}
+--- !u!1 &1695878179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1695878180}
+  - 114: {fileID: 1695878181}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1695878180
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1695878179}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1695878181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1695878179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &1697372901
 GameObject:
   m_ObjectHideFlags: 0
