@@ -5,7 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// Scales the game object according to screen size and user defined coverage to act as a GUI element.
-/// On screen redimension the game object's z position and its scale are adjusted.
+/// On screen redimension the game object's Z position and scale are adjusted.
 /// </summary>
 [ExecuteInEditMode]
 public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {

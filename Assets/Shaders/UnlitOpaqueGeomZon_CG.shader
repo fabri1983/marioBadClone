@@ -1,5 +1,5 @@
 // NOTE: this shader intended for 3D geometry. For 2D geometry use another with zwrite off and ull off
-Shader "Custom/Unlit Opaque Geom Z on CG" {
+Shader "Custom/Unlit Opaque Geom Z On CG" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
 }
