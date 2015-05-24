@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListener {
+public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	public int sceneIndex; // index of the scene to be loaded
 	
@@ -9,7 +9,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 	
 	void Awake () {
 		_screenBounds.x = -1f; // initialize the screen bounds cache
-		TransitionGUIFxManager.Instance.registerForEndTransition(this);
+		EffectPrioritizer.registerForEndEffect(this);
 	}
 	
 	void OnDestroy () {
@@ -58,13 +58,13 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, ITransitionListene
 			LevelManager.Instance.loadLevel(sceneIndex);
 	}
 	
-	public TransitionGUIFx[] getTransitions () {
+	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
+		return EffectPrioritizer.getEffects(gameObject, false);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
+	public void onLastEffectEnd () {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began);

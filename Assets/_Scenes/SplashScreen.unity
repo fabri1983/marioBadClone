@@ -281,6 +281,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
   startOffsetTransform: {x: 0, y: -1}
   _transition: 0
   direction: 0
@@ -326,7 +327,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1057044129}
+  - {fileID: 566536909}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -665,6 +666,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
   startOffsetTransform: {x: -1, y: 0}
   _transition: 0
   direction: 1
@@ -694,7 +696,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1093955343}
+  - {fileID: 1978488404}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1439,10 +1441,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf98f1f8d93f5044c9988800728eddc5, type: 1}
   m_Name: 
+  priority: 0
   shake_decay: .00499999989
   shake_intensity: .100000001
   allowRotation: 0
-  startDelaySecs: 1.29999995
+  startDelaySecs: .5
   debug: 0
 --- !u!114 &316163717
 MonoBehaviour:
@@ -1455,6 +1458,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
   startOffsetTransform: {x: 0, y: .5}
   _transition: 0
   direction: 2
@@ -1498,7 +1502,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2146440935}
+  - {fileID: 879971359}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2779,15 +2783,15 @@ Prefab:
     - target: {fileID: 2300002, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1057044129}
+      objectReference: {fileID: 566536909}
     - target: {fileID: 2300004, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1754979354}
+      objectReference: {fileID: 1522758534}
     - target: {fileID: 2300000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2060402658}
+      objectReference: {fileID: 1353766828}
     - target: {fileID: 400000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_LocalPosition.x
       value: .163765401
@@ -3054,7 +3058,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ce509fca44b49b439117e064103bca4, type: 1}
   m_Name: 
---- !u!21 &572234242
+--- !u!21 &566536909
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -3069,7 +3073,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: ced6afea69a81864e95bda8ed8db4157, type: 1}
+          m_Texture: {fileID: 2800000, guid: 1e55bb52ad4e2e149a570440770fb9be, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -3665,7 +3669,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2084771490}
+  - {fileID: 1655237201}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3709,7 +3713,7 @@ Prefab:
     - target: {fileID: 2300000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1093955343}
+      objectReference: {fileID: 1978488404}
     - target: {fileID: 11400006, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: size.x
       value: .0839999989
@@ -4121,7 +4125,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 572234242}
+  - {fileID: 1447053243}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4160,6 +4164,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
   startOffsetTransform: {x: 0, y: -.5}
   _transition: 0
   direction: 0
@@ -4452,6 +4457,45 @@ Prefab:
   m_RootGameObject: {fileID: 1841978333}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &754007671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 754007672}
+  - 114: {fileID: 754007673}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &754007672
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 754007671}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &754007673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 754007671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &764551416
 GameObject:
   m_ObjectHideFlags: 0
@@ -4850,6 +4894,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
   startOffsetTransform: {x: 0, y: -1}
   _transition: 0
   direction: 0
@@ -4895,12 +4940,36 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1754979354}
+  - {fileID: 1522758534}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+--- !u!21 &879971359
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 62944c71b10a47a45b6244c7af6188d6, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &880196522
 GameObject:
   m_ObjectHideFlags: 0
@@ -5151,11 +5220,11 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2084771490}
+      objectReference: {fileID: 1655237201}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 572234242}
+      objectReference: {fileID: 1447053243}
     - target: {fileID: 11400000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: beginSelected
       value: 1
@@ -5203,6 +5272,10 @@ Prefab:
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
       value: .268467873
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .0357957147
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2951b2296562f4546a250745336f0512, type: 2}
@@ -5378,30 +5451,6 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   sizeAsPixels: 0
   newMaterialInstance: 0
---- !u!21 &1057044129
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 1e55bb52ad4e2e149a570440770fb9be, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1074642271
 GameObject:
   m_ObjectHideFlags: 0
@@ -5562,30 +5611,6 @@ MonoBehaviour:
   _buffer: {x: 0, y: 0}
   _rowLimits: 0000000001000000
   _colLimits: 0000000002000000
---- !u!21 &1093955343
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1145869667
 GameObject:
   m_ObjectHideFlags: 0
@@ -5919,7 +5944,7 @@ Prefab:
     - target: {fileID: 2300000, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2146440935}
+      objectReference: {fileID: 879971359}
     - target: {fileID: 11400006, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
       propertyPath: asProportion
       value: 1
@@ -5959,6 +5984,14 @@ Prefab:
     - target: {fileID: 11400000, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
       propertyPath: lastSize.y
       value: 154
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
+      propertyPath: startDelaySecs
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
@@ -6036,45 +6069,30 @@ MonoBehaviour:
   _collisionGroup: Scenery
   _radius: 1
   _center: {x: 0, y: 0}
---- !u!1 &1329794785
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+--- !u!21 &1353766828
+Material:
   serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1329794786}
-  - 114: {fileID: 1329794787}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1329794786
-Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1329794785}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1329794787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1329794785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 984d093ee08c1d3499ff833a8878eedc, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1401485590
 Prefab:
   m_ObjectHideFlags: 0
@@ -6144,6 +6162,30 @@ Transform:
   - {fileID: 386562620}
   - {fileID: 316163714}
   m_Father: {fileID: 792814333}
+--- !u!21 &1447053243
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: ced6afea69a81864e95bda8ed8db4157, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1498840872
 Prefab:
   m_ObjectHideFlags: 0
@@ -6248,6 +6290,30 @@ Prefab:
   m_RootGameObject: {fileID: 603536713}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &1522758534
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 4c7dcf056a8fc5941aa093d9c6889fd6, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1526911098
 GameObject:
   m_ObjectHideFlags: 0
@@ -6531,6 +6597,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1734273237}
   m_GameObject: {fileID: 1145869667}
   m_Mesh: {fileID: 4300000, guid: c2bfc3160d33ce041b1faba9492ce33b, type: 2}
+--- !u!21 &1655237201
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1655315200
 GameObject:
   m_ObjectHideFlags: 0
@@ -6834,30 +6924,6 @@ Transform:
   - {fileID: 1186773052}
   - {fileID: 603536714}
   m_Father: {fileID: 792814333}
---- !u!21 &1754979354
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 4c7dcf056a8fc5941aa093d9c6889fd6, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1761539400
 GameObject:
   m_ObjectHideFlags: 0
@@ -7228,6 +7294,30 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1841978334}
+--- !u!21 &1978488404
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &2014852544
 Prefab:
   m_ObjectHideFlags: 0
@@ -7495,6 +7585,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
   startOffsetTransform: {x: 0, y: -1}
   _transition: 0
   direction: 0
@@ -7540,36 +7631,12 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2060402658}
+  - {fileID: 1353766828}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
---- !u!21 &2060402658
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 984d093ee08c1d3499ff833a8878eedc, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2076553716
 GameObject:
   m_ObjectHideFlags: 0
@@ -7615,51 +7682,3 @@ MonoBehaviour:
   _collisionGroup: Scenery
   _radius: 1
   _center: {x: 0, y: 0}
---- !u!21 &2084771490
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
---- !u!21 &2146440935
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 62944c71b10a47a45b6244c7af6188d6, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}

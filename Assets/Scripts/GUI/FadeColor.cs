@@ -98,6 +98,8 @@ public class FadeColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	}
 	
 	private void locateInScreen () {
+		if (transform == null)
+			return;
 		Vector2 sizeInPixels;
 		sizeInPixels.x = sizeFactor.x * Screen.width;
 		sizeInPixels.y = sizeFactor.y * Screen.height;

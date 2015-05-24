@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener {
+public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	// this modified in inspector window
 	public EnumButton buttonId = EnumButton.A;
@@ -13,7 +13,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 		if (dontDestroy)
 			DontDestroyOnLoad(this.gameObject);
 		
-		TransitionGUIFxManager.Instance.registerForEndTransition(this);
+		EffectPrioritizer.registerForEndEffect(this);
 	}
 	
 	public bool isStatic () {
@@ -36,13 +36,13 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
 	}
 	
-	public TransitionGUIFx[] getTransitions () {
+	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
+		return EffectPrioritizer.getEffects(gameObject, false);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
+	public void onLastEffectEnd () {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);

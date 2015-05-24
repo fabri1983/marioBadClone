@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
+public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	public bool dontDestroy = true; // true for keeping alive between scenes
 	public bool isStaticRuntime = true; // true if the game object never translate, even when is initialized
@@ -29,7 +29,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 		
-		TransitionGUIFxManager.Instance.registerForEndTransition(this);
+		EffectPrioritizer.registerForEndEffect(this);
 		
 		// calculate scaling if current GUI texture dimension is diferent than 64x64 because
 		// the array of arrows were defined in a 64x64 basis
@@ -111,13 +111,13 @@ public class GamepadCross : MonoBehaviour, ITouchListener, ITransitionListener {
 	
 	public void OnEndedTouch (Touch t) {}
 	
-	public TransitionGUIFx[] getTransitions () {
+	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
+		return EffectPrioritizer.getEffects(gameObject, false);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
+	public void onLastEffectEnd () {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);

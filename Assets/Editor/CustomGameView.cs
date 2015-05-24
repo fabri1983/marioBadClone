@@ -34,7 +34,7 @@ public class CustomGameView : EditorWindow {
 	
 	private static CustomGameView popup;
 	
-	[MenuItem ("Window/Set Custom Game Window")]
+	[MenuItem ("Window/Set Custom Window Game")]
 	static void Init () {
 		// this gets our editor window to let the user enter the configuration
 		popup = (CustomGameView)(EditorWindow.GetWindow(typeof(CustomGameView)));

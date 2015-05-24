@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Shake : MonoBehaviour, ITransitionListener
+public class ShakeFx : Effect
 {
 	// controls the amount that shake_intensity is decremented each update. It determines if the shake is long or short
 	public float shake_decay = 0.5f;
@@ -9,7 +9,7 @@ public class Shake : MonoBehaviour, ITransitionListener
 	public float shake_intensity = 4f;
 	// true if you want also shake rotation of game object
 	public bool allowRotation = false;
-	public float startDelaySecs = 0;
+	public float startDelaySecs = 0f;
 #if UNITY_EDITOR
 	// set to true if you want to test in gameplay mode
 	public bool debug = false;
@@ -18,20 +18,15 @@ public class Shake : MonoBehaviour, ITransitionListener
 	private float tempDecay, tempIntensity;
 	private Vector3 origPosition;
 	private Quaternion origRotation;
-	private bool allowShake = false;
+	private bool allowShake;
 	private Quaternion quatTemp;
 	
-	void Start () {
-		if (startDelaySecs > 0f)
-			Invoke("reset", startDelaySecs);
-	}
-
-	public TransitionGUIFx[] getTransitions () {
-		return null;
+	protected override void ownAwake () {
+		allowShake = false;
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
-		this.enabled = true;
+	protected override void ownEffectStarts () {
+		Invoke("reset", startDelaySecs);
 	}
 
 #if UNITY_EDITOR
@@ -50,7 +45,7 @@ public class Shake : MonoBehaviour, ITransitionListener
 		shake();
 	}
 	
-	public void reset ()
+	private void reset ()
 	{
 		tempDecay = shake_decay;
 		tempIntensity = shake_intensity;
@@ -60,7 +55,7 @@ public class Shake : MonoBehaviour, ITransitionListener
 		allowShake = true;
 	}
 	
-	public void shake ()
+	private void shake ()
 	{
 		if (tempIntensity > 0) {
 			transform.localPosition = origPosition + Random.insideUnitSphere * tempIntensity;

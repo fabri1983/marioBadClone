@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IGUIScreenLayout {
+public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUIScreenLayout {
 	
 	private bool showOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;
@@ -29,7 +29,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 
 		setupButtons(); // locate the buttons
 		GUIScreenLayoutManager.Instance.register(this);
-		TransitionGUIFxManager.Instance.registerForEndTransition(this);
+		EffectPrioritizer.registerForEndEffect(this);
 	}
 	
 	void OnDestroy () {
@@ -74,13 +74,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener, ITransitionListener, IG
 	
 	public void OnEndedTouch (Touch t) {}
 	
-	public TransitionGUIFx[] getTransitions () {
+	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
+		return EffectPrioritizer.getEffects(gameObject, false);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
+	public void onLastEffectEnd () {
 		// register with touch event manager once the transition finishes since the manager
 		// depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
