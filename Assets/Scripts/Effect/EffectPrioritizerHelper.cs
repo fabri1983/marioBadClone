@@ -5,7 +5,7 @@ using UnityEngine;
 /// It also exposes the functionallity to register listeners at the end of an Effect chain.
 /// Once the efect chain has finished then the listeners callback is invoked.
 /// </summary>
-public static class EffectPrioritizer {
+public static class EffectPrioritizerHelper {
 	
 	public static void sortAndChain () {
 		

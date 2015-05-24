@@ -181,7 +181,6 @@ public class TransitionGUIFx : Effect {
             yield return null;
 		}
 
-		this.enabled = false;
 		effectEnded();
 	}
 	
@@ -190,7 +189,6 @@ public class TransitionGUIFx : Effect {
 		// main transition/easing loop
 		//if (currentStep >= steps) {
 		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y) {
-			this.enabled = false;
 			effectEnded();
 			return;
 		}

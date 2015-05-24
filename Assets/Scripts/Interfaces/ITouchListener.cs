@@ -46,9 +46,8 @@ public interface ITouchListener
 	Rect getScreenBoundsAA ();
 	
 	/// <summary>
-	/// Since in Runtime (no Editor mode) the gameObject.isStatic property isn't valid, use this 
-	/// method to define if listener's gameObject is static.
+	/// Defines if listener's game object is still from a point of view of screen location.
 	/// </summary>
 	/// <returns>boolean</returns>
-	bool isStatic ();
+	bool isScreenStatic ();
 }

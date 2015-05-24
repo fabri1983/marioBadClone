@@ -58,7 +58,7 @@ public class TouchEventManager {
 	/// </param>
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
 		
-		if (!listener.isStatic())
+		if (!listener.isScreenStatic())
 			dynamicListeners.add(listener, touchPhases);
 		else {
 			/// adding the listener's screen rect into the quad tree will return a list of 
@@ -79,7 +79,7 @@ public class TouchEventManager {
 	/// </summary>
 	public void removeListener (ITouchListener listener) {
 
-		if (!listener.isStatic())
+		if (!listener.isScreenStatic())
 			dynamicListeners.remove(listener);
 		else {
 			// need to remove from every list the listener appears

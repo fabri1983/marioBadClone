@@ -9,7 +9,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	void Awake () {
 		_screenBounds.x = -1f; // initialize the screen bounds cache
-		EffectPrioritizer.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this);
 	}
 	
 	void OnDestroy () {
@@ -20,7 +20,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		optionSelected();
 	}
 	
-	public bool isStatic () {
+	public bool isScreenStatic () {
 		// for event touch listener
 		return true;
 	}
@@ -61,12 +61,12 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizer.getEffects(gameObject, false);
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
 	}
 	
 	public void onLastEffectEnd () {
-		// register with touch event manager once the transition finishes since the manager
-		// depends on final element's position
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began);
 	}
 

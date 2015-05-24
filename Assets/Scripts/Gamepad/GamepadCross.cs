@@ -29,7 +29,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 			// keep this game object alive between scenes
 			DontDestroyOnLoad(this.gameObject);
 		
-		EffectPrioritizer.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this);
 		
 		// calculate scaling if current GUI texture dimension is diferent than 64x64 because
 		// the array of arrows were defined in a 64x64 basis
@@ -55,6 +55,10 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		}
 	}
 
+	void OnDestroy () {
+		TouchEventManager.Instance.removeListener(this);
+	}
+	
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
 	void OnGUI () {
 		if (debugZones && EventType.Repaint == Event.current.type) {
@@ -81,7 +85,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 #endif
 
-	public bool isStatic () {
+	public bool isScreenStatic () {
 		// for event touch listener
 		return isStaticRuntime;
 	}
@@ -114,12 +118,12 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizer.getEffects(gameObject, false);
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
 	}
 	
 	public void onLastEffectEnd () {
-		// register with touch event manager once the transition finishes since the manager
-		// depends on final element's position
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
 		
 		// update current gui position cache

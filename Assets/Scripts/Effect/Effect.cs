@@ -7,20 +7,25 @@ public abstract class Effect : MonoBehaviour {
 	
 	private Effect nextEffect = null;
 	private List<IEffectListener> listeners = null;
+	private bool isPriorizable = false;
 	
 	void Awake () {
-		//if (typeof(EfectPriorizable))
-		//	this.enabled = false;
+		if (GetComponent<EfectPrioritizer>() != null) {
+			this.enabled = false;
+			isPriorizable = true;
+		}
 		ownAwake();
+	}
+	
+	void Start () {
+		// if the effect is not priorizable then it can start immediatly
+		if (!isPriorizable)
+			executeEffect();
 	}
 	
 	protected abstract void ownAwake ();
 	
 	protected abstract void ownEffectStarts ();
-	
-	void OnEnable () {
-		ownEffectStarts();
-	}
 	
 	public void addNextEffect (Effect next) {
 		nextEffect = next;
@@ -32,7 +37,7 @@ public abstract class Effect : MonoBehaviour {
 		listeners.Add(listener);
 	}
 	
-	public void execute() {
+	public void executeEffect() {
 		this.enabled = true;
 		ownEffectStarts();
 	}
@@ -54,6 +59,6 @@ public abstract class Effect : MonoBehaviour {
 	
 	private void executeNextEffect () {
 		if (nextEffect != null)
-			nextEffect.execute();
+			nextEffect.executeEffect();
 	}
 }

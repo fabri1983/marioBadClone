@@ -1087,7 +1087,7 @@ Transform:
   m_GameObject: {fileID: 307038626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 131.720764, y: 19.4413376, z: 0}
-  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1604644676}
 --- !u!114 &307038628
@@ -1107,7 +1107,7 @@ MonoBehaviour:
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
   _center: {x: 0, y: 16.3799992}
-  _size: {x: 1, y: 50}
+  _size: {x: 3, y: 50}
   _radius: 0
 --- !u!114 &307038629
 MonoBehaviour:
@@ -4440,7 +4440,7 @@ MonoBehaviour:
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
   _center: {x: 0, y: 0}
-  _size: {x: 15.7200003, y: 9.51000023}
+  _size: {x: 20, y: 9.51000023}
   _radius: 0
 --- !u!114 &1370795952
 MonoBehaviour:
@@ -6343,7 +6343,7 @@ Transform:
   m_GameObject: {fileID: 1801379777}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 54.009304, y: 11.4610214, z: 0}
-  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1604644676}
 --- !u!114 &1801379779
@@ -6375,7 +6375,7 @@ MonoBehaviour:
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
   _center: {x: 0, y: 16.3799992}
-  _size: {x: 1, y: 50}
+  _size: {x: 3, y: 50}
   _radius: 0
 --- !u!1001 &1805898319
 Prefab:
@@ -6997,6 +6997,14 @@ Prefab:
       propertyPath: _isSensor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: b6c6e335ce4b70d44a3be29c46b98c16, type: 2}
+      propertyPath: _size.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: b6c6e335ce4b70d44a3be29c46b98c16, type: 2}
+      propertyPath: _center.y
+      value: 15.2600002
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6c6e335ce4b70d44a3be29c46b98c16, type: 2}
   m_RootGameObject: {fileID: 2028569807}
@@ -7156,7 +7164,7 @@ Transform:
   m_GameObject: {fileID: 1983085449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.0776672, y: 8.0381546, z: 0}
-  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1604644676}
 --- !u!114 &1983085452
@@ -7176,7 +7184,7 @@ MonoBehaviour:
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
   _center: {x: 0, y: 16.3799992}
-  _size: {x: 1, y: 50}
+  _size: {x: 3, y: 50}
   _radius: 0
 --- !u!114 &1983085454
 MonoBehaviour:
@@ -7315,7 +7323,7 @@ Transform:
   m_GameObject: {fileID: 2028569807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -33.6373825, y: 11.4610214, z: 0}
-  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1604644676}
 --- !u!114 &2028569810
@@ -7334,8 +7342,8 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
-  _center: {x: 0, y: 16.3799992}
-  _size: {x: 1, y: 50}
+  _center: {x: 0, y: 15.2600002}
+  _size: {x: 3, y: 50}
   _radius: 0
 --- !u!114 &2028569812
 MonoBehaviour:

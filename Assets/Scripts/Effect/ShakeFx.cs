@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ShakeFx : Effect
+public class ShakeFx : Effect, ITouchListener, IEffectListener
 {
 	// controls the amount that shake_intensity is decremented each update. It determines if the shake is long or short
 	public float shake_decay = 0.5f;
@@ -18,17 +18,26 @@ public class ShakeFx : Effect
 	private float tempDecay, tempIntensity;
 	private Vector3 origPosition;
 	private Quaternion origRotation;
-	private bool allowShake;
 	private Quaternion quatTemp;
+	private bool allowShake = false;
 	
 	protected override void ownAwake () {
-		allowShake = false;
+		EffectPrioritizerHelper.registerForEndEffect(this);
 	}
 	
 	protected override void ownEffectStarts () {
 		Invoke("reset", startDelaySecs);
 	}
-
+	
+	void OnDestroy () {
+		TouchEventManager.Instance.removeListener(this);
+	}
+	
+	void Update () {
+		if (allowShake)
+			shakeTransition();
+	}
+	
 #if UNITY_EDITOR
 	void OnGUI () {
 		if (!debug)
@@ -38,24 +47,17 @@ public class ShakeFx : Effect
 	}
 #endif
 	
-	void Update ()
-	{
-		if (!allowShake)
-			return;
-		shake();
-	}
-	
 	private void reset ()
 	{
+		allowShake = true;
 		tempDecay = shake_decay;
 		tempIntensity = shake_intensity;
 		// for GUI Custom elements use localPosition
 		origPosition = transform.localPosition;
 		origRotation = transform.rotation;
-		allowShake = true;
 	}
 	
-	private void shake ()
+	private void shakeTransition ()
 	{
 		if (tempIntensity > 0) {
 			transform.localPosition = origPosition + Random.insideUnitSphere * tempIntensity;
@@ -75,10 +77,47 @@ public class ShakeFx : Effect
 			transform.localPosition = origPosition;
 			transform.rotation = origRotation;
 			allowShake = false;
+			effectEnded();
 		}
 	}
 	
-	public bool isFinished () {
-		return allowShake;
+	public bool isScreenStatic () {
+		// for event touch listener
+		return true;
+	}
+	
+	public GameObject getGameObject () {
+		return gameObject;
+	}
+	
+	public Rect getScreenBoundsAA () {
+		// This method called only once if the gameobject is a non destroyable game object
+		
+		// if used with a Unity's GUITexture
+		if (guiTexture != null)
+			return guiTexture.GetScreenRect(Camera.main);
+		// here I suppose this game object has attached a GUICustomElement
+		else
+			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+	}
+	
+	public void OnBeganTouch (Touch t) {
+		executeEffect();
+	}
+	
+	public void OnStationaryTouch (Touch t) {}
+	
+	public void OnEndedTouch (Touch t) {}
+	
+	public Effect[] getEffects () {
+		// return the transitions in an order set from Inspector.
+		// Note: to return in a custom order get the transitions array and sort it as desired.
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
+	}
+	
+	public void onLastEffectEnd () {
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
+		TouchEventManager.Instance.register(this, TouchPhase.Began);
 	}
 }

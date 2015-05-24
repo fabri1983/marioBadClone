@@ -10,7 +10,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	void Awake () {
 		optLoadLevel = transform.parent.gameObject.GetComponentInChildren<OptionLoadLevel>();
 		unselect();
-		EffectPrioritizer.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this);
 	}
 	
 	void Update () {
@@ -35,7 +35,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizer.getEffects(transform.parent.gameObject, true);
+		return EffectPrioritizerHelper.getEffects(transform.parent.gameObject, true);
 	}
 	
 	public void onLastEffectEnd () {

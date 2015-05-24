@@ -13,10 +13,14 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 		if (dontDestroy)
 			DontDestroyOnLoad(this.gameObject);
 		
-		EffectPrioritizer.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this);
 	}
 	
-	public bool isStatic () {
+	void OnDestroy () {
+		TouchEventManager.Instance.removeListener(this);
+	}
+	
+	public bool isScreenStatic () {
 		// for event touch listener
 		return isStaticRuntime;
 	}
@@ -39,12 +43,12 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizer.getEffects(gameObject, false);
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
 	}
 	
 	public void onLastEffectEnd () {
-		// register with touch event manager once the transition finishes since the manager
-		// depends on final element's position
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
 		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
 	}
 	

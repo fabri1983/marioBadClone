@@ -251,7 +251,7 @@ MonoBehaviour:
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
   _center: {x: 0, y: 0}
-  _size: {x: 15.7200003, y: 9.51000023}
+  _size: {x: 20, y: 9.51000023}
   _radius: 0
 --- !u!114 &11400022
 MonoBehaviour:

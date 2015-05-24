@@ -29,11 +29,12 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 
 		setupButtons(); // locate the buttons
 		GUIScreenLayoutManager.Instance.register(this);
-		EffectPrioritizer.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this);
 	}
 	
 	void OnDestroy () {
 		GUIScreenLayoutManager.Instance.remove(this);
+		TouchEventManager.Instance.removeListener(this);
 	}
 
 	public void updateForGUI() {
@@ -46,7 +47,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 		rectLevelSel.Set(480 / 2 - 35, 320 / 2 + 10, 70, 24);
 	}
 	
-	public bool isStatic () {
+	public bool isScreenStatic () {
 		// for event touch listener
 		return true;
 	}
@@ -77,13 +78,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizer.getEffects(gameObject, false);
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
 	}
 	
 	public void onLastEffectEnd () {
-		// register with touch event manager once the transition finishes since the manager
-		// depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Ended);
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
+		TouchEventManager.Instance.register(this, TouchPhase.Began);
 	}
 	
 	public void reset() {
