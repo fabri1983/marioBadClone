@@ -67,7 +67,7 @@ public class FPSHud : MonoBehaviour
 		float fps = accum / frames;
 		sFPS = fps.ToString( "f" + Mathf.Clamp( nbDecimal, 0, 10 ) );
 		
-		//Update the color
+		// Update the color
 		color = (fps >= 25) ? Color.green : ((fps > 10) ? Color.yellow : Color.red);
 		
 		accum = 0.0f;

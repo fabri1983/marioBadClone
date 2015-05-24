@@ -135,8 +135,8 @@ MonoBehaviour:
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
-  _collisionType: 
-  _collisionGroup: 
+  _collisionType: Scenery
+  _collisionGroup: Scenery
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 18}
   _radius: 0
