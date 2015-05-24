@@ -6,7 +6,7 @@ InputManager:
   m_Axes:
   - serializedVersion: 3
     m_Name: Horizontal
-    descriptiveName: 
+    descriptiveName: Keyboard Axis
     descriptiveNegativeName: 
     negativeButton: left
     positiveButton: right
@@ -22,7 +22,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Vertical
-    descriptiveName: 
+    descriptiveName: Keyboard Axis
     descriptiveNegativeName: 
     negativeButton: down
     positiveButton: up
@@ -38,7 +38,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Button B
-    descriptiveName: 
+    descriptiveName: Keyboard button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: left ctrl
@@ -54,7 +54,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Button B
-    descriptiveName: 
+    descriptiveName: Gamepad button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 2
@@ -70,7 +70,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Button B
-    descriptiveName: 
+    descriptiveName: Gamepad extra button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 5
@@ -86,7 +86,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Button A
-    descriptiveName: 
+    descriptiveName: Keyboard button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: space
@@ -102,7 +102,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Horizontal
-    descriptiveName: 
+    descriptiveName: Gamepad X axis
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -118,7 +118,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Vertical
-    descriptiveName: 
+    descriptiveName: Gamepad Y axis
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -134,7 +134,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Button A
-    descriptiveName: 
+    descriptiveName: Gamepad button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 3
@@ -150,7 +150,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Button A
-    descriptiveName: 
+    descriptiveName: Gamepad extra button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 4
@@ -163,4 +163,20 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Vertical
+    descriptiveName: Vertical 5th Axis for some gamepads
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1
+    dead: .189999998
+    sensitivity: 1
+    snap: 1
+    invert: 1
+    type: 2
+    axis: 4
     joyNum: 0

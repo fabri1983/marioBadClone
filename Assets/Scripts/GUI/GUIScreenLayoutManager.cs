@@ -17,7 +17,11 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	[SerializeField] private float lastScreenHeight;
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
-
+	
+	private static Vector3 zero = Vector3.zero;
+	private static Quaternion identity = Quaternion.identity;
+	private static Vector3 scale = Vector3.zero;
+	
 	private static GUIScreenLayoutManager instance = null;
 
 	public static GUIScreenLayoutManager Instance {
@@ -67,9 +71,10 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	}
 
 	private void setupUnityGUIMatrixForResizing () {
-		float widthRatio = Screen.width / MIN_RESOLUTION.x;
-		float heightRatio = Screen.height / MIN_RESOLUTION.y;
-		unityGUIMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(widthRatio, heightRatio, 1f));
+		float widthRatio = ((float)Screen.width) / MIN_RESOLUTION.x;
+		float heightRatio = ((float)Screen.height) / MIN_RESOLUTION.y;
+		scale.Set(widthRatio, heightRatio, 1f);
+		unityGUIMatrix = Matrix4x4.TRS(zero, identity, scale);
 	}
 
 	void OnGUI () {
@@ -315,7 +320,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	/// <param name='guiY'>
 	/// GUI y. Y Coordinate in GUI space
 	/// </param>
-	public static Vector2 guiToScreen (float guiX, float guiY)
+	public static Vector2 GUIToScreen (float guiX, float guiY)
 	{
 		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
 		Vector2 result;
@@ -348,7 +353,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		Vector3 guiPos = guiElem.transform.localPosition; // GUI custom element uses localPosition for correctly on screen location
 		Vector2 sizeInGUI = guiElem.getSizeInGUI();
 		Vector2 sizeInPixels = guiElem.getSizeInPixels();
-		Vector2 pixelMin = guiToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);
+		Vector2 pixelMin = GUIToScreen(guiPos.x - sizeInGUI.x/2f, guiPos.y - sizeInGUI.y/2f);
 		return new Rect(pixelMin.x, pixelMin.y, sizeInPixels.x, sizeInPixels.y);
 	}
 
@@ -367,23 +372,23 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static void locateForGUI (Transform tr, Vector2 sizeInPixels)
 	{
 		// get z position and GUI space coordinates. The GUI coordinates act as scale factors
-		Vector3 guiZposAndDimension = getZLocationAndScaleForGUI();
+		Vector3 guiZPosAndDimension = getZLocationAndScaleForGUI();
 		
 		Vector3 thePos = tr.position;
-		thePos.z = guiZposAndDimension.z;
+		thePos.z = guiZPosAndDimension.z;
 		tr.position = thePos;
 		
 		// apply scale to locate in GUI space. Consider user defined size
 		Vector3 theScale = tr.localScale;
-		theScale.x = guiZposAndDimension.x * sizeInPixels.x / Screen.width;
-		theScale.y = guiZposAndDimension.y * sizeInPixels.y / Screen.height;
+		theScale.x = guiZPosAndDimension.x * sizeInPixels.x / (float)Screen.width;
+		theScale.y = guiZPosAndDimension.y * sizeInPixels.y / (float)Screen.height;
 		theScale.z = 0f;
 		tr.localScale = theScale;
 		
 		// modify local position (not world position)
 		/*Vector3 theLocalPos = tr.localPosition;
 		// x position doesn't work yet
-		theLocalPos.y = guiZposAndDimension.y * 0.5f * (1f - Mathf.Abs(sizeInPixels.y)) * Mathf.Sign(sizeInPixels.y);
+		theLocalPos.y = guiZPosAndDimension.y * 0.5f * (1f - Mathf.Abs(sizeInPixels.y)) * Mathf.Sign(sizeInPixels.y);
 		tr.localPosition = theLocalPos;*/
 	}
 }
