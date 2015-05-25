@@ -6,8 +6,16 @@ using UnityEngine;
 /// </summary>
 public class PauseGameUnityListener : MonoBehaviour {
 
+	static bool created;
+	
 	void Awake () {
-		DontDestroyOnLoad(gameObject);
+		if (!created) {
+			DontDestroyOnLoad(gameObject);
+			created = true;
+		}
+		else {
+			Destroy(gameObject); // duplicate will be destroyed if 'first' scene is reloaded
+		}
 	}
 
 	/**

@@ -1,17 +1,16 @@
 using UnityEngine;
-using System.Collections;
 
 public class NonDestroyable : MonoBehaviour {
 	
-	private static NonDestroyable instance = null;
+	private static bool created = false;
 	
 	void Awake () {
-		if (instance != null && instance != this) {
-			Destroy(gameObject);
+		if (!created) {
+			DontDestroyOnLoad(gameObject);
+			created = true;
 		}
 		else {
-			instance = this;
-			DontDestroyOnLoad(gameObject);
+			Destroy(gameObject); // duplicate will be destroyed if 'first' scene is reloaded
 		}
 	}
 }

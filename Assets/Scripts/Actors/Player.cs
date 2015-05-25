@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
+public class Player : Pausable, IPowerUpAble, IMortalFall {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	private static uint collisionLayers;
 	
 	private static Player instance = null;
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
 	public static Player Instance {
         get {
@@ -47,13 +48,23 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
     }
 	
 	void Awake () {
-		if (instance != null && instance != this)
-			Destroy(this.gameObject);
+		if (instance != null && instance != this) {
+			duplicated = true;
+			Destroy(gameObject);
+		}
 		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
+			initialize();
 		}
-
+	}
+	
+	void Start () {
+		//resetPlayer(); // invoke after getting action components
+		PauseGameManager.Instance.register(this as Pausable, gameObject);
+	}
+	
+	private void initialize () {
 		jump = GetComponent<Jump>();
 		walk = GetComponent<PlayerWalk>();
 		firePivot = transform.FindChild("FirePivot");
@@ -75,24 +86,21 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		collisionLayers = unchecked((uint)~(1 << gameObject.layer)); // all layers except Player's layer
 	}
 	
-	// Use this for initialization
-	void Start () {
-		resetPlayer(); // invoke after getting action components
-
-		PauseGameManager.Instance.register(this, gameObject);
-	}
-	
 	void OnDestroy () {
+		if (duplicated) {
+			duplicated = false; // reset the flag for next time
+			return;
+		}
 		GameObjectTools.ChipmunkBodyDestroy(body);
-		PauseGameManager.Instance.remove(this);
+		PauseGameManager.Instance.remove(this as Pausable);
 		instance = null;
 	}
 	
-	public void pause () {}
+	public override void beforePause () {}
 	
-	public void resume () {}
+	public override void afterResume () {}
 	
-	public bool isSceneOnly () {
+	public override bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return false;
 	}
@@ -100,8 +108,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 	// Update is called once per frame
 	void Update () {
 		
-		// this set the correct jump status when the player without jumping enters on free fall state
-		// and also correct a sprite animation flickering when walking because the animation starts again 
+		// This sets the correct jump status when the player without jumping enters on free fall state.
+		// Also corrects a sprite animation flickering when walking because the animation starts again 
 		// constantly after jump.resetStatus()
 		if (exitedFromScenery && !jump.IsJumping()) {
 			// check if there is no shape below us
@@ -117,7 +125,7 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		
 		// jump
 		if (Gamepad.isA()) {
-			walk.stopWalking(); // it resets walk behavior
+			walk.stopWalking(); // resets walk behavior
 			jump.jump(lightJumpVelocity);
 			// apply gain jump power. Only once per jump (handled in Jump component)
 			if (Gamepad.isHardPressed(EnumButton.A))
@@ -240,7 +248,8 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		walkVelocity = walkVelBackup;
 	}
 
-	public void climbDown () {
+	public void locateAt (Vector2 pos) {
+		body.position = pos;
 	}
 
 	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
@@ -330,7 +339,6 @@ public class Player : MonoBehaviour, IPowerUpAble, IPausable, IMortalFall {
 		}
 		// if player wants to climb down (once it is over the platform) then disable the collision to start free fall
 		if (shape1.GetComponent<ClimbDownOnPlatform>().isPullingDown()) {
-			shape1.GetComponent<Player>().climbDown();
 			arbiter.Ignore();
 			return false;
 		}

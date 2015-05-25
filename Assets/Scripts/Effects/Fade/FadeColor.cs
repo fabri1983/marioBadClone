@@ -27,7 +27,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 		fadeDir = EnumFadeDirection.FADE_NONE;
 		
 		// register this class with ScreenLayoutManager for screen resize event
-		GUIScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 	}
 	
 	void Start () {
@@ -40,7 +40,7 @@ public class FadeColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	}
 	
 	void OnDestroy () {
-		GUIScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 	
 	void LateUpdate () {
@@ -98,6 +98,8 @@ public class FadeColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	}
 	
 	private void locateInScreen () {
+		if (transform == null)
+			return;
 		Vector2 sizeInPixels;
 		sizeInPixels.x = sizeFactor.x * Screen.width;
 		sizeInPixels.y = sizeFactor.y * Screen.height;

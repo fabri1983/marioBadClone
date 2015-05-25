@@ -22,11 +22,11 @@ public class CamAspectRatio : MonoBehaviour, IGUIScreenLayout {
 		screenRect = new Rect(0, 0, Screen.width, Screen.height);
 		setAspectRatio();
 		
-		GUIScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 	}
 	
 	void OnDestroy () {
-		GUIScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 	
 	public void updateForGUI () {

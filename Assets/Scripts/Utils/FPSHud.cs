@@ -81,7 +81,7 @@ public class FPSHud : MonoBehaviour
 			// NOTE: this transformation has effect per game loop
 			GUI.matrix = GUIScreenLayoutManager.unityGUIMatrix;
 
-			// TODO adjust the box size using GUI.matrix.m00 and GUI.matrix.m11
+			// TODO adjust the box size using GUI.matrix.m00 and GUI.matrix.m11 to keep it in original size
 			targetRect.Set(startRect.x, startRect.y, startRect.width, startRect.height);
 			
 			// GUI.color and other properties affects are global, so save original values temporary

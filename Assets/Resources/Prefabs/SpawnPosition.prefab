@@ -24,8 +24,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -57.2742043, y: 8.0381546, z: 0}
-  m_LocalScale: {x: 3, y: 1.36986303, z: 1}
+  m_LocalPosition: {x: 0, y: 6.16558838, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!114 &11400000
@@ -38,7 +38,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b985018f91f04d34a9ae2ed10dc60e75, type: 1}
   m_Name: 
-  priority: 20
+  priority: 10
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,8 +54,8 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
-  _center: {x: 0, y: 16.3799992}
-  _size: {x: 1, y: 50}
+  _center: {x: 0, y: 8.5}
+  _size: {x: 3, y: 33.7900009}
   _radius: 0
 --- !u!1001 &100100000
 Prefab:

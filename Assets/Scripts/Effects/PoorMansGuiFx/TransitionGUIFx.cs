@@ -1,5 +1,5 @@
 ﻿// PoorMansGUIFX by UnityCoder.com
-// Modifications added by fabri1983
+// Modifications added by fabri1983@gmail.com
 
 using UnityEngine;
 using System.Collections;
@@ -30,12 +30,11 @@ enum Element
 /// When this script is in a GUIText or GUITexture game object, please consider your actual 
 /// pixel offset and set the start offset transform property accordingly.
 /// </summary>
-public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
+public class TransitionGUIFx : Effect {
 	
 	public Vector2 startOffsetTransform = Vector2.zero;
 	public Transition _transition;
 	public Direction direction;
-	public float startDelaySecs = 0f;
 	public int steps = 32;
 	public float acceleration = 1f;
 	public EasingType easingType;
@@ -48,30 +47,12 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
 	private bool update;
-	private List<ITransitionListener> nextTransitions = null;
 
-	void Awake () {
+	protected override void ownAwake () {
 		update = false;
 	}
-
-	void Start ()
-	{
-		elem = Element.TRANSFORM;
-		// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
-		/*if (guiTexture != null)
-			elem = Element.GUI_TEXTURE;
-		else if (guiText != null)
-			elem = Element.GUI_TEXT;*/
-
-		prepareTransition();
-	}
 	
-	void OnEnable () {
-		currentStep = 0;
-		if (useCoroutine)
-			StartCoroutine("DoCoroutine");
-		else
-			Invoke("enableUpdate", startDelaySecs);
+	protected override void ownOnDestroy () {
 	}
 	
 	void OnDisable () {
@@ -79,13 +60,21 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 			StopCoroutine("DoCoroutine");
 	}
 
-	public TransitionGUIFx[] getTransitions () {
-		return null;
-	}
-
-	public void prevTransitionEnds (TransitionGUIFx fx) {
-		this.enabled = true;
-		update = true;
+	protected override void ownEffectStarts () {
+		elem = Element.TRANSFORM;
+		// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
+		/*if (guiTexture != null)
+			elem = Element.GUI_TEXTURE;
+		else if (guiText != null)
+			elem = Element.GUI_TEXT;*/
+		
+		prepareTransition();
+		
+		currentStep = 0;
+		if (useCoroutine)
+			StartCoroutine("DoCoroutine");
+		else
+			Invoke("enableUpdate", startDelaySecs);
 	}
 
 	void Update () {
@@ -93,12 +82,6 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 			return;
 		if (update)
 			DoTransition();
-	}
-	
-	public void addNextTransition (ITransitionListener listener) {
-		if (nextTransitions == null)
-			nextTransitions = new List<ITransitionListener>();
-		nextTransitions.Add(listener);
 	}
 	
 	void enableUpdate () {
@@ -124,12 +107,12 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 		switch (_transition)
 		{
 		case Transition.FromCurrentPosition:
-			offsetX = -EasingFX.Ease(0,acceleration, easingType);
-			offsetY = -EasingFX.Ease(0,acceleration, easingType);
+			offsetX = -Easing.Ease(0,acceleration, easingType);
+			offsetY = -Easing.Ease(0,acceleration, easingType);
 			break;
 		case Transition.ToCurrentPosition:
-			offsetX = -EasingFX.Ease(1,acceleration, easingType);
-			offsetY = -EasingFX.Ease(1,acceleration, easingType);
+			offsetX = -Easing.Ease(1,acceleration, easingType);
+			offsetY = -Easing.Ease(1,acceleration, easingType);
 			break;
 		}
 
@@ -200,8 +183,7 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
             yield return null;
 		}
 
-		this.enabled = false;
-		transitionEnded();
+		effectEnded();
 	}
 	
 	private void DoTransition ()
@@ -209,27 +191,18 @@ public class TransitionGUIFx : MonoBehaviour, ITransitionListener {
 		// main transition/easing loop
 		//if (currentStep >= steps) {
 		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y) {
-			this.enabled = false;
-			transitionEnded();
+			effectEnded();
 			return;
 		}
 		transition(currentStep);
 		++currentStep;
 	}
 
-	private void transitionEnded () {
-		// this transition has finished, then continue with next one (if any)
-		if (nextTransitions != null) {
-			for (int i=0, c=nextTransitions.Count; i < c; ++i)
-				nextTransitions[i].prevTransitionEnds(this);
-		}
-	}
-
 	private void transition (int step)
 	{
 		// TODO: remap step from 0-steps into 0-1
 		float linearStep = (float)step/(steps-1);
-		float e = EasingFX.Ease(linearStep, acceleration, easingType);
+		float e = Easing.Ease(linearStep, acceleration, easingType);
 		float newX=0f, newY=0f;
 		
 		switch (direction)

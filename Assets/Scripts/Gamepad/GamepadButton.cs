@@ -1,22 +1,25 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener {
+public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	// this modified in inspector window
 	public EnumButton buttonId = EnumButton.A;
-	public bool dontDestroy = true; // true for keeping alive between scenes
 	public bool isStaticRuntime = true;
 	
 	void Awake () {
-		// should we keep this game object alive between scenes
-		if (dontDestroy)
-			DontDestroyOnLoad(this.gameObject);
-		
-		TransitionGUIFxManager.Instance.registerForEndTransition(this);
+		initialize();
 	}
 	
-	public bool isStatic () {
+	private void initialize () {
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+	}
+	
+	void OnDestroy () {
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
+	}
+	
+	public bool isScreenStatic () {
 		// for event touch listener
 		return isStaticRuntime;
 	}
@@ -26,8 +29,6 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// This method called only once if the gameobject is a non destroyable game object
-		
 		// if used with a Unity's GUITexture
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
@@ -36,16 +37,16 @@ public class GamepadButton : MonoBehaviour, ITouchListener, ITransitionListener 
 			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
 	}
 	
-	public TransitionGUIFx[] getTransitions () {
+	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(gameObject, false);
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
-		// register with touch event manager once the transition finishes since the manager
-		// depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
+	public void onLastEffectEnd () {
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began, TouchPhase.Stationary);
 	}
 	
 	public void OnBeganTouch (Touch t) {

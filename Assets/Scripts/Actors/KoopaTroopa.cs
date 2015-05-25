@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
+public class KoopaTroopa : Pausable, IMortalFall {
 	
 	public bool jumpInLoop = false;
 	public float jumpSpeed = 20f;
@@ -31,15 +31,16 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			jump.setForeverJumpSpeed(jumpSpeed);
 		}
 
-		PauseGameManager.Instance.register(this, gameObject);
+		PauseGameManager.Instance.register(this as Pausable, gameObject);
 	}
 
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this);
+		PauseGameManager.Instance.remove(this as Pausable);
 	}
 	
 	/**
-	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
+	 * Self implementation for destroy since using GamObject.Destroy() has 
+	 * a performance hit in android for Chipmunk component.
 	 */
 	private void destroy () {
 		shape.enabled = false; // makes the shape to be removed from the space
@@ -49,14 +50,14 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 #else
 		gameObject.SetActiveRecursively(false);
 #endif
-		PauseGameManager.Instance.remove(this);
+		PauseGameManager.Instance.remove(this as Pausable);
 	}
 	
-	public void pause () {}
+	public override void beforePause () {}
 	
-	public void resume () {}
+	public override void afterResume () {}
 	
-	public bool isSceneOnly () {
+	public override bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}

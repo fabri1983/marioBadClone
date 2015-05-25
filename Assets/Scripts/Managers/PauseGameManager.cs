@@ -7,12 +7,12 @@ using System.Collections.Generic;
 /// when pausable components are destroyed. This manager can't be destroyed before any pausable has executed his
 /// remove() operation. So the solution to that was simply create the manager as non MonoBehaviour subclass, thus 
 /// it won't appear in game hierarchy.
-/// However it creates a non destroyable game object for catching OnApplicationPause().
+/// However it needs a non destroyable game object for catching OnApplicationPause() wich is the PauseGameUnityListener.
 /// </summary>
 public class PauseGameManager {
 	
-	private List<IPausable> sceneOnly = new List<IPausable>();
-	private List<IPausable> durables = new List<IPausable>();
+	private List<Pausable> sceneOnly = new List<Pausable>();
+	private List<Pausable> durables = new List<Pausable>();
 	private List<MonoBehaviour[]> sceneOnlyMonos = new List<MonoBehaviour[]>();
 	private List<MonoBehaviour[]> durablesMonos = new List<MonoBehaviour[]>();
 	
@@ -53,11 +53,11 @@ public class PauseGameManager {
 
 	/// <summary>
 	/// Register the specified gameobject into the pausable components list
-	/// Call this method in Start(). Calling from Awake() will fail to correctly get children componenents.
+	/// Call this method in Start(). Calling from Awake() will fail to correctly get children components.
 	/// </summary>
-	/// <param name="p">IPausable implementation</param>
-	/// <param name="go">gameobject</param>
-	public void register(IPausable p, GameObject go) {
+	/// <param name="p">Pausable implementation</param>
+	/// <param name="go">GameObject</param>
+	public void register(Pausable p, GameObject go) {
 		// extract all MonoBehaviour components and
 		MonoBehaviour[] comps = go.GetComponents<MonoBehaviour>();
 		MonoBehaviour[] compsChildren = go.GetComponentsInChildren<MonoBehaviour>();
@@ -75,7 +75,26 @@ public class PauseGameManager {
 		}
 	}
 	
-	public void remove (IPausable p) {
+	/// <summary>
+	/// Register the specified MonoBehaviour into the pausable components list
+	/// Call this method in Start(). Calling from Awake() will fail to correctly get children components.
+	/// </summary>
+	/// <param name="p">Pausable implementation</param>
+	/// <param name="mono">MonoBehaviour</param>
+	public void register(Pausable p, MonoBehaviour mono) {
+		MonoBehaviour[] monoArray = new MonoBehaviour[1];
+		monoArray[0] = mono;
+		if (p.isSceneOnly()) {
+			sceneOnly.Add(p);
+			sceneOnlyMonos.Add(monoArray);
+		}
+		else {
+			durables.Add(p);
+			durablesMonos.Add(monoArray);
+		}
+	}
+	
+	public void remove (Pausable p) {
 		int h = p.GetHashCode();
 		if (p.isSceneOnly()) {
 			for (int i=0, c=sceneOnly.Count; i<c; ++i)
@@ -102,16 +121,28 @@ public class PauseGameManager {
 	public void pause () {
 		paused = true;
 		for (int i=0, c=sceneOnly.Count; i<c; ++i) {
-			sceneOnly[i].pause();
+			sceneOnly[i].beforePause();
 			MonoBehaviour[] monos = sceneOnlyMonos[i];
-			for (int j=0, cc=monos.Length; j < cc; ++j)
+			bool alreadyDisabled = true;
+			for (int j=0, cc=monos.Length; j < cc; ++j) {
+				if (!monos[j].enabled)
+					continue;
 				monos[j].enabled = false;
+				alreadyDisabled = false;
+			}
+			sceneOnly[i].doNotResume = alreadyDisabled;
 		}
 		for (int i=0, c=durables.Count; i<c; ++i) {
-			durables[i].pause();
+			durables[i].beforePause();
 			MonoBehaviour[] monos = durablesMonos[i];
-			for (int j=0, cc=monos.Length; j < cc; ++j)
+			bool alreadyDisabled = true;
+			for (int j=0, cc=monos.Length; j < cc; ++j) {
+				if (!monos[j].enabled)
+					continue;
 				monos[j].enabled = false;
+				alreadyDisabled = false;
+			}
+			durables[i].doNotResume = alreadyDisabled;
 		}
 	}
 	
@@ -121,16 +152,22 @@ public class PauseGameManager {
 	/// </summary>
 	public void resume () {
 		for (int i=0, c=sceneOnly.Count; i<c; ++i) {
+			if (sceneOnly[i].doNotResume)
+				continue;
 			MonoBehaviour[] monos = sceneOnlyMonos[i];
-			for (int j=0, cc=monos.Length; j < cc; ++j)
+			for (int j=0, cc=monos.Length; j < cc; ++j) {
 				monos[j].enabled = true;
-			sceneOnly[i].resume();
+			}
+			sceneOnly[i].afterResume();
 		}
 		for (int i=0, c=durables.Count; i<c; ++i) {
+			if (durables[i].doNotResume)
+				continue;
 			MonoBehaviour[] monos = durablesMonos[i];
-			for (int j=0, cc=monos.Length; j < cc; ++j)
+			for (int j=0, cc=monos.Length; j < cc; ++j) {
 				monos[j].enabled = true;
-			durables[i].resume();
+			}
+			durables[i].afterResume();
 		}
 		
 		paused = false;

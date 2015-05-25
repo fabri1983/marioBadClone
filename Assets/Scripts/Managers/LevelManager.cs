@@ -46,7 +46,8 @@ public class LevelManager : MonoBehaviour {
 	
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
-	private static LevelManager instance;
+	private static LevelManager instance = null;
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
 	public static LevelManager Instance {
         get {
@@ -60,14 +61,14 @@ public class LevelManager : MonoBehaviour {
 	
 	void Awake () {
 		if (instance != null && instance != this) {
+			duplicated = true;
 			Destroy(gameObject);
 		}
 		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
+			initialize();
 		}
-
-		initialize();
 	}
 	
 	private void initialize() {
@@ -82,6 +83,10 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	void OnDestroy() {
+		if (duplicated) {
+			duplicated = false; // reset the flag for next time
+			return;
+		}
 		instance = null;
 		player = null;
     }
@@ -92,7 +97,7 @@ public class LevelManager : MonoBehaviour {
 	
 	public int getNextLevel () {
 		// if exceeds max level then return scene index 0
-		return activeLevel + 1 >= Application.levelCount ? 0 : activeLevel + 1;
+		return activeLevel + 1 >= Application.levelCount ? SCENE_MAIN_INDEX : activeLevel + 1;
 	}
 	
 	public void loadNextLevel() {
@@ -107,10 +112,9 @@ public class LevelManager : MonoBehaviour {
 	public void loadLevel (int level) {
 		// fix level index if invalid
 		if (level < SCENE_MAIN_INDEX || level >= Application.levelCount)
-			activeLevel = SCENE_MAIN_INDEX; // splash screen
-		// update current level index
+			activeLevel = SCENE_MAIN_INDEX; // splash scree
 		else
-			activeLevel = level;
+			activeLevel = level; // update current level index
 		
 		player.toogleEnabled(false); // deactivate to avoid falling in empty scene, it will be restored with StartLevel script
 		player.restoreWalkVel(); // in case the player was colliding a wall
@@ -137,14 +141,15 @@ public class LevelManager : MonoBehaviour {
 		activeLevel = level;
 		// move camera instantaneously to where player spawns
 		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime();
-		// activate the player's game object
+		// reset and activate the player's game object
+		player.resetPlayer();
 		player.toogleEnabled(playerEnabled);
 		// setup some scene only scripts in LookUpwards
 		player.GetComponent<LookDirections>().setup();
 		// set Mario spawn position for this level
-		setPlayerPosition(level);
+		setPlayerSpawnPosition(level);
 		
-		// throw error if no GUI container was created
+		// check if no GUI container was created
 		if (LevelManager.getGUIContainerNonDestroyable() == null)
 			Debug.LogWarning("Missing " + GUI_container_nd + " game object. Will be created and populated with minimum elements.");
 		if (LevelManager.getGUIContainerSceneOnly() == null)
@@ -189,12 +194,12 @@ public class LevelManager : MonoBehaviour {
 		OptionQuit.Instance.transform.parent = guiContainer_nd.transform;
 	}
 	
-	private void setPlayerPosition (int level) {
+	private void setPlayerSpawnPosition (int level) {
 		// if spawn position for current level wasn't already set then set it
 		if (spawnPosArray[level].priority == INVALID_PRIORITY) {
 			// get all SpawnPositionTrigger game objects from the current scene
 			SpawnPositionTrigger[] arr = (SpawnPositionTrigger[])FindObjectsOfType(typeof(SpawnPositionTrigger));
-			// no triiger game objects? then use default spawn position
+			// no trigger game objects? then use default spawn position
 			if (arr == null || arr.Length == 0) {
 				spawnPosArray[level].priority = 0; // to avoid seeking again for all triggers
 				spawnPosArray[level].position = Vector2.zero;
@@ -206,7 +211,7 @@ public class LevelManager : MonoBehaviour {
 			}
 		}
 		// set player's spawn position
-		player.GetComponent<ChipmunkBody>().position = spawnPosArray[level].position;
+		player.locateAt(spawnPosArray[level].position);
 	}
 	
 	/**

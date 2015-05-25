@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class FireBall : MonoBehaviour, IPausable {
+public class FireBall : Pausable {
 	
 	private Vector2 dir = Vector2.zero;
 	private float rotAnimGrades = 28f;
@@ -20,11 +20,11 @@ public class FireBall : MonoBehaviour, IPausable {
 	}
 
 	void Start () {
-		PauseGameManager.Instance.register(this, gameObject);
+		PauseGameManager.Instance.register(this as Pausable, gameObject);
 	}
 
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this);
+		PauseGameManager.Instance.remove(this as Pausable);
 	}
 	
 	void Update () {
@@ -47,14 +47,14 @@ public class FireBall : MonoBehaviour, IPausable {
 #else
 		gameObject.SetActiveRecursively(false);
 #endif
-		PauseGameManager.Instance.remove(this);
+		PauseGameManager.Instance.remove(this as Pausable);
 	}
 	
-	public void pause () {}
+	public override void beforePause () {}
 	
-	public void resume () {}
+	public override void afterResume () {}
 	
-	public bool isSceneOnly () {
+	public override bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}

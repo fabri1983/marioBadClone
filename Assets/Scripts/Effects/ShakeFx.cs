@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Shake : MonoBehaviour, ITransitionListener
+public class ShakeFx : Effect, ITouchListener, IEffectListener
 {
 	// controls the amount that shake_intensity is decremented each update. It determines if the shake is long or short
 	public float shake_decay = 0.5f;
@@ -9,7 +9,6 @@ public class Shake : MonoBehaviour, ITransitionListener
 	public float shake_intensity = 4f;
 	// true if you want also shake rotation of game object
 	public bool allowRotation = false;
-	public float startDelaySecs = 0;
 #if UNITY_EDITOR
 	// set to true if you want to test in gameplay mode
 	public bool debug = false;
@@ -18,22 +17,26 @@ public class Shake : MonoBehaviour, ITransitionListener
 	private float tempDecay, tempIntensity;
 	private Vector3 origPosition;
 	private Quaternion origRotation;
-	private bool allowShake = false;
 	private Quaternion quatTemp;
+	private bool allowShake = false;
 	
-	void Start () {
-		if (startDelaySecs > 0f)
-			Invoke("reset", startDelaySecs);
-	}
-
-	public TransitionGUIFx[] getTransitions () {
-		return null;
+	protected override void ownAwake () {
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
-		this.enabled = true;
+	protected override void ownEffectStarts () {
+		Invoke("reset", startDelaySecs);
 	}
-
+	
+	protected override void ownOnDestroy () {
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
+	}
+	
+	void Update () {
+		if (allowShake)
+			shakeTransition();
+	}
+	
 #if UNITY_EDITOR
 	void OnGUI () {
 		if (!debug)
@@ -43,25 +46,16 @@ public class Shake : MonoBehaviour, ITransitionListener
 	}
 #endif
 	
-	void Update ()
-	{
-		if (!allowShake)
-			return;
-		shake();
-	}
-	
-	public void reset ()
-	{
+	private void reset () {
+		allowShake = true;
 		tempDecay = shake_decay;
 		tempIntensity = shake_intensity;
 		// for GUI Custom elements use localPosition
 		origPosition = transform.localPosition;
 		origRotation = transform.rotation;
-		allowShake = true;
 	}
 	
-	public void shake ()
-	{
+	private void shakeTransition () {
 		if (tempIntensity > 0) {
 			transform.localPosition = origPosition + Random.insideUnitSphere * tempIntensity;
 			if (allowRotation) {
@@ -80,10 +74,47 @@ public class Shake : MonoBehaviour, ITransitionListener
 			transform.localPosition = origPosition;
 			transform.rotation = origRotation;
 			allowShake = false;
+			effectEnded();
 		}
 	}
 	
-	public bool isFinished () {
-		return allowShake;
+	public bool isScreenStatic () {
+		// for event touch listener
+		return true;
+	}
+	
+	public GameObject getGameObject () {
+		return gameObject;
+	}
+	
+	public Rect getScreenBoundsAA () {		
+		// if used with a Unity's GUITexture
+		if (guiTexture != null)
+			return guiTexture.GetScreenRect(Camera.main);
+		// here I suppose this game object has attached a GUICustomElement
+		else
+			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+	}
+	
+	public void OnBeganTouch (Touch t) {
+		float temp = startDelaySecs = 0f;
+		executeEffect();
+		startDelaySecs = temp;
+	}
+	
+	public void OnStationaryTouch (Touch t) {}
+	
+	public void OnEndedTouch (Touch t) {}
+	
+	public Effect[] getEffects () {
+		// return the transitions in an order set from Inspector.
+		// Note: to return in a custom order get the transitions array and sort it as desired.
+		return EffectPrioritizerHelper.getEffects(gameObject, false);
+	}
+	
+	public void onLastEffectEnd () {
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);
 	}
 }

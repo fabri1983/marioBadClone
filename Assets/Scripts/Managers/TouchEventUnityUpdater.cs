@@ -6,14 +6,25 @@ using System.Collections;
 /// </summary>
 public class TouchEventUnityUpdater : MonoBehaviour {
 	
+	static bool created = false;
+	TouchEventManager tm;
+	
 	void Awake () {
-		DontDestroyOnLoad(gameObject);
-		// force to activate multi touch support
-		Input.multiTouchEnabled = true;
+		if (!created) {
+			// force to activate multi touch support
+			Input.multiTouchEnabled = true;
+			DontDestroyOnLoad(gameObject);
+			created = true;
+		}
+		else {
+			Destroy(gameObject); // duplicate will be destroyed if 'first' scene is reloaded
+		}
 	}
 
 	void Update () {
-		TouchEventManager.Instance.processEvents();
+		if (tm == null)
+			tm = TouchEventManager.Instance;
+		tm.processEvents();
 	}
 
 }

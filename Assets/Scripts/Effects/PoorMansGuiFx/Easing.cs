@@ -3,7 +3,7 @@
 using UnityEngine;
 using System;
 
-public static class EasingFX
+public static class Easing
 {
 	// Adapted from source : http://www.robertpenner.com/easing/
 	

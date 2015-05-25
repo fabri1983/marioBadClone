@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionSelecter : MonoBehaviour, ITransitionListener {
+public class OptionSelecter : MonoBehaviour, IEffectListener {
 
 	public bool beginSelected = false;
 	public OptionSelecter aboveSelecter, belowSelecter, leftSelecter, rightSelecter;
@@ -10,7 +10,7 @@ public class OptionSelecter : MonoBehaviour, ITransitionListener {
 	void Awake () {
 		optLoadLevel = transform.parent.gameObject.GetComponentInChildren<OptionLoadLevel>();
 		unselect();
-		TransitionGUIFxManager.Instance.registerForEndTransition(this);
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
 	void Update () {
@@ -32,13 +32,13 @@ public class OptionSelecter : MonoBehaviour, ITransitionListener {
 		}
 	}
 	
-	public TransitionGUIFx[] getTransitions () {
+	public Effect[] getEffects () {
 		// return the transitions in an order set from Inspector.
 		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return TransitionGUIFxManager.getTransitionsInOrder(transform.parent.gameObject, true);
+		return EffectPrioritizerHelper.getEffects(transform.parent.gameObject, true);
 	}
 	
-	public void prevTransitionEnds (TransitionGUIFx fx) {
+	public void onLastEffectEnd () {
 		if (beginSelected)
 			select();
 	}
