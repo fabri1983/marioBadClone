@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUIScreenLayout {
 	
-	private bool showOptions = false;
+	private bool showingOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;
 	private IFadeable fader;
 	
 	private static OptionQuit instance = null;
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
 	public static OptionQuit Instance {
         get {
@@ -20,21 +21,30 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
     }
 	
 	void Awake () {
-		if (instance != null && instance != this)
+		if (instance != null && instance != this) {
+			duplicated = true;
 			Destroy(this.gameObject);
+		}
 		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
+			initialize();
 		}
-
+	}
+	
+	private void initialize () {
 		setupButtons(); // locate the buttons
-		GUIScreenLayoutManager.Instance.register(this);
-		EffectPrioritizerHelper.registerForEndEffect(this);
+		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {
-		GUIScreenLayoutManager.Instance.remove(this);
-		TouchEventManager.Instance.removeListener(this);
+		if (duplicated) {
+			duplicated = false; // reset the flag for next time
+			return;
+		}
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
 
 	public void updateForGUI() {
@@ -57,8 +67,6 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// This method called only once if the gameobject is a non destroyable game object
-		
 		// if used with a Unity's GUITexture
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
@@ -84,11 +92,11 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	public void onLastEffectEnd () {
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began);
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);
 	}
 	
 	public void reset() {
-		showOptions = false;
+		showingOptions = false;
 	}
 	
 	public void setFaderFromMainCamera () {
@@ -97,19 +105,19 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	}
 	
 	private void optionSelected() {
-		if (showOptions)
+		if (showingOptions)
 			return;
 		
 		PauseGameManager.Instance.pause();
 		fader.startFading(EnumFadeDirection.FADE_IN);
-		showOptions = true;
+		showingOptions = true;
 	}
 	
 	void Update () {
 		// back button
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			// if options already shown, then hide them
-			if (showOptions)
+			if (showingOptions)
 				back();
 			else
 				optionSelected();
@@ -126,7 +134,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 				optionSelected();
 		}
 #endif
-		if (!showOptions)
+		if (!showingOptions)
 			return;
 
 		// update Unity GUI matrix to allow automatic resizing (only works for Unity GUI elems)
@@ -149,13 +157,13 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	}
 	
 	private void back () {
-		showOptions = false;
+		showingOptions = false;
 		fader.startFading(EnumFadeDirection.FADE_OUT);
 		PauseGameManager.Instance.resume();
 	}
 	
 	private void levelSelection () {
-		showOptions = false;
+		showingOptions = false;
 		fader.startFading(EnumFadeDirection.FADE_OUT);
 		PauseGameManager.Instance.resume();
 		LevelManager.Instance.loadLevelSelection();

@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public abstract class PowerUp : MonoBehaviour, IPausable {
+public abstract class PowerUp : Pausable {
 	
 	public GameObject artifact; // Game Object that will be used as bullet/gunfire
 	
@@ -20,9 +20,13 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	}
 
 	void Start () {
-		PauseGameManager.Instance.register(this, gameObject);
-
+		PauseGameManager.Instance.register(this as Pausable, gameObject);
 		ownStart(); // invokes subclass own starting method
+	}
+	
+	void OnDestroy () {
+		PauseGameManager.Instance.remove(this as Pausable);
+		GameObjectTools.ChipmunkBodyDestroy(body);
 	}
 	
 	void Update () {
@@ -34,11 +38,11 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 		ownUpdate();
 	}
 	
-	public void pause () {}
+	public override void beforePause () {}
 	
-	public void resume () {}
+	public override void afterResume () {}
 	
-	public bool isSceneOnly () {
+	public override bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return false; // the power up should be in a pool
 	}
@@ -98,7 +102,6 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	 * Tells this power up to perform a little animation to show what power up the player has got.
 	 */
 	public void doGotchaAnim (Vector3 startingPos) {
-
 		// instantiate the artifact for a short moment
 		if (artifact != null) {
 			objectToAnim = GameObject.Instantiate(artifact) as GameObject;
@@ -119,11 +122,7 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	public float getPower () {
 		return firePow;
 	}
-	
-	void OnDestroy () {	
-		GameObjectTools.ChipmunkBodyDestroy(body);
-	}
-	
+
 	/**
 	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */

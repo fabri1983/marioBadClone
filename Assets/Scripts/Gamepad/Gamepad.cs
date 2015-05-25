@@ -13,6 +13,7 @@ public class Gamepad : MonoBehaviour {
 	private static short[] hardPressedCount = new short[System.Enum.GetValues(typeof(EnumButton)).Length];
 	
 	private static Gamepad instance = null;
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
 	public static Gamepad Instance {
         get {
@@ -25,13 +26,15 @@ public class Gamepad : MonoBehaviour {
     }
 	
 	void Awake () {
-		if (instance != null && instance != this)
+		if (instance != null && instance != this) {
+			duplicated = true;
 			Destroy(this.gameObject);
+		}
 		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
+			initialize();
 		}
-		initialize();
 	}
 	
 	private void initialize () {
@@ -60,6 +63,10 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	void OnDestroy () {
+		if (duplicated) {
+			duplicated = false;
+			return;
+		}
 		instance = null;
 	}
 	

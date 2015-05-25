@@ -14,9 +14,11 @@ public class TouchEventManager {
 	private static ListenerLists dynamicListeners = new ListenerLists();
 	private static QuadTreeTouchEvent staticQuadTree = new QuadTreeTouchEvent();
 	
+	/// <summary>
 	/// If true then you can touch overlapped game objects (in screen)
 	/// If false then once touched a game object for current touch and current phase there is no need to 
 	/// continue looking for another touched game object.
+	/// </summary>
 	private static bool ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS = false;
 	
 	private static TouchEventManager instance = null;
@@ -58,6 +60,9 @@ public class TouchEventManager {
 	/// </param>
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
 		
+		#if TOUCH_EVENT_MANAGER_NO_QUADTREE
+		dynamicListeners.add(listener, touchPhases);
+		#else
 		if (!listener.isScreenStatic())
 			dynamicListeners.add(listener, touchPhases);
 		else {
@@ -71,6 +76,7 @@ public class TouchEventManager {
 				leaves[i].add(listener, touchPhases);
 			}
 		}
+		#endif
 	}
 	
 	/// <summary>
@@ -79,6 +85,9 @@ public class TouchEventManager {
 	/// </summary>
 	public void removeListener (ITouchListener listener) {
 
+		#if TOUCH_EVENT_MANAGER_NO_QUADTREE
+		dynamicListeners.remove(listener);
+		#else
 		if (!listener.isScreenStatic())
 			dynamicListeners.remove(listener);
 		else {
@@ -91,8 +100,12 @@ public class TouchEventManager {
 				lls[i].remove(listener);
 			}
 		}
+		#endif
 	}
 	
+	/// <summary>
+	/// Called form the TouchEventUnityUpdater, process the touches of current frame.
+	/// </summary>
 	public void processEvents () {
 		if (Input.touchCount == 0)
 			return;
@@ -106,11 +119,15 @@ public class TouchEventManager {
 		// send events to listeners
 		for (int i=0,c=Input.touchCount; i < c; ++i) {
 			Touch t = Input.touches[i];
+			#if TOUCH_EVENT_MANAGER_NO_QUADTREE
+			sendEvent(t, dynamicListeners);
+			#else
 			// static listeners
 			if (sendEvent(t, staticQuadTree.traverse(t.position)))
 				continue;
 			// dynamic listeners
 			sendEvent(t, dynamicListeners);
+			#endif
 		}
 	}
 	

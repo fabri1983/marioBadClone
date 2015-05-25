@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Effect : MonoBehaviour {
+public abstract class Effect : Pausable {
 	
 	public int priority = 0;
+	public float startDelaySecs = 0f;
 	
 	private Effect nextEffect = null;
 	private List<IEffectListener> listeners = null;
@@ -14,6 +15,7 @@ public abstract class Effect : MonoBehaviour {
 			this.enabled = false;
 			isPriorizable = true;
 		}
+		PauseGameManager.Instance.register(this as Pausable, this as MonoBehaviour);
 		ownAwake();
 	}
 	
@@ -23,9 +25,16 @@ public abstract class Effect : MonoBehaviour {
 			executeEffect();
 	}
 	
+	void OnDestroy () {
+		PauseGameManager.Instance.remove(this as Pausable);
+		ownOnDestroy();
+	}
+	
 	protected abstract void ownAwake ();
 	
 	protected abstract void ownEffectStarts ();
+	
+	protected abstract void ownOnDestroy ();
 	
 	public void addNextEffect (Effect next) {
 		nextEffect = next;
@@ -60,5 +69,14 @@ public abstract class Effect : MonoBehaviour {
 	private void executeNextEffect () {
 		if (nextEffect != null)
 			nextEffect.executeEffect();
+	}
+	
+	public override void beforePause () {}
+	
+	public override void afterResume () {}
+	
+	public override bool isSceneOnly () {
+		// used for allocation in subscriber lists managed by PauseGameManager
+		return false;
 	}
 }

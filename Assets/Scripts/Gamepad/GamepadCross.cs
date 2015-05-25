@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	
-	public bool dontDestroy = true; // true for keeping alive between scenes
 	public bool isStaticRuntime = true; // true if the game object never translate, even when is initialized
 	public bool debugZones = false;
 	
 	/// Defines the screen position and dimension (width/height) of every arrow in the cross,
 	/// relative to the GUI texture of size 64x64. Scale adjustments are apply once the 
 	/// game object awakes.
-	private static Rect[] arrowRects = new Rect[]{
+	private Rect[] arrowRects = new Rect[]{
 		new Rect(20f, 40f, 24f, 22f), // UP
 		new Rect(42f, 20f, 22f, 24f), // RIGHT
 		new Rect(20f, 0f, 24f, 22f), // DOWN
@@ -21,16 +20,13 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		new Rect(0f, 0f, 16f, 16f) // DOWN-LEFT
 	};
 	
-	// absolute screen position of gui
-	private static Vector2 guiPos;
+	private Vector2 guiPosCache; // absolute screen position of gui
 	
 	void Awake () {
-		if (dontDestroy)
-			// keep this game object alive between scenes
-			DontDestroyOnLoad(this.gameObject);
-		
-		EffectPrioritizerHelper.registerForEndEffect(this);
-		
+		initialize();
+	}
+
+	private void initialize () {
 		// calculate scaling if current GUI texture dimension is diferent than 64x64 because
 		// the array of arrows were defined in a 64x64 basis
 		float scaleW = 1f;
@@ -53,10 +49,12 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 			Rect r = arrowRects[i];
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
 		}
+		
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
-
+	
 	void OnDestroy () {
-		TouchEventManager.Instance.removeListener(this);
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
 	
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER
@@ -95,8 +93,6 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// This method called only once if the gameobject is a non destroyable game object
-		
 		// if used with a Unity's GUITexture
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
@@ -122,20 +118,20 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public void onLastEffectEnd () {
-		// register with touch event manager once the effect finishes since the touch
-		// event depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
-		
 		// update current gui position cache
 		if (guiTexture != null)
-			guiPos.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
+			guiPosCache.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
 		else {
 			Rect screenBounds = getScreenBoundsAA();
-			guiPos.Set(screenBounds.x, screenBounds.y);
+			guiPosCache.Set(screenBounds.x, screenBounds.y);
 		}
+		
+		// register with touch event manager once the effect finishes since the touch
+		// event depends on final element's position
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began, TouchPhase.Stationary);
 	}
 	
-	private static void optionSelected(Vector2 pos) {
+	private void optionSelected(Vector2 pos) {
 		// no allow interaction when game is on pause
 		if (PauseGameManager.Instance.isPaused())
 			return;
@@ -145,35 +141,35 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 #endif
 		
 		// up?
-		if (arrowRects[0].Contains(pos - guiPos)) {
+		if (arrowRects[0].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("up");
 #endif
 			Gamepad.fireButton(EnumButton.UP);
 		}
 		// right?
-		else if (arrowRects[1].Contains(pos - guiPos)) {
+		else if (arrowRects[1].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("right");
 #endif
 			Gamepad.fireButton(EnumButton.RIGHT);
 		}
 		// down?
-		else if (arrowRects[2].Contains(pos - guiPos)) {
+		else if (arrowRects[2].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("down");
 #endif
 			Gamepad.fireButton(EnumButton.DOWN);
 		}
 		// left?
-		else if (arrowRects[3].Contains(pos - guiPos)) {
+		else if (arrowRects[3].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("left");
 #endif
 			Gamepad.fireButton(EnumButton.LEFT);
 		}
 		// up-right?
-		else if (arrowRects[4].Contains(pos - guiPos)) {
+		else if (arrowRects[4].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("up-right");
 #endif
@@ -181,7 +177,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 			Gamepad.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
-		else if (arrowRects[5].Contains(pos - guiPos)) {
+		else if (arrowRects[5].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("up-left");
 #endif
@@ -189,7 +185,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 			Gamepad.fireButton(EnumButton.LEFT);
 		}
 		// up-left?
-		else if (arrowRects[6].Contains(pos - guiPos)) {
+		else if (arrowRects[6].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("down-right");
 #endif
@@ -197,7 +193,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 			Gamepad.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
-		else if (arrowRects[7].Contains(pos - guiPos)) {
+		else if (arrowRects[7].Contains(pos - guiPosCache)) {
 #if UNITY_EDITOR
 			Debug.Log("down-left");
 #endif

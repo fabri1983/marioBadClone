@@ -18,7 +18,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 		guiElem = GetComponent<GUICustomElement>();
 		
 		// register this class with ScreenLayoutManager for screen resize event
-		GUIScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 		//updateForGUI();
 	}
 	
@@ -27,7 +27,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 	}
 	
 	void OnDestroy () {
-		GUIScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 
 #if UNITY_EDITOR

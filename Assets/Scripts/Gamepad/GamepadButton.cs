@@ -5,19 +5,18 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	// this modified in inspector window
 	public EnumButton buttonId = EnumButton.A;
-	public bool dontDestroy = true; // true for keeping alive between scenes
 	public bool isStaticRuntime = true;
 	
 	void Awake () {
-		// should we keep this game object alive between scenes
-		if (dontDestroy)
-			DontDestroyOnLoad(this.gameObject);
-		
-		EffectPrioritizerHelper.registerForEndEffect(this);
+		initialize();
+	}
+	
+	private void initialize () {
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {
-		TouchEventManager.Instance.removeListener(this);
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
 	
 	public bool isScreenStatic () {
@@ -30,8 +29,6 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public Rect getScreenBoundsAA () {
-		// This method called only once if the gameobject is a non destroyable game object
-		
 		// if used with a Unity's GUITexture
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
@@ -49,7 +46,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	public void onLastEffectEnd () {
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began, TouchPhase.Stationary);
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began, TouchPhase.Stationary);
 	}
 	
 	public void OnBeganTouch (Touch t) {

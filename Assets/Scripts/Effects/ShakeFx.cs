@@ -9,7 +9,6 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	public float shake_intensity = 4f;
 	// true if you want also shake rotation of game object
 	public bool allowRotation = false;
-	public float startDelaySecs = 0f;
 #if UNITY_EDITOR
 	// set to true if you want to test in gameplay mode
 	public bool debug = false;
@@ -22,15 +21,15 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	private bool allowShake = false;
 	
 	protected override void ownAwake () {
-		EffectPrioritizerHelper.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
 	protected override void ownEffectStarts () {
 		Invoke("reset", startDelaySecs);
 	}
 	
-	void OnDestroy () {
-		TouchEventManager.Instance.removeListener(this);
+	protected override void ownOnDestroy () {
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
 	
 	void Update () {
@@ -47,8 +46,7 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	}
 #endif
 	
-	private void reset ()
-	{
+	private void reset () {
 		allowShake = true;
 		tempDecay = shake_decay;
 		tempIntensity = shake_intensity;
@@ -57,8 +55,7 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 		origRotation = transform.rotation;
 	}
 	
-	private void shakeTransition ()
-	{
+	private void shakeTransition () {
 		if (tempIntensity > 0) {
 			transform.localPosition = origPosition + Random.insideUnitSphere * tempIntensity;
 			if (allowRotation) {
@@ -90,9 +87,7 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 		return gameObject;
 	}
 	
-	public Rect getScreenBoundsAA () {
-		// This method called only once if the gameobject is a non destroyable game object
-		
+	public Rect getScreenBoundsAA () {		
 		// if used with a Unity's GUITexture
 		if (guiTexture != null)
 			return guiTexture.GetScreenRect(Camera.main);
@@ -102,7 +97,9 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	}
 	
 	public void OnBeganTouch (Touch t) {
+		float temp = startDelaySecs = 0f;
 		executeEffect();
+		startDelaySecs = temp;
 	}
 	
 	public void OnStationaryTouch (Touch t) {}
@@ -118,6 +115,6 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	public void onLastEffectEnd () {
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began);
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);
 	}
 }

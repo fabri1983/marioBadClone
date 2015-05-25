@@ -10,7 +10,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	void Awake () {
 		optLoadLevel = transform.parent.gameObject.GetComponentInChildren<OptionLoadLevel>();
 		unselect();
-		EffectPrioritizerHelper.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
 	void Update () {

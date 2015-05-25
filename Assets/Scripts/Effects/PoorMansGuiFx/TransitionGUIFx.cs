@@ -35,7 +35,6 @@ public class TransitionGUIFx : Effect {
 	public Vector2 startOffsetTransform = Vector2.zero;
 	public Transition _transition;
 	public Direction direction;
-	public float startDelaySecs = 0f;
 	public int steps = 32;
 	public float acceleration = 1f;
 	public EasingType easingType;
@@ -51,6 +50,9 @@ public class TransitionGUIFx : Effect {
 
 	protected override void ownAwake () {
 		update = false;
+	}
+	
+	protected override void ownOnDestroy () {
 	}
 	
 	void OnDisable () {

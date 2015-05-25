@@ -9,11 +9,11 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	void Awake () {
 		_screenBounds.x = -1f; // initialize the screen bounds cache
-		EffectPrioritizerHelper.registerForEndEffect(this);
+		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {
-		TouchEventManager.Instance.removeListener(this);
+		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
 	
 	void Update () {
@@ -67,7 +67,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	public void onLastEffectEnd () {
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
-		TouchEventManager.Instance.register(this, TouchPhase.Began);
+		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);
 	}
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER

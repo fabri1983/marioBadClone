@@ -37,7 +37,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		}
 
 		// register this class with ScreenLayoutManager for screen resize event
-		GUIScreenLayoutManager.Instance.register(this);
+		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 		
 		if (newMaterialInstance) {
             // create the new material and assing it to the renderer
@@ -58,7 +58,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	}*/
 
 	void OnDestroy () {
-		GUIScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 #if UNITY_EDITOR
 		// this is in case this script is used in editor mode
 		if (!texture)

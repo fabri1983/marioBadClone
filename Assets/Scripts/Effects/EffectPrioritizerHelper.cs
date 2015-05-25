@@ -8,7 +8,7 @@ using UnityEngine;
 public static class EffectPrioritizerHelper {
 	
 	public static void sortAndChain () {
-		
+		// TODO sort, chain, and execute the first effect
 	}
 	
 	public static void registerForEndEffect (IEffectListener listener) {

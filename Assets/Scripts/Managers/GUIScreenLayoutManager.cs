@@ -23,7 +23,8 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	private static Vector3 scale = Vector3.zero;
 	
 	private static GUIScreenLayoutManager instance = null;
-
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
+	
 	public static GUIScreenLayoutManager Instance {
         get {
             if (instance == null) {
@@ -37,27 +38,36 @@ public class GUIScreenLayoutManager : MonoBehaviour {
     }
 	
 	void Awake () {
-		if (instance != null && instance != this)
-#if UNITY_EDITOR
+		if (instance != null && instance != this) {
+			duplicated = true;
+			#if UNITY_EDITOR
 			DestroyImmediate(this.gameObject);
-#else
+			#else
 			Destroy(this.gameObject);
-#endif
+			#endif
+		}
 		else {
 			instance = this;
 			DontDestroyOnLoad(gameObject);
+			initialize();
 		}
-
+	}
+	
+	private void initialize () {
 		// NOTE: set as current resolution so the first OnGUI event isn't a resized event. 
 		// That would cause a callback to all subscribers before correct initialization of them
 		lastScreenWidth = Screen.width;
 		lastScreenHeight = Screen.height;
-
-		// update GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
+		
+		// update the GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
 		setupUnityGUIMatrixForResizing();
 	}
 	
 	void OnDestroy() {
+		if (duplicated) {
+			duplicated = false; // reset the flag for next time
+			return;
+		}
 		listeners.Clear();
 		instance = null;
     }

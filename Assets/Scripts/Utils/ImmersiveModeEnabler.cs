@@ -6,25 +6,21 @@ public class ImmersiveModeEnabler : MonoBehaviour {
 	AndroidJavaObject javaObj;
 	AndroidJavaClass javaClass;
 	bool paused;
-	static bool created;
+	static bool created = false;
 
-	void Awake()
-	{
-		if(!Application.isEditor)
+	void Awake () {
+		if (!Application.isEditor)
 			HideNavigationBar();
-		if(!created)
-		{
+		if (!created) {
 			DontDestroyOnLoad(gameObject);
 			created = true;
 		}
-		else
-		{
+		else {
 			Destroy(gameObject); // duplicate will be destroyed if 'first' scene is reloaded
 		}
 	}
 	
-	void HideNavigationBar()
-	{
+	void HideNavigationBar () {
 		#if UNITY_ANDROID
 		lock(this)
 		{
@@ -59,13 +55,11 @@ public class ImmersiveModeEnabler : MonoBehaviour {
 		#endif
 	}
 	
-	void OnApplicationPause(bool pausedState)
-	{
+	void OnApplicationPause (bool pausedState) {
 		paused = pausedState;
 	}
 	
-	void OnApplicationFocus(bool hasFocus)
-	{
+	void OnApplicationFocus (bool hasFocus) {
 		if(hasFocus)
 		{
 			if(javaObj != null && paused != true)
@@ -79,16 +73,16 @@ public class ImmersiveModeEnabler : MonoBehaviour {
 		
 	}
 	
-	public void PinThisApp() // Above android 5.0 - App Pinning
-	{
+	// Above android 5.0: App Pinning
+	public void PinThisApp () {
 		if(javaObj != null)
 		{
 			javaObj.CallStatic("EnableAppPin",unityActivity);
 		}
 	}
 	
-	public void UnPinThisApp() // Unpin the app
-	{
+	// Unpin the app
+	public void UnPinThisApp () {
 		if(javaObj != null)
 		{
 			javaObj.CallStatic("DisableAppPin",unityActivity);

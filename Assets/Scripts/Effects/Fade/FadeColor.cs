@@ -1,36 +1,33 @@
 using UnityEngine;
 
 /**
- * Fade the current viewport to and from a given a color using a GUI texture created internally.
- * Since it uses Unity's GUI.DrawTexture then there is no need to assign correct render queue 
- * neither locate the game object in front of the screen.
+ * Fade the current game object's material to and from a given a color.
+ * The expected material is one having the shader FadeColor_CG.
+ * It doesn't matter the mesh the game object has for render.
+ * The FadeColor_CG shader has it's own render queue assigned in such way it will overlay 
+ * all materials, except Unity's GUI.
  */
-public class FadeTextureQuad : MonoBehaviour, IFadeable, IGUIScreenLayout {
+public class FadeColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	
 	public Color fadeColor = Color.black;
 	public float fadeTimeFactor = 1f;
 	public bool fadeOutOnStart = true;
+	public Vector2 sizeFactor = Vector2.one;
 	
 	private bool doFading;
 	private EnumFadeDirection fadeDir;
 	private float alphaFadeValue;
-	private Texture2D tex; // empty texture element, used for GUI.DrawTexture()
-	private Rect rectTex; // is the rectangle where the texture will be drawn
 	private bool finishedTransition; // true if the fade could finish
+	private Material fadeMat;
 	
+	// Use this for initialization
 	void Awake () {
-		// create the texture manually
-		tex = new Texture2D(1, 1, TextureFormat.Alpha8, false);
-		tex.SetPixel(1,1, fadeColor);
-		// create the rectangle where the texture will fill in
-		rectTex = new Rect(0, 0, Screen.width, Screen.height);
-		
+		fadeMat = renderer.sharedMaterial;
 		finishedTransition = false;
 		fadeDir = EnumFadeDirection.FADE_NONE;
-		// disable by default
-		this.enabled = false;
 		
-		GUIScreenLayoutManager.Instance.register(this);
+		// register this class with ScreenLayoutManager for screen resize event
+		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 	}
 	
 	void Start () {
@@ -38,10 +35,12 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IGUIScreenLayout {
 			startFading(EnumFadeDirection.FADE_OUT);
 		else
 			stopFading();
+		
+		locateInScreen(); // make this game object to be located correctly in viewport
 	}
 	
 	void OnDestroy () {
-		GUIScreenLayoutManager.Instance.remove(this);
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 	
 	void LateUpdate () {
@@ -50,22 +49,10 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IGUIScreenLayout {
 			fade();
 	}
 	
-	public void updateForGUI () {
-		rectTex.x = 0f;
-		rectTex.y =	0f;
-		rectTex.width = Screen.width;
-		rectTex.height = Screen.height;
-	}
-	
 	private void fade () {
-		// GUI.color affects both background and text colors, so back it up
-		Color origColor = GUI.color;
-		// set the fade color
+		// set the alpha color
 		fadeColor.a = alphaFadeValue;
-		GUI.color = fadeColor;
-		GUI.DrawTexture(rectTex, tex, ScaleMode.StretchToFill, true);
-		// restore GUI color
-		GUI.color = origColor;
+		fadeMat.SetColor("_Color", fadeColor);
 		
 		if (fadeDir.Equals(EnumFadeDirection.FADE_IN)) {
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue + (Time.deltaTime * fadeTimeFactor));
@@ -108,5 +95,18 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	
 	public EnumFadeDirection getFadingDirection () {
 		return fadeDir;
+	}
+	
+	private void locateInScreen () {
+		if (transform == null)
+			return;
+		Vector2 sizeInPixels;
+		sizeInPixels.x = sizeFactor.x * Screen.width;
+		sizeInPixels.y = sizeFactor.y * Screen.height;
+		GUIScreenLayoutManager.locateForGUI(transform, sizeInPixels);
+	}
+	
+	public void updateForGUI () {
+		locateInScreen();
 	}
 }
