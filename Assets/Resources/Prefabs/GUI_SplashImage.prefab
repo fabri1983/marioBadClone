@@ -84,11 +84,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf98f1f8d93f5044c9988800728eddc5, type: 1}
   m_Name: 
   doNotResume: 0
-  priority: 0
+  priority: 1
+  startDelaySecs: .400000006
   shake_decay: .00499999989
   shake_intensity: .100000001
   allowRotation: 0
-  startDelaySecs: .400000006
   debug: 0
 --- !u!114 &11400004
 MonoBehaviour:
@@ -102,10 +102,10 @@ MonoBehaviour:
   m_Name: 
   doNotResume: 0
   priority: 0
+  startDelaySecs: 0
   startOffsetTransform: {x: 0, y: .5}
   _transition: 0
   direction: 2
-  startDelaySecs: 0
   steps: 64
   acceleration: 1
   easingType: 4

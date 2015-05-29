@@ -28,10 +28,8 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static GUIScreenLayoutManager Instance {
         get {
             if (instance == null) {
-				instance = FindObjectOfType(typeof(GUIScreenLayoutManager)) as GUIScreenLayoutManager;
-				if (instance == null)
-					// creates a game object with this script component
-					instance = new GameObject("GUIScreenLayoutManager").AddComponent<GUIScreenLayoutManager>();
+				// creates a game object with this script component
+				instance = new GameObject("GUIScreenLayoutManager").AddComponent<GUIScreenLayoutManager>();
 			}
             return instance;
         }
@@ -64,11 +62,12 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	}
 	
 	void OnDestroy() {
+		listeners.Clear();
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
 			return;
 		}
-		listeners.Clear();
 		instance = null;
     }
 	

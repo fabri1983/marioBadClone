@@ -91,7 +91,7 @@ public class Ghost : Pausable, IMortalFall {
 		Vector2 towardTarget = chase.getTarget().position - transform.position;
 		if (targetWalkComp == null)
 			targetWalkComp = chase.getTarget().GetComponent<WalkAbs>();
-		return (targetWalkComp.getLookingDir().x * towardTarget.x) <= 0f;
+		return (targetWalkComp.getLookingDir().x * towardTarget.x) <= 2f; // give a little distant threshold
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {

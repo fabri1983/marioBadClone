@@ -1,16 +1,24 @@
 using UnityEngine;
 
+/// <summary>
+/// Option selecter logic for a game object with a GUI element.
+/// This script only enabled from and outside event, in this case is the onLastEffectEnd() event.
+/// </summary>
 public class OptionSelecter : MonoBehaviour, IEffectListener {
 
+	public OptionLoadLevel optionLoadLevel;
 	public bool beginSelected = false;
 	public OptionSelecter aboveSelecter, belowSelecter, leftSelecter, rightSelecter;
 	
-	private OptionLoadLevel optLoadLevel;
+	private Effect guiSelector = null;
 	
 	void Awake () {
-		optLoadLevel = transform.parent.gameObject.GetComponentInChildren<OptionLoadLevel>();
-		unselect();
+		guiSelector = GetComponent<Effect>();
 		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+	}
+	
+	void Start () {
+		unselect();
 	}
 	
 	void Update () {
@@ -33,9 +41,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	}
 	
 	public Effect[] getEffects () {
-		// return the transitions in an order set from Inspector.
-		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizerHelper.getEffects(transform.parent.gameObject, true);
+		return optionLoadLevel.GetComponents<Effect>();
 	}
 	
 	public void onLastEffectEnd () {
@@ -45,13 +51,13 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	
 	private void unselect () {
 		this.enabled = false;
-		renderer.enabled = false; // hide the GUI selecter
-		optLoadLevel.setSelected(false);
+		guiSelector.startEffect();
+		optionLoadLevel.setSelected(false);
 	}
 	
 	private void select () {
 		this.enabled = true;
-		renderer.enabled = true; // show the GUI selecter
-		optLoadLevel.setSelected(true);
+		guiSelector.endEffect();
+		optionLoadLevel.setSelected(true);
 	}
 }

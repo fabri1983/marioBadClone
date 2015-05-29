@@ -11,7 +11,8 @@ public abstract class Effect : Pausable {
 	private bool isPriorizable = false;
 	
 	void Awake () {
-		if (GetComponent<EfectPrioritizer>() != null) {
+		// if this game object has the 
+		if (GetComponent<EffectPrioritizer>() != null) {
 			this.enabled = false;
 			isPriorizable = true;
 		}
@@ -20,9 +21,9 @@ public abstract class Effect : Pausable {
 	}
 	
 	void Start () {
-		// if the effect is not priorizable then it can start immediatly
+		// if the effect is not priorizable then it starts immediatly
 		if (!isPriorizable)
-			executeEffect();
+			startEffect();
 	}
 	
 	void OnDestroy () {
@@ -32,11 +33,13 @@ public abstract class Effect : Pausable {
 	
 	protected abstract void ownAwake ();
 	
-	protected abstract void ownEffectStarts ();
+	protected abstract void ownStartEffect (); // only call from this startEffect()
+	
+	protected abstract void ownEndEffect (); // only call from this endEffect()
 	
 	protected abstract void ownOnDestroy ();
 	
-	public void addNextEffect (Effect next) {
+	public void setNextEffect (Effect next) {
 		nextEffect = next;
 	}
 	
@@ -46,12 +49,16 @@ public abstract class Effect : Pausable {
 		listeners.Add(listener);
 	}
 	
-	public void executeEffect() {
+	public void startEffect() {
 		this.enabled = true;
-		ownEffectStarts();
+		if (startDelaySecs > 0f)
+			Invoke("ownStartEffect", startDelaySecs);
+		else
+			ownStartEffect();
 	}
 	
-	protected void effectEnded () {
+	public void endEffect () {
+		ownEndEffect();
 		this.enabled = false;
 		// the next line only has sense if this Effect is the last one in the chain
 		executeListeners();
@@ -68,7 +75,7 @@ public abstract class Effect : Pausable {
 	
 	private void executeNextEffect () {
 		if (nextEffect != null)
-			nextEffect.executeEffect();
+			nextEffect.startEffect();
 	}
 	
 	public override void beforePause () {}

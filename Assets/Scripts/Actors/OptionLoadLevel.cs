@@ -59,9 +59,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public Effect[] getEffects () {
-		// return the transitions in an order set from Inspector.
-		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizerHelper.getEffects(gameObject, false);
+		return GetComponents<Effect>();
 	}
 	
 	public void onLastEffectEnd () {

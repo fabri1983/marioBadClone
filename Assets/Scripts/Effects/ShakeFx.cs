@@ -24,8 +24,11 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
 	}
 	
-	protected override void ownEffectStarts () {
-		Invoke("reset", startDelaySecs);
+	protected override void ownStartEffect () {
+		reset();
+	}
+	
+	protected override void ownEndEffect () {
 	}
 	
 	protected override void ownOnDestroy () {
@@ -74,7 +77,7 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 			transform.localPosition = origPosition;
 			transform.rotation = origRotation;
 			allowShake = false;
-			effectEnded();
+			endEffect();
 		}
 	}
 	
@@ -98,7 +101,7 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	
 	public void OnBeganTouch (Touch t) {
 		float temp = startDelaySecs = 0f;
-		executeEffect();
+		startEffect();
 		startDelaySecs = temp;
 	}
 	
@@ -107,9 +110,7 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	public void OnEndedTouch (Touch t) {}
 	
 	public Effect[] getEffects () {
-		// return the transitions in an order set from Inspector.
-		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizerHelper.getEffects(gameObject, false);
+		return GetComponents<Effect>();
 	}
 	
 	public void onLastEffectEnd () {

@@ -28,6 +28,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
+  - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: GUI_Selector
   m_TagString: Untagged
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1820ac83b1700af48bf35698deaa2207, type: 1}
   m_Name: 
+  optionLoadLevel: {fileID: 11400010}
   beginSelected: 1
   aboveSelecter: {fileID: 0}
   belowSelecter: {fileID: 0}
@@ -207,10 +209,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  doNotResume: 0
+  priority: 0
+  startDelaySecs: .400000006
+  autoStart: 0
   startOffsetTransform: {x: 0, y: -.5}
   _transition: 0
   direction: 0
-  startDelaySecs: .400000006
   steps: 64
   acceleration: 1
   easingType: 4
@@ -241,6 +246,20 @@ MonoBehaviour:
   size: {x: .5, y: .100000001}
   sizeAsPixels: 0
   newMaterialInstance: 1
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834f693e8d6b60f40b95267d754c8d94, type: 1}
+  m_Name: 
+  doNotResume: 0
+  priority: 0
+  startDelaySecs: 0
+  autoStart: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

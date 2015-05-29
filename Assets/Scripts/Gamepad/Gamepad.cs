@@ -63,6 +63,7 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	void OnDestroy () {
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false;
 			return;

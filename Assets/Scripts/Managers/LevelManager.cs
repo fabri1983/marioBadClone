@@ -83,12 +83,13 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	void OnDestroy() {
+		player = null;
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
 			return;
 		}
 		instance = null;
-		player = null;
     }
 	
     public int getLevel() {

@@ -58,12 +58,15 @@ public class PauseGameManager {
 	/// <param name="p">Pausable implementation</param>
 	/// <param name="go">GameObject</param>
 	public void register(Pausable p, GameObject go) {
-		// extract all MonoBehaviour components and
-		MonoBehaviour[] comps = go.GetComponents<MonoBehaviour>();
+		// extract all MonoBehaviour components in one big array
+		MonoBehaviour[] comps = go.GetComponentsInChildren<MonoBehaviour>();
+		MonoBehaviour[] combined = new MonoBehaviour[comps.Length];
+		Array.Copy(comps, 0, combined, 0, comps.Length);
+		/*MonoBehaviour[] comps = go.GetComponents<MonoBehaviour>();
 		MonoBehaviour[] compsChildren = go.GetComponentsInChildren<MonoBehaviour>();
 		MonoBehaviour[] combined = new MonoBehaviour[comps.Length + compsChildren.Length];
 		Array.Copy(comps, 0, combined, 0, comps.Length);
-		Array.Copy(compsChildren, 0, combined, comps.Length, compsChildren.Length);
+		Array.Copy(compsChildren, 0, combined, comps.Length, compsChildren.Length);*/
 
 		if (p.isSceneOnly()) {
 			sceneOnly.Add(p);

@@ -9,36 +9,6 @@ static public class GameObjectTools
 {
 	public static float COS_45 = Mathf.Cos(45f);
 	
-	///////////////////////////////////////////////////////////
-	// Essentially a reimplementation of
-	// GameObject.GetComponentInChildren< T >()
-	// Major difference is that this DOES NOT skip deactivated game objects
-	///////////////////////////////////////////////////////////
-	public static TType GetComponentInChildren< TType >( GameObject objRoot ) where TType : Component {
-		// if we don't find the component in this object
-		// recursively iterate children until we do
-		TType tRetComponent = objRoot.GetComponent< TType >();
-		 
-		if( null != tRetComponent )
-			return tRetComponent;
-		
-		// transform is what makes the hierarchy of GameObjects, so we need to access it to iterate children
-		Transform trnsRoot = objRoot.transform;
-		 
-		// could have used foreach(), but it causes GC churn
-		for( int iChild=0, c=trnsRoot.childCount; iChild < c; ++iChild )
-		{
-			// recursive call to this function for each child
-			// break out of the loop and return as soon as we find
-			// a component of the specified type
-			tRetComponent = GetComponentInChildren< TType >( trnsRoot.GetChild( iChild ).gameObject );
-			if( null != tRetComponent )
-				break;
-		}
-	 
-		return tRetComponent;
-	}
-	
 	public static void toogleEnableAllScripts (GameObject go, bool enabled) {
 		// gets all MonoBehaviour componenets attached to a game object and updates its enable property
 		MonoBehaviour[] monos = go.GetComponents<MonoBehaviour>();
