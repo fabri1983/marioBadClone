@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-/// Internal Chipmunk class used to implement the update loop.
+/// Internal Chipmunk class used to implement the physic step logic.
 public class ChipmunkManager : MonoBehaviour {
 	public ChipmunkSpace _space;
 	
@@ -19,14 +19,14 @@ public class ChipmunkManager : MonoBehaviour {
 			ChipmunkBody b = _space.bodies[i];
 			
 			//b.transform.position = (Vector3) b.position + (Vector3.forward * b._savedZ);
-			// do the same than above
+			// Next lines do the same than above line
 			Vector3 thePos = b.transform.position;
 			thePos.x = b.position.x;
 			thePos.y = b.position.y;
 			thePos.z = b._savedZ;
 			b.transform.position = thePos;
 			
-			// next rotation operaiton seems to be the fastest, since it immediately executes internal call to engine api
+			// next rotation operation seems to be the fastest, since it immediately executes internal call to engine api
 			b.transform.rotation = Quaternion.AngleAxis(b.angle*Mathf.Rad2Deg, Vector3.forward);
 		}
 	}

@@ -3,15 +3,16 @@
 #endif
 using UnityEngine;
 
-public class Goomba : Pausable, IMortalFall {
+public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 
+	private const float TIMING_DIE = 0.3f;
+	
 	private GoombaDieAnim dieAnim;
 	private Patrol patrol;
 	private Idle idle;
 	private ChipmunkBody body;
 	private ChipmunkShape shape;
-	
-	private const float TIMING_DIE = 0.3f;
+	private bool doNotResume;
 	
 	void Awake () {
 		dieAnim = GetComponent<GoombaDieAnim>();
@@ -22,11 +23,11 @@ public class Goomba : Pausable, IMortalFall {
 	}
 
 	void Start () {
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
 	/**
@@ -40,14 +41,19 @@ public class Goomba : Pausable, IMortalFall {
 #else
 		gameObject.SetActiveRecursively(false);
 #endif
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}

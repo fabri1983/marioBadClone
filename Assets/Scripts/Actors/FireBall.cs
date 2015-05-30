@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class FireBall : Pausable {
+public class FireBall : MonoBehaviour, IPausable {
 	
 	private Vector2 dir = Vector2.zero;
 	private float rotAnimGrades = 28f;
@@ -11,6 +11,7 @@ public class FireBall : Pausable {
 	private Jump jump;
 	private ChipmunkShape shape;
 	private ChipmunkBody body;
+	private bool doNotResume;
 	
 	void Awake () {
 		jump = GetComponent<Jump>();
@@ -20,11 +21,11 @@ public class FireBall : Pausable {
 	}
 
 	void Start () {
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
 	void Update () {
@@ -47,14 +48,19 @@ public class FireBall : Pausable {
 #else
 		gameObject.SetActiveRecursively(false);
 #endif
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}

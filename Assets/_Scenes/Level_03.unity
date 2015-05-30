@@ -10905,6 +10905,7 @@ GameObject:
   - 4: {fileID: 2126948542}
   - 23: {fileID: 2126948543}
   - 33: {fileID: 2126948544}
+  - 114: {fileID: 2126948545}
   m_Layer: 0
   m_Name: CastleSimple
   m_TagString: Untagged
@@ -10950,6 +10951,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1395309862}
   m_GameObject: {fileID: 2126948541}
   m_Mesh: {fileID: 4300000, guid: 78ada13b9671ddd4e979c4dfc09effa9, type: 2}
+--- !u!114 &2126948545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 6a5cbc2e56f046449b0690e7909174c4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1395309862}
+  m_GameObject: {fileID: 2126948541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76baa6085128714f9fe09b208bdaa05, type: 1}
+  m_Name: 
+  baseQueue: 2000
+  offset: -10
 --- !u!1001 &2133584454
 Prefab:
   m_ObjectHideFlags: 0

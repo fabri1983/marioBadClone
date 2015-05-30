@@ -34,11 +34,18 @@ public class ChipmunkInterpolationManager : MonoBehaviour {
 	protected void Update(){
 		float dt = Time.time - Time.fixedTime;
 		
-		foreach(ChipmunkBody b in bodies){
-			var mode = b._interpolationMode;
-			
-			if(mode == ChipmunkBodyInterpolationMode.Extrapolate){
-				b.transform.position = (Vector3)(b.position + b.velocity*dt) + (Vector3.forward * b._savedZ);
+		for (int i=0,c=bodies.Count; i<c; ++i){
+			ChipmunkBody b = bodies[i];
+			if(ChipmunkBodyInterpolationMode.Extrapolate == b._interpolationMode){
+				//b.transform.position = (Vector3)(b.position + b.velocity*dt) + (Vector3.forward * b._savedZ);
+				// Next lines do the same than above line
+				Vector3 thePos = b.transform.position;
+				thePos.x = b.position.x + b.velocity.x * dt;
+				thePos.y = b.position.y + b.velocity.y * dt;
+				thePos.z = b._savedZ;
+				b.transform.position = thePos;
+				
+				// next rotation operation seems to be the fastest, since it immediately executes internal call to engine api
 				b.transform.rotation = Quaternion.AngleAxis((b.angle + b.angularVelocity*dt)*Mathf.Rad2Deg, Vector3.forward);
 			}
 		}

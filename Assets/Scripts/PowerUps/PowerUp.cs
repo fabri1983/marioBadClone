@@ -3,9 +3,11 @@
 #endif
 using UnityEngine;
 
-public abstract class PowerUp : Pausable {
+public abstract class PowerUp : MonoBehaviour, IPausable {
 	
 	public GameObject artifact; // Game Object that will be used as bullet/gunfire
+	
+	private bool doNotResume;
 	
 	protected int usageLeft;
 	protected float firePow; 
@@ -20,12 +22,12 @@ public abstract class PowerUp : Pausable {
 	}
 
 	void Start () {
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 		ownStart(); // invokes subclass own starting method
 	}
 	
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 		GameObjectTools.ChipmunkBodyDestroy(body);
 	}
 	
@@ -38,11 +40,16 @@ public abstract class PowerUp : Pausable {
 		ownUpdate();
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return false; // the power up should be in a pool
 	}

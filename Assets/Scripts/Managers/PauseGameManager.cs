@@ -11,8 +11,8 @@ using System.Collections.Generic;
 /// </summary>
 public class PauseGameManager {
 	
-	private List<Pausable> sceneOnly = new List<Pausable>();
-	private List<Pausable> durables = new List<Pausable>();
+	private List<IPausable> sceneOnly = new List<IPausable>();
+	private List<IPausable> durables = new List<IPausable>();
 	private List<MonoBehaviour[]> sceneOnlyMonos = new List<MonoBehaviour[]>();
 	private List<MonoBehaviour[]> durablesMonos = new List<MonoBehaviour[]>();
 	
@@ -57,7 +57,7 @@ public class PauseGameManager {
 	/// </summary>
 	/// <param name="p">Pausable implementation</param>
 	/// <param name="go">GameObject</param>
-	public void register(Pausable p, GameObject go) {
+	public void register(IPausable p, GameObject go) {
 		// extract all MonoBehaviour components in one big array
 		MonoBehaviour[] comps = go.GetComponentsInChildren<MonoBehaviour>();
 		MonoBehaviour[] combined = new MonoBehaviour[comps.Length];
@@ -84,7 +84,7 @@ public class PauseGameManager {
 	/// </summary>
 	/// <param name="p">Pausable implementation</param>
 	/// <param name="mono">MonoBehaviour</param>
-	public void register(Pausable p, MonoBehaviour mono) {
+	public void register(IPausable p, MonoBehaviour mono) {
 		MonoBehaviour[] monoArray = new MonoBehaviour[1];
 		monoArray[0] = mono;
 		if (p.isSceneOnly()) {
@@ -97,7 +97,7 @@ public class PauseGameManager {
 		}
 	}
 	
-	public void remove (Pausable p) {
+	public void remove (IPausable p) {
 		int h = p.GetHashCode();
 		if (p.isSceneOnly()) {
 			for (int i=0, c=sceneOnly.Count; i<c; ++i)
@@ -133,7 +133,7 @@ public class PauseGameManager {
 				monos[j].enabled = false;
 				alreadyDisabled = false;
 			}
-			sceneOnly[i].doNotResume = alreadyDisabled;
+			sceneOnly[i].DoNotResume = alreadyDisabled;
 		}
 		for (int i=0, c=durables.Count; i<c; ++i) {
 			durables[i].beforePause();
@@ -145,7 +145,7 @@ public class PauseGameManager {
 				monos[j].enabled = false;
 				alreadyDisabled = false;
 			}
-			durables[i].doNotResume = alreadyDisabled;
+			durables[i].DoNotResume = alreadyDisabled;
 		}
 	}
 	
@@ -155,7 +155,7 @@ public class PauseGameManager {
 	/// </summary>
 	public void resume () {
 		for (int i=0, c=sceneOnly.Count; i<c; ++i) {
-			if (sceneOnly[i].doNotResume)
+			if (sceneOnly[i].DoNotResume)
 				continue;
 			MonoBehaviour[] monos = sceneOnlyMonos[i];
 			for (int j=0, cc=monos.Length; j < cc; ++j) {
@@ -164,7 +164,7 @@ public class PauseGameManager {
 			sceneOnly[i].afterResume();
 		}
 		for (int i=0, c=durables.Count; i<c; ++i) {
-			if (durables[i].doNotResume)
+			if (durables[i].DoNotResume)
 				continue;
 			MonoBehaviour[] monos = durablesMonos[i];
 			for (int j=0, cc=monos.Length; j < cc; ++j) {

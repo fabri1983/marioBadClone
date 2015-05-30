@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class Player : Pausable, IPowerUpAble, IMortalFall {
+public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -21,6 +21,7 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 	private ChipmunkSegmentQueryInfo qinfo;
 	private ChipmunkBody body;
 	private float walkVelBackup, signCollision;
+	private bool doNotResume;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
@@ -61,7 +62,7 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 	
 	void Start () {
 		//resetPlayer(); // invoke after getting action components
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 	
 	private void initialize () {
@@ -93,15 +94,20 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 			duplicated = false; // reset the flag for next time
 			return;
 		}
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 		instance = null;
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return false;
 	}

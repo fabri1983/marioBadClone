@@ -171,7 +171,8 @@ public static class Chipmunk {
 		}
 		
 		// Update the mass properties of the bodies.
-		foreach(ChipmunkBody body in bodies) body._RecalculateMass();
+		foreach(ChipmunkBody body in bodies)
+			body._RecalculateMass();
 	}
 	
 	//MARK: Nearest Point Query

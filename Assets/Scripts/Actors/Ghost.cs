@@ -3,11 +3,12 @@
 #endif
 using UnityEngine;
 
-public class Ghost : Pausable, IMortalFall {
+public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	
 	public float flySpeed = 6f;
 	public float flyRange = 6f;
 	
+	private bool doNotResume;
 	private Fly fly;
 	private Chase chase;
 	private ChipmunkBody body;
@@ -27,11 +28,11 @@ public class Ghost : Pausable, IMortalFall {
 		fly.setAutomaticFly(true, flyRange);
 		fly.setSpeed(flySpeed);
 
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 	
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
 	/**
@@ -45,14 +46,19 @@ public class Ghost : Pausable, IMortalFall {
 #else
 		gameObject.SetActiveRecursively(false);
 #endif
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}
