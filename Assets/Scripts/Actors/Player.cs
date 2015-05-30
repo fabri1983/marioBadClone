@@ -87,11 +87,12 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 	}
 	
 	void OnDestroy () {
+		GameObjectTools.ChipmunkBodyDestroy(body);
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
 			return;
 		}
-		GameObjectTools.ChipmunkBodyDestroy(body);
 		PauseGameManager.Instance.remove(this as Pausable);
 		instance = null;
 	}

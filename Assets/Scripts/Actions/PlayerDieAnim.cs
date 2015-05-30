@@ -35,7 +35,7 @@ public class PlayerDieAnim : MonoBehaviour {
 	}
 	
 	void OnDestroy () {
-		// this because oon Editor mode any change in sharedMaterial seems to be saved
+		// this because on Editor mode any change in sharedMaterial seems to be saved
 		setBackOrigShader();
 		// remove reference to anim component
 		animComp = null;

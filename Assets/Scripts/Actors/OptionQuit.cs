@@ -39,6 +39,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	}
 	
 	void OnDestroy () {
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
 			return;
@@ -84,9 +85,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	public void OnEndedTouch (Touch t) {}
 	
 	public Effect[] getEffects () {
-		// return the transitions in an order set from Inspector.
-		// Note: to return in a custom order get the transitions array and sort it as desired.
-		return EffectPrioritizerHelper.getEffects(gameObject, false);
+		return GetComponents<Effect>();
 	}
 	
 	public void onLastEffectEnd () {

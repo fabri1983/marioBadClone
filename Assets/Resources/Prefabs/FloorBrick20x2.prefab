@@ -58,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -55.212326, y: -2, z: 0}
+  m_LocalPosition: {x: 74.2376633, y: -2, z: 0}
   m_LocalScale: {x: 2.4000001, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
@@ -148,16 +148,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
+  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
   m_Name: 
   _friction: .699999988
   _elasticity: 0
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  _radius: .699999988
   _center: {x: 0, y: 0}
-  _size: {x: 1, y: 1}
-  _radius: 0
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,16 +165,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
+  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
   m_Name: 
   _friction: .699999988
   _elasticity: 0
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  _radius: .699999988
   _center: {x: 0, y: 0}
-  _size: {x: 1, y: 1}
-  _radius: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -1,4 +1,4 @@
-﻿// PoorMansGUIFX by UnityCoder.com
+// PoorMansGUIFX by UnityCoder.com
 // Modifications added by fabri1983@gmail.com
 
 using UnityEngine;
@@ -50,17 +50,7 @@ public class TransitionGUIFx : Effect {
 
 	protected override void ownAwake () {
 		update = false;
-	}
-	
-	protected override void ownOnDestroy () {
-	}
-	
-	void OnDisable () {
-		if (useCoroutine)
-			StopCoroutine("DoCoroutine");
-	}
-
-	protected override void ownEffectStarts () {
+		
 		elem = Element.TRANSFORM;
 		// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
 		/*if (guiTexture != null)
@@ -69,23 +59,29 @@ public class TransitionGUIFx : Effect {
 			elem = Element.GUI_TEXT;*/
 		
 		prepareTransition();
-		
+	}
+	
+	protected override void ownOnDestroy () {
+	}
+
+	protected override void ownStartEffect () {
 		currentStep = 0;
 		if (useCoroutine)
 			StartCoroutine("DoCoroutine");
 		else
-			Invoke("enableUpdate", startDelaySecs);
+			update = true;
 	}
 
+	protected override void ownEndEffect () {
+		if (useCoroutine)
+			StopCoroutine("DoCoroutine");
+	}
+	
 	void Update () {
 		if (useCoroutine)
 			return;
 		if (update)
 			DoTransition();
-	}
-	
-	void enableUpdate () {
-		update = true;
 	}
 	
 	private void prepareTransition ()
@@ -107,12 +103,12 @@ public class TransitionGUIFx : Effect {
 		switch (_transition)
 		{
 		case Transition.FromCurrentPosition:
-			offsetX = -Easing.Ease(0,acceleration, easingType);
-			offsetY = -Easing.Ease(0,acceleration, easingType);
+			offsetX = -Easing.Ease(0f, acceleration, easingType);
+			offsetY = -Easing.Ease(0f, acceleration, easingType);
 			break;
 		case Transition.ToCurrentPosition:
-			offsetX = -Easing.Ease(1,acceleration, easingType);
-			offsetY = -Easing.Ease(1,acceleration, easingType);
+			offsetX = -Easing.Ease(1f, acceleration, easingType);
+			offsetY = -Easing.Ease(1f, acceleration, easingType);
 			break;
 		}
 
@@ -183,7 +179,7 @@ public class TransitionGUIFx : Effect {
             yield return null;
 		}
 
-		effectEnded();
+		endEffect();
 	}
 	
 	private void DoTransition ()
@@ -191,7 +187,7 @@ public class TransitionGUIFx : Effect {
 		// main transition/easing loop
 		//if (currentStep >= steps) {
 		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y) {
-			effectEnded();
+			endEffect();
 			return;
 		}
 		transition(currentStep);
