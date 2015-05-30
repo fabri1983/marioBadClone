@@ -100,6 +100,8 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	}
 	
 	public void OnBeganTouch (Touch t) {
+		if (PauseGameManager.Instance.isPaused())
+			return;
 		float temp = startDelaySecs = 0f;
 		startEffect();
 		startDelaySecs = temp;
@@ -107,7 +109,8 @@ public class ShakeFx : Effect, ITouchListener, IEffectListener
 	
 	public void OnStationaryTouch (Touch t) {}
 	
-	public void OnEndedTouch (Touch t) {}
+	public void OnEndedTouch (Touch t) {
+	}
 	
 	public Effect[] getEffects () {
 		return GetComponents<Effect>();

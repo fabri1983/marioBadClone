@@ -14,7 +14,8 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		// Chipmunk is also pretty fast so you don't need to worry about the performance so much.
 		// Not really necessary, but helps in several subtle ways.
 		// NOTE: do this in the Time Manager window
-		//Time.fixedDeltaTime = 0.01f; // 0.0033 (1f/300f), 0.0055 (1f/180f), and 0.0083 (1f/120f) is OK. However lower it and see what happens
+		// 0.0033 (1/300), 0.0055 (1/180), and 0.0083 (1/120), and 0.0125 (1/80) is OK. However lower it and see what happens
+		//Time.fixedDeltaTime = 0.0125f;
 		
 		Chipmunk.gravity = new Vector2(0f, -100f);	
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
