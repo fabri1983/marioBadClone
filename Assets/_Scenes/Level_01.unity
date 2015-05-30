@@ -1856,6 +1856,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a5cbc2e56f046449b0690e7909174c4, type: 2}
   m_RootGameObject: {fileID: 1029698439}
@@ -2907,7 +2911,6 @@ GameObject:
   - 4: {fileID: 1029698440}
   - 23: {fileID: 1029698441}
   - 33: {fileID: 1029698442}
-  - 114: {fileID: 1029698443}
   m_Layer: 0
   m_Name: CastleSimple
   m_TagString: Untagged
@@ -2953,19 +2956,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 616830482}
   m_GameObject: {fileID: 1029698439}
   m_Mesh: {fileID: 4300000, guid: 78ada13b9671ddd4e979c4dfc09effa9, type: 2}
---- !u!114 &1029698443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 6a5cbc2e56f046449b0690e7909174c4,
-    type: 2}
-  m_PrefabInternal: {fileID: 616830482}
-  m_GameObject: {fileID: 1029698439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76baa6085128714f9fe09b208bdaa05, type: 1}
-  m_Name: 
-  baseQueue: 2000
-  offset: -10
 --- !u!1 &1035140509
 GameObject:
   m_ObjectHideFlags: 0
