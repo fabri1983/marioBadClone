@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
@@ -258,12 +256,6 @@ public partial class ChipmunkBinding {
 	[DllImport(IMPORT)] public static extern void cpSegmentShapeSetRadius(IntPtr shape, float radius);
 	[DllImport(IMPORT)] public static extern void cpPolyShapeSetRadius(IntPtr shape, float radius);
 }
-
-
-
-
-
-
 
 public partial class ChipmunkSpace {
 	public int iterations {

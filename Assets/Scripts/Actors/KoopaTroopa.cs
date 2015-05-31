@@ -3,11 +3,12 @@
 #endif
 using UnityEngine;
 
-public class KoopaTroopa : Pausable, IMortalFall {
+public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	
 	public bool jumpInLoop = false;
 	public float jumpSpeed = 20f;
 
+	private bool doNotResume;
 	private Bounce bounce;
 	private Patrol patrol;
 	private Chase chase;
@@ -31,11 +32,11 @@ public class KoopaTroopa : Pausable, IMortalFall {
 			jump.setForeverJumpSpeed(jumpSpeed);
 		}
 
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
 	/**
@@ -50,14 +51,19 @@ public class KoopaTroopa : Pausable, IMortalFall {
 #else
 		gameObject.SetActiveRecursively(false);
 #endif
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return true;
 	}

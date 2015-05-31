@@ -1,4 +1,3 @@
-using UnityEngine;
 
 /// <summary>
 /// Pause behavior for game objects and monobehavior scripts.
@@ -6,25 +5,28 @@ using UnityEngine;
 /// For example, an element whose enabled state is false before the pause event so when resuming it 
 /// has not need to be enabled.
 /// </summary>
-public abstract class Pausable : MonoBehaviour {
-
-	[HideInInspector]
-	public bool doNotResume = false;
+public interface IPausable {
+	
+	bool DoNotResume
+	{
+		get;
+		set;
+	}
 	
 	/// <summary>
 	/// Called just before going into pause.
 	/// </summary>
-	public abstract void beforePause ();
+	void beforePause ();
 	
 	/// <summary>
 	/// Called just after going back from pause.
 	/// </summary>
-	public abstract void afterResume ();
+	void afterResume ();
 	
 	/// <summary>
 	/// Used for allocation in subscriber lists managed by PauseGameManager.
 	/// If the element only exist per scene then returns true, else returns false.
 	/// </summary>
 	/// <returns>bool</returns>
-	public abstract bool isSceneOnly ();
+	bool isSceneOnly ();
 }

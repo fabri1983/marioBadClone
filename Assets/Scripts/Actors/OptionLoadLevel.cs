@@ -54,8 +54,9 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	private void doAction () {
-		if (!PauseGameManager.Instance.isPaused())
-			LevelManager.Instance.loadLevel(sceneIndex);
+		if (PauseGameManager.Instance.isPaused())
+			return;
+		LevelManager.Instance.loadLevel(sceneIndex);
 	}
 	
 	public Effect[] getEffects () {

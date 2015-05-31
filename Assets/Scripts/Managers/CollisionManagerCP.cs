@@ -1,34 +1,38 @@
 using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// Register script for ChipmunkCollisionManager callbacks.
+/// Given the nature of the callback methods being static, there must be only one instance of this script per scene.
+/// This script also adds the posibility to handle "while in collision" situation, a feature that CP does not provide.
+/// </summary>
 public class CollisionManagerCP : ChipmunkCollisionManager {
-
-	//private const int MAX_UNFINISHED_C0LLISIONS_CALLBACKS = 10;
-	//private UnFinishedCollisionDelegate noFinishedCollisiions = new UnFinishedCollisionDelegate[10];
-
+	
 	void Start(){
-		// NOTE: applying changes from Wake() will ignore base.Awake() method which is the 
-		// one who adds this manager instance to chipmunk API. So apply changes on Start().
+		// NOTE: using Awake() will ignore base.Awake() method which is the 
+		// one who adds this manager instance to chipmunk API.
 		
 		// Turning down the timestep can smooth things out significantly.
 		// Chipmunk is also pretty fast so you don't need to worry about the performance so much.
 		// Not really necessary, but helps in several subtle ways.
-		// NOTE: do this in the Time Manager window
-		//Time.fixedDeltaTime = 0.01f; // 0.0033 (1f/300f), 0.0055 (1f/180f), and 0.0083 (1f/120f) is OK. However lower it and see what happens
+		// NOTE: set this in the Time Manager window
+		// 0.0033 (1/300), 0.0055 (1/180), and 0.0083 (1/120), and 0.0111 (1/90) is OK. 
+		// However lower it and see what happens. Is it OK to at least be 3 times your target
+		// Also you need to modified the Maximum Allowed Timestep value in the Time Manager window. For example if you only
+		// want to allow a max of 3 steps frame then set it to 1/3 = 0.3333
+		//Time.fixedDeltaTime = 0.0111f;
 		
 		Chipmunk.gravity = new Vector2(0f, -100f);	
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 
-	/*void FixedUpdate() {
-		/// This provides while colliding functionality to those components who need it
-		for (int i=0; i < MAX_UNFINISHED_C0LLISIONS_CALLBACKS; ++i) {
-			UnFinishedCollisionDelegate callback = noFinishedCollisiions[i];
-			if (callback != null)
-				callback.unfinishCollision();
-		}
-	}*/
-
+	private static IInCollisionCP GetInCollisionCP< TType > (ChipmunkArbiter arbiter) where TType : MonoBehaviour {
+		ChipmunkShape shape1, shape2;
+		arbiter.GetShapes(out shape1, out shape2);
+		// IInCollisionCP comp = shape1.GetComponent<TType>() as IInCollisionCP;
+		IInCollisionCP comp = shape1.getOwnComponent<TType>() as IInCollisionCP;
+		return comp;
+	}
+	
 	//##################### Goomba #################
 	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter) {
 		return Patrol.beginCollisionWithAny(arbiter);
@@ -111,12 +115,18 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	
 	//##################### Player #################
 	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter) {
+		IInCollisionCP comp = GetInCollisionCP<Player>(arbiter);
+		comp.InCollision = true;
+		
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
 		return Jump.beginCollisionWithAny(arbiter);
 	}
 	
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter) {
+		IInCollisionCP comp = GetInCollisionCP<Player>(arbiter);
+		comp.InCollision = false;
+		
 		Player.endCollisionWithScenery(arbiter);
 	}
 	
@@ -146,10 +156,13 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	bool ChipmunkBegin_Goal_Player (ChipmunkArbiter arbiter) {
-		return Goal.beginCollisionWithPlayer(arbiter);
+		IInCollisionCP comp = GetInCollisionCP<Goal>(arbiter);
+		comp.InCollision = true;
+		return false;
 	}
 	
 	void ChipmunkSeparate_Goal_Player (ChipmunkArbiter arbiter) {
-		Goal.endCollisionWithPlayer(arbiter);
+		IInCollisionCP comp = GetInCollisionCP<Goal>(arbiter);
+		comp.InCollision = false;
 	}
 }

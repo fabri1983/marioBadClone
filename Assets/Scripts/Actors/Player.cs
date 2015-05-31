@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class Player : Pausable, IPowerUpAble, IMortalFall {
+public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCollisionCP {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -21,6 +21,8 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 	private ChipmunkSegmentQueryInfo qinfo;
 	private ChipmunkBody body;
 	private float walkVelBackup, signCollision;
+	private bool doNotResume;
+	private bool inCollision;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
@@ -61,7 +63,7 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 	
 	void Start () {
 		//resetPlayer(); // invoke after getting action components
-		PauseGameManager.Instance.register(this as Pausable, gameObject);
+		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 	
 	private void initialize () {
@@ -93,15 +95,25 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 			duplicated = false; // reset the flag for next time
 			return;
 		}
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 		instance = null;
 	}
 	
-	public override void beforePause () {}
+	public bool InCollision {
+		get {return inCollision;}
+		set {inCollision = value;}
+	}
 	
-	public override void afterResume () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override bool isSceneOnly () {
+	public void beforePause () {}
+	
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return false;
 	}
@@ -258,7 +270,7 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 		
-		Player player = shape1.GetComponent<Player>();
+		Player player = shape1.getOwnComponent<Player>();
 		/*if (player.isDying())
 			return false; // stop collision with scenery since this frame*/
 		
@@ -293,7 +305,7 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 		
-		shape1.GetComponent<Player>().exitedFromScenery = true;
+		shape1.getOwnComponent<Player>().exitedFromScenery = true;
 	}
 	
 	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
@@ -301,7 +313,7 @@ public class Player : Pausable, IPowerUpAble, IMortalFall {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Player player = shape1.GetComponent<Player>();
+		Player player = shape1.getOwnComponent<Player>();
 		player.restoreWalkVel();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 

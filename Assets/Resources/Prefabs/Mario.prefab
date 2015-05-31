@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b8d9f0aaaf35d43be4ea9990003d4c, type: 1}
   m_Name: 
   speedUpFactor: 1.89999998
+  lessenOnJump: 1
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,7 +345,8 @@ MonoBehaviour:
   _elasticity: 0
   _isSensor: 0
   _collisionType: Player
-  _collisionGroup: Player
+  _collisionGroup: 
+  MonoBehaviourName: Player
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978

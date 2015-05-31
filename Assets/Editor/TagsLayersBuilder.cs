@@ -40,7 +40,7 @@ public class TagsLayersBuilder : EditorWindow
     private static string GetClassContent(string className, string[] labelsArray)
     {
         string output = "";
-        output += "//This class is auto-generated do not modify (TagsLayersBuilder.cs) - blog.almostlogical.com\n";
+        output += "//This class is auto-generated do not modify (see Editor/TagsLayersBuilder.cs) - blog.almostlogical.com\n";
         output += "public class " + className + "\n";
         output += "{\n";
         foreach (string label in labelsArray)

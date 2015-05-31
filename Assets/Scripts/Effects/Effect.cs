@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Effect : Pausable {
+public abstract class Effect : MonoBehaviour, IPausable {
 	
 	public int priority = 0;
 	public float startDelaySecs = 0f;
@@ -9,6 +9,7 @@ public abstract class Effect : Pausable {
 	private Effect nextEffect = null;
 	private List<IEffectListener> listeners = null;
 	private bool isPriorizable = false;
+	private bool doNotResume;
 	
 	void Awake () {
 		// if this game object has the 
@@ -16,7 +17,7 @@ public abstract class Effect : Pausable {
 			this.enabled = false;
 			isPriorizable = true;
 		}
-		PauseGameManager.Instance.register(this as Pausable, this as MonoBehaviour);
+		PauseGameManager.Instance.register(this as IPausable, this as MonoBehaviour);
 		ownAwake();
 	}
 	
@@ -27,7 +28,7 @@ public abstract class Effect : Pausable {
 	}
 	
 	void OnDestroy () {
-		PauseGameManager.Instance.remove(this as Pausable);
+		PauseGameManager.Instance.remove(this as IPausable);
 		ownOnDestroy();
 	}
 	
@@ -78,11 +79,16 @@ public abstract class Effect : Pausable {
 			nextEffect.startEffect();
 	}
 	
-	public override void beforePause () {}
+	public bool DoNotResume {
+		get {return doNotResume;}
+		set {doNotResume = value;}
+	}
 	
-	public override void afterResume () {}
+	public void beforePause () {}
 	
-	public override bool isSceneOnly () {
+	public void afterResume () {}
+	
+	public bool isSceneOnly () {
 		// used for allocation in subscriber lists managed by PauseGameManager
 		return false;
 	}

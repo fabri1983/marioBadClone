@@ -215,7 +215,7 @@ public partial class ChipmunkSpace {
 		public PreSolve preSolve;
 		public PostSolve postSolve;
 		public Separate separate;
-		
+
 		// Written on the C-side to cache the System.Delegate.Invoke() method.
 		private IntPtr invokeMethod;
 	}

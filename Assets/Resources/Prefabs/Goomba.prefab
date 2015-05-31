@@ -157,7 +157,7 @@ MonoBehaviour:
   _framesPerSecond: 10
   _pingPongAnim: 0
   _rowsTotalInSprite: 1
-  _maxColsInRows: 2
+  _maxColsInRows: 3
   _playOnce: 0
   _disableUponCompletion: 0
   _enableEvents: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   pingPong: 0
   rowStart: 0
   rowLength: 1
-  colStart: 0
+  colStart: 2
   colLength: 1
 --- !u!114 &11400018
 MonoBehaviour:

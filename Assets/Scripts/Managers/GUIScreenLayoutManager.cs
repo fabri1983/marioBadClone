@@ -179,69 +179,69 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	/// <param name='guiElem'>
 	/// Is the GUI element containing the info about size in pixels or as a proportion
 	/// </param>
-	/// <param name='offset'>
-	/// Offset.
+	/// <param name='offsetInPixels'>
+	/// Offset measured in pixels.
 	/// </param>
 	/// <param name='layout'>
 	/// Layout.
 	/// </param>
-	public static void adjustPos (Transform tr, GUICustomElement guiElem, Vector2 offset, EnumScreenLayout layout)
+	public static void adjustPos (Transform tr, GUICustomElement guiElem, Vector2 offsetInPixels, EnumScreenLayout layout)
 	{
 		Vector3 p = tr.localPosition;
 
 		// assume the GUI element has its size as pixels
-		Vector2 tex = guiElem.size;
-		// check if GUI element's size is set as a proportion
+		Vector2 size = guiElem.virtualSize.x != 0 ? guiElem.virtualSize : guiElem.size;
+		// convert to pixels if GUI element's size is set as a proportion
 		if (!guiElem.sizeAsPixels) {
-			tex.x = Screen.width * guiElem.size.x;
-			tex.y = Screen.height * guiElem.size.y;
+			size.x *= Screen.width;
+			size.y *= Screen.height;
 		}
 		
 		switch (layout) {
 		case EnumScreenLayout.TOP_LEFT: {
-			Vector2 temp = screenToGUI(offset.x + tex.x/2f, Screen.height - tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(offsetInPixels.x + size.x/2f, Screen.height - size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP: {
-			Vector2 temp = screenToGUI(Screen.width/2 + offset.x, Screen.height - tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width/2 + offsetInPixels.x, Screen.height - size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.TOP_RIGHT: {
-			Vector2 temp = screenToGUI(Screen.width + offset.x - tex.x/2f, Screen.height - tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width + offsetInPixels.x - size.x/2f, Screen.height - size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER_LEFT: {
-			Vector2 temp = screenToGUI(offset.x + tex.x/2f, Screen.height/2 + offset.y);
+			Vector2 temp = screenToGUI(offsetInPixels.x + size.x/2f, Screen.height/2 + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER: {
-			p.x = Screen.width/2 - tex.x/2 + offset.x;
-			p.y = Screen.height/2 - tex.y/2 + offset.y;
-			Vector2 temp = screenToGUI(Screen.width/2 + offset.x, Screen.height/2 + offset.y);
+			p.x = Screen.width/2 - size.x/2 + offsetInPixels.x;
+			p.y = Screen.height/2 - size.y/2 + offsetInPixels.y;
+			Vector2 temp = screenToGUI(Screen.width/2 + offsetInPixels.x, Screen.height/2 + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.CENTER_RIGHT: {
-			Vector2 temp = screenToGUI(Screen.width + offset.x - tex.x/2f, Screen.height/2 + offset.y);
+			Vector2 temp = screenToGUI(Screen.width + offsetInPixels.x - size.x/2f, Screen.height/2 + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM_LEFT: {
-			Vector2 temp = screenToGUI(offset.x + tex.x/2f, tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(offsetInPixels.x + size.x/2f, size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM: {
-			Vector2 temp = screenToGUI(Screen.width/2 + offset.x, tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width/2 + offsetInPixels.x, size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }
 		case EnumScreenLayout.BOTTOM_RIGHT: {
-			Vector2 temp = screenToGUI(Screen.width + offset.x - tex.x/2f, tex.y/2f + offset.y);
+			Vector2 temp = screenToGUI(Screen.width + offsetInPixels.x - size.x/2f, size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
 			p.y = temp.y;
 			break; }

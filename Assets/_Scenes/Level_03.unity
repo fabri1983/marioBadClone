@@ -729,6 +729,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
+  doNotResume: 0
   jumpInLoop: 1
   jumpSpeed: 30
 --- !u!114 &96017004
@@ -860,6 +861,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e61afca24455b4e41acda6c94596401d, type: 1}
   m_Name: 
+  doNotResume: 0
   flySpeed: 4
   flyRange: 13
 --- !u!114 &98027630
@@ -1406,6 +1408,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
+  doNotResume: 0
   jumpInLoop: 1
   jumpSpeed: 30
 --- !u!114 &161480892
@@ -1877,6 +1880,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
+  doNotResume: 0
 --- !u!114 &234723884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3407,6 +3411,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e61afca24455b4e41acda6c94596401d, type: 1}
   m_Name: 
+  doNotResume: 0
   flySpeed: 4
   flyRange: 13
 --- !u!1 &567748024
@@ -3608,6 +3613,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
+  doNotResume: 0
   jumpInLoop: 1
   jumpSpeed: 30
 --- !u!1001 &601829051
@@ -4043,6 +4049,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
+  doNotResume: 0
 --- !u!114 &687951847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4621,6 +4628,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
+  doNotResume: 0
 --- !u!114 &812089277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4724,6 +4732,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
+  doNotResume: 0
 --- !u!114 &823808284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5668,6 +5677,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
+  doNotResume: 0
   jumpInLoop: 1
   jumpSpeed: 30
 --- !u!114 &962816366
@@ -6101,6 +6111,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
+  doNotResume: 0
   jumpInLoop: 1
   jumpSpeed: 30
 --- !u!114 &995684688
@@ -6298,6 +6309,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
+  doNotResume: 0
 --- !u!114 &1014106428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8825,6 +8837,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e61afca24455b4e41acda6c94596401d, type: 1}
   m_Name: 
+  doNotResume: 0
   flySpeed: 4
   flyRange: 13
 --- !u!114 &1626923703
@@ -10327,6 +10340,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
+  doNotResume: 0
 --- !u!114 &1984840444
 MonoBehaviour:
   m_ObjectHideFlags: 0
