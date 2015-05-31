@@ -290,7 +290,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
-  doNotResume: 0
   jumpInLoop: 0
   jumpSpeed: 30
 --- !u!114 &26674480
@@ -1490,7 +1489,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
-  doNotResume: 0
 --- !u!114 &455986676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2390,7 +2388,7 @@ MonoBehaviour:
   pingPong: 0
   rowStart: 0
   rowLength: 1
-  colStart: 0
+  colStart: 2
   colLength: 1
 --- !u!114 &791938208
 MonoBehaviour:
@@ -2407,7 +2405,7 @@ MonoBehaviour:
   _framesPerSecond: 10
   _pingPongAnim: 0
   _rowsTotalInSprite: 1
-  _maxColsInRows: 2
+  _maxColsInRows: 3
   _playOnce: 0
   _disableUponCompletion: 0
   _enableEvents: 0
@@ -3416,7 +3414,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
-  doNotResume: 0
 --- !u!114 &1166349963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4398,7 +4395,7 @@ Transform:
   m_PrefabInternal: {fileID: 1602004122}
   m_GameObject: {fileID: 1370795944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 72.2138672, y: 13.0789032, z: 0}
+  m_LocalPosition: {x: 74.0737534, y: 13.0789032, z: 0}
   m_LocalScale: {x: 2.29999995, y: 2.29999995, z: 1}
   m_Children:
   - {fileID: 258322106}
@@ -4414,7 +4411,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e61afca24455b4e41acda6c94596401d, type: 1}
   m_Name: 
-  doNotResume: 0
   flySpeed: 4
   flyRange: 13
 --- !u!114 &1370795947
@@ -5113,7 +5109,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
-  doNotResume: 0
 --- !u!114 &1585558152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5328,7 +5323,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 519e54fc741623b4eaa7c739c305e161, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 72.2138672
+      value: 74.0737534
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 519e54fc741623b4eaa7c739c305e161, type: 2}
       propertyPath: m_LocalPosition.y
@@ -5584,7 +5579,7 @@ MonoBehaviour:
   pingPong: 0
   rowStart: 0
   rowLength: 1
-  colStart: 0
+  colStart: 2
   colLength: 1
 --- !u!114 &1625199377
 MonoBehaviour:
@@ -5601,7 +5596,7 @@ MonoBehaviour:
   _framesPerSecond: 10
   _pingPongAnim: 0
   _rowsTotalInSprite: 1
-  _maxColsInRows: 2
+  _maxColsInRows: 3
   _playOnce: 0
   _disableUponCompletion: 0
   _enableEvents: 0
@@ -6020,7 +6015,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f791e71ba56fc044bf19c94fc73488f, type: 1}
   m_Name: 
-  doNotResume: 0
 --- !u!114 &1760765237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6542,7 +6536,7 @@ MonoBehaviour:
   _framesPerSecond: 10
   _pingPongAnim: 0
   _rowsTotalInSprite: 1
-  _maxColsInRows: 2
+  _maxColsInRows: 3
   _playOnce: 0
   _disableUponCompletion: 0
   _enableEvents: 0
@@ -6570,7 +6564,7 @@ MonoBehaviour:
   pingPong: 0
   rowStart: 0
   rowLength: 1
-  colStart: 0
+  colStart: 2
   colLength: 1
 --- !u!114 &1809190378
 MonoBehaviour:
@@ -7736,7 +7730,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 247f7ebcb914c004584ccfcc61af1f6f, type: 1}
   m_Name: 
-  doNotResume: 0
   jumpInLoop: 0
   jumpSpeed: 30
 --- !u!114 &2119660815
@@ -8006,7 +7999,7 @@ MonoBehaviour:
   _framesPerSecond: 10
   _pingPongAnim: 0
   _rowsTotalInSprite: 1
-  _maxColsInRows: 2
+  _maxColsInRows: 3
   _playOnce: 0
   _disableUponCompletion: 0
   _enableEvents: 0
@@ -8034,7 +8027,7 @@ MonoBehaviour:
   pingPong: 0
   rowStart: 0
   rowLength: 1
-  colStart: 0
+  colStart: 2
   colLength: 1
 --- !u!114 &2140555914
 MonoBehaviour:

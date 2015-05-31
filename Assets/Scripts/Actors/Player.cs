@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
+public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCollisionCP {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	private ChipmunkBody body;
 	private float walkVelBackup, signCollision;
 	private bool doNotResume;
+	private bool inCollision;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
@@ -96,6 +97,11 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		}
 		PauseGameManager.Instance.remove(this as IPausable);
 		instance = null;
+	}
+	
+	public bool InCollision {
+		get {return inCollision;}
+		set {inCollision = value;}
 	}
 	
 	public bool DoNotResume {

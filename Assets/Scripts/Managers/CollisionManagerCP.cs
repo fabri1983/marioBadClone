@@ -25,17 +25,15 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 
-	private static InCollisionCP GetInCollisionCP< TType > (ChipmunkArbiter arbiter) where TType : Component {
+	private static IInCollisionCP GetInCollisionCP< TType > (ChipmunkArbiter arbiter) where TType : Component {
 		ChipmunkShape shape1, shape2;
 		arbiter.GetShapes(out shape1, out shape2);
-		InCollisionCP comp = shape1.GetComponent<TType>() as InCollisionCP;
+		IInCollisionCP comp = shape1.GetComponent<TType>() as IInCollisionCP;
 		return comp;
 	}
 	
 	//##################### Goomba #################
 	bool ChipmunkBegin_Goomba_Scenery (ChipmunkArbiter arbiter) {
-		/*InCollisionCP comp = GetInCollisionCP<Goomba>(arbiter);
-		comp.setInCollision(true);*/
 		return Patrol.beginCollisionWithAny(arbiter);
 	}
 	
@@ -116,12 +114,18 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	
 	//##################### Player #################
 	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter) {
+		IInCollisionCP comp = GetInCollisionCP<Player>(arbiter);
+		comp.InCollision = true;
+		
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
 		return Jump.beginCollisionWithAny(arbiter);
 	}
 	
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter) {
+		IInCollisionCP comp = GetInCollisionCP<Player>(arbiter);
+		comp.InCollision = false;
+		
 		Player.endCollisionWithScenery(arbiter);
 	}
 	
@@ -151,10 +155,13 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	bool ChipmunkBegin_Goal_Player (ChipmunkArbiter arbiter) {
-		return Goal.beginCollisionWithPlayer(arbiter);
+		IInCollisionCP comp = GetInCollisionCP<Goal>(arbiter);
+		comp.InCollision = true;
+		return false;
 	}
 	
 	void ChipmunkSeparate_Goal_Player (ChipmunkArbiter arbiter) {
-		Goal.endCollisionWithPlayer(arbiter);
+		IInCollisionCP comp = GetInCollisionCP<Goal>(arbiter);
+		comp.InCollision = false;
 	}
 }

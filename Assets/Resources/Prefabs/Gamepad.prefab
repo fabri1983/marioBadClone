@@ -89,8 +89,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .163765401, y: -.150342003, z: .309999466}
-  m_LocalScale: {x: .0590629317, y: .057273142, z: 0}
+  m_LocalPosition: {x: .164436579, y: -.151013181, z: .309999466}
+  m_LocalScale: {x: .0559308082, y: .0559308045, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400002
@@ -100,8 +100,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .238936409, y: -.150342003, z: .309999466}
-  m_LocalScale: {x: .0590629317, y: .057273142, z: 0}
+  m_LocalPosition: {x: .240502477, y: -.151013181, z: .309999466}
+  m_LocalScale: {x: .0559308082, y: .0559308045, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400004
@@ -111,8 +111,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.206720263, y: -.118125856, z: .309999466}
-  m_LocalScale: {x: .123495221, y: .121705435, z: 0}
+  m_LocalPosition: {x: -.208062604, y: -.120810539, z: .309999466}
+  m_LocalScale: {x: .120810546, y: .116336077, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400006
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: 0, y: 0}
-  asProportion: 1
+  asProportion: 0
   layout: 8
 --- !u!114 &11400010
 MonoBehaviour:
@@ -273,8 +273,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  offset: {x: -.140000001, y: 0}
-  asProportion: 1
+  offset: {x: -68, y: 0}
+  asProportion: 0
   layout: 8
 --- !u!114 &11400012
 MonoBehaviour:
@@ -300,10 +300,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
   priority: 0
+  startDelaySecs: 0
   startOffsetTransform: {x: 0, y: -1}
   _transition: 0
   direction: 0
-  startDelaySecs: 0
   steps: 32
   acceleration: 1
   easingType: 4
@@ -319,10 +319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
   priority: 0
+  startDelaySecs: .300000012
   startOffsetTransform: {x: 0, y: -1}
   _transition: 0
   direction: 0
-  startDelaySecs: 0
   steps: 32
   acceleration: 1
   easingType: 4
@@ -338,10 +338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
   priority: 0
+  startDelaySecs: 0
   startOffsetTransform: {x: 0, y: -1}
   _transition: 0
   direction: 0
-  startDelaySecs: 0
   steps: 32
   acceleration: 1
   easingType: 4
@@ -394,8 +394,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 984d093ee08c1d3499ff833a8878eedc, type: 1}
   wrapMode: 1
-  size: {x: .230000004, y: .340000004}
-  sizeAsPixels: 0
+  size: {x: 108, y: 104}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &11400028
 MonoBehaviour:
@@ -409,8 +410,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 1e55bb52ad4e2e149a570440770fb9be, type: 1}
   wrapMode: 0
-  size: {x: .109999999, y: .159999996}
-  sizeAsPixels: 0
+  size: {x: 50, y: 50}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &11400030
 MonoBehaviour:
@@ -424,8 +426,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 4c7dcf056a8fc5941aa093d9c6889fd6, type: 1}
   wrapMode: 0
-  size: {x: .109999999, y: .159999996}
-  sizeAsPixels: 0
+  size: {x: 50, y: 50}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!1001 &100100000
 Prefab:

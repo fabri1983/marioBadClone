@@ -12,7 +12,8 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 
 	public Texture2D texture;
 	public TextureWrapMode wrapMode = TextureWrapMode.Repeat;
-	public Vector2 size = Vector2.one; // pixels or proportion
+	public Vector2 size = Vector2.one; // pixels or screen proportion
+	public Vector2 virtualSize = Vector2.zero; // this emulates a GUI size for correct screen location in situations where elem position is relative to another one
 	public bool sizeAsPixels = false;
 	public bool newMaterialInstance = false; // currently no atlas usage, so every game object instance has its own material instance
 

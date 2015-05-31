@@ -102,6 +102,45 @@ Transform:
   - {fileID: 1761950541}
   - {fileID: 2004149832}
   m_Father: {fileID: 912851602}
+--- !u!1 &24391965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 24391966}
+  - 114: {fileID: 24391967}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &24391966
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 24391965}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &24391967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 24391965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &26116023
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,8 +169,8 @@ Transform:
   m_PrefabInternal: {fileID: 1125239447}
   m_GameObject: {fileID: 26116023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.222828329, y: -.00715915347, z: .310000002}
-  m_LocalScale: {x: .026846787, y: .025057001, z: 0}
+  m_LocalPosition: {x: -.222380891, y: -.00715913624, z: .310000002}
+  m_LocalScale: {x: .0246095546, y: .0223723222, z: 0}
   m_Children: []
   m_Father: {fileID: 660059894}
 --- !u!23 &26116025
@@ -147,7 +186,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2087768670}
+  - {fileID: 1091421418}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -172,9 +211,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  offset: {x: -.414999992, y: .444999993}
-  asProportion: 1
-  layout: 7
+  offset: {x: -.0599999987, y: -.0199999996}
+  xAsPixels: 0
+  yAsPixels: 0
+  layout: 3
 --- !u!114 &26116028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,8 +228,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
   wrapMode: 1
-  size: {x: .0500000007, y: .0700000003}
-  sizeAsPixels: 0
+  size: {x: 22, y: 20}
+  virtualSize: {x: 140, y: 34}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &26116029
 MonoBehaviour:
@@ -219,10 +260,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 834f693e8d6b60f40b95267d754c8d94, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
+  startRendererOn: 0
 --- !u!1 &26904209
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,8 +319,8 @@ Transform:
   m_PrefabInternal: {fileID: 1635430300}
   m_GameObject: {fileID: 29685651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0241621155, y: -.00715915347, z: .310000002}
-  m_LocalScale: {x: .026846787, y: .025057001, z: 0}
+  m_LocalPosition: {x: .0285471063, y: -.00715913624, z: .310000002}
+  m_LocalScale: {x: .0246095546, y: .0223723222, z: 0}
   m_Children: []
   m_Father: {fileID: 1146820896}
 --- !u!23 &29685653
@@ -296,7 +336,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 78956460}
+  - {fileID: 828589139}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -340,8 +380,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
   wrapMode: 1
-  size: {x: .0500000007, y: .0700000003}
-  sizeAsPixels: 0
+  size: {x: 22, y: 20}
+  virtualSize: {x: 140, y: 34}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &29685657
 MonoBehaviour:
@@ -354,9 +395,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  offset: {x: .0450000018, y: .444999993}
-  asProportion: 1
-  layout: 7
+  offset: {x: -.300999999, y: -.0199999996}
+  xAsPixels: 0
+  yAsPixels: 0
+  layout: 5
 --- !u!114 &29685658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,11 +410,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 834f693e8d6b60f40b95267d754c8d94, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
---- !u!21 &78956460
+  startRendererOn: 0
+--- !u!21 &127856653
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -387,7 +428,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Texture: {fileID: 2800000, guid: 407409c48f2cfd24c8966dfc5fb295f9, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -396,7 +437,7 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
---- !u!21 &94276754
+--- !u!21 &153819753
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -446,45 +487,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 637632304}
---- !u!1 &233961854
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 233961855}
-  - 114: {fileID: 233961856}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &233961855
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 233961854}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &233961856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 233961854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &459115771
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +554,33 @@ MonoBehaviour:
   texture: {fileID: 2800000, guid: ec8b99c26aad78d45980a97393b0c1a6, type: 1}
   wrapMode: 0
   size: {x: 1, y: 1}
+  virtualSize: {x: 0, y: 0}
   sizeAsPixels: 0
   newMaterialInstance: 0
+--- !u!21 &558758538
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: ac4933a432cbdc34992148aef79d5773, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &637632303
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,14 +675,14 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 94276754}
+      objectReference: {fileID: 1623908977}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1297581306}
+      objectReference: {fileID: 773706898}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .091279082
+      value: .0883706734
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.z
@@ -691,11 +718,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
-      value: .300000012
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .161080718
+      value: .156606257
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -711,7 +738,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.123495214
+      value: -.125732452
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
@@ -719,7 +746,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .0930688605
+      value: .0919502378
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
@@ -751,19 +778,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.222828329
+      value: -.222380891
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.x
-      value: -.414999992
+      value: -.0599999987
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
-      value: .720000029
+      value: -.200000003
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -779,11 +806,71 @@ Prefab:
       objectReference: {fileID: 1761950544}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .026846787
+      value: .0246095546
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.y
-      value: .025057001
+      value: .0223723222
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.x
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .038032949
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsPixels
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2951b2296562f4546a250745336f0512, type: 2}
@@ -818,7 +905,7 @@ Transform:
   - {fileID: 26116024}
   - {fileID: 1741172252}
   m_Father: {fileID: 912851602}
---- !u!21 &745662207
+--- !u!21 &773706898
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -833,7 +920,31 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 8b613d9710592b146829f5cc3ceea3ae, type: 1}
+          m_Texture: {fileID: 2800000, guid: 8aae0f9b8f7ed234aa9053ac59250cea, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+--- !u!21 &828589139
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -927,8 +1038,8 @@ Transform:
   m_PrefabInternal: {fileID: 659236942}
   m_GameObject: {fileID: 914124017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.222828329, y: .091279082, z: .310000002}
-  m_LocalScale: {x: .026846787, y: .025057001, z: 0}
+  m_LocalPosition: {x: -.222380891, y: .0883706734, z: .310000002}
+  m_LocalScale: {x: .0246095546, y: .0223723222, z: 0}
   m_Children: []
   m_Father: {fileID: 1624047670}
 --- !u!23 &914124019
@@ -944,7 +1055,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 94276754}
+  - {fileID: 1623908977}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -969,9 +1080,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  offset: {x: -.414999992, y: .720000029}
-  asProportion: 1
-  layout: 7
+  offset: {x: -.0599999987, y: -.200000003}
+  xAsPixels: 0
+  yAsPixels: 0
+  layout: 0
 --- !u!114 &914124022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,8 +1097,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
   wrapMode: 1
-  size: {x: .0500000007, y: .0700000003}
-  sizeAsPixels: 0
+  size: {x: 22, y: 20}
+  virtualSize: {x: 140, y: 34}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &914124023
 MonoBehaviour:
@@ -1016,10 +1129,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 834f693e8d6b60f40b95267d754c8d94, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
+  startRendererOn: 0
 --- !u!1 &921600153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,7 +1202,7 @@ MonoBehaviour:
   m_Name: 
   baseQueue: 4000
   offset: 100
---- !u!21 &1097341053
+--- !u!21 &1091421418
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -1152,14 +1264,14 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2087768670}
+      objectReference: {fileID: 1091421418}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1857208781}
+      objectReference: {fileID: 127856653}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.00715915347
+      value: -.00715913624
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1195,11 +1307,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
-      value: .300000012
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .161080718
+      value: .156606257
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -1215,7 +1327,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.123495214
+      value: -.125732452
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
@@ -1255,15 +1367,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.x
-      value: -.414999992
+      value: -.0599999987
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.222828329
+      value: -.222380891
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
-      value: .444999993
+      value: -.0199999996
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -1279,11 +1391,71 @@ Prefab:
       objectReference: {fileID: 29685655}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .026846787
+      value: .0246095546
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.y
-      value: .025057001
+      value: .0223723222
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.x
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .038032949
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: layout
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.y
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2951b2296562f4546a250745336f0512, type: 2}
@@ -1342,30 +1514,6 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
---- !u!21 &1297581306
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 8aae0f9b8f7ed234aa9053ac59250cea, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1329444629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,8 +1542,8 @@ Transform:
   m_PrefabInternal: {fileID: 659236942}
   m_GameObject: {fileID: 1329444629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.123495214, y: .0930688605, z: .310000002}
-  m_LocalScale: {x: .161080718, y: .0357957147, z: 0}
+  m_LocalPosition: {x: -.125732452, y: .0919502378, z: .310000002}
+  m_LocalScale: {x: .156606257, y: .038032949, z: 0}
   m_Children: []
   m_Father: {fileID: 1624047670}
 --- !u!23 &1329444631
@@ -1411,7 +1559,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1297581306}
+  - {fileID: 773706898}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1438,8 +1586,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 8aae0f9b8f7ed234aa9053ac59250cea, type: 1}
   wrapMode: 1
-  size: {x: .300000012, y: .100000001}
-  sizeAsPixels: 0
+  size: {x: 140, y: 34}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &1329444634
 MonoBehaviour:
@@ -1464,10 +1613,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
   startOffsetTransform: {x: -1, y: 0}
   _transition: 0
   direction: 1
@@ -1487,7 +1634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: .119999997, y: -.189999998}
-  asProportion: 1
+  xAsPixels: 0
+  yAsPixels: 0
   layout: 0
 --- !u!1001 &1508897290
 Prefab:
@@ -1527,14 +1675,14 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1097341053}
+      objectReference: {fileID: 153819753}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 745662207}
+      objectReference: {fileID: 1700367986}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .091279082
+      value: .0883706734
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1570,11 +1718,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
-      value: .300000012
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .161080718
+      value: .156606257
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -1590,7 +1738,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .123495214
+      value: .125732452
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
@@ -1598,7 +1746,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .0930688605
+      value: .0919502378
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
@@ -1630,19 +1778,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .0241621155
+      value: .0296209343
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.x
-      value: .0450000018
+      value: -.298999995
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
-      value: .720000029
+      value: -.200000003
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -1658,17 +1806,97 @@ Prefab:
       objectReference: {fileID: 29685655}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .026846787
+      value: .0246095546
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.y
-      value: .025057001
+      value: .0223723222
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.x
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .038032949
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.y
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2951b2296562f4546a250745336f0512, type: 2}
   m_RootGameObject: {fileID: 15586904}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &1623908977
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1624047669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,14 +1963,14 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 78956460}
+      objectReference: {fileID: 828589139}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1887899842}
+      objectReference: {fileID: 558758538}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.00715915347
+      value: -.00715913624
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1778,11 +2006,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
-      value: .300000012
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .161080718
+      value: .156606257
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -1798,7 +2026,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .123495214
+      value: .125732452
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
@@ -1838,15 +2066,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.x
-      value: .0450000018
+      value: -.300999999
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .0241621155
+      value: .0285471063
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: offset.y
-      value: .444999993
+      value: -.0199999996
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: texture
@@ -1862,17 +2090,101 @@ Prefab:
       objectReference: {fileID: 26116029}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.x
-      value: .026846787
+      value: .0246095546
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalScale.y
-      value: .025057001
+      value: .0223723222
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.x
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: sizeAsPixels
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .038032949
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: size.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: yAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: xAsProportion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: asProportion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: layout
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
+      propertyPath: virtualSize.y
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2951b2296562f4546a250745336f0512, type: 2}
   m_RootGameObject: {fileID: 1146820895}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &1700367986
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 8b613d9710592b146829f5cc3ceea3ae, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1741172251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,8 +2213,8 @@ Transform:
   m_PrefabInternal: {fileID: 1125239447}
   m_GameObject: {fileID: 1741172251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.123495214, y: 0, z: .310000002}
-  m_LocalScale: {x: .161080718, y: .0357957147, z: 0}
+  m_LocalPosition: {x: -.125732452, y: 0, z: .310000002}
+  m_LocalScale: {x: .156606257, y: .038032949, z: 0}
   m_Children: []
   m_Father: {fileID: 660059894}
 --- !u!23 &1741172253
@@ -1918,7 +2230,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1857208781}
+  - {fileID: 127856653}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1945,8 +2257,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 407409c48f2cfd24c8966dfc5fb295f9, type: 1}
   wrapMode: 1
-  size: {x: .300000012, y: .100000001}
-  sizeAsPixels: 0
+  size: {x: 140, y: 34}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &1741172256
 MonoBehaviour:
@@ -1971,10 +2284,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
   startOffsetTransform: {x: -1, y: 0}
   _transition: 0
   direction: 1
@@ -1994,7 +2305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: .119999997, y: 0}
-  asProportion: 1
+  xAsPixels: 0
+  yAsPixels: 0
   layout: 3
 --- !u!1 &1761950540
 GameObject:
@@ -2024,8 +2336,8 @@ Transform:
   m_PrefabInternal: {fileID: 1508897290}
   m_GameObject: {fileID: 1761950540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0241621155, y: .091279082, z: .310000002}
-  m_LocalScale: {x: .026846787, y: .025057001, z: 0}
+  m_LocalPosition: {x: .0296209343, y: .0883706734, z: .310000002}
+  m_LocalScale: {x: .0246095546, y: .0223723222, z: 0}
   m_Children: []
   m_Father: {fileID: 15586905}
 --- !u!23 &1761950542
@@ -2041,7 +2353,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1097341053}
+  - {fileID: 153819753}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2085,8 +2397,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
   wrapMode: 1
-  size: {x: .0500000007, y: .0700000003}
-  sizeAsPixels: 0
+  size: {x: 22, y: 20}
+  virtualSize: {x: 140, y: 34}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &1761950546
 MonoBehaviour:
@@ -2099,9 +2412,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  offset: {x: .0450000018, y: .720000029}
-  asProportion: 1
-  layout: 7
+  offset: {x: -.298999995, y: -.200000003}
+  xAsPixels: 0
+  yAsPixels: 0
+  layout: 2
 --- !u!114 &1761950547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2113,10 +2427,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 834f693e8d6b60f40b95267d754c8d94, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
+  startRendererOn: 0
 --- !u!1 &1769508023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,8 +2458,8 @@ Transform:
   m_PrefabInternal: {fileID: 1635430300}
   m_GameObject: {fileID: 1769508023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .123495214, y: 0, z: .310000002}
-  m_LocalScale: {x: .161080718, y: .0357957147, z: 0}
+  m_LocalPosition: {x: .125732452, y: 0, z: .310000002}
+  m_LocalScale: {x: .156606257, y: .038032949, z: 0}
   m_Children: []
   m_Father: {fileID: 1146820896}
 --- !u!23 &1769508025
@@ -2162,7 +2475,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1887899842}
+  - {fileID: 558758538}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2188,7 +2501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: -.119999997, y: 0}
-  asProportion: 1
+  xAsPixels: 0
+  yAsPixels: 0
   layout: 5
 --- !u!114 &1769508028
 MonoBehaviour:
@@ -2201,10 +2515,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
   startOffsetTransform: {x: 1, y: 0}
   _transition: 0
   direction: 3
@@ -2237,57 +2549,10 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: ac4933a432cbdc34992148aef79d5773, type: 1}
   wrapMode: 1
-  size: {x: .300000012, y: .100000001}
-  sizeAsPixels: 0
+  size: {x: 140, y: 34}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
---- !u!21 &1857208781
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 407409c48f2cfd24c8966dfc5fb295f9, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
---- !u!21 &1887899842
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: ac4933a432cbdc34992148aef79d5773, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2004149831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2316,8 +2581,8 @@ Transform:
   m_PrefabInternal: {fileID: 1508897290}
   m_GameObject: {fileID: 2004149831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .123495214, y: .0930688605, z: .310000002}
-  m_LocalScale: {x: .161080718, y: .0357957147, z: 0}
+  m_LocalPosition: {x: .125732452, y: .0919502378, z: .310000002}
+  m_LocalScale: {x: .156606257, y: .038032949, z: 0}
   m_Children: []
   m_Father: {fileID: 15586905}
 --- !u!23 &2004149833
@@ -2333,7 +2598,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 745662207}
+  - {fileID: 1700367986}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2359,7 +2624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: -.119999997, y: -.189999998}
-  asProportion: 1
+  xAsPixels: 0
+  yAsPixels: 0
   layout: 2
 --- !u!114 &2004149836
 MonoBehaviour:
@@ -2372,10 +2638,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
-  doNotResume: 0
   priority: 0
   startDelaySecs: 0
-  autoStart: 0
   startOffsetTransform: {x: 1, y: 0}
   _transition: 0
   direction: 3
@@ -2408,8 +2672,9 @@ MonoBehaviour:
   m_Name: 
   texture: {fileID: 2800000, guid: 8b613d9710592b146829f5cc3ceea3ae, type: 1}
   wrapMode: 1
-  size: {x: .300000012, y: .100000001}
-  sizeAsPixels: 0
+  size: {x: 140, y: 34}
+  virtualSize: {x: 0, y: 0}
+  sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!1001 &2021319502
 Prefab:
@@ -2475,30 +2740,6 @@ Prefab:
   m_RootGameObject: {fileID: 2122884575}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!21 &2087768670
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2122884575
 GameObject:
   m_ObjectHideFlags: 0
