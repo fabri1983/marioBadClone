@@ -103,8 +103,26 @@ public abstract partial class ChipmunkShape : ChipmunkBinding.Base {
 		set { if(_handle != IntPtr.Zero) ChipmunkBinding._cpShapeSetSurfaceVelocity(_handle, value); }
 	}
 	
+	// Name of the MonoBehaviour script which will be used on collision events.
+	// This is to avoid the use of shape.GetComponent<Type>().
+	public String MonoBehaviourName = String.Empty;
+	private MonoBehaviour ownMono;
+	/// <summary>
+	/// Gets the script component (subclass of MonoBehaviour) this shape owns. 
+	/// </summary>
+	/// <returns>The own component casted to TType param.</returns>
+	/// <typeparam name="TType">Script componenet (subclass of MonoBehaviour)</typeparam>
+	public TType getOwnComponent <TType> () where TType : MonoBehaviour {
+		return ownMono as TType;
+	}
+	
 	protected override void Awake(){
 		body = this.GetComponentUpwards<ChipmunkBody>();
+		
+		if (!String.Empty.Equals(MonoBehaviourName)) {
+			Type type = AssembliesHelper.GetType(MonoBehaviourName);
+			ownMono = this.GetComponent(type) as MonoBehaviour;
+		}
 	}
 	
 	protected void OnEnable(){

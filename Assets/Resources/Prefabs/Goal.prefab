@@ -43,6 +43,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: Goal
   _collisionGroup: 
+  MonoBehaviourName: Goal
   _radius: .300000012
   _center: {x: 0, y: 0}
 --- !u!114 &11400002

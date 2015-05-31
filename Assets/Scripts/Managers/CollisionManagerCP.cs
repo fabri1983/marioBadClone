@@ -25,10 +25,11 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
 	}
 
-	private static IInCollisionCP GetInCollisionCP< TType > (ChipmunkArbiter arbiter) where TType : Component {
+	private static IInCollisionCP GetInCollisionCP< TType > (ChipmunkArbiter arbiter) where TType : MonoBehaviour {
 		ChipmunkShape shape1, shape2;
 		arbiter.GetShapes(out shape1, out shape2);
-		IInCollisionCP comp = shape1.GetComponent<TType>() as IInCollisionCP;
+		// IInCollisionCP comp = shape1.GetComponent<TType>() as IInCollisionCP;
+		IInCollisionCP comp = shape1.getOwnComponent<TType>() as IInCollisionCP;
 		return comp;
 	}
 	

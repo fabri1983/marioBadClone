@@ -270,7 +270,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 		
-		Player player = shape1.GetComponent<Player>();
+		Player player = shape1.getOwnComponent<Player>();
 		/*if (player.isDying())
 			return false; // stop collision with scenery since this frame*/
 		
@@ -305,7 +305,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 		
-		shape1.GetComponent<Player>().exitedFromScenery = true;
+		shape1.getOwnComponent<Player>().exitedFromScenery = true;
 	}
 	
 	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
@@ -313,7 +313,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Player player = shape1.GetComponent<Player>();
+		Player player = shape1.getOwnComponent<Player>();
 		player.restoreWalkVel();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
