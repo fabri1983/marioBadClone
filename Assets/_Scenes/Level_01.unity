@@ -198,6 +198,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -229,6 +230,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: KoopaTroopa
   _collisionGroup: 
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0949999988}
   _size: {x: .899999976, y: .810000002}
   _radius: 0
@@ -358,6 +360,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &35385322
@@ -443,6 +446,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &60056041
@@ -488,6 +492,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &78328914
@@ -656,6 +661,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Oneway
   _collisionGroup: Oneway
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0399999991}
   _size: {x: .970000029, y: .899999976}
   _radius: 0
@@ -773,6 +779,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 24, y: 4}
   _radius: .00999999978
@@ -996,6 +1003,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 24, y: 4}
   _radius: .00999999978
@@ -1059,6 +1067,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 4}
   _radius: .00999999978
@@ -1106,6 +1115,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
+  MonoBehaviourName: 
   _center: {x: 0, y: 16.3799992}
   _size: {x: 3, y: 50}
   _radius: 0
@@ -1246,6 +1256,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!23 &366183657
@@ -1275,6 +1286,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1006141234}
   m_GameObject: {fileID: 1338598338}
   m_Mesh: {fileID: 4300000, guid: aaf8e953e779eee4e8bb2801f02fae82, type: 2}
+--- !u!1 &391990627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 391990628}
+  - 114: {fileID: 391990629}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &391990628
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391990627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &391990629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391990627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &404261056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,6 +1368,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &445703089
@@ -1475,6 +1526,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Goomba
   _collisionGroup: 
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978
@@ -1657,48 +1709,10 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 4}
   _radius: .00999999978
---- !u!1 &549103546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 549103547}
-  - 114: {fileID: 549103548}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &549103547
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 549103546}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &549103548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 549103546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &571054907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,6 +1773,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 4}
   _radius: .00999999978
@@ -1960,6 +1975,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!21 &642103776
@@ -2150,6 +2166,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: Goal
   _collisionGroup: 
+  MonoBehaviourName: Goal
   _radius: .300000012
   _center: {x: 0, y: 0}
 --- !u!114 &760332249
@@ -2207,6 +2224,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &778861326
@@ -2252,6 +2270,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &786914167
@@ -2498,6 +2517,7 @@ MonoBehaviour:
   texture: {fileID: 2800000, guid: cd8ba37483f632a4bad198b7e2cfecdd, type: 1}
   wrapMode: 0
   size: {x: 1, y: 1}
+  virtualSize: {x: 0, y: 0}
   sizeAsPixels: 0
   newMaterialInstance: 0
 --- !u!23 &804052029
@@ -2570,6 +2590,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &938484005
@@ -2615,6 +2636,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &953681913
@@ -3050,6 +3072,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &1061897982
@@ -3112,6 +3135,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 4}
   _radius: .00999999978
@@ -3265,6 +3289,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &1149827355
@@ -3315,6 +3340,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 4}
   _radius: .00999999978
@@ -3400,6 +3426,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Goomba
   _collisionGroup: 
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978
@@ -3580,6 +3607,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &1235225171
@@ -3625,6 +3653,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &1238963383
@@ -3696,6 +3725,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!23 &1268897227
@@ -3808,6 +3838,7 @@ MonoBehaviour:
   texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
   wrapMode: 0
   size: {x: 1, y: .239999995}
+  virtualSize: {x: 0, y: 0}
   sizeAsPixels: 0
   newMaterialInstance: 0
 --- !u!114 &1318567360
@@ -3821,7 +3852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: 0, y: 0}
-  asProportion: 0
+  xAsPixels: 0
+  yAsPixels: 0
   layout: 1
 --- !u!1001 &1318861329
 Prefab:
@@ -3962,6 +3994,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Oneway
   _collisionGroup: Oneway
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0399999991}
   _size: {x: .970000029, y: .899999976}
   _radius: 0
@@ -4167,6 +4200,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 4}
   _radius: .00999999978
@@ -4245,6 +4279,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 18}
   _radius: 0
@@ -4320,6 +4355,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 4, y: 4}
   _radius: .00999999978
@@ -4481,6 +4517,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 20, y: 9.51000023}
   _radius: 0
@@ -4500,6 +4537,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Ghost
   _collisionGroup: Ghost
+  MonoBehaviourName: 
   _radius: .529999971
   _center: {x: 0, y: 0}
 --- !u!114 &1370795953
@@ -4606,6 +4644,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &1441467589
@@ -4717,6 +4756,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &1471928556
@@ -4948,6 +4988,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Oneway
   _collisionGroup: Oneway
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0399999991}
   _size: {x: .970000029, y: .899999976}
   _radius: 0
@@ -5125,6 +5166,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Goomba
   _collisionGroup: 
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978
@@ -5427,6 +5469,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &1617991174
@@ -5650,6 +5693,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: 1
   _center: {x: 0, y: 0}
 --- !u!1001 &1645078965
@@ -5770,6 +5814,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &1712843896
@@ -6031,6 +6076,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Goomba
   _collisionGroup: 
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978
@@ -6132,6 +6178,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1001 &1780812485
@@ -6330,6 +6377,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 20, y: 4}
   _radius: .00999999978
@@ -6416,6 +6464,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
+  MonoBehaviourName: 
   _center: {x: 0, y: 16.3799992}
   _size: {x: 3, y: 50}
   _radius: 0
@@ -6457,6 +6506,10 @@ Prefab:
     - target: {fileID: 11400000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
       propertyPath: inFrontCam
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
+      propertyPath: enablePlayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
@@ -6726,6 +6779,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Oneway
   _collisionGroup: Oneway
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0399999991}
   _size: {x: .970000029, y: .899999976}
   _radius: 0
@@ -7327,6 +7381,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
+  MonoBehaviourName: 
   _center: {x: 0, y: 16.3799992}
   _size: {x: 3, y: 50}
   _radius: 0
@@ -7440,6 +7495,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &2028569807
@@ -7486,6 +7542,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: SpawnPos
   _collisionGroup: SpawnPos
+  MonoBehaviourName: 
   _center: {x: 0, y: 15.2600002}
   _size: {x: 3, y: 50}
   _radius: 0
@@ -7620,6 +7677,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Scenery
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 20, y: 4}
   _radius: .00999999978
@@ -7678,6 +7736,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: 1
   _center: {x: 0, y: 0}
 --- !u!1 &2119660812
@@ -7813,6 +7872,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: KoopaTroopa
   _collisionGroup: 
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0949999988}
   _size: {x: .899999976, y: .810000002}
   _radius: 0
@@ -7844,6 +7904,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
+  MonoBehaviourName: 
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -7924,6 +7985,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: UnlockSensor
   _collisionGroup: Scenery
+  MonoBehaviourName: 
   _radius: .699999988
   _center: {x: 0, y: 0}
 --- !u!1 &2140555908

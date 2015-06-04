@@ -1,25 +1,22 @@
 using UnityEngine;
 
-public class Goal : MonoBehaviour, IInCollisionCP {
+public class Goal : MonoBehaviour {
 	
 	public EnumGoalActivation activation = EnumGoalActivation.ACTIVATION_UP;
 	
-	private bool inCollision;
-	
 	void Awake() {
-		this.enabled = false;
-	}
-	
-	public bool InCollision {
-		get {return inCollision;}
-		set {this.enabled = value; inCollision = value;}
+		setTargetInside(false);
 	}
 	
 	void Update () {
 		if (isActivationValid()) {
-			this.enabled = false;
+			setTargetInside(false);
 			LevelManager.Instance.loadNextLevel();
 		}
+	}
+	
+	private void setTargetInside (bool value){
+		this.enabled = value;
 	}
 	
 	public bool isActivationValid () {		
@@ -36,5 +33,25 @@ public class Goal : MonoBehaviour, IInCollisionCP {
 		}
 		
 		return false;
+	}
+	
+	public static bool beginCollisionWithPlayer (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
+		
+		shape1.getOwnComponent<Goal>().setTargetInside(true);
+		
+		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
+		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
+		return false;
+	}
+	
+	public static void endCollisionWithPlayer (ChipmunkArbiter arbiter) {
+		ChipmunkShape shape1, shape2;
+		// The order of the arguments matches the order in the function name.
+		arbiter.GetShapes(out shape1, out shape2);
+		
+		shape1.getOwnComponent<Goal>().setTargetInside(false);
 	}
 }

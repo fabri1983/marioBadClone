@@ -3,7 +3,7 @@
 #endif
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCollisionCP {
+public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -20,9 +20,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	private bool exitedFromScenery;
 	private ChipmunkSegmentQueryInfo qinfo;
 	private ChipmunkBody body;
-	private float walkVelBackup, signCollision;
+	private float walkVelBackup;
 	private bool doNotResume;
-	private bool inCollision;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
@@ -99,11 +98,6 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		instance = null;
 	}
 	
-	public bool InCollision {
-		get {return inCollision;}
-		set {inCollision = value;}
-	}
-	
 	public bool DoNotResume {
 		get {return doNotResume;}
 		set {doNotResume = value;}
@@ -156,17 +150,11 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 			walk.walk(-walkVelocity);
 			fireDir = leftFireDir;
 			isIdle = false;
-			// enable move speed after a wall collision if intended moving direction changes
-			if (signCollision > 0f)
-				restoreWalkVel();
 		}
 		else if (Gamepad.isRight()) {
 			walk.walk(walkVelocity);
 			fireDir = rightFireDir;
 			isIdle = false;
-			// enable move speed after a wall collision if intended moving direction changes
-			if (signCollision < 0f)
-				restoreWalkVel();
 		}
 		else
 			// if no movement input then set correct internal status
@@ -214,9 +202,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		// disable this componenet
 		this.enabled = false;
 		// dump to zero velocity
-		Vector2 v = body.velocity;
-		v.x =0;
-		body.velocity = v;
+		body.velocity = Vector2.zero;
 		// do animation
 		dieAnim.startAnimation();
 	}
@@ -271,29 +257,22 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		arbiter.GetShapes(out shape1, out shape2);
 		
 		Player player = shape1.getOwnComponent<Player>();
-		/*if (player.isDying())
-			return false; // stop collision with scenery since this frame*/
+		if (player.isDying())
+			return false; // stop collision with scenery since this frame
+		
+		// avoid ground penetration (Y axis). Another way to solve this: see minPenetrationForPenalty config in CollisionManagerCP
+		/*Vector2 thePos = player.body.position;
+		float depth = arbiter.GetDepth(0);
+		thePos.y -= depth;
+		player.body.position = thePos;*/
 		
 		player.exitedFromScenery = false;
 		
-		// avoid ground penetration (Y axis)
-		// NOTE: to solve this Chipmunk has the property collisionBias and/or minPenetrationForPenalty
-		Vector2 thePos = player.body.position;
-		float depth = arbiter.GetDepth(0);
-		thePos.y -= depth;
-		player.body.position = thePos;
-		
 		// if isn't a grounded surface then stop velocity and avoid getting inside the object
-		if (GameObjectTools.isWallHit(arbiter)) {
-			// get sign direction to know what offset apply to body
-			player.signCollision = -Mathf.Sign(player.transform.position.x - shape2.transform.position.x);
+		/*if (GameObjectTools.isWallHit(arbiter)) {
 			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
 			player.walkVelocity = 0.001f;
-			// move back to the contact point and a little more
-			thePos = player.body.position;
-			thePos.x += player.signCollision * (depth - 0.01f);
-			player.body.position = thePos;
-		}
+		}*/
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
@@ -305,20 +284,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 		
-		shape1.getOwnComponent<Player>().exitedFromScenery = true;
-	}
-	
-	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
-		ChipmunkShape shape1, shape2;
-	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
-		
 		Player player = shape1.getOwnComponent<Player>();
-		player.restoreWalkVel();
-		
-		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
-		return false;
+		player.exitedFromScenery = true;
 	}
 
 	public static bool beginCollisionWithOneway (ChipmunkArbiter arbiter) {

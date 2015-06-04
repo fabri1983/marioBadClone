@@ -123,7 +123,7 @@ public class SideScrollerController : MonoBehaviour {
 	protected bool lastJumpKeyState = false;
 	protected float remainingBoost = 0f;
 	
-	public string jumpButton = "Jump";
+	private string jumpButton = "Jump";
 	protected bool jumpInput {
 		get {
 			// Check both the virtual controls and the input buttons.
@@ -134,12 +134,12 @@ public class SideScrollerController : MonoBehaviour {
 		}
 	}
 	
-	public string runButton = "Fire1";
+	private string runButton = "Fire1";
 	protected bool runInput {
 		get { return Input.GetButton(runButton); }
 	}
 	
-	public string directionAxis = "Horizontal";
+	private string directionAxis = "Horizontal";
 	protected float directionInput {
 		get {
 			// Check both the virtual controls and the input buttons.
