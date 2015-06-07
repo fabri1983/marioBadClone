@@ -38,13 +38,6 @@ public abstract class WalkAbs : MonoBehaviour {
 		stop();
 	}
 	
-	void Update () {
-		if (Mathf.Abs(body.velocity.x) < 0.1f)
-			walking = false;
-		else
-			updateWalk();
-	}
-	
 	public void stop () {
 		stopWalking(); // implemented in the sub class
 		walking = false;
@@ -71,7 +64,7 @@ public abstract class WalkAbs : MonoBehaviour {
 		updateWalk();
 	}
 	
-	private void updateWalk () {
+	protected void updateWalk () {
 		bool oldLooking = lookingRight;
 		float vx = body.velocity.x;
 		if (vx > 0f)

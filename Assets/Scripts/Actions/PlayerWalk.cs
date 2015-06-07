@@ -14,6 +14,13 @@ public class PlayerWalk : WalkAbs {
 		walkLookingUpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.WalkLookUpwards, true);
 	}
 	
+	void Update () {
+		if (Mathf.Abs(base.body.velocity.x) < 0.1f)
+			base.walking = false;
+		else
+			base.updateWalk();
+	}
+	
 	public override void reset () {
 		Vector2 v = base.body.velocity;
 		v.x = 0f;
