@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerWalk : WalkAbs {
 	
 	public float speedUpFactor = 1.9f;
-	public bool lessenOnJump = true;
 	
 	private AnimateTiledConfig walkAC_orig;
 	private AnimateTiledConfig walkLookingUpAC;
@@ -16,23 +15,19 @@ public class PlayerWalk : WalkAbs {
 	}
 	
 	public override void reset () {
-		//if (idle != null) idle.setIdle(true);
-		base.walking = false;
-		base.stop = false;
+		Vector2 v = base.body.velocity;
+		v.x = 0f;
+		base.body.velocity = v;
+		base.stop();
 	}
 	
 	public override void walk (float velocity) {
-		if (stop)
+		if (!base.enabled)
 			return;
 		
 		base.gain = 1f; // default value
-		float velX = base.shape.body.velocity.x;
-		
-		// when jumping and trying to move in opposite direction, just lessen current velocity
-		if (lessenOnJump && base.jump.IsJumping() && (velX * velocity) < 0f)
-			velocity = velX * 0.75f;
 		// is speed up button being pressed?
-		else if (Gamepad.isB())
+		if (Gamepad.isB())
 			base.gain = speedUpFactor;
 		
 		// if user is looking upwards then set the correct sprite animation
@@ -42,13 +37,10 @@ public class PlayerWalk : WalkAbs {
 			base.walkAC = walkAC_orig;
 		
 		base._walk(velocity);
-		base.walkAC.animComp.setFPS(base.walkAC.animFPS * base.gain);
 	}
 	
-	public override void stopWalking () {
-		base._stopWalking();
-		
-		if (!base.jump.IsJumping() && lookDirections.isLookingAnyDirection())
+	protected override void stopWalking () {
+		if (!base.jump.IsJumping() && !lookDirections.isLookingAnyDirection())
 			base.walkAC = walkAC_orig;
 	}
 }

@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This class allow to pull down from a platform when on crouching.
+/// This class allow to climb down from a platform when on crouching.
 /// </summary>
-public class ClimbDownOnPlatform : MonoBehaviour {
+public class ClimbDownFromPlatform : MonoBehaviour {
 
 	private bool isOnPlatform = false;
 	private bool traversingUpwards = false;
@@ -42,7 +42,7 @@ public class ClimbDownOnPlatform : MonoBehaviour {
 			isOnPlatform = false;
 	}
 
-	public bool isPullingDown () {
+	public bool isClimbingDown () {
 		if (isOnPlatform && crouch != null && crouch.isCrouching())
 			return true;
 		return false;

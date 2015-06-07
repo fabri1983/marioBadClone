@@ -1,20 +1,14 @@
 
 public class Walk : WalkAbs {
 	
-	public override void reset () {
-		//if (idle != null) idle.setIdle(true);
-		walking = false;
-		stop = false;
-	}
+	public override void reset () {}
 	
 	public override void walk (float velocity) {
-		if (stop)
+		if (!base.enabled)
 			return;
 		gain = 1f;
 		base._walk(velocity);
 	}
 
-	public override void stopWalking () {
-		base._stopWalking();
-	}
+	protected override void stopWalking () {}
 }

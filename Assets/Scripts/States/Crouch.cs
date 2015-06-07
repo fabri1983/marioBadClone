@@ -85,7 +85,7 @@ public class Crouch : MonoBehaviour {
 		if (!crouching)
 			return;
 		
-		move.stopWalking(); // this force the reset of the sprite animation
+		move.stop(); // this force the reset of the sprite animation
 		crouchAC.stop();
 		crouching = false;
 		

@@ -32,7 +32,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		/// flood of begin/separate collision events. Increasing the collision slop greatly reduces the chances of 
 		/// objects getting pushed completely apart.
 		/// Default is 0.01f
-		Chipmunk.minPenetrationForPenalty = 0.1f;
+		//Chipmunk.minPenetrationForPenalty = 0.1f;
 		
 		/// Rate at which overlapping objects are pushed apart.
 		/// Defaults to Mathf.Pow(0.9f, 60f) = 0.001797007f, meaning it will fix 10% of overlap per 1/60th second.

@@ -190,6 +190,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Ghost
   _collisionGroup: Ghost
+  MonoBehaviourName: Ghost
   _radius: .529999971
   _center: {x: 0, y: 0}
 --- !u!114 &11400012
@@ -250,6 +251,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 20, y: 9.51000023}
   _radius: 0

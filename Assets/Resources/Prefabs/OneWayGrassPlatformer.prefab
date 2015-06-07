@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: PlatformOneWayGrass
+  m_Name: OneWayGrassPlatformer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,6 +82,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Oneway
   _collisionGroup: Oneway
+  MonoBehaviourName: 
   _center: {x: 0, y: -.0399999991}
   _size: {x: .970000029, y: .899999976}
   _radius: 0

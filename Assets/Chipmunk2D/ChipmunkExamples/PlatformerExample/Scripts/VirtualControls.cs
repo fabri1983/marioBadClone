@@ -16,12 +16,12 @@ public class VirtualControls : MonoBehaviour {
 		direction = 0f;
 		jump = false;
 		
-		
 		if(Input.GetMouseButton(0) && Input.touchCount == 0){
 			ProcessTouch(Input.mousePosition);
 		}
 		
-		foreach(var touch in Input.touches) ProcessTouch(touch.position);
+		foreach(var touch in Input.touches)
+			ProcessTouch(touch.position);
 	}
 	
 	protected void ProcessTouch(Vector3 point){

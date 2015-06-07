@@ -200,6 +200,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: Goomba
   _collisionGroup: 
+  MonoBehaviourName: Goomba
   _center: {x: 0, y: 0}
   _size: {x: 1, y: 1}
   _radius: .00999999978

@@ -70,7 +70,7 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	
 	private void stop () {
 		targetWalkComp = null;
-		chase.stopChasing();
+		chase.stop();
 		fly.stopFlying();
 	}
 	
@@ -87,7 +87,7 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		}
 		else {
 			body.Activate();
-			chase.enableChasing();
+			chase.enable();
 			fly.fly();
 		}
 	}
@@ -104,8 +104,8 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Ghost ghost = shape1.GetComponent<Ghost>();
-		PowerUp powerUp = shape2.GetComponent<PowerUp>();
+		Ghost ghost = shape1.getOwnComponent<Ghost>();
+		PowerUp powerUp = shape2.getOwnComponent<PowerUp>();
 		
 		powerUp.Invoke("destroy", 0f); // a replacement for Destroy
 		ghost.die();
@@ -119,7 +119,7 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Ghost ghost = shape1.GetComponent<Ghost>();
+		Ghost ghost = shape1.getOwnComponent<Ghost>();
 		ghost.stop();
 		
 		// kills player

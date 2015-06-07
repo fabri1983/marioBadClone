@@ -111,6 +111,7 @@ MonoBehaviour:
   _isSensor: 0
   _collisionType: KoopaTroopa
   _collisionGroup: 
+  MonoBehaviourName: KoopaTroopa
   _center: {x: 0, y: -.0949999988}
   _size: {x: .899999976, y: .810000002}
   _radius: 0
@@ -301,6 +302,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0

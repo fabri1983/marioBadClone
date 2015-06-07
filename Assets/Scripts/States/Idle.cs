@@ -25,7 +25,7 @@ public class Idle : MonoBehaviour {
 			return;
 		
 		if (move != null)
-			move.stopWalking();
+			move.stop();
 		
 		if (crouch != null)
 			crouch.noCrouch();

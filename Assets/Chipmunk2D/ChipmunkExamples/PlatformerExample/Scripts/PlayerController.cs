@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour {
 			Debug.LogError("Your PlayerController is not configured properly! Add a body!");	
 		}
 
-		
 		startPos = body.position;
 		spriteScale = sprite.transform.localScale;
 	}

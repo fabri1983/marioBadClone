@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour {
 
 	public const int SCENE_MAIN_INDEX = 0;
 	public const int SCENE_SELECTION_INDEX = 1;
-	public const float ENDING_DIE_ANIM_Y_POS = -20f; // used in addition to current y pos
+	public const float ENDING_DIE_ANIM_Y_POS = -40f; // world y coordinate
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
 	
@@ -118,7 +118,6 @@ public class LevelManager : MonoBehaviour {
 			activeLevel = level; // update current level index
 		
 		player.toogleEnabled(false); // deactivate to avoid falling in empty scene, it will be restored with StartLevel script
-		player.restoreWalkVel(); // in case the player was colliding a wall
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
 		guiContainer_so = null; // reset the references of scene only GUI elements container
 		
