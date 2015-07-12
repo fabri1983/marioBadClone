@@ -215,10 +215,6 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	public void die () {
 		// disable this componenet
 		this.enabled = false;
-		// dump velocity to zero
-		/*Vector2 v = body.velocity;
-		v.x = 0f;
-		body.velocity = v;*/
 		// do animation
 		dieAnim.startAnimation();
 	}
@@ -337,7 +333,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		arbiter.GetShapes(out shape1, out shape2);
 
 		Player player = shape1.getOwnComponent<Player>();
-		player.jump.resetStatus(); // set state as if were jumping
+		//player.jump.resetStatus(); // set state as if were jumping
 		
 		// If was traversing the platform from below then the player is over the platform.
 		// Correct inner state is treated by the invoked method

@@ -149,7 +149,7 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	void ChipmunkSeparate_Player_Oneway (ChipmunkArbiter arbiter) {
 		Player.endCollisionWithOneway(arbiter);
 		// proceed as separating from Scenery
-		ChipmunkSeparate_Player_Scenery(arbiter);
+		//ChipmunkSeparate_Player_Scenery(arbiter);
 	}
 	
 	bool ChipmunkBegin_Goal_Player (ChipmunkArbiter arbiter) {

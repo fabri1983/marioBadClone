@@ -44,13 +44,14 @@ public abstract class WalkAbs : MonoBehaviour {
 		stopWalking(); // implemented in the sub class
 		walking = false;
 		velocity = 0f;
-		updateWalk();
 		walkAC.stop();
 	}
 	
 	void Update () {
-		if (agUpdater != null && Mathf.Abs(agUpdater.groundVelocity.x) < 0.8f)
+		if (agUpdater != null && Mathf.Abs(agUpdater.groundVelocity.x) < 1f)
 			stop();
+		else
+			updateWalk();
 	}
 	
 	protected void _walk (float vel) {
