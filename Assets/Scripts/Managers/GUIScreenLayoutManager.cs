@@ -276,12 +276,12 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		// we're only interesting in z coordinate
 		// NOTE: x and y are overwritten on consequent lines
 		result = posAhead * Camera.main.transform.forward + Camera.main.transform.position;
-
-		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + 0.01f
-		// keep z untouch (z-position of the GUI element), set width and height
+		
+		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + delta
+		// keep z untouch (z-position of the GUI element), only set width and height
 		if (Camera.main.orthographic) {
 			result.y = Camera.main.orthographicSize * 2f;
-			result.x = result.y / Screen.height * Screen.width;
+			result.x = (result.y / Screen.height) * Screen.width;
 		}
 		else {
 			result.y = 2f * Mathf.Tan(Camera.main.fieldOfView * DEG_2_RAD_0_5) * posAhead;
@@ -311,6 +311,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		float guiH = guiZposAndDimension.y;
 		
 		// maps pixel coordinate to a box with coordinates (-w/2, -h/2) to (w/2, h/2). This is the custom GUI viewport
+		
 		result.x = guiW * (pixelX / Screen.width - 0.5f);
 		result.y = guiH * (pixelY / Screen.height - 0.5f);
 
