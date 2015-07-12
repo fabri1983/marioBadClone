@@ -22,6 +22,9 @@ public class Chase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (target == null)
+			return;
+		
 		// calculate sign direction
 		signDir = Mathf.Sign(target.position.x - transform.position.x);
 		if (patrol != null)

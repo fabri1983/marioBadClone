@@ -21,7 +21,7 @@ public class Idle : MonoBehaviour {
 	public void setIdle (bool force) {
 		
 		// not idle if jumping and force = false
-		if (!force && jump != null && jump.IsJumping())
+		if (!force && jump != null && jump.isJumping())
 			return;
 		
 		if (move != null)

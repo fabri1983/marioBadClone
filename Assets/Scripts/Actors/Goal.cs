@@ -22,13 +22,13 @@ public class Goal : MonoBehaviour {
 	public bool isActivationValid () {		
 		switch (activation) {
 			case EnumGoalActivation.ACTIVATION_UP:
-				return Gamepad.isUp();
+				return Gamepad.Instance.isUp();
 			case EnumGoalActivation.ACTIVATION_DOWN:
-				return Gamepad.isDown();
+				return Gamepad.Instance.isDown();
 			case EnumGoalActivation.ACTIVATION_RIGHT:
-				return Gamepad.isRight();
+				return Gamepad.Instance.isRight();
 			case EnumGoalActivation.ACTIVATION_LEFT:
-				return Gamepad.isLeft();
+				return Gamepad.Instance.isLeft();
 			default: break;
 		}
 		

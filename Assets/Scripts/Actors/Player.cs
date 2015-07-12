@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	
+	private static Player instance = null;
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
+	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
 	public float gainJumpFactor = 1.4f;
@@ -17,7 +20,6 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	private Teleportable teleportable;
 	private PowerUp powerUp;
 	private LookDirections lookDirections;
-	private bool exitedFromScenery;
 	private ChipmunkBody body;
 	private bool doNotResume;
 	
@@ -25,13 +27,11 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	private Transform firePivot;
 	private Vector2 rightFireDir, leftFireDir, fireDir;
 	
-	// I guess 3.2f is half the size of Player's renderer plus few units more so the query ratio is the shortest possible
-	private static Vector2 queryOffset = Vector2.up * -3.2f;
-	private static string collisionGroupSkip;
-	private static uint collisionLayers;
-	
-	private static Player instance = null;
-	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
+	/// used for downwards ray casting
+	private bool exitedFromScenery;
+	private Vector2 queryOffset = Vector2.up * -3.2f;
+	private string collisionGroupSkip;
+	private uint collisionLayersSkip;
 	
 	public static Player Instance {
         get {
@@ -82,7 +82,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		
 		collisionGroupSkip = GetComponent<ChipmunkShape>().collisionGroup;
 		// not sure if ok: all layers except Player's layer
-		collisionLayers = unchecked((uint)(1 << LayerMask.NameToLayer(Layers.PLAYER)));
+		collisionLayersSkip = unchecked((uint)(1 << LayerMask.NameToLayer(Layers.PLAYER)));
+		//collisionLayers = 0;
 	}
 	
 	void OnDestroy () {
@@ -125,28 +126,28 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	
 	// Update is called once per frame
 	void Update () {
+		bool isIdle = true;
 		
 		// This sets the correct jump status when the player without jumping enters on free fall state.
 		// Also corrects a sprite animation flickering when walking because the animation starts again 
 		// constantly after jump.resetStatus()
-		if (exitedFromScenery && !jump.IsJumping()) {
+		if (exitedFromScenery && !jump.isJumping()) {
 			ChipmunkSegmentQueryInfo qinfo;
 			// check if there is no shape below us
 			Vector2 end = body.position + queryOffset;
-			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayers, collisionGroupSkip, out qinfo);
+			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayersSkip, collisionGroupSkip, out qinfo);
 			// if no handler it means no hit
-			if (System.IntPtr.Zero == qinfo._shapeHandle)
+			if (System.IntPtr.Zero == qinfo._shapeHandle) {
 				jump.resetStatus(); // set state as if were jumping
+			}
 		}
 		
-		bool isIdle = true;
-		
 		// jump
-		if (Gamepad.isA()) {
+		if (Gamepad.Instance.isA()) {
 			walk.stop();
 			jump.jump(lightJumpVelocity);
 			// apply gain jump power. Only once per jump (handled in Jump component)
-			if (Gamepad.isHardPressed(EnumButton.A))
+			if (Gamepad.Instance.isHardPressed(EnumButton.A))
 				jump.applyGain(gainJumpFactor); 
 			isIdle = false;
 		}
@@ -155,12 +156,18 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		if (powerUp != null && powerUp.ableToUse())
 			powerUp.action(gameObject);
 		
-		// move
-		if (Gamepad.isLeft()) {
+		// walk
+		if (Gamepad.Instance.isLeft()) {
+			// is speed up button being pressed?
+			if (Gamepad.Instance.isB()) walk.setGain(walk.speedUpFactor);
+			else walk.setGain(1f);
 			walk.walk(-walkVelocity);
 			fireDir = leftFireDir;
 		}
-		else if (Gamepad.isRight()) {
+		else if (Gamepad.Instance.isRight()) {
+			// is speed up button being pressed?
+			if (Gamepad.Instance.isB()) walk.setGain(walk.speedUpFactor);
+			else walk.setGain(1f);
 			walk.walk(walkVelocity);
 			fireDir = rightFireDir;
 		}
@@ -168,7 +175,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 			isIdle = false;
 
 		// crouch
-		if (Gamepad.isDown()) {
+		if (Gamepad.Instance.isDown()) {
 			crouch.crouch();
 			isIdle = false;
 		}
@@ -176,8 +183,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 			crouch.noCrouch();
 		
 		// look upwards/downwards
-		if (!jump.IsJumping()) {
-			if (Gamepad.isUp()) {
+		if (!jump.isJumping()) {
+			if (Gamepad.Instance.isUp()) {
 				lookDirections.lookUpwards();
 				isIdle = false;
 			}
@@ -209,10 +216,9 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		// disable this componenet
 		this.enabled = false;
 		// dump velocity to zero
-		Vector2 v = body.velocity;
+		/*Vector2 v = body.velocity;
 		v.x = 0f;
-		v.y = 0f;
-		body.velocity = v;
+		body.velocity = v;*/
 		// do animation
 		dieAnim.startAnimation();
 	}
@@ -222,11 +228,13 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	}
 	
 	public bool isJumping () {
-		return jump.IsJumping();
+		return jump.isJumping();
 	}
 	
+	/// <summary>
+	/// Used when the player kills an enemy from above or similar situations
+	/// </summary>
 	public void forceJump () {
-		// used when the player kills an enemy from above or similar situations
 		jump.forceJump(lightJumpVelocity);
 	}
 	
@@ -255,13 +263,16 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		if (player.isDying())
 			return false; // stop collision with scenery since this frame
 		
-		// avoid ground penetration (Y axis). Another way to solve this: see minPenetrationForPenalty config in CollisionManagerCP
-		Vector2 thePos = player.body.position;
-		float depth = arbiter.GetDepth(0);
-		thePos.y -= depth;
-		player.body.position = thePos;
-		
 		player.exitedFromScenery = false;
+		
+		// Avoid ground penetration (Y axis). Another way: see collisionBias and/or minPenetrationForPenalty config in CollisionManagerCP.
+		// Currently is being addressed by AirGroundControlUpdater and in WalkAbs
+		/*if (GameObjectTools.isGrounded(arbiter)) {
+			Vector2 thePos = player.body.position;
+	        float depth = arbiter.GetDepth(0);
+			thePos.y -= depth;
+	        player.body.position = thePos;
+		}*/
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
@@ -274,6 +285,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		arbiter.GetShapes(out shape1, out shape2);
 		
 		Player player = shape1.getOwnComponent<Player>();
+		
 		player.exitedFromScenery = true;
 	}
 
@@ -291,7 +303,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		else {
 			shape1.GetComponent<ClimbDownFromPlatform>().handleLanding();
 		}
-
+		
 		// oneway platform logic was not met
 		return false;
 	}

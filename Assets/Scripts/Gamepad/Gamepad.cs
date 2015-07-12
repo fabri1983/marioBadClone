@@ -44,7 +44,7 @@ public class Gamepad : MonoBehaviour {
 	/// <summary>
 	/// Resets the state of all buttons.
 	/// </summary>
-	public static void resetButtonState () {
+	public void resetButtonState () {
 		for (int i=0; i < buttonsState.Length; ++i)
 			buttonsState[i] = false;
 	}
@@ -52,7 +52,7 @@ public class Gamepad : MonoBehaviour {
 	/// <summary>
 	/// Updates the hard pressed state of every button.
 	/// </summary>
-	private static void updateHardPressed () {
+	private void updateHardPressed () {
 		// increment count for ON buttons. Set to 0 to OFF buttons
 		for (int i=0; i < buttonsState.Length; ++i) {
 			if (buttonsState[i])
@@ -85,7 +85,7 @@ public class Gamepad : MonoBehaviour {
 	/// Set the button's state to true (on). If the button does pass the hard pressed test, 
 	/// the Gamepad manager keeps track of the situation.
 	/// </summary>
-	public static void fireButton (EnumButton button) {
+	public void fireButton (EnumButton button) {
 		buttonsState[(int)button] = true;
 	}
 	
@@ -99,31 +99,31 @@ public class Gamepad : MonoBehaviour {
 	/// <param name='button'>
 	/// The button enum value
 	/// </param>
-	public static bool isHardPressed (EnumButton button) {
+	public bool isHardPressed (EnumButton button) {
 		return hardPressedCount[(int)button] >= HARD_PRESSED_MIN_COUNT;
 	}
 	
-	public static bool isUp() {
+	public bool isUp() {
 		return buttonsState[(int)EnumButton.UP] || Input.GetAxis("Vertical") > 0.1f;
 	}
 	
-	public static bool isDown() {
+	public bool isDown() {
 		return buttonsState[(int)EnumButton.DOWN] || Input.GetAxis("Vertical") < -0.1f;
 	}
 	
-	public static bool isLeft() {
+	public bool isLeft() {
 		return buttonsState[(int)EnumButton.LEFT] || Input.GetAxis("Horizontal") < -0.1f;
 	}
 	
-	public static bool isRight() {
+	public bool isRight() {
 		return buttonsState[(int)EnumButton.RIGHT] || Input.GetAxis("Horizontal") > 0.1f;
 	}
 	
-	public static bool isA() {
+	public bool isA() {
 		return buttonsState[(int)EnumButton.A] || Input.GetButton("Button A");
 	}
 	
-	public static bool isB() {
+	public bool isB() {
 		return buttonsState[(int)EnumButton.B] || (Input.GetButton("Button B") && Input.touchCount == 0);
 	}
 }

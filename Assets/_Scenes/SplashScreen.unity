@@ -328,7 +328,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1379560432}
+  - {fileID: 2008497009}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -700,7 +700,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 87915835}
+  - {fileID: 651461618}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -719,30 +719,6 @@ MonoBehaviour:
   m_Name: 
   baseQueue: 4000
   offset: 1
---- !u!21 &87915835
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &120880479
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,9 +900,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 71.948082, y: -14.6627502, z: 0}
   m_LocalScale: {x: 3, y: 1, z: 1}
-  m_Children:
-  - {fileID: 686682892}
-  - {fileID: 655931085}
+  m_Children: []
   m_Father: {fileID: 1149980330}
 --- !u!114 &184410087
 MonoBehaviour:
@@ -987,6 +961,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 381187271}
   m_GameObject: {fileID: 184410085}
   m_Mesh: {fileID: 4300000, guid: bf36e7ac6026a8f498e5f96bb3b4f4a2, type: 2}
+--- !u!21 &192146730
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 62944c71b10a47a45b6244c7af6188d6, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &196330257
 Prefab:
   m_ObjectHideFlags: 0
@@ -1025,7 +1023,7 @@ Prefab:
     - target: {fileID: 2300000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 87915835}
+      objectReference: {fileID: 651461618}
     - target: {fileID: 400000, guid: 9fbcfd0c1dbb8e7469e30421bdf8b6c4, type: 2}
       propertyPath: m_LocalScale.x
       value: .0425074138
@@ -1039,30 +1037,6 @@ Prefab:
   m_RootGameObject: {fileID: 46351032}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!21 &198463221
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &198966388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,9 +1065,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 105.522797, y: -6.69000006, z: 0}
   m_LocalScale: {x: 1.20000005, y: .670000017, z: 1}
-  m_Children:
-  - {fileID: 2076553717}
-  - {fileID: 1526911099}
+  m_Children: []
   m_Father: {fileID: 1149980330}
 --- !u!114 &198966390
 MonoBehaviour:
@@ -1211,7 +1183,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
-  MonoBehaviourName: 
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -1330,30 +1302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc64c64e38d8d04a9d03f866737c16f, type: 1}
   m_Name: 
   hideColliderProportion: .800000012
---- !u!21 &205184362
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 4c7dcf056a8fc5941aa093d9c6889fd6, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &219193284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,98 +1372,6 @@ MonoBehaviour:
   m_Name: 
   baseQueue: 4000
   offset: 100
---- !u!1 &255849552
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100004, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 1401485590}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 255849553}
-  - 114: {fileID: 255849554}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &255849553
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400004, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 1401485590}
-  m_GameObject: {fileID: 255849552}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.1299438, y: 7.545331, z: 0}
-  m_LocalScale: {x: .333333343, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 809602693}
---- !u!114 &255849554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: a4e4695db73385f46be6583630b121f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 1401485590}
-  m_GameObject: {fileID: 255849552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: .699999988
-  _center: {x: 0, y: 0}
---- !u!1 &292204624
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100006, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 2014852544}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 292204625}
-  - 114: {fileID: 292204626}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &292204625
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400006, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 2014852544}
-  m_GameObject: {fileID: 292204624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.1917992, y: 7.545331, z: 0}
-  m_LocalScale: {x: .333333343, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 949173669}
---- !u!114 &292204626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: a4e4695db73385f46be6583630b121f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 2014852544}
-  m_GameObject: {fileID: 292204624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: .699999988
-  _center: {x: 0, y: 0}
 --- !u!1 &316163713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,7 +1496,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1597385274}
+  - {fileID: 192146730}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1833,6 +1689,7 @@ GameObject:
   - 114: {fileID: 335493307}
   - 114: {fileID: 335493315}
   - 114: {fileID: 335493316}
+  - 114: {fileID: 335493317}
   m_Layer: 10
   m_Name: Mario
   m_TagString: Untagged
@@ -2033,6 +1890,23 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efd1b4032f6fb6b46baf7d02b26a5b90, type: 1}
   m_Name: 
+--- !u!114 &335493317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400044, guid: c962b9c1f9528d14ea03cd06fefbcf87,
+    type: 2}
+  m_PrefabInternal: {fileID: 364437414}
+  m_GameObject: {fileID: 335493301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4adbed88fd99cc14c885f3724b431b05, type: 1}
+  m_Name: 
+  walkAccelTime: .0500000007
+  airAccelTime: .25
+  maxAirJumps: 1
+  jumpLeniency: .0500000007
+  jumpHeight: 1
+  jumpBoostHeight: 2
 --- !u!1001 &364437414
 Prefab:
   m_ObjectHideFlags: 0
@@ -2141,52 +2015,6 @@ Transform:
   - {fileID: 639511289}
   - {fileID: 707504935}
   m_Father: {fileID: 1438843281}
---- !u!1 &403404348
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100006, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 1401485590}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 403404349}
-  - 114: {fileID: 403404350}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &403404349
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400006, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 1401485590}
-  m_GameObject: {fileID: 403404348}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.1917992, y: 7.545331, z: 0}
-  m_LocalScale: {x: .333333343, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 809602693}
---- !u!114 &403404350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: a4e4695db73385f46be6583630b121f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 1401485590}
-  m_GameObject: {fileID: 403404348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: .699999988
-  _center: {x: 0, y: 0}
 --- !u!1 &436574620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,7 +2281,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
-  MonoBehaviourName: 
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -2936,6 +2764,30 @@ Prefab:
   m_RootGameObject: {fileID: 778429934}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &528820926
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &553119603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,7 +2976,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
-  MonoBehaviourName: 
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -3480,7 +3332,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
-  MonoBehaviourName: 
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -3733,7 +3585,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 198463221}
+  - {fileID: 528820926}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3753,6 +3605,30 @@ MonoBehaviour:
   priority: 0
   startDelaySecs: 0
   startRendererOn: 0
+--- !u!21 &651461618
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 7a483c45eb757504a9ba05e49dfafe1f, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &653688795
 Prefab:
   m_ObjectHideFlags: 0
@@ -3805,98 +3681,6 @@ Prefab:
   m_RootGameObject: {fileID: 553119603}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &655931084
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100004, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 381187271}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 655931085}
-  - 114: {fileID: 655931086}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &655931085
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400004, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 381187271}
-  m_GameObject: {fileID: 655931084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.1299438, y: 7.545331, z: 0}
-  m_LocalScale: {x: .333333343, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 184410086}
---- !u!114 &655931086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: a4e4695db73385f46be6583630b121f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 381187271}
-  m_GameObject: {fileID: 655931084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: .699999988
-  _center: {x: 0, y: 0}
---- !u!1 &686682891
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100006, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 381187271}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 686682892}
-  - 114: {fileID: 686682893}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &686682892
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400006, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 381187271}
-  m_GameObject: {fileID: 686682891}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.1917992, y: 7.545331, z: 0}
-  m_LocalScale: {x: .333333343, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 184410086}
---- !u!114 &686682893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: a4e4695db73385f46be6583630b121f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 381187271}
-  m_GameObject: {fileID: 686682891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: .699999988
-  _center: {x: 0, y: 0}
 --- !u!1 &697088253
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,52 +3843,6 @@ Prefab:
   m_RootGameObject: {fileID: 1549489661}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &703540433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100030, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1734273237}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 703540434}
-  - 114: {fileID: 1302604221}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &703540434
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400030, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1734273237}
-  m_GameObject: {fileID: 703540433}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4873414, y: 18.2470036, z: 0}
-  m_LocalScale: {x: .5, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1145869668}
---- !u!114 &703540435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: 63cf21d56d7947b4f9c12fd487fae67b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1734273237}
-  m_GameObject: {fileID: 1302604219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: 1
-  _center: {x: 0, y: 0}
 --- !u!1 &707504934
 GameObject:
   m_ObjectHideFlags: 0
@@ -4150,7 +3888,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2145715898}
+  - {fileID: 1350575687}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4445,6 +4183,30 @@ Prefab:
   m_RootGameObject: {fileID: 1841978333}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &719383875
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 4c7dcf056a8fc5941aa093d9c6889fd6, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &764551416
 GameObject:
   m_ObjectHideFlags: 0
@@ -4697,9 +4459,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -72.0698624, y: -14.6627398, z: 0}
   m_LocalScale: {x: 3, y: 1, z: 1}
-  m_Children:
-  - {fileID: 403404349}
-  - {fileID: 255849553}
+  m_Children: []
   m_Father: {fileID: 1149980330}
 --- !u!114 &809602694
 MonoBehaviour:
@@ -4760,6 +4520,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1401485590}
   m_GameObject: {fileID: 809602692}
   m_Mesh: {fileID: 4300000, guid: bf36e7ac6026a8f498e5f96bb3b4f4a2, type: 2}
+--- !u!21 &836024002
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 984d093ee08c1d3499ff833a8878eedc, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &862929955
 GameObject:
   m_ObjectHideFlags: 0
@@ -4892,7 +4676,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 205184362}
+  - {fileID: 719383875}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -5048,9 +4832,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.0514310002, y: -14.6627502, z: 0}
   m_LocalScale: {x: 3, y: 1, z: 1}
-  m_Children:
-  - {fileID: 292204625}
-  - {fileID: 1655315201}
+  m_Children: []
   m_Father: {fileID: 1149980330}
 --- !u!114 &949173670
 MonoBehaviour:
@@ -5149,11 +4931,11 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 198463221}
+      objectReference: {fileID: 528820926}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2145715898}
+      objectReference: {fileID: 1350575687}
     - target: {fileID: 11400000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: beginSelected
       value: 1
@@ -5335,30 +5117,6 @@ Prefab:
   m_RootGameObject: {fileID: 712668638}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!21 &1001251686
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 984d093ee08c1d3499ff833a8878eedc, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1048211016
 Prefab:
   m_ObjectHideFlags: 0
@@ -5641,6 +5399,45 @@ MonoBehaviour:
   _buffer: {x: 0, y: 0}
   _rowLimits: 0000000001000000
   _colLimits: 0000000002000000
+--- !u!1 &1095843811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1095843812}
+  - 114: {fileID: 1095843813}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1095843812
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1095843811}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1095843813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1095843811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+  lastScreenWidth: 480
+  lastScreenHeight: 320
 --- !u!1 &1145869667
 GameObject:
   m_ObjectHideFlags: 0
@@ -5669,9 +5466,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -105.657303, y: -6.69000006, z: 0}
   m_LocalScale: {x: 1.20000005, y: .670000017, z: 1}
-  m_Children:
-  - {fileID: 1302604220}
-  - {fileID: 703540434}
+  m_Children: []
   m_Father: {fileID: 1149980330}
 --- !u!114 &1145869669
 MonoBehaviour:
@@ -5924,7 +5719,7 @@ MonoBehaviour:
   _isSensor: 1
   _collisionType: ChaseSensor
   _collisionGroup: ChaseSensor
-  MonoBehaviourName: 
+  MonoBehaviourName: Chase
   _center: {x: 0, y: 0}
   _size: {x: 8, y: 1}
   _radius: 0
@@ -5965,53 +5760,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 335493302}
---- !u!1 &1302604219
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100024, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1734273237}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1302604220}
-  - 114: {fileID: 703540435}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1302604220
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400024, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1734273237}
-  m_GameObject: {fileID: 1302604219}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.44445801, y: 18.2470036, z: 0}
-  m_LocalScale: {x: .5, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1145869668}
---- !u!114 &1302604221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: 63cf21d56d7947b4f9c12fd487fae67b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1734273237}
-  m_GameObject: {fileID: 703540433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: 1
-  _center: {x: 0, y: 0}
---- !u!21 &1379560432
+--- !u!21 &1350575687
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -6026,7 +5775,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 1e55bb52ad4e2e149a570440770fb9be, type: 1}
+          m_Texture: {fileID: 2800000, guid: ced6afea69a81864e95bda8ed8db4157, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -6142,15 +5891,15 @@ Prefab:
     - target: {fileID: 2300002, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1379560432}
+      objectReference: {fileID: 2008497009}
     - target: {fileID: 2300004, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 205184362}
+      objectReference: {fileID: 719383875}
     - target: {fileID: 2300000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1001251686}
+      objectReference: {fileID: 836024002}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb7c38ba07aa1a74ba88d5123f85f052, type: 2}
   m_RootGameObject: {fileID: 764551416}
@@ -6260,52 +6009,6 @@ Prefab:
   m_RootGameObject: {fileID: 603536713}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &1526911098
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100030, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1703717588}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1526911099}
-  - 114: {fileID: 2076553718}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1526911099
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400030, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1703717588}
-  m_GameObject: {fileID: 1526911098}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4873414, y: 18.2470036, z: 0}
-  m_LocalScale: {x: .5, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 198966389}
---- !u!114 &1526911100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: 63cf21d56d7947b4f9c12fd487fae67b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1703717588}
-  m_GameObject: {fileID: 2076553716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: 1
-  _center: {x: 0, y: 0}
 --- !u!1 &1549489661
 GameObject:
   m_ObjectHideFlags: 0
@@ -6544,76 +6247,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1734273237}
   m_GameObject: {fileID: 1145869667}
   m_Mesh: {fileID: 4300000, guid: c2bfc3160d33ce041b1faba9492ce33b, type: 2}
---- !u!21 &1597385274
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 62944c71b10a47a45b6244c7af6188d6, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1655315200
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100004, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 2014852544}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1655315201}
-  - 114: {fileID: 1655315202}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1655315201
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400004, guid: a4e4695db73385f46be6583630b121f9, type: 2}
-  m_PrefabInternal: {fileID: 2014852544}
-  m_GameObject: {fileID: 1655315200}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.1299438, y: 7.545331, z: 0}
-  m_LocalScale: {x: .333333343, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 949173669}
---- !u!114 &1655315202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: a4e4695db73385f46be6583630b121f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 2014852544}
-  m_GameObject: {fileID: 1655315200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: .699999988
-  _center: {x: 0, y: 0}
 --- !u!1001 &1703717588
 Prefab:
   m_ObjectHideFlags: 0
@@ -6834,7 +6467,7 @@ Prefab:
     - target: {fileID: 2300000, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1597385274}
+      objectReference: {fileID: 192146730}
     - target: {fileID: 11400002, guid: b32ab9de900688245bbee6d193efed7f, type: 2}
       propertyPath: startDelaySecs
       value: .300000012
@@ -6917,16 +6550,16 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 577636685}
+  - {fileID: 120880480}
+  - {fileID: 778429935}
   - {fileID: 45986291}
   - {fileID: 712668639}
-  - {fileID: 577636685}
-  - {fileID: 778429935}
-  - {fileID: 120880480}
   - {fileID: 204719687}
-  - {fileID: 448548949}
   - {fileID: 553119604}
-  - {fileID: 603536714}
+  - {fileID: 448548949}
   - {fileID: 1186773052}
+  - {fileID: 603536714}
   m_Father: {fileID: 792814333}
 --- !u!1 &1761539400
 GameObject:
@@ -7232,45 +6865,6 @@ MonoBehaviour:
   enablePlayer: 0
   min: {fileID: 1966489403}
   max: {fileID: 1761539401}
---- !u!1 &1914314772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1914314773}
-  - 114: {fileID: 1914314774}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1914314773
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1914314772}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1914314774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1914314772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1001 &1950341952
 Prefab:
   m_ObjectHideFlags: 0
@@ -7337,6 +6931,30 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1841978334}
+--- !u!21 &2008497009
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 1e55bb52ad4e2e149a570440770fb9be, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &2014852544
 Prefab:
   m_ObjectHideFlags: 0
@@ -7651,79 +7269,9 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1001251686}
+  - {fileID: 836024002}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
---- !u!1 &2076553716
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100024, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1703717588}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 2076553717}
-  - 114: {fileID: 1526911100}
-  m_Layer: 0
-  m_Name: PlayerUnlockSensor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &2076553717
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400024, guid: 63cf21d56d7947b4f9c12fd487fae67b, type: 2}
-  m_PrefabInternal: {fileID: 1703717588}
-  m_GameObject: {fileID: 2076553716}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.44445801, y: 18.2470036, z: 0}
-  m_LocalScale: {x: .5, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 198966389}
---- !u!114 &2076553718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: 63cf21d56d7947b4f9c12fd487fae67b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1703717588}
-  m_GameObject: {fileID: 1526911098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
-  m_Name: 
-  _friction: .699999988
-  _elasticity: 0
-  _isSensor: 1
-  _collisionType: UnlockSensor
-  _collisionGroup: Scenery
-  MonoBehaviourName: 
-  _radius: 1
-  _center: {x: 0, y: 0}
---- !u!21 &2145715898
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: ced6afea69a81864e95bda8ed8db4157, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}

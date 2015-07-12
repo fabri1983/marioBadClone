@@ -14,28 +14,20 @@ public class PlayerWalk : WalkAbs {
 		walkLookingUpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.WalkLookUpwards, true);
 	}
 	
-	void Update () {
-		if (Mathf.Abs(base.body.velocity.x) < 0.1f)
-			base.walking = false;
-		else
-			base.updateWalk();
+	public override void reset () {
+		/*Vector2 v = base.body.velocity;
+		v.x = 0f;
+		base.body.velocity = v;*/
+		base.stop();
 	}
 	
-	public override void reset () {
-		Vector2 v = base.body.velocity;
-		v.x = 0f;
-		base.body.velocity = v;
-		base.stop();
+	public void setGain (float val) {
+		base.gain = val;
 	}
 	
 	public override void walk (float velocity) {
 		if (!base.enabled)
 			return;
-		
-		base.gain = 1f; // default value
-		// is speed up button being pressed?
-		if (Gamepad.isB())
-			base.gain = speedUpFactor;
 		
 		// if user is looking upwards then set the correct sprite animation
 		if (lookDirections.isLookingUpwards())
@@ -47,7 +39,8 @@ public class PlayerWalk : WalkAbs {
 	}
 	
 	protected override void stopWalking () {
-		if (!base.jump.IsJumping() && !lookDirections.isLookingAnyDirection())
+		if (!base.jump.isJumping() && !lookDirections.isLookingAnyDirection())
 			base.walkAC = walkAC_orig;
 	}
+
 }

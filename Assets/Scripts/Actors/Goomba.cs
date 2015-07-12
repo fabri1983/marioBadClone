@@ -110,6 +110,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		}
 		// kills Player
 		else {
+			goomba.patrol.stopPatrol();
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			LevelManager.Instance.loseGame(true); // force die animation
 		}

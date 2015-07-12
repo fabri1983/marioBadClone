@@ -7,14 +7,13 @@ using UnityEngine;
 public class Jump : MonoBehaviour {
 	
 	private bool foreverJump = false;
-	private bool isJumping = false;
+	private bool _isJumping = false;
 	private float foreverJumpVel = 0f;
 	private bool gainApplied = false; // whether a jump gain was or wasn't applied in current jump loop
 	private Crouch crouch;
 	private AnimateTiledConfig jumpAC;
 	private ChipmunkBody body;
-
-	// Use this for initialization
+	
 	void Awake () {
 		crouch = GetComponent<Crouch>();
 		jumpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Jump, true);
@@ -23,27 +22,27 @@ public class Jump : MonoBehaviour {
 	}
 
 	public void resetStatus () {
-		isJumping = true; // initialized as true in case the object is spawned in the air
+		_isJumping = true; // initialized as true in case the object is spawned in the air
 		gainApplied = true;
 	}
-
+	
 	void LateUpdate () {
 		////////////////////////////////////
 		//IMPORTANT: this fixes the crash when assigning the modified velocity to the body along this script
-		if (isJumping)
+		/*if (_isJumping)
 			return;
 		Vector2 v = body.velocity;
-		body.velocity = v;
+		body.velocity = v;*/
 		////////////////////////////////////
 	}
 
 	public void stop () {
 		gainApplied = false;
-		isJumping = false;
+		_isJumping = false;
 	}
 
 	public void jump (float jumpVel) {
-		if (isJumping)
+		if (_isJumping)
 			return;
 		forceJump(jumpVel);
 	}
@@ -53,13 +52,11 @@ public class Jump : MonoBehaviour {
 		if (crouch == null || !crouch.isCrouching())
 			jumpAC.setupAndPlay();
 		
-		isJumping = true;
+		_isJumping = true;
 
-		if (jumpVel != 0f) {
-			Vector2 v = body.velocity;
-			v.y = jumpVel;
-			body.velocity = v;
-		}
+		Vector2 v = body.velocity;
+		v.y = jumpVel;
+		body.velocity = v;
 	}
 		
 	/// <summary>
@@ -75,8 +72,8 @@ public class Jump : MonoBehaviour {
 		}
 	}
 	
-	public bool IsJumping () {
-		return isJumping;
+	public bool isJumping () {
+		return _isJumping;
 	}
 	
 	public void setForeverJump (bool val) {
@@ -101,11 +98,15 @@ public class Jump : MonoBehaviour {
 		/*if (jump.isJumping && GameObjectTools.isWallHit(arbiter))
 			return true;*/
 		
-		if (jump.enabled && GameObjectTools.isGrounded(arbiter)) {
+		// check if hit its head against something
+		if (jump.enabled && GameObjectTools.isCeiling(arbiter)) {
+			;
+		}
+		else if (jump.enabled && GameObjectTools.isGrounded(arbiter)) {
 			if (jump.foreverJump)
 				jump.forceJump(jump.foreverJumpVel);
 			// if it was jumping then reset jump behavior
-			else if (jump.isJumping)
+			else if (jump._isJumping)
 				jump.stop();
 		}
 		

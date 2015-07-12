@@ -10,15 +10,16 @@ public abstract class WalkAbs : MonoBehaviour {
 	private static Vector2 VEC2_RIGHT = Vector2.right;
 	private static Vector2 VEC2_LEFT = -Vector2.right;
 	
-	private float _velocity;
+	protected float velocity = 0f;
 	
 	protected bool walking, lookingRight;
-	protected float gain;
+	protected float gain = 1f;
 	protected Jump jump;
 	protected Idle idle;
 	protected Crouch crouch;
 	protected AnimateTiledConfig walkAC;
 	protected ChipmunkBody body;
+	protected AirGroundControlUpdater agUpdater;
 	
 	void Awake () {
 		jump = GetComponent<Jump>();
@@ -26,6 +27,7 @@ public abstract class WalkAbs : MonoBehaviour {
 		crouch = GetComponent<Crouch>();
 		body = GetComponent<ChipmunkBody>();
 		walkAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Walk, true);
+		agUpdater = GetComponent<AirGroundControlUpdater>();
 		
 		lookingRight = true;
 	}
@@ -41,35 +43,50 @@ public abstract class WalkAbs : MonoBehaviour {
 	public void stop () {
 		stopWalking(); // implemented in the sub class
 		walking = false;
+		velocity = 0f;
+		updateWalk();
 		walkAC.stop();
 	}
 	
-	protected void _walk (float velocity) {
+	void Update () {
+		if (agUpdater != null && Mathf.Abs(agUpdater.groundVelocity.x) < 0.8f)
+			stop();
+	}
+	
+	protected void _walk (float vel) {
 		//NOTE: remember to set the gain property before calling this method from subclasses
-		
+	
 		// set the correct sprite animation
-		if (!walkAC.isWorking() && (jump == null || !jump.IsJumping()) && (crouch == null || !crouch.isCrouching())) {
+		if (!walkAC.isWorking() && (jump == null || !jump.isJumping()) && (crouch == null || !crouch.isCrouching())) {
 			walkAC.setupAndPlay();
 		}
 		
-		_velocity = velocity;
+		velocity = vel;
 		if (!walking)
 			this.enabled = true;
 		walking = true;
 		
-		Vector2 v = body.velocity;
-		v.x = gain * velocity;
-		body.velocity = v;
+		if (agUpdater != null) {
+			agUpdater.setWalkSpeed(gain * velocity);
+		} else {
+			Vector2 v = body.velocity;
+			v.x = gain * vel;
+			body.velocity = v;
+		}
 		
-		updateWalk();
+		/*if (jump != null) {
+			if (!jump.isJumping())
+				updateWalk();
+		} else */{
+			updateWalk();
+		}
 	}
 	
-	protected void updateWalk () {
+	private void updateWalk () {
 		bool oldLooking = lookingRight;
-		float vx = body.velocity.x;
-		if (vx > 0f)
+		if (velocity > 0f)
 			lookingRight = true;
-		else if (vx < 0f)
+		else if (velocity < 0f)
 			lookingRight = false;
 		
 		// if velocity changed direction then fix sprite direction
@@ -79,8 +96,9 @@ public abstract class WalkAbs : MonoBehaviour {
 			transform.localScale = theScale;
 		}
 		
-		vx = Mathf.Abs(body.velocity.x);
-		walkAC.animComp.setFPS(walkAC.animFPS * gain * (Mathf.Min(vx,_velocity) / _velocity));
+		float vx = Mathf.Abs(body.velocity.x);
+		float velFactor = Mathf.Min(vx, velocity) / velocity;
+		walkAC.animComp.setFPS(walkAC.animFPS * gain * velFactor);
 	}
 	
 	public bool isLookingRight () {

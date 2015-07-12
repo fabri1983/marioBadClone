@@ -83,7 +83,7 @@ public class PowerUpFireBall : PowerUp {
 	}
 	
 	public override bool isAllowedInput () {
-		return Gamepad.isB();
+		return Gamepad.Instance.isB();
 	}
 }
 

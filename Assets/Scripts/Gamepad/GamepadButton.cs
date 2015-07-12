@@ -65,9 +65,9 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 #endif
 		// set the pressed button on GamepadInput manager
 		if (buttonId == EnumButton.A)
-			Gamepad.fireButton(EnumButton.A);
+			Gamepad.Instance.fireButton(EnumButton.A);
 		else if (buttonId == EnumButton.B)
-			Gamepad.fireButton(EnumButton.B);
+			Gamepad.Instance.fireButton(EnumButton.B);
 	}
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBPLAYER

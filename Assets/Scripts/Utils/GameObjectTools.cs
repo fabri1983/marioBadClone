@@ -54,6 +54,16 @@ static public class GameObjectTools
 			return true;
 		return false;
 	}
+	
+	public static bool isCeiling (ChipmunkArbiter arbiter) {
+		/// The collision normal is the direction of the surfaces where the two objects collided.
+		/// Keep in mind that the normal points out of the first object and into the second. 
+		/// If you switch the order of your collision types in the method name, it will flip the normal around.
+		
+		if (-arbiter.GetNormal(0).y < -COS_45)
+			return true;
+		return false;
+	}
 
 	public static bool isWallHit (ChipmunkArbiter arbiter) {
 		/// The collision normal is the direction of the surfaces where the two objects collided.
@@ -67,7 +77,7 @@ static public class GameObjectTools
 	}
 	
 	/**
-	 * Set the layer to game object and also ot their chidlren. So only considers two levels of deep.
+	 * Set the layer to the game object and also their chidlren.
 	 */
 	public static void setLayer (GameObject go, int layer) {
 		go.layer = layer;
@@ -77,7 +87,7 @@ static public class GameObjectTools
 	}
 	
 	/**
-	 * Set the layer to the shape and also ot their chidlren shapes. So only considers two levels of deep.
+	 * Set the layer to the shape and also ot their chidlren shapes.
 	 */
 	public static void setLayerForShapes (GameObject go, uint mask) {
 		// first: set game object's shape layer 

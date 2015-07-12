@@ -30,7 +30,7 @@ public class Crouch : MonoBehaviour {
 	public void crouch () {
 		// is it jumping?
 		bool jumping = false;
-		if (jump != null && jump.IsJumping())
+		if (jump != null && jump.isJumping())
 			jumping = true;
 		// is it moving?
 		bool moving = false;

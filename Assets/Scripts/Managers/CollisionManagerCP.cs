@@ -136,8 +136,9 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 
 	bool ChipmunkBegin_Player_Oneway (ChipmunkArbiter arbiter) {
 		// if condition for oneway platform was not met then proceed as a begin collision with Scenery
-		if (!Player.beginCollisionWithOneway(arbiter))
+		if (!Player.beginCollisionWithOneway(arbiter)) {
 			return ChipmunkBegin_Player_Scenery(arbiter);
+		}
 		return true;
 	}
 
