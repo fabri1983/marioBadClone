@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Automaticaly sets the "layers" property for all the ChipmunkShape shapes this game object contains. 
+/// Automatically sets the "layers" property for all the ChipmunkShape components this game object contains. 
 /// Chipmunk Physics concept of layers is: what layer collides with each other layer.
 /// Also this class lets add other layers defined by the user, as in the Unity's layer concept, this way the 
 /// game object can belong to several layers.
@@ -33,9 +33,9 @@ public class CollisionLayersCP : MonoBehaviour {
 			if (((currentMask >> i) & 1) != 1)
 				continue;
 			for (int j=0; j < unityLayersCount; ++j) {
-				/// NOTE: - first 8 layers are built-in layers.
-				///       - built-in layers without name aren't ignored whit other built-in layers
-				///         hence you will see them as 1 in the matrix
+				/// NOTES:
+				/// - first 8 layers are built-in layers.
+				/// - built-in layers without name aren't ignored with every other built-in layers, hence you will see them as 1 in the matrix
 				if (!Physics.GetIgnoreLayerCollision(i,j))
 					mask |= (uint)(1 << j);
 			}
@@ -52,22 +52,22 @@ public class CollisionLayersCP : MonoBehaviour {
 /// Once the value is calculated then it's cached.
 /// </summary>
 static class CountLayers {
-	private static int unitys_layers = 0;
+	private static int unity_layers = 0;
 	
 	public static int countUnitysLayers ()
 	{
-		if (unitys_layers != 0)
-			return unitys_layers;
+		if (unity_layers != 0)
+			return unity_layers;
 		
 		// start testing from last layer
 		for (int i=31; i >= 0; --i) {
 			string name = LayerMask.LayerToName(i);
 			if (!"".Equals(name)) {
-				unitys_layers = i + 1;
+				unity_layers = i + 1;
 				break;
 			}
 		}
 		
-		return unitys_layers;
+		return unity_layers;
 	}
 }

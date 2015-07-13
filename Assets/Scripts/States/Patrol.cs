@@ -40,12 +40,12 @@ public class Patrol : MonoBehaviour {
 	
 	public void stopPatrol () {
 		stop = true;
-		walk.stopWalking();
+		walk.enabled = false;
 	}
 	
 	public void enablePatrol () {
 		stop = false;
-		walk.enableWalking();
+		walk.enabled = true;
 	}
 	
 	public static bool beginCollisionWithAny (ChipmunkArbiter arbiter) {

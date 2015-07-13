@@ -49,7 +49,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	private void optionSelected() {
-		if (selected && Gamepad.isA())
+		if (selected && Gamepad.Instance.isA())
 			doAction();
 	}
 	

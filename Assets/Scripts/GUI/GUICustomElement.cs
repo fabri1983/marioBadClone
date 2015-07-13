@@ -42,8 +42,10 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		
 		if (newMaterialInstance) {
             // create the new material and assing it to the renderer
-			if (renderer.sharedMaterial == null)
+			if (renderer.sharedMaterial == null) {
 				renderer.sharedMaterial = new Material(renderer.material);
+				Debug.LogWarning("No material. A Default one will is created. Verify your prefab or gameobject config. " + gameObject.name);
+			}
 			else
             	renderer.sharedMaterial = new Material(renderer.sharedMaterial);
         }
@@ -65,9 +67,8 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 			renderer.sharedMaterial.mainTexture = texture;
 		// Note: scripts with [ExecuteInEditMode] should not call managers that also runs in editor mode.
 		// That is to avoid a NullPointerException since the managers instance has been destroyed just before entering Play mode
-#else
-		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 #endif
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 
 #if UNITY_EDITOR
@@ -102,6 +103,11 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		return casheSizeInGUI;
 	}
 	
+	/// <summary>
+	/// Gets the size in pixels this element covers at screen. 
+	/// It internally converts from proportion to pixels if needed.
+	/// </summary>
+	/// <returns>The size in pixels.</returns>
 	public Vector2 getSizeInPixels () {
 		Vector2 result;
 		result.x = sizeAsPixels? size.x : Screen.width * size.x;

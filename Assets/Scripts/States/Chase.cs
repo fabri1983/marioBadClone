@@ -9,23 +9,22 @@ public class Chase : MonoBehaviour {
 	private Patrol patrol;
 	private Idle idle;
 	private Transform target;
-	private bool stop, operable, enableWhenOutOfSensor;
-	private ChipmunkBody body;
+	private bool operable, enableWhenOutOfSensor;
 	
 	// Use this for initialization
 	void Awake () {
 		walk = GetComponent<WalkAbs>();
 		patrol = GetComponent<Patrol>();
 		idle = GetComponent<Idle>();
-		body = GetComponent<ChipmunkBody>();
-		stop = true;
 		operable = true;
+		this.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (stop)
+		if (target == null)
 			return;
+		
 		// calculate sign direction
 		signDir = Mathf.Sign(target.position.x - transform.position.x);
 		if (patrol != null)
@@ -34,28 +33,23 @@ public class Chase : MonoBehaviour {
 			walk.walk(signDir * speed);
 	}
 	
-	public void stopChasing () {
-		if (!operable)
-			return;
-		stop = true;
+	public void stop () {
+		this.enabled = false;
 		if (patrol == null) {
-			body.velocity = Vector2.zero;
-			walk.stopWalking();
+			walk.enabled = false;
 			if (idle != null)
 				idle.setIdle(true);
 		}
 	}
 	
-	public void enableChasing () {		
-		if (!operable)
-			return;
-		stop = false;
+	public void enable () {	
+		this.enabled = true;
 		if (patrol == null)
-			walk.enableWalking();
+			walk.enabled = true;
 	}
 	
 	public bool isChasing () {
-		return !stop;
+		return this.enabled;
 	}
 	
 	public Transform getTarget () {
@@ -71,8 +65,6 @@ public class Chase : MonoBehaviour {
 	}
 	
 	public void enableOperateWhenOutOfSensor () {
-		if (!operable)
-			return;
 		// this behavior is esential for avoiding wall penetration
 		operable = false;
 		enableWhenOutOfSensor = true;
@@ -92,8 +84,8 @@ public class Chase : MonoBehaviour {
 		
 		// if chasing then avoid wall penetration
 		Chase chase = shape1.GetComponent<Chase>();
-		if (chase != null && chase.enabled && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
-			chase.stopChasing();
+		if (chase != null && chase.isChasing() && GameObjectTools.isWallHit(arbiter)) {
+			chase.stop();
 			chase.enableOperateWhenOutOfSensor();
 		}
 
@@ -107,15 +99,15 @@ public class Chase : MonoBehaviour {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Chase chase = shape1.GetComponent<Chase>();
-		Player player = shape2.GetComponent<Player>();
+		Chase chase = shape1.getOwnComponent<Chase>();
+		Player player = shape2.getOwnComponent<Player>();
 		
 		if (player.isDying() || !chase.isOperable())
 			return false; // stop collision since this frame
 		
 		// start chasing player
 		chase.target = player.transform;
-		chase.enableChasing();
+		chase.enable();
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
@@ -127,8 +119,8 @@ public class Chase : MonoBehaviour {
 	    // The order of the arguments matches the order in the function name.
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Chase chase = shape1.GetComponent<Chase>();
-		chase.stopChasing();
+		Chase chase = shape1.getOwnComponent<Chase>();
+		chase.stop();
 		chase.target = null;
 		chase.enableOperate();
 	}

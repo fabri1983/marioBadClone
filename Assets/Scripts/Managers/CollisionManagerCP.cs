@@ -23,14 +23,20 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 		
 		Chipmunk.gravity = new Vector2(0f, -100f);	
 		Chipmunk.solverIterationCount = 3; // Unity's Physic default is 6
-	}
-
-	private static IInCollisionCP GetInCollisionCP< TType > (ChipmunkArbiter arbiter) where TType : MonoBehaviour {
-		ChipmunkShape shape1, shape2;
-		arbiter.GetShapes(out shape1, out shape2);
-		// IInCollisionCP comp = shape1.GetComponent<TType>() as IInCollisionCP;
-		IInCollisionCP comp = shape1.getOwnComponent<TType>() as IInCollisionCP;
-		return comp;
+		
+		/// The space.collisionSlop, which is set by Chipmunk.minPenetrationForPenalty, is how much objects are allowed to overlap. 
+		/// This helps prevent cached contact values from disappearing because objects stay overlapping instead of 
+		/// being pushed apart one frame then coming into contact again the next. 
+		/// With a collision slop of 0, shapes quite often stop touching by a very small amount when the solver moves 
+		/// overlapping shapes apart. This can cause all sorts of problems from poor solver performance to getting a 
+		/// flood of begin/separate collision events. Increasing the collision slop greatly reduces the chances of 
+		/// objects getting pushed completely apart.
+		/// Default is 0.01f
+		//Chipmunk.minPenetrationForPenalty = 0.1f;
+		
+		/// Rate at which overlapping objects are pushed apart.
+		/// Defaults to Mathf.Pow(0.9f, 60f) = 0.001797007f, meaning it will fix 10% of overlap per 1/60th second.
+		//Chipmunk.collisionBias = 1f; // a value of 1 seems to cancel the push apart.
 	}
 	
 	//##################### Goomba #################
@@ -115,33 +121,24 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	
 	//##################### Player #################
 	bool ChipmunkBegin_Player_Scenery (ChipmunkArbiter arbiter) {
-		IInCollisionCP comp = GetInCollisionCP<Player>(arbiter);
-		comp.InCollision = true;
-		
 		if (!Player.beginCollisionWithScenery(arbiter))
 			return false;
 		return Jump.beginCollisionWithAny(arbiter);
 	}
 	
 	void ChipmunkSeparate_Player_Scenery (ChipmunkArbiter arbiter) {
-		IInCollisionCP comp = GetInCollisionCP<Player>(arbiter);
-		comp.InCollision = false;
-		
 		Player.endCollisionWithScenery(arbiter);
 	}
 	
 	bool ChipmunkBegin_Player_SpawnPos (ChipmunkArbiter arbiter) {
 		return SpawnPositionTrigger.beginCollisionWithPlayer(arbiter);
 	}
-	
-	bool ChipmunkBegin_Player_UnlockSensor (ChipmunkArbiter arbiter) {
-		return Player.beginCollisionWithUnlockSensor(arbiter);
-	}
 
 	bool ChipmunkBegin_Player_Oneway (ChipmunkArbiter arbiter) {
 		// if condition for oneway platform was not met then proceed as a begin collision with Scenery
-		if (!Player.beginCollisionWithOneway(arbiter))
+		if (!Player.beginCollisionWithOneway(arbiter)) {
 			return ChipmunkBegin_Player_Scenery(arbiter);
+		}
 		return true;
 	}
 
@@ -152,17 +149,14 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	void ChipmunkSeparate_Player_Oneway (ChipmunkArbiter arbiter) {
 		Player.endCollisionWithOneway(arbiter);
 		// proceed as separating from Scenery
-		ChipmunkSeparate_Player_Scenery(arbiter);
+		//ChipmunkSeparate_Player_Scenery(arbiter);
 	}
 	
 	bool ChipmunkBegin_Goal_Player (ChipmunkArbiter arbiter) {
-		IInCollisionCP comp = GetInCollisionCP<Goal>(arbiter);
-		comp.InCollision = true;
-		return false;
+		return Goal.beginCollisionWithPlayer(arbiter);
 	}
 	
 	void ChipmunkSeparate_Goal_Player (ChipmunkArbiter arbiter) {
-		IInCollisionCP comp = GetInCollisionCP<Goal>(arbiter);
-		comp.InCollision = false;
+		Goal.endCollisionWithPlayer(arbiter);
 	}
 }

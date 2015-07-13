@@ -73,8 +73,8 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Goomba goomba = shape1.GetComponent<Goomba>();
-		PowerUp powerUp = shape2.GetComponent<PowerUp>();
+		Goomba goomba = shape1.getOwnComponent<Goomba>();
+		PowerUp powerUp = shape2.getOwnComponent<PowerUp>();
 		
 		if (goomba.dieAnim.isDying())
 			return false; // avoid the collision to continue since this frame
@@ -92,8 +92,8 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		Goomba goomba = shape1.GetComponent<Goomba>();
-		Player player = shape2.GetComponent<Player>();
+		Goomba goomba = shape1.getOwnComponent<Goomba>();
+		Player player = shape2.getOwnComponent<Player>();
 		
 		if (goomba.dieAnim.isDying() || player.isDying()) {
 			arbiter.Ignore(); // avoid the collision to continue since this frame
@@ -110,6 +110,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		}
 		// kills Player
 		else {
+			goomba.patrol.stopPatrol();
 			arbiter.Ignore(); // avoid the collision to continue since this frame
 			LevelManager.Instance.loseGame(true); // force die animation
 		}

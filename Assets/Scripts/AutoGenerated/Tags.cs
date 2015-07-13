@@ -1,4 +1,4 @@
-//This class is auto-generated do not modify (TagsLayersBuilder.cs) - blog.almostlogical.com
+//This class is auto-generated do not modify (see Editor/TagsLayersBuilder.cs) - blog.almostlogical.com
 public class Tags
 {
 	public const string UNTAGGED = "Untagged";

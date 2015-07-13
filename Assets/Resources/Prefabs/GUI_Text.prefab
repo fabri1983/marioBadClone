@@ -44,7 +44,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -67,8 +67,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
-  allowResize: 1
   offset: {x: 0, y: -56}
+  xAsPixels: 0
+  yAsPixels: 0
   layout: 4
 --- !u!114 &11400002
 MonoBehaviour:
@@ -83,6 +84,7 @@ MonoBehaviour:
   texture: {fileID: 2800000, guid: ced6afea69a81864e95bda8ed8db4157, type: 1}
   wrapMode: 1
   size: {x: 274, y: 32}
+  virtualSize: {x: 0, y: 0}
   sizeAsPixels: 1
   newMaterialInstance: 1
 --- !u!114 &11400004
@@ -106,10 +108,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
+  priority: 0
+  startDelaySecs: .400000006
   startOffsetTransform: {x: 0, y: -.5}
   _transition: 0
   direction: 0
-  startDelaySecs: .400000006
   steps: 64
   acceleration: 1
   easingType: 4

@@ -26,9 +26,8 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 #if UNITY_EDITOR
 		// Note: scripts with [ExecuteInEditMode] should not call managers that also runs in editor mode.
 		// That is to avoid a NullPointerException since the managers instance has been destroyed just before entering Play mode
-#else
-		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 #endif
+		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 
 #if UNITY_EDITOR

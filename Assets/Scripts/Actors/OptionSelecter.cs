@@ -24,13 +24,13 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	void Update () {
 		// read the gamepad input and check what is the next menu option the user is browesing
 		OptionSelecter selecterNext = null;
-		if (Gamepad.isUp())
+		if (Gamepad.Instance.isUp())
 			selecterNext = aboveSelecter;
-		else if (Gamepad.isDown())
+		else if (Gamepad.Instance.isDown())
 			selecterNext = belowSelecter;
-		else if (Gamepad.isRight())
+		else if (Gamepad.Instance.isRight())
 			selecterNext = rightSelecter;
-		else if (Gamepad.isLeft())
+		else if (Gamepad.Instance.isLeft())
 			selecterNext = leftSelecter;
 		
 		// unselect this option and continue with next

@@ -30,7 +30,7 @@ public class Crouch : MonoBehaviour {
 	public void crouch () {
 		// is it jumping?
 		bool jumping = false;
-		if (jump != null && jump.IsJumping())
+		if (jump != null && jump.isJumping())
 			jumping = true;
 		// is it moving?
 		bool moving = false;
@@ -85,7 +85,7 @@ public class Crouch : MonoBehaviour {
 		if (!crouching)
 			return;
 		
-		move.stopWalking(); // this force the reset of the sprite animation
+		move.stop(); // this force the reset of the sprite animation
 		crouchAC.stop();
 		crouching = false;
 		

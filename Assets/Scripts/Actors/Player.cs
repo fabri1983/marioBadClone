@@ -3,7 +3,10 @@
 #endif
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCollisionCP {
+public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
+	
+	private static Player instance = null;
+	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
 	public float walkVelocity = 10f;
 	public float lightJumpVelocity = 40f;
@@ -17,24 +20,18 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	private Teleportable teleportable;
 	private PowerUp powerUp;
 	private LookDirections lookDirections;
-	private bool exitedFromScenery;
-	private ChipmunkSegmentQueryInfo qinfo;
 	private ChipmunkBody body;
-	private float walkVelBackup, signCollision;
 	private bool doNotResume;
-	private bool inCollision;
 	
 	/// the position where the bullets start firing
 	private Transform firePivot;
 	private Vector2 rightFireDir, leftFireDir, fireDir;
 	
-	// I guess 3.2f is half the size of Player's renderer plus few units more so the query ratio is the shortest possible
-	private static Vector2 queryOffset = Vector2.up * -3.2f;
-	private static string collisionGroupSkip;
-	private static uint collisionLayers;
-	
-	private static Player instance = null;
-	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
+	/// used for downwards ray casting
+	private bool exitedFromScenery;
+	private Vector2 queryOffset = Vector2.up * -3.2f;
+	private string collisionGroupSkip;
+	private uint collisionLayersSkip;
 	
 	public static Player Instance {
         get {
@@ -77,7 +74,6 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		lookDirections = GetComponent<LookDirections>();
 		body = GetComponent<ChipmunkBody>();
 		
-		walkVelBackup = walkVelocity;
 		rightFireDir.x = 1f;
 		rightFireDir.y = -0.5f;
 		leftFireDir.x = -1f;
@@ -85,7 +81,9 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		fireDir = rightFireDir;
 		
 		collisionGroupSkip = GetComponent<ChipmunkShape>().collisionGroup;
-		collisionLayers = unchecked((uint)~(1 << gameObject.layer)); // all layers except Player's layer
+		// not sure if ok: all layers except Player's layer
+		collisionLayersSkip = unchecked((uint)(1 << LayerMask.NameToLayer(Layers.PLAYER)));
+		//collisionLayers = 0;
 	}
 	
 	void OnDestroy () {
@@ -99,9 +97,17 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		instance = null;
 	}
 	
-	public bool InCollision {
-		get {return inCollision;}
-		set {inCollision = value;}
+	public void resetPlayer () {
+		this.enabled = true; // enable Update() and OnGUI()
+		if (teleportable != null)
+			teleportable.teleportReset();
+		setPowerUp(null);
+		jump.resetStatus();
+		if (walk.isLookingRight())
+			fireDir = rightFireDir;
+		else
+			fireDir = leftFireDir;
+		walk.reset();
 	}
 	
 	public bool DoNotResume {
@@ -120,28 +126,28 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	
 	// Update is called once per frame
 	void Update () {
+		bool isIdle = true;
 		
 		// This sets the correct jump status when the player without jumping enters on free fall state.
 		// Also corrects a sprite animation flickering when walking because the animation starts again 
 		// constantly after jump.resetStatus()
-		if (exitedFromScenery && !jump.IsJumping()) {
+		if (exitedFromScenery && !jump.isJumping()) {
+			ChipmunkSegmentQueryInfo qinfo;
 			// check if there is no shape below us
 			Vector2 end = body.position + queryOffset;
-			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayers, collisionGroupSkip, out qinfo);
+			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayersSkip, collisionGroupSkip, out qinfo);
 			// if no handler it means no hit
-			if (System.IntPtr.Zero == qinfo._shapeHandle)
-				// set state as if were jumping
-				jump.resetStatus();
+			if (System.IntPtr.Zero == qinfo._shapeHandle) {
+				jump.resetStatus(); // set state as if were jumping
+			}
 		}
 		
-		bool isIdle = true;
-		
 		// jump
-		if (Gamepad.isA()) {
-			walk.stopWalking(); // resets walk behavior
+		if (Gamepad.Instance.isA()) {
+			walk.stop();
 			jump.jump(lightJumpVelocity);
 			// apply gain jump power. Only once per jump (handled in Jump component)
-			if (Gamepad.isHardPressed(EnumButton.A))
+			if (Gamepad.Instance.isHardPressed(EnumButton.A))
 				jump.applyGain(gainJumpFactor); 
 			isIdle = false;
 		}
@@ -150,30 +156,26 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		if (powerUp != null && powerUp.ableToUse())
 			powerUp.action(gameObject);
 		
-		// move
-		walk.enableWalking();
-		if (Gamepad.isLeft()) {
+		// walk
+		if (Gamepad.Instance.isLeft()) {
+			// is speed up button being pressed?
+			if (Gamepad.Instance.isB()) walk.setGain(walk.speedUpFactor);
+			else walk.setGain(1f);
 			walk.walk(-walkVelocity);
 			fireDir = leftFireDir;
-			isIdle = false;
-			// enable move speed after a wall collision if intended moving direction changes
-			if (signCollision > 0f)
-				restoreWalkVel();
 		}
-		else if (Gamepad.isRight()) {
+		else if (Gamepad.Instance.isRight()) {
+			// is speed up button being pressed?
+			if (Gamepad.Instance.isB()) walk.setGain(walk.speedUpFactor);
+			else walk.setGain(1f);
 			walk.walk(walkVelocity);
 			fireDir = rightFireDir;
-			isIdle = false;
-			// enable move speed after a wall collision if intended moving direction changes
-			if (signCollision < 0f)
-				restoreWalkVel();
 		}
-		else
-			// if no movement input then set correct internal status
-			walk.stopWalking();
+		if (walk.isWalking())
+			isIdle = false;
 
 		// crouch
-		if (Gamepad.isDown()) {
+		if (Gamepad.Instance.isDown()) {
 			crouch.crouch();
 			isIdle = false;
 		}
@@ -181,8 +183,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 			crouch.noCrouch();
 		
 		// look upwards/downwards
-		if (!jump.IsJumping()) {
-			if (Gamepad.isUp()) {
+		if (!jump.isJumping()) {
+			if (Gamepad.Instance.isUp()) {
 				lookDirections.lookUpwards();
 				isIdle = false;
 			}
@@ -213,10 +215,6 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	public void die () {
 		// disable this componenet
 		this.enabled = false;
-		// dump to zero velocity
-		Vector2 v = body.velocity;
-		v.x =0;
-		body.velocity = v;
 		// do animation
 		dieAnim.startAnimation();
 	}
@@ -226,23 +224,14 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	}
 	
 	public bool isJumping () {
-		return jump.IsJumping();
+		return jump.isJumping();
 	}
 	
+	/// <summary>
+	/// Used when the player kills an enemy from above or similar situations
+	/// </summary>
 	public void forceJump () {
-		// used when the player kills an enemy from above or similar situations
 		jump.forceJump(lightJumpVelocity);
-	}
-	
-	public void resetPlayer () {
-		this.enabled = true; // enable Update() and OnGUI()
-		if (teleportable != null)
-			teleportable.teleportReset();
-		setPowerUp(null);
-		jump.resetStatus();
-		walk.reset();
-		body.velocity = Vector2.zero;
-		walkVelocity = walkVelBackup;
 	}
 	
 	public void setPowerUp (PowerUp pPowerUp) {
@@ -256,13 +245,9 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 	public Vector3 getFireDir () {
 		return fireDir;
 	}
-	
-	public void restoreWalkVel () {
-		walkVelocity = walkVelBackup;
-	}
 
 	public void locateAt (Vector2 pos) {
-		body.position = pos;
+		body.position = transform.position = pos;
 	}
 
 	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
@@ -271,29 +256,19 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		arbiter.GetShapes(out shape1, out shape2);
 		
 		Player player = shape1.getOwnComponent<Player>();
-		/*if (player.isDying())
-			return false; // stop collision with scenery since this frame*/
+		if (player.isDying())
+			return false; // stop collision with scenery since this frame
 		
 		player.exitedFromScenery = false;
 		
-		// avoid ground penetration (Y axis)
-		// NOTE: to solve this Chipmunk has the property collisionBias and/or minPenetrationForPenalty
-		Vector2 thePos = player.body.position;
-		float depth = arbiter.GetDepth(0);
-		thePos.y -= depth;
-		player.body.position = thePos;
-		
-		// if isn't a grounded surface then stop velocity and avoid getting inside the object
-		if (GameObjectTools.isWallHit(arbiter)) {
-			// get sign direction to know what offset apply to body
-			player.signCollision = -Mathf.Sign(player.transform.position.x - shape2.transform.position.x);
-			// set moving velocity close to 0 so player can't move against the wall but can change direction of movement
-			player.walkVelocity = 0.001f;
-			// move back to the contact point and a little more
-			thePos = player.body.position;
-			thePos.x += player.signCollision * (depth - 0.01f);
-			player.body.position = thePos;
-		}
+		// Avoid ground penetration (Y axis). Another way: see collisionBias and/or minPenetrationForPenalty config in CollisionManagerCP.
+		// Currently is being addressed by AirGroundControlUpdater and in WalkAbs
+		/*if (GameObjectTools.isGrounded(arbiter)) {
+			Vector2 thePos = player.body.position;
+	        float depth = arbiter.GetDepth(0);
+			thePos.y -= depth;
+	        player.body.position = thePos;
+		}*/
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
 		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
@@ -305,20 +280,9 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 		
-		shape1.getOwnComponent<Player>().exitedFromScenery = true;
-	}
-	
-	public static bool beginCollisionWithUnlockSensor (ChipmunkArbiter arbiter) {
-		ChipmunkShape shape1, shape2;
-	    // The order of the arguments matches the order in the function name.
-	    arbiter.GetShapes(out shape1, out shape2);
-		
 		Player player = shape1.getOwnComponent<Player>();
-		player.restoreWalkVel();
 		
-		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 
-		// until they separate. Also for current frame. Ignore() does the same but next fixed step.
-		return false;
+		player.exitedFromScenery = true;
 	}
 
 	public static bool beginCollisionWithOneway (ChipmunkArbiter arbiter) {
@@ -328,14 +292,14 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 
 		// if collision starts from below then proceed to the oneway platform logic
 		if (GameObjectTools.isHitFromBelow(arbiter)) {
-			shape1.GetComponent<ClimbDownOnPlatform>().setTraversingUpwards(true);
+			shape1.GetComponent<ClimbDownFromPlatform>().setTraversingUpwards(true);
 			return true; // return true so the PreSolve condition continues
 		}
 		// collisiion from above, then player is on platform
 		else {
-			shape1.GetComponent<ClimbDownOnPlatform>().handleLanding();
+			shape1.GetComponent<ClimbDownFromPlatform>().handleLanding();
 		}
-
+		
 		// oneway platform logic was not met
 		return false;
 	}
@@ -350,8 +314,11 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 			arbiter.Ignore();
 			return false;
 		}
+		
+		Player player = shape1.getOwnComponent<Player>();
 		// if player wants to climb down (once it is over the platform) then disable the collision to start free fall
-		if (shape1.GetComponent<ClimbDownOnPlatform>().isPullingDown()) {
+		if (player.GetComponent<ClimbDownFromPlatform>().isClimbingDown()) {
+			player.jump.resetStatus(); // set state as if were jumping
 			arbiter.Ignore();
 			return false;
 		}
@@ -365,8 +332,12 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IInCo
 		// The order of the arguments matches the order in the function name.
 		arbiter.GetShapes(out shape1, out shape2);
 
+		Player player = shape1.getOwnComponent<Player>();
+		//player.jump.resetStatus(); // set state as if were jumping
+		player.exitedFromScenery = true;
+		
 		// If was traversing the platform from below then the player is over the platform.
 		// Correct inner state is treated by the invoked method
-		shape1.GetComponent<ClimbDownOnPlatform>().handleSeparation();
+		player.GetComponent<ClimbDownFromPlatform>().handleSeparation();
 	}
 }

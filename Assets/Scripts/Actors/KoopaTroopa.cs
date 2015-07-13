@@ -76,7 +76,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	
 	private void stop () {
 		bounce.stop();
-		chase.stopChasing();
+		chase.stop();
 		patrol.stopPatrol();
 		if (jump != null)
 			jump.setForeverJump(false);
@@ -100,8 +100,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		KoopaTroopa koopa = shape1.GetComponent<KoopaTroopa>();
-		PowerUp powerUp = shape2.GetComponent<PowerUp>();
+		KoopaTroopa koopa = shape1.getOwnComponent<KoopaTroopa>();
+		PowerUp powerUp = shape2.getOwnComponent<PowerUp>();
 		
 		powerUp.Invoke("destroy", 0f); // a replacement for Destroy
 		koopa.stop();
@@ -121,8 +121,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		KoopaTroopa koopa = shape1.GetComponent<KoopaTroopa>();
-		Player player = shape2.GetComponent<Player>();
+		KoopaTroopa koopa = shape1.getOwnComponent<KoopaTroopa>();
+		Player player = shape2.getOwnComponent<Player>();
 		
 		if (player.isDying()) {
 			arbiter.Ignore(); // avoid the collision to continue since this frame
@@ -166,41 +166,39 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		ChipmunkShape shape1, shape2;
 	    arbiter.GetShapes(out shape1, out shape2);
 		
-		KoopaTroopa koopa1 = shape1.GetComponent<KoopaTroopa>();
-		KoopaTroopa koopa2 = shape2.GetComponent<KoopaTroopa>();
+		KoopaTroopa koopa1 = shape1.getOwnComponent<KoopaTroopa>();
+		KoopaTroopa koopa2 = shape2.getOwnComponent<KoopaTroopa>();
 		bool hidden1 = koopa1._hide.isHidden();
 		bool hidden2 = koopa2._hide.isHidden();
 		bool bouncing1 = koopa1.bounce.isBouncing();
 		bool bouncing2 = koopa2.bounce.isBouncing();
 		
 		// avoid koopa1 pushes hidden koopa2
-		Chase chase = shape1.GetComponent<Chase>();
-		if (chase != null && chase.isChasing()) {
-			chase.stopChasing();
-			chase.enableOperateWhenOutOfSensor();
+		Chase chase1 = shape1.GetComponent<Chase>();
+		if (chase1 != null && chase1.isChasing()) {
+			chase1.stop();
+			chase1.enableOperateWhenOutOfSensor();
 		}
 		// avoid koopa2 pushes hidden koopa1
-		chase = shape2.GetComponent<Chase>();
-		if (chase != null && chase.isChasing()) {
-			chase.stopChasing();
-			chase.enableOperateWhenOutOfSensor();
+		Chase chase2 = shape2.GetComponent<Chase>();
+		if (chase2 != null && chase2.isChasing()) {
+			chase2.stop();
+			chase2.enableOperateWhenOutOfSensor();
 		}
 		
-		// is koopa above the other koopa?
+		// is koopa1 above the koopa2?
 		if (GameObjectTools.isGrounded(arbiter)) {
-			if (!hidden1)
+			if (!hidden1 && koopa1.jumpInLoop)
 				koopa1.jump.forceJump(koopa1.jumpSpeed);
-			else
+			else if (hidden1 && koopa2.jumpInLoop)
 				koopa2.jump.forceJump(koopa1.jumpSpeed);
-			// NOTE: I assume here the isGrounded() works as expected
-			return false; // avoid the collision to continue since this frame
+			return false; // avoid the collision since this frame
 		}
-		// kills koopa 2
+		// hide koopa 2
 		else if (bouncing1 && !hidden2 && !bouncing2) {
-			//koopa2.die();
 			koopa2.hide();
 		}
-		// kills koopa 1
+		// hide koopa 1
 		else if (bouncing2 && !hidden1 && !bouncing1) {
 			//koopa1.die();
 			koopa1.hide();
