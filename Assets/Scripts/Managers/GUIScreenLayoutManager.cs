@@ -13,8 +13,10 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static Matrix4x4 unityGUIMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() that use this matrix
 
 	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
-	[SerializeField] private float lastScreenWidth;
-	[SerializeField] private float lastScreenHeight;
+	[SerializeField]
+	private float lastScreenWidth;
+	[SerializeField]
+	private float lastScreenHeight;
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
 	
@@ -311,10 +313,9 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		float guiH = guiZposAndDimension.y;
 		
 		// maps pixel coordinate to a box with coordinates (-w/2, -h/2) to (w/2, h/2). This is the custom GUI viewport
-		
 		result.x = guiW * (pixelX / Screen.width - 0.5f);
 		result.y = guiH * (pixelY / Screen.height - 0.5f);
-
+		
 		return result;
 	}
 	
@@ -377,7 +378,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	/// Transform of the game object to be modified for being a GUI element
 	/// </param>
 	/// <param name='sizeInPixels'>
-	/// Size the texture covers in screen
+	/// Size the element covers at screen
 	/// </param>
 	public static void locateForGUI (Transform tr, Vector2 sizeInPixels)
 	{
@@ -390,8 +391,8 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		
 		// apply scale to locate in GUI space. Consider user defined size
 		Vector3 theScale = tr.localScale;
-		theScale.x = guiZPosAndDimension.x * sizeInPixels.x / (float)Screen.width;
-		theScale.y = guiZPosAndDimension.y * sizeInPixels.y / (float)Screen.height;
+		theScale.x = (guiZPosAndDimension.x * sizeInPixels.x) / (float)Screen.width;
+		theScale.y = (guiZPosAndDimension.y * sizeInPixels.y) / (float)Screen.height;
 		theScale.z = 0f;
 		tr.localScale = theScale;
 		

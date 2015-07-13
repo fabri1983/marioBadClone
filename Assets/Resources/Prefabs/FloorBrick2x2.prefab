@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400000}
-  - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
+  - 33: {fileID: 3300000}
   m_Layer: 0
   m_Name: FloorBrick2x2
   m_TagString: Untagged
@@ -54,7 +54,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
-  m_Mesh: {fileID: 4300000, guid: aaf8e953e779eee4e8bb2801f02fae82, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 7cf3efb13dbdfc245943eca7a313cabd, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1

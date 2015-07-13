@@ -334,6 +334,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 
 		Player player = shape1.getOwnComponent<Player>();
 		//player.jump.resetStatus(); // set state as if were jumping
+		player.exitedFromScenery = true;
 		
 		// If was traversing the platform from below then the player is over the platform.
 		// Correct inner state is treated by the invoked method

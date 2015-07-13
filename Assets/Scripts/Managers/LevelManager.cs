@@ -41,8 +41,8 @@ public class LevelManager : MonoBehaviour {
 	// They are only used for organizational purpose of GUI custom elements
     private static GameObject guiContainer_so = null; // scene only GUI container
     private static GameObject guiContainer_nd = null; // non destroyable GUI container
-	private const string GUI_container_nd = "GUI_Container_nd";
-	private const string GUI_container_so = "GUI_Container_so";
+	private const string GUI_CONTAINER_ND_NAME = "GUI_Container_nd";
+	private const string GUI_CONTAINER_SO_NAME = "GUI_Container_so";
 	
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
@@ -149,11 +149,8 @@ public class LevelManager : MonoBehaviour {
 		// set Mario spawn position for this level
 		setPlayerSpawnPosition(level);
 		
-		// check if no GUI container was created
-		if (LevelManager.getGUIContainerNonDestroyable() == null)
-			Debug.LogWarning("Missing " + GUI_container_nd + " game object. Will be created and populated with minimum elements.");
 		if (LevelManager.getGUIContainerSceneOnly() == null)
-			Debug.LogError("Missing " + GUI_container_so + " game object. Please create it.");
+			Debug.LogError("Missing " + GUI_CONTAINER_SO_NAME + " game object. Please create it.");
 	
 		// if GUI_container_nd doesn't exist then create it and add minimum required game objects
 		setupGUIContainerNonDestroyable();
@@ -180,14 +177,12 @@ public class LevelManager : MonoBehaviour {
 	/// </summary>
 	private void setupGUIContainerNonDestroyable () {
 		// if GUI_container_nd game object exists then continue normally
-		if (LevelManager.getGUIContainerNonDestroyable() != null)
-			return;
-
-		// create the GUI_container_nd game object
-		guiContainer_nd = new GameObject(GUI_container_nd, typeof(NonDestroyable));
-#if UNITY_EDITOR
-		Debug.Log(GUI_container_nd + " created.");
-#endif		
+		if (LevelManager.getGUIContainerNonDestroyable() == null) {
+			Debug.LogWarning("Missing " + GUI_CONTAINER_ND_NAME + " game object. Will be created and populated with minimum elements.");
+			// create the GUI_container_nd game object
+			guiContainer_nd = new GameObject(GUI_CONTAINER_ND_NAME, typeof(NonDestroyable));
+		}
+		
 		// add Gamepad game object into GUI_container_nd
 		Gamepad.Instance.transform.parent = guiContainer_nd.transform;
 		// add OptionQuit game object into GUI_container_nd
@@ -259,7 +254,7 @@ public class LevelManager : MonoBehaviour {
 		if (guiContainer_nd != null)
 			return guiContainer_nd;
 		// cache the reference. Is the same across all scenes
-	    guiContainer_nd = GameObject.Find(GUI_container_nd);
+	    guiContainer_nd = GameObject.Find(GUI_CONTAINER_ND_NAME);
 	    return guiContainer_nd;
 	}
 	
@@ -274,7 +269,7 @@ public class LevelManager : MonoBehaviour {
 		if (guiContainer_so != null)
 			return guiContainer_so;
 		// cache the reference. Only has sense per scene
-	    guiContainer_so = GameObject.Find(GUI_container_so);
+	    guiContainer_so = GameObject.Find(GUI_CONTAINER_SO_NAME);
 	    return guiContainer_so;
 	}
 	
@@ -293,20 +288,19 @@ public class LevelManager : MonoBehaviour {
 		
 		float length = Mathf.Abs(levelExtent.xMin - levelExtent.xMax);
 		float height = Mathf.Abs(levelExtent.yMin - levelExtent.yMax);
-        GUIParallax[] parallax = null;
 		
 		// setup the GUIParallax components from scene only GUI container
-		parallax = getGUIContainerSceneOnly().GetComponentsInChildren<GUIParallax>();
-		for (int i=0,c=parallax.Length; i<c;++i) {
-            parallax[i].setLevelExtentWorldUnits(length, height);
-            parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+		GUIParallax[] parallaxSO = getGUIContainerSceneOnly().GetComponentsInChildren<GUIParallax>();
+		for (int i=0,c=parallaxSO.Length; i<c;++i) {
+			parallaxSO[i].setLevelExtentWorldUnits(length, height);
+			parallaxSO[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
         }
 		
 		// setup the GUIParallax components from non destroyable GUI container
-		parallax = getGUIContainerNonDestroyable().GetComponentsInChildren<GUIParallax>();
-		for (int i=0,c=parallax.Length; i<c;++i) {
-            parallax[i].setLevelExtentWorldUnits(length, height);
-            parallax[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
+		GUIParallax[] parallaxND = getGUIContainerNonDestroyable().GetComponentsInChildren<GUIParallax>();
+		for (int i=0,c=parallaxND.Length; i<c;++i) {
+			parallaxND[i].setLevelExtentWorldUnits(length, height);
+			parallaxND[i].setOffsetWorldCoords(playerSpawnPos.x, playerSpawnPos.y);
         }
 	}
 }

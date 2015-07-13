@@ -95,8 +95,8 @@ public class Jump : MonoBehaviour {
 			return true;
 
 		// if is jumping and hits a wall then continue the collision
-		if (jump.isJumping() && GameObjectTools.isWallHit(arbiter))
-			return true;
+		/*if (jump.isJumping() && GameObjectTools.isWallHit(arbiter))
+			return true;*/
 		
 		// check if hit its head against something
 		if (jump.enabled && GameObjectTools.isCeiling(arbiter)) {

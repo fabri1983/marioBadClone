@@ -40,7 +40,6 @@ public class GUICameraSync : MonoBehaviour {
 
 	// Use Update to avoid wrong Touch Event Manager updates.
 	void Update () {
-
 		// call listeners to update the camera
 		for (int i=0, c=listeners.Count; i < c; ++i)
 			listeners[i].updateCamera();
@@ -53,27 +52,15 @@ public class GUICameraSync : MonoBehaviour {
 	/// Updates the transform of the GUI containers which depend on the camera position and rotation.
 	/// </summary>
 	public void transformGUIContainers () {
-
 		Vector3 camPos = transform.position;
 		Quaternion camRot = transform.rotation;
 		GameObject guiContainer_so = LevelManager.getGUIContainerSceneOnly();
 		GameObject guiContainer_nd = LevelManager.getGUIContainerNonDestroyable();
-
+		
 		// update according camera's current transform
 		guiContainer_so.transform.position = camPos;
 		guiContainer_so.transform.rotation = camRot;
-
-#if UNITY_EDITOR
-		// in Editor Mode the game object guiContainer_nd only exists in first scene, so will be null while editing in other scene.
-		if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) {
-			if (guiContainer_nd != null) {
-				guiContainer_nd.transform.position = camPos;
-				guiContainer_nd.transform.rotation = camRot;
-			}
-		}
-		else
-#endif
-		{
+		if (guiContainer_nd != null) {
 			guiContainer_nd.transform.position = camPos;
 			guiContainer_nd.transform.rotation = camRot;
 		}
