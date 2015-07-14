@@ -10,14 +10,14 @@ using UnityEngine;
  */
 public class CameraFadeable : MonoBehaviour {
 	
-	private IFadeable fader = null;
+	private IFadeable effect = null;
 	
-	public IFadeable getFader () {
+	public IFadeable getEffect () {
 		// can't set the reference on Start() because LevelManager also do some stuffs in Start() that depends on this fader component
-		if (fader == null) {
-			FadeColor component = GetComponentInChildren<FadeColor>();
-			fader = (IFadeable)component.GetComponent(typeof(IFadeable));
+		if (effect == null) {
+			FadeByColor component = GetComponentInChildren<FadeByColor>();
+			effect = (IFadeable)component.GetComponent(typeof(IFadeable));
 		}
-		return fader;
+		return effect;
 	}
 }

@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 139.373749, y: 25.3376255, z: 0}
+  m_LocalPosition: {x: 172.59552, y: 9.47843361, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,7 +46,7 @@ MonoBehaviour:
   _collisionGroup: 
   MonoBehaviourName: Goal
   _radius: .300000012
-  _center: {x: 0, y: 0}
+  _center: {x: -.800000012, y: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -57,6 +58,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fa16ea43829ddd4bb0308d4202c04e8, type: 1}
   m_Name: 
   activation: 0
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d06b40e1c348808d45d8b1ef77793, type: 1}
+  m_Name: 
+  _friction: 0
+  _elasticity: 0
+  _isSensor: 1
+  _collisionType: Goal
+  _collisionGroup: 
+  MonoBehaviourName: Goal
+  _radius: .300000012
+  _center: {x: .800000012, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
