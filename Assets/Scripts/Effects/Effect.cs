@@ -9,7 +9,7 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	private Effect nextEffect = null;
 	private List<IEffectListener> listeners = null;
 	private bool isPriorizable = false;
-	private bool doNotResume;
+	private bool doNotResume; // used by the pause manager
 	
 	void Awake () {
 		// if this game object has the 

@@ -7,6 +7,10 @@
 /// </summary>
 public interface IPausable {
 	
+	/// <summary>
+	/// This acts as a interface property which is used internally by the PauseGameManager.
+	/// Classes must only implement this property but no use it at all.
+	/// </summary>
 	bool DoNotResume
 	{
 		get;
