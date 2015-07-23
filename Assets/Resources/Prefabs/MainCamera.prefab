@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76baa6085128714f9fe09b208bdaa05, type: 1}
   m_Name: 
   baseQueue: 4000
-  offset: 100
+  offset: 10
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

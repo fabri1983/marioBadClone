@@ -19,8 +19,9 @@ public class EffectPrioritizer : MonoBehaviour {
 	}
 	
 	void Start () {
-		// execute first
+		// execute first thus propagating the chain effect
 		chain[0].startEffect();
+		// then disable this script
 		this.enabled = false;
 	}
 }

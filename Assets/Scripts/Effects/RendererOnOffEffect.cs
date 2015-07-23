@@ -7,19 +7,25 @@ using System.Collections;
 /// </summary>
 public class RendererOnOffEffect : Effect {
 
-	public bool startRendererOn = false;
+	public RENDER_STATUS startRendering = RENDER_STATUS.OFF;
+	public RENDER_STATUS doEffectRendering = RENDER_STATUS.ON;
 	
 	protected override void ownAwake () {
+		renderer.enabled = startRendering == RENDER_STATUS.ON;
 	}
 	
 	protected override void ownStartEffect () {
-		renderer.enabled = startRendererOn;
+		renderer.enabled = startRendering == RENDER_STATUS.ON;
 	}
 	
 	protected override void ownEndEffect () {
-		renderer.enabled = !startRendererOn;
+		renderer.enabled = doEffectRendering == RENDER_STATUS.ON;
 	}
 	
 	protected override void ownOnDestroy () {
 	}
+}
+
+public enum RENDER_STATUS {
+	ON, OFF
 }

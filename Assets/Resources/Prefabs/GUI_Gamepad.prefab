@@ -89,8 +89,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .164436579, y: -.151013181, z: .309999466}
-  m_LocalScale: {x: .0559308082, y: .0559308045, z: 0}
+  m_LocalPosition: {x: 16.5375004, y: -15.1875, z: .309999466}
+  m_LocalScale: {x: 5.625, y: 5.625, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400002
@@ -100,8 +100,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .240502477, y: -.151013181, z: .309999466}
-  m_LocalScale: {x: .0559308082, y: .0559308045, z: 0}
+  m_LocalPosition: {x: 24.1875, y: -15.1875, z: .309999466}
+  m_LocalScale: {x: 5.625, y: 5.625, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400004
@@ -111,8 +111,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.208062604, y: -.120810539, z: .309999466}
-  m_LocalScale: {x: .120810546, y: .116336077, z: 0}
+  m_LocalPosition: {x: -20.9249992, y: -12.1499996, z: .309999466}
+  m_LocalScale: {x: 12.1499996, y: 11.6999998, z: 0}
   m_Children: []
   m_Father: {fileID: 400006}
 --- !u!4 &400006
@@ -141,7 +141,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -159,7 +159,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -177,7 +177,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 8
+  layout: 9
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,7 +277,7 @@ MonoBehaviour:
   offset: {x: -68, y: 0}
   xAsPixels: 1
   yAsPixels: 0
-  layout: 8
+  layout: 9
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1c518ab5905ef40ad7a86dfabafb80, type: 1}
   m_Name: 
   offset: {x: 0, y: 0}
-  xAsPixels: 0
+  xAsPixels: 1
   yAsPixels: 0
-  layout: 6
+  layout: 7
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -304,10 +304,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: 0, y: -1}
+  startOffsetTransform: {x: 0, y: -10}
   _transition: 0
   direction: 0
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0
@@ -323,10 +323,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: .300000012
-  startOffsetTransform: {x: 0, y: -1}
+  startOffsetTransform: {x: 0, y: -10}
   _transition: 0
   direction: 0
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0
@@ -342,10 +342,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: 0, y: -1}
+  startOffsetTransform: {x: 0, y: -10}
   _transition: 0
   direction: 0
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0

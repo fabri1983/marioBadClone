@@ -29,7 +29,11 @@ public static class EffectPrioritizerHelper {
 			arr[i].setNextEffect(arr[i+1]);
 	}
 	
-	public static void registerForEndEffect (IEffectListener listener) {
+	/// <summary>
+	/// Registers the listener to be executed at the end of all effects the game object contains.
+	/// </summary>
+	/// <param name="listener">IEffectListener instance</param>
+	public static void registerAsEndEffect (IEffectListener listener) {
 		Effect[] arr = listener.getEffects();
 		if (arr == null)
 			return;

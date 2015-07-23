@@ -74,6 +74,30 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
+--- !u!21 &10994884
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: ac4933a432cbdc34992148aef79d5773, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &15586904
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +171,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 355504485}
+  - {fileID: 2001585015}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -175,7 +199,7 @@ MonoBehaviour:
   offset: {x: -.0599999987, y: -.0199999996}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 3
+  layout: 4
 --- !u!114 &26116028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +247,8 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startRendererOn: 0
+  startRendering: 1
+  doEffectRendering: 0
 --- !u!1 &26904209
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +322,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 114403397}
+  - {fileID: 1777720546}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -359,7 +384,7 @@ MonoBehaviour:
   offset: {x: -.300999999, y: -.0199999996}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 5
+  layout: 6
 --- !u!114 &29685658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,8 +398,46 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startRendererOn: 0
---- !u!21 &114403397
+  startRendering: 1
+  doEffectRendering: 0
+--- !u!1 &132498429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 132498430}
+  - 114: {fileID: 132498431}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &132498430
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132498429}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &132498431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132498429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
+--- !u!21 &214064271
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -389,7 +452,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Texture: {fileID: 2800000, guid: 407409c48f2cfd24c8966dfc5fb295f9, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -424,7 +487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 637632304}
---- !u!21 &355504485
+--- !u!21 &455966389
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -439,7 +502,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Texture: {fileID: 2800000, guid: 8aae0f9b8f7ed234aa9053ac59250cea, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -518,7 +581,7 @@ MonoBehaviour:
   virtualSize: {x: 0, y: 0}
   sizeAsPixels: 0
   newMaterialInstance: 0
---- !u!21 &477843908
+--- !u!21 &630331632
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -533,7 +596,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 8aae0f9b8f7ed234aa9053ac59250cea, type: 1}
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -636,11 +699,11 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1057435627}
+      objectReference: {fileID: 630331632}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 477843908}
+      objectReference: {fileID: 455966389}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
       value: 8.88749981
@@ -659,7 +722,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.x
-      value: -1
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.y
@@ -675,7 +738,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: steps
-      value: 32
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
@@ -711,7 +774,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_IsActive
@@ -739,7 +802,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
@@ -866,7 +929,7 @@ Transform:
   - {fileID: 26116024}
   - {fileID: 1741172252}
   m_Father: {fileID: 912851602}
---- !u!21 &777185185
+--- !u!21 &795280361
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -881,7 +944,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Texture: {fileID: 2800000, guid: 8b613d9710592b146829f5cc3ceea3ae, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -992,7 +1055,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1057435627}
+  - {fileID: 630331632}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1020,7 +1083,7 @@ MonoBehaviour:
   offset: {x: -.0599999987, y: -.200000003}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 0
+  layout: 1
 --- !u!114 &914124022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,7 +1131,8 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startRendererOn: 0
+  startRendering: 1
+  doEffectRendering: 0
 --- !u!1 &921600153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,31 +1202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76baa6085128714f9fe09b208bdaa05, type: 1}
   m_Name: 
   baseQueue: 4000
-  offset: 100
---- !u!21 &1057435627
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+  offset: 10
 --- !u!1001 &1125239447
 Prefab:
   m_ObjectHideFlags: 0
@@ -1201,11 +1241,11 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 355504485}
+      objectReference: {fileID: 2001585015}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1777292193}
+      objectReference: {fileID: 214064271}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
       value: -.719999313
@@ -1224,7 +1264,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.x
-      value: -1
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.y
@@ -1240,7 +1280,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: steps
-      value: 32
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
@@ -1276,7 +1316,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_IsActive
@@ -1384,7 +1424,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: virtualSize.x
@@ -1496,7 +1536,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 477843908}
+  - {fileID: 455966389}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1552,10 +1592,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: -1, y: 0}
+  startOffsetTransform: {x: -50, y: 0}
   _transition: 0
   direction: 1
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0
@@ -1573,70 +1613,7 @@ MonoBehaviour:
   offset: {x: .119999997, y: -.189999998}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 0
---- !u!21 &1402261158
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 8b613d9710592b146829f5cc3ceea3ae, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1442648730
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 1442648731}
-  - 114: {fileID: 1442648732}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1442648731
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1442648730}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1442648732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1442648730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
+  layout: 1
 --- !u!1001 &1508897290
 Prefab:
   m_ObjectHideFlags: 0
@@ -1675,11 +1652,11 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 777185185}
+      objectReference: {fileID: 1697985483}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1402261158}
+      objectReference: {fileID: 795280361}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
       value: 8.88749981
@@ -1698,7 +1675,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.x
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.y
@@ -1714,7 +1691,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: steps
-      value: 32
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
@@ -1750,7 +1727,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_IsActive
@@ -1778,7 +1755,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1873,30 +1850,6 @@ Prefab:
   m_RootGameObject: {fileID: 15586904}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!21 &1523524114
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: ForegroundMat
-  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: ac4933a432cbdc34992148aef79d5773, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1624047669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,11 +1916,11 @@ Prefab:
     - target: {fileID: 2300000, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 114403397}
+      objectReference: {fileID: 1777720546}
     - target: {fileID: 2300002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1523524114}
+      objectReference: {fileID: 10994884}
     - target: {fileID: 400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_LocalPosition.y
       value: -.719999313
@@ -1986,7 +1939,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.x
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: startOffsetTransform.y
@@ -2002,7 +1955,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: steps
-      value: 32
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: size.x
@@ -2038,7 +1991,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400006, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: m_IsActive
@@ -2146,7 +2099,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: layout
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 2951b2296562f4546a250745336f0512, type: 2}
       propertyPath: virtualSize.x
@@ -2161,6 +2114,30 @@ Prefab:
   m_RootGameObject: {fileID: 1146820895}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!21 &1697985483
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1741172251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,7 +2183,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1777292193}
+  - {fileID: 214064271}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2262,10 +2239,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: -1, y: 0}
+  startOffsetTransform: {x: -50, y: 0}
   _transition: 0
   direction: 1
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0
@@ -2283,7 +2260,7 @@ MonoBehaviour:
   offset: {x: .119999997, y: 0}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 3
+  layout: 4
 --- !u!1 &1761950540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,7 +2306,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 777185185}
+  - {fileID: 1697985483}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2391,7 +2368,7 @@ MonoBehaviour:
   offset: {x: -.298999995, y: -.200000003}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 2
+  layout: 3
 --- !u!114 &1761950547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2405,7 +2382,8 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startRendererOn: 0
+  startRendering: 1
+  doEffectRendering: 0
 --- !u!1 &1769508023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,7 +2429,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1523524114}
+  - {fileID: 10994884}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2479,7 +2457,7 @@ MonoBehaviour:
   offset: {x: -.119999997, y: 0}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 5
+  layout: 6
 --- !u!114 &1769508028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2493,10 +2471,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: 1, y: 0}
+  startOffsetTransform: {x: 50, y: 0}
   _transition: 0
   direction: 3
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0
@@ -2529,7 +2507,7 @@ MonoBehaviour:
   virtualSize: {x: 0, y: 0}
   sizeAsPixels: 1
   newMaterialInstance: 1
---- !u!21 &1777292193
+--- !u!21 &1777720546
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -2544,7 +2522,31 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 407409c48f2cfd24c8966dfc5fb295f9, type: 1}
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+--- !u!21 &2001585015
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ForegroundMat
+  m_Shader: {fileID: 4800000, guid: 3af6123a184543f4e84851b22cef984b, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 53edebbd557741e4cbae6614a1eceace, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -2598,7 +2600,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1402261158}
+  - {fileID: 795280361}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2626,7 +2628,7 @@ MonoBehaviour:
   offset: {x: -.119999997, y: -.189999998}
   xAsPixels: 0
   yAsPixels: 0
-  layout: 2
+  layout: 3
 --- !u!114 &2004149836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2640,10 +2642,10 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: 1, y: 0}
+  startOffsetTransform: {x: 50, y: 0}
   _transition: 0
   direction: 3
-  steps: 32
+  steps: 10
   acceleration: 1
   easingType: 4
   useCoroutine: 0

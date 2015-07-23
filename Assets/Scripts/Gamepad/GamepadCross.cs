@@ -50,7 +50,7 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
 		}
 		
-		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {
