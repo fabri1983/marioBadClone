@@ -12,7 +12,7 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	private void initialize () {
-		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {

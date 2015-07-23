@@ -9,7 +9,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	void Awake () {
 		_screenBounds.x = -1f; // initialize the screen bounds cache
-		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {

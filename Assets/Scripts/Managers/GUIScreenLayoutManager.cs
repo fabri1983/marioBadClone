@@ -13,13 +13,12 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static Matrix4x4 unityGUIMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() that use this matrix
 
 	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
-	[SerializeField]
-	private float lastScreenWidth;
-	[SerializeField]
-	private float lastScreenHeight;
+	
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
 	
+	private static float lastScreenWidth;
+	private static float lastScreenHeight;
 	private static Vector3 zero = Vector3.zero;
 	private static Quaternion identity = Quaternion.identity;
 	private static Vector3 scale = Vector3.zero;
@@ -53,25 +52,40 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		}
 	}
 	
+	void OnLevelWasLoaded(int level) {
+		// This event is only call when the scene is loaded from Application.LoadLevel().
+		// If a game object already exists, this method is executed anyway before the Awake().
+		// So for non destroyable game objects this methods executes twice.
+		lastScreenWidth = 0; // force the re calculation of GUI positioning
+	}
+	
 	private void initialize () {
 		// NOTE: set as current resolution so the first OnGUI event isn't a resized event. 
 		// That would cause a callback to all subscribers before correct initialization of them
-		lastScreenWidth = Screen.width;
-		lastScreenHeight = Screen.height;
+		// Currently commented because the use of OnLevelWasLoaded()
+		//lastScreenWidth = Screen.width;
+		//lastScreenHeight = Screen.height;
 		
 		// update the GUI matrix used by several Unity GUI elements as a shortcut for GUI elems resizing
 		setupUnityGUIMatrixForResizing();
 	}
 	
-	void OnDestroy() {
+	void OnDestroy() {		
 		listeners.Clear();
-		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
+		// this is to avoid nullifying or destroying static variables. Instance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
 			return;
 		}
 		instance = null;
     }
+
+	private void setupUnityGUIMatrixForResizing () {
+		float widthRatio = ((float)Screen.width) / MIN_RESOLUTION.x;
+		float heightRatio = ((float)Screen.height) / MIN_RESOLUTION.y;
+		scale.Set(widthRatio, heightRatio, 1f);
+		unityGUIMatrix = Matrix4x4.TRS(zero, identity, scale);
+	}
 	
 	public void register (IGUIScreenLayout sl) {
 		listeners.Add(sl);
@@ -79,13 +93,6 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	
 	public void remove (IGUIScreenLayout sl) {
 		listeners.Remove(sl);
-	}
-
-	private void setupUnityGUIMatrixForResizing () {
-		float widthRatio = ((float)Screen.width) / MIN_RESOLUTION.x;
-		float heightRatio = ((float)Screen.height) / MIN_RESOLUTION.y;
-		scale.Set(widthRatio, heightRatio, 1f);
-		unityGUIMatrix = Matrix4x4.TRS(zero, identity, scale);
 	}
 
 	void OnGUI () {
@@ -185,7 +192,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	/// Offset measured in pixels.
 	/// </param>
 	/// <param name='layout'>
-	/// Layout.
+	/// Layout. Base screen positions
 	/// </param>
 	public static void adjustPos (Transform tr, GUICustomElement guiElem, Vector2 offsetInPixels, EnumScreenLayout layout)
 	{
@@ -200,6 +207,11 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		}
 		
 		switch (layout) {
+		case EnumScreenLayout.NONE: {
+			Vector2 temp = screenToGUI(offsetInPixels.x, offsetInPixels.y);
+			p.x = temp.x;
+			p.y = temp.y;
+			break; }
 		case EnumScreenLayout.TOP_LEFT: {
 			Vector2 temp = screenToGUI(offsetInPixels.x + size.x/2f, Screen.height - size.y/2f + offsetInPixels.y);
 			p.x = temp.x;
@@ -260,9 +272,9 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	
 	/// <summary>
 	/// Gets the z-pos and (w,h) scale factors for a custom GUI positioning in screen. 
-	/// The game object which wants to be transformed as a GUI element needs to be positioned to the Z xoordinate 
-	/// and be scaled as this method return values specify.
-	/// NOTE: the virtual plane for locating the game object is centered on screen and located in z = nearClipPlane + 0.01f.
+	/// The game object which wants to be transformed as a GUI element needs to be positioned at a Z coordinate 
+	/// and be scaled by the returned values.
+	/// NOTE: the virtual plane for locating the game object is centered on screen and located in z = nearClipPlane + GUI_NEAR_PLANE_OFFSET.
 	/// It's a virtual box with coordinates (-w/2, -h/2) to (w/2, h/2).
 	/// </summary>
 	/// <returns>
@@ -273,21 +285,25 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		Vector3 result;
 		
 		// position barely ahead from near clip plane
-		float posAhead = (Camera.main.nearClipPlane + GUI_NEAR_PLANE_OFFSET);
+		float posAhead = Camera.main.nearClipPlane + GUI_NEAR_PLANE_OFFSET;
 		// consider current cameras's facing direction (it can be rotated)
 		// we're only interesting in z coordinate
-		// NOTE: x and y are overwritten on consequent lines
+		// NOTE: x and y are overwritten on next lines
 		result = posAhead * Camera.main.transform.forward + Camera.main.transform.position;
-		
+		// optimized: I assume camera's forward is (0,0,1)
+		//result.z = posAhead + Camera.main.transform.position.z;
+			
 		// calculate Width and Height of our virtual plane z-positioned in nearClipPlane + delta
 		// keep z untouch (z-position of the GUI element), only set width and height
 		if (Camera.main.orthographic) {
-			result.y = Camera.main.orthographicSize * 2f;
-			result.x = (result.y / Screen.height) * Screen.width;
+			float y = Camera.main.orthographicSize * 2f;
+			result.y = y;
+			result.x = (y / Screen.height) * Screen.width;
 		}
 		else {
-			result.y = 2f * Mathf.Tan(Camera.main.fieldOfView * DEG_2_RAD_0_5) * posAhead;
-			result.x = result.y * Camera.main.aspect;
+			float y = 2f * Mathf.Tan(Camera.main.fieldOfView * DEG_2_RAD_0_5) * posAhead;
+			result.y = y;
+			result.x = y * Camera.main.aspect;
 		}
 
 		return result;

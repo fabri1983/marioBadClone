@@ -14,7 +14,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	
 	void Awake () {
 		guiSelector = GetComponent<Effect>();
-		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	void Start () {

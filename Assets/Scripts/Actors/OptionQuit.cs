@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUIScreenLayout {
+public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	private bool showingOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;
@@ -34,8 +34,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	
 	private void initialize () {
 		setupButtons(); // locate the buttons
-		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
-		EffectPrioritizerHelper.registerForEndEffect(this as IEffectListener);
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	void OnDestroy () {
@@ -44,12 +43,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 			duplicated = false; // reset the flag for next time
 			return;
 		}
-		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 		TouchEventManager.Instance.removeListener(this as ITouchListener);
-	}
-
-	public void updateForGUI() {
-		//setupButtons();
 	}
 	
 	private void setupButtons () {
@@ -100,7 +94,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener, IGUISc
 	
 	public void setFaderFromMainCamera () {
 		// need to find IFadeable component here because main camera instance changes during scenes
-		fader = Camera.main.GetComponent<CameraFadeable>().getEffect();
+		fader = Camera.main.GetComponent<CameraFadeable>().getFader();
 	}
 	
 	private void optionSelected() {

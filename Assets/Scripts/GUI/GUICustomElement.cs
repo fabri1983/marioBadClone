@@ -67,8 +67,13 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 			renderer.sharedMaterial.mainTexture = texture;
 		// Note: scripts with [ExecuteInEditMode] should not call managers that also runs in editor mode.
 		// That is to avoid a NullPointerException since the managers instance has been destroyed just before entering Play mode
-#endif
+		
+		// only call the manager if is playing
+		if (Application.isPlaying)
+			GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
+#else
 		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
+#endif
 	}
 
 #if UNITY_EDITOR

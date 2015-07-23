@@ -5,7 +5,7 @@ using UnityEngine;
  * The expected material is one having the shader FadeColor_CG.
  * It doesn't matter the mesh the game object has for render.
  * The FadeColor_CG shader has it's own render queue assigned in such way it will overlay 
- * all materials, except Unity's GUI.
+ * all materials, except Unity's GUI and any material with correct render queue.
  */
 public class FadeByColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	
@@ -20,7 +20,6 @@ public class FadeByColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	private bool finishedTransition; // true if the fade could finish
 	private Material fadeMat;
 	
-	// Use this for initialization
 	void Awake () {
 		fadeMat = renderer.sharedMaterial;
 		finishedTransition = false;
@@ -98,8 +97,6 @@ public class FadeByColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	}
 	
 	private void locateInScreen () {
-		if (transform == null)
-			return;
 		Vector2 sizeInPixels;
 		sizeInPixels.x = sizeFactor.x * Screen.width;
 		sizeInPixels.y = sizeFactor.y * Screen.height;

@@ -45,8 +45,8 @@ MonoBehaviour:
   _collisionType: Goal
   _collisionGroup: 
   MonoBehaviourName: Goal
-  _radius: .300000012
-  _center: {x: -.800000012, y: 0}
+  _radius: .400000006
+  _center: {x: -.899999976, y: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,8 +74,8 @@ MonoBehaviour:
   _collisionType: Goal
   _collisionGroup: 
   MonoBehaviourName: Goal
-  _radius: .300000012
-  _center: {x: .800000012, y: 0}
+  _radius: .400000006
+  _center: {x: .899999976, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -43,33 +43,28 @@ public class TransitionGUIFx : Effect {
 	private Element elem; // which element the script will transform
 	private Vector2 finalPos = Vector2.zero;
 	private int currentStep;
-	private float offsetX=0;
-	private float offsetY=0;
 	private Vector2 startPos = Vector2.zero;
 	private bool update;
-
+	
 	protected override void ownAwake () {
 		update = false;
-		
 		elem = Element.TRANSFORM;
 		// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
 		/*if (guiTexture != null)
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)
 			elem = Element.GUI_TEXT;*/
-		
-		prepareTransition();
 	}
 	
 	protected override void ownOnDestroy () {
 	}
 
 	protected override void ownStartEffect () {
+		prepareTransition();
 		currentStep = 0;
+		update = !useCoroutine;
 		if (useCoroutine)
 			StartCoroutine("DoCoroutine");
-		else
-			update = true;
 	}
 
 	protected override void ownEndEffect () {
@@ -99,60 +94,27 @@ public class TransitionGUIFx : Effect {
 		else if (elem == Element.GUI_TEXTURE)
 			startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);*/
 		
-		// calculate automatic offsets
-		switch (_transition)
-		{
-		case Transition.FromCurrentPosition:
-			offsetX = -Easing.Ease(0f, acceleration, easingType);
-			offsetY = -Easing.Ease(0f, acceleration, easingType);
-			break;
-		case Transition.ToCurrentPosition:
-			offsetX = -Easing.Ease(1f, acceleration, easingType);
-			offsetY = -Easing.Ease(1f, acceleration, easingType);
-			break;
-		}
-
-		// fix offsets
-		switch (direction)
-		{
-			case Direction.Up:
-				offsetX = 0;
-				break;
-			case Direction.Down:
-				offsetX = 0;
-				offsetY = -offsetY;
-				break;
-			case Direction.Left:
-				offsetX = -offsetX;
-				offsetY = 0;
-				break;
-			case Direction.Right:
-				offsetY = 0;
-				break;
-		}
-		
 		// set initial object position
-		switch (elem)
-		{
-		case Element.TRANSFORM:
-			Vector3 pos = transform.localPosition;
-			pos.x = startPos.x + offsetX;
-			pos.y = startPos.y + offsetY;
-			transform.localPosition = pos;
-			break;
-		/*case Element.GUI_TEXT:
-			Vector2 pOffset = guiText.pixelOffset;
-			pOffset.x = startPos.x + offsetX;
-			pOffset.y = startPos.y + offsetY;
-			guiText.pixelOffset = pOffset;
-			break;
-		case Element.GUI_TEXTURE:
-			Rect pInset = guiTexture.pixelInset;
-			pInset.x = startPos.x + offsetX;
-			pInset.y = startPos.y + offsetY;
-			guiTexture.pixelInset = pInset;
-			break;*/
-		}
+		switch (elem) {
+			case Element.TRANSFORM: {
+				Vector3 pos = transform.localPosition;
+				pos.x = startPos.x;
+				pos.y = startPos.y;
+				transform.localPosition = pos;
+				break; }
+			/*case Element.GUI_TEXT: {
+				Vector2 pOffset = guiText.pixelOffset;
+				pOffset.x = startPos.x;
+				pOffset.y = startPos.y;
+				guiText.pixelOffset = pOffset;
+				break; }
+			case Element.GUI_TEXTURE: {
+				Rect pInset = guiTexture.pixelInset;
+				pInset.x = startPos.x;
+				pInset.y = startPos.y;
+				guiTexture.pixelInset = pInset;
+				break; }*/
+			}
 	}
 	
 	// actual transition happens here
@@ -204,47 +166,47 @@ public class TransitionGUIFx : Effect {
 		switch (direction)
 		{
 		case Direction.Up:
-			newX=startPos.x + offsetX; newY=startPos.y + offsetY + e;
+			newX=startPos.x; newY=startPos.y + e;
 			// don't exceed the final position
 			if (newY > finalPos.y) newY = finalPos.y;
 			break;
 		case Direction.Down:
-			newX=startPos.x + offsetX; newY=startPos.y + offsetY - e;
+			newX=startPos.x; newY=startPos.y - e;
 			// don't exceed the final position
 			if (newY < finalPos.y) newY = finalPos.y;
 			break;
 		case Direction.Left:
-			newX=startPos.x + offsetX - e; newY=startPos.y + offsetY;
+			newX=startPos.x - e; newY=startPos.y;
 			// don't exceed the final position
 			if (newX < finalPos.x) newX = finalPos.x;
 			break;
 		case Direction.Right:
-			newX=startPos.x + offsetX + e; newY=startPos.y + offsetY;
+			newX=startPos.x + e; newY=startPos.y;
 			// don't exceed the final position
 			if (newX > finalPos.x) newX = finalPos.x;
 			break;
 		}
-		
+
 		switch (elem)
 		{
-		case Element.TRANSFORM:
-			Vector3 pos = transform.localPosition;
-			pos.x = newX;
-			pos.y = newY;
-			transform.localPosition = pos;
-			break;
-		/*case Element.GUI_TEXT:
-			Vector2 pOffset = guiText.pixelOffset;
-			pOffset.x = newX;
-			pOffset.y = newY;
-			guiText.pixelOffset = pOffset;
-			break;
-		case Element.GUI_TEXTURE:
-			Rect pInset = guiTexture.pixelInset;
-			pInset.x = newX;
-			pInset.y = newY;
-			guiTexture.pixelInset = pInset;
-			break;*/
-		}
+			case Element.TRANSFORM: {
+				Vector3 pos = transform.localPosition;
+				pos.x = newX;
+				pos.y = newY;
+				transform.localPosition = pos;
+				break; }
+			/*case Element.GUI_TEXT: {
+				Vector2 pOffset = guiText.pixelOffset;
+				pOffset.x = newX;
+				pOffset.y = newY;
+				guiText.pixelOffset = pOffset;
+				break; }
+			case Element.GUI_TEXTURE: {
+				Rect pInset = guiTexture.pixelInset;
+				pInset.x = newX;
+				pInset.y = newY;
+				guiTexture.pixelInset = pInset;
+				break; }*/
+			}
 	}
 }

@@ -26,8 +26,13 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 #if UNITY_EDITOR
 		// Note: scripts with [ExecuteInEditMode] should not call managers that also runs in editor mode.
 		// That is to avoid a NullPointerException since the managers instance has been destroyed just before entering Play mode
-#endif
+		
+		// only call the manager if is playing
+		if (Application.isPlaying)
+			GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
+#else
 		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
+#endif
 	}
 
 #if UNITY_EDITOR
@@ -50,7 +55,7 @@ public class GUIScreenLayout : MonoBehaviour, IGUIScreenLayout {
 			offsetInPixels.y = offset.y * Screen.height;
 		else
 			offsetInPixels.y = offset.y;
-
+		
 		// then apply position correction
 		GUIScreenLayoutManager.adjustPos(transform, guiElem, offsetInPixels, layout);
 	}

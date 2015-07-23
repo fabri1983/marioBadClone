@@ -12,7 +12,7 @@ public class CameraFadeable : MonoBehaviour {
 	
 	private IFadeable effect = null;
 	
-	public IFadeable getEffect () {
+	public IFadeable getFader () {
 		// can't set the reference on Start() because LevelManager also do some stuffs in Start() that depends on this fader component
 		if (effect == null) {
 			FadeByColor component = GetComponentInChildren<FadeByColor>();
