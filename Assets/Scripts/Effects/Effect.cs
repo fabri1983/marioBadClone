@@ -12,7 +12,8 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	private bool doNotResume; // used by the pause manager
 	
 	void Awake () {
-		// if this game object has the 
+		// if this game object has the EffectPrioritizer component it means it will be part of 
+		// an execution chain so start it as disabled
 		if (GetComponent<EffectPrioritizer>() != null) {
 			this.enabled = false;
 			isPriorizable = true;
