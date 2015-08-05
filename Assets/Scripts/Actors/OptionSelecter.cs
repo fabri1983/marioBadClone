@@ -19,7 +19,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	}
 	
 	void Start () {
-		// this initialization depends whether we have another effect we wait for ends
+		// this initialization depends whether we have another effect we wait for ends.
 		unselect();
 	}
 	
