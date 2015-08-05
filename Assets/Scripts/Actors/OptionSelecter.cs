@@ -14,10 +14,12 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	
 	void Awake () {
 		guiSelector = GetComponent<Effect>();
+		// when the OptionText effect finishes then call this effect
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	void Start () {
+		// this initialization depends whether we have another effect we wait for ends.
 		unselect();
 	}
 	
@@ -51,13 +53,13 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	
 	private void unselect () {
 		this.enabled = false;
-		guiSelector.startEffect();
+		guiSelector.endEffect();
 		optionLoadLevel.setSelected(false);
 	}
 	
 	private void select () {
 		this.enabled = true;
-		guiSelector.endEffect();
+		guiSelector.startEffect();
 		optionLoadLevel.setSelected(true);
 	}
 }

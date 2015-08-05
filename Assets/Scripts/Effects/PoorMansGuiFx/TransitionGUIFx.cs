@@ -44,10 +44,8 @@ public class TransitionGUIFx : Effect {
 	private Vector2 finalPos = Vector2.zero;
 	private int currentStep;
 	private Vector2 startPos = Vector2.zero;
-	private bool update;
 	
 	protected override void ownAwake () {
-		update = false;
 		elem = Element.TRANSFORM;
 		// NOTE: currently only TRANSFORM is used, because I don't know exactly what values to use when working with Unity GUI components
 		/*if (guiTexture != null)
@@ -62,27 +60,28 @@ public class TransitionGUIFx : Effect {
 	protected override void ownStartEffect () {
 		prepareTransition();
 		currentStep = 0;
-		update = !useCoroutine;
 		if (useCoroutine)
 			StartCoroutine("DoCoroutine");
+		else
+			this.enabled = true;
 	}
 
 	protected override void ownEndEffect () {
 		if (useCoroutine)
 			StopCoroutine("DoCoroutine");
+		else
+			this.enabled = false;
 	}
 	
 	void Update () {
-		if (useCoroutine)
-			return;
-		if (update)
-			DoTransition();
+		if (!useCoroutine)
+			DoUpdate();
 	}
 	
 	private void prepareTransition ()
 	{
-		if (Mathf.Abs(steps) < 2)
-			steps = (int)Mathf.Sign(steps) * 2;
+		if (steps < 2)
+			steps = 2;
 		
 		// the final position is the current one
 		finalPos.Set(transform.localPosition.x, transform.localPosition.y);
@@ -93,7 +92,7 @@ public class TransitionGUIFx : Effect {
 			startPos.Set(guiText.pixelOffset.x + startOffsetTransform.x, guiText.pixelOffset.y + startOffsetTransform.y);
 		else if (elem == Element.GUI_TEXTURE)
 			startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);*/
-		
+
 		// set initial object position
 		switch (elem) {
 			case Element.TRANSFORM: {
@@ -114,23 +113,12 @@ public class TransitionGUIFx : Effect {
 				pInset.y = startPos.y;
 				guiTexture.pixelInset = pInset;
 				break; }*/
-			}
+		}
 	}
 	
 	// actual transition happens here
 	IEnumerator DoCoroutine () 
 	{
-		// startup delay
-		if (startDelaySecs > 0)
-		{
-			float startTime = Time.time;
-			while(Time.time < startTime + startDelaySecs)
-			{
-				yield return null;
-			}
-		}
-
-		// main transition/easing loop
 		//while (currentStep < steps)
 		while (true)
 		{
@@ -138,22 +126,20 @@ public class TransitionGUIFx : Effect {
 			++currentStep;
 			if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
 				break;
-            yield return null;
+            yield return null; // wait to the next frame
 		}
 
 		endEffect();
 	}
 	
-	private void DoTransition ()
+	private void DoUpdate ()
 	{
-		// main transition/easing loop
-		//if (currentStep >= steps) {
-		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y) {
-			endEffect();
-			return;
-		}
 		transition(currentStep);
 		++currentStep;
+		
+		// if (currentStep >= steps)
+		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
+			endEffect();
 	}
 
 	private void transition (int step)
