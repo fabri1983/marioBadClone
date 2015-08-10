@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class Gamepad : MonoBehaviour {
+public class Gamepad : MonoBehaviour, IEffectListener {
 	
 	// 5 is ok for mobile 30 fps, 9 for 60 fps
 	public const short HARD_PRESSED_MIN_COUNT = 9;
@@ -37,8 +37,18 @@ public class Gamepad : MonoBehaviour {
 		}
 	}
 	
+	void OnDestroy () {
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
+		if (duplicated) {
+			duplicated = false;
+			return;
+		}
+		instance = null;
+	}
+	
 	private void initialize () {
 		resetButtonState();
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	/// <summary>
@@ -62,15 +72,6 @@ public class Gamepad : MonoBehaviour {
 		}
 	}
 	
-	void OnDestroy () {
-		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
-		if (duplicated) {
-			duplicated = false;
-			return;
-		}
-		instance = null;
-	}
-	
 	/**
 	 * LateUpdate is called after all Update functions have been called.
 	 * Dependant objects might have moved during Update.
@@ -79,6 +80,15 @@ public class Gamepad : MonoBehaviour {
 		updateHardPressed();
 		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
 		resetButtonState();
+	}
+	
+	public Effect[] getEffects () {
+		return GetComponentsInChildren<Effect>();
+	}
+	
+	public void onLastEffectEnd () {
+		// setup the swipe control once all the gamepad elements effects finish
+		Debug.Log("hacer setup de SwipeControlXY");
 	}
 	
 	/// <summary>

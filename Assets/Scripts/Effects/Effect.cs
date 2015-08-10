@@ -52,6 +52,7 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	}
 	
 	public void startEffect() {
+		this.enabled = true;
 		if (startDelaySecs > 0f)
 			Invoke("ownStartEffect", startDelaySecs);
 		else
@@ -59,6 +60,7 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	}
 	
 	public void endEffect () {
+		this.enabled = false;
 		ownEndEffect();
 		// the next line only has sense if this Effect is the last one in the chain
 		executeListeners();
