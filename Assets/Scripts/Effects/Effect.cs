@@ -12,9 +12,9 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	private bool doNotResume; // used by the pause manager
 	
 	void Awake () {
-		// if this game object has the EffectPrioritizer component it means it will be part of 
+		// if this game object has the EffectPrioritizerChain component it means it will be part of 
 		// an execution chain so start it as disabled
-		if (GetComponent<EffectPrioritizer>() != null) {
+		if (GetComponent<EffectPrioritizerChain>() != null) {
 			this.enabled = false;
 			isPriorizable = true;
 		}
@@ -52,7 +52,6 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	}
 	
 	public void startEffect() {
-		this.enabled = true;
 		if (startDelaySecs > 0f)
 			Invoke("ownStartEffect", startDelaySecs);
 		else
@@ -61,7 +60,6 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	
 	public void endEffect () {
 		ownEndEffect();
-		this.enabled = false;
 		// the next line only has sense if this Effect is the last one in the chain
 		executeListeners();
 		// call the next Effect in the chain

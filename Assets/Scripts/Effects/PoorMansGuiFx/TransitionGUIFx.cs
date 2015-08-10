@@ -124,7 +124,7 @@ public class TransitionGUIFx : Effect {
 		{
 			transition(currentStep);
 			++currentStep;
-			if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
+			if (currentStep > 2 && finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
 				break;
             yield return null; // wait to the next frame
 		}
@@ -138,7 +138,7 @@ public class TransitionGUIFx : Effect {
 		++currentStep;
 		
 		// if (currentStep >= steps)
-		if (finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
+		if (currentStep > 2 && finalPos.x == transform.localPosition.x && finalPos.y == transform.localPosition.y)
 			endEffect();
 	}
 
