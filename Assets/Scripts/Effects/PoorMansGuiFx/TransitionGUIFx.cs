@@ -52,13 +52,14 @@ public class TransitionGUIFx : Effect {
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)
 			elem = Element.GUI_TEXT;*/
+		
+		prepareTransition();
 	}
 	
 	protected override void ownOnDestroy () {
 	}
 
 	protected override void ownStartEffect () {
-		prepareTransition();
 		currentStep = 0;
 		if (useCoroutine)
 			StartCoroutine("DoCoroutine");
