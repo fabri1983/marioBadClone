@@ -15,6 +15,10 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 	private static Gamepad instance = null;
 	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
+	private SwipeControlXY swipeCtrl;
+	private float startPosY = 0;
+	private bool readInput = true;
+	
 	public static Gamepad Instance {
         get {
             if (instance == null)
@@ -37,6 +41,14 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 		}
 	}
 	
+	private void initialize () {
+		resetButtonState();
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
+		
+		swipeCtrl = GetComponent<SwipeControlXY>();
+		swipeCtrl.allowInput = false;
+	}
+	
 	void OnDestroy () {
 		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
@@ -44,11 +56,6 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 			return;
 		}
 		instance = null;
-	}
-	
-	private void initialize () {
-		resetButtonState();
-		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
 	/// <summary>
@@ -73,9 +80,29 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 	}
 	
 	void LateUpdate () {
-		updateHardPressed();
-		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
-		resetButtonState();
+		if (readInput) {
+			updateHardPressed();
+			// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
+			resetButtonState();
+		}
+		
+		/*if (swipeCtrl.allowInput) {
+			float displacementY = Mathf.Round(swipeCtrl.smoothValue.y);
+			float swipeOffset = swipeCtrl.smoothValue.y - displacementY;
+			float offset = (Screen.height - 104) - (swipeOffset * 108);
+
+			// if surpassing threshold then move the gamepad object and keep it disabled
+			if (Mathf.Abs(displacementY) >= 0 && displacementY < swipeCtrl.maxValue.y) {
+				Debug.Log(displacementY + " - " + swipeOffset + " - " + offset);
+				readInput = false;
+				Vector3 thePos = transform.position;
+				thePos.y += offset;
+				transform.position = thePos;
+			}
+			// only active if at original position
+			else if (startPosY == transform.position.y)
+				readInput = true;
+		}*/
 	}
 	
 	public Effect[] getEffects () {
@@ -83,8 +110,11 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 	}
 	
 	public void onLastEffectEnd () {
+		startPosY = transform.position.y;
 		// setup the swipe control once all the gamepad elements effects finish
-		Debug.Log("hacer setup de SwipeControlXY");
+		swipeCtrl.allowInput = true;
+		swipeCtrl.activeArea = new Rect(Screen.width / 2 - 100, Screen.height - 80, 200f, 80f);
+		swipeCtrl.Setup();
 	}
 	
 	/// <summary>
