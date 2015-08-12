@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class Gamepad : MonoBehaviour {
+public class Gamepad : MonoBehaviour, IEffectListener {
 	
 	// 5 is ok for mobile 30 fps, 9 for 60 fps
 	public const short HARD_PRESSED_MIN_COUNT = 9;
@@ -14,6 +14,10 @@ public class Gamepad : MonoBehaviour {
 	
 	private static Gamepad instance = null;
 	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
+	
+	private SwipeControlXY swipeCtrl;
+	private float startPosY = 0;
+	private bool readInput = true;
 	
 	public static Gamepad Instance {
         get {
@@ -39,6 +43,19 @@ public class Gamepad : MonoBehaviour {
 	
 	private void initialize () {
 		resetButtonState();
+		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
+		
+		swipeCtrl = GetComponent<SwipeControlXY>();
+		swipeCtrl.allowInput = false;
+	}
+	
+	void OnDestroy () {
+		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
+		if (duplicated) {
+			duplicated = false;
+			return;
+		}
+		instance = null;
 	}
 	
 	/// <summary>
@@ -62,23 +79,42 @@ public class Gamepad : MonoBehaviour {
 		}
 	}
 	
-	void OnDestroy () {
-		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
-		if (duplicated) {
-			duplicated = false;
-			return;
+	void LateUpdate () {
+		if (readInput) {
+			updateHardPressed();
+			// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
+			resetButtonState();
 		}
-		instance = null;
+		
+		/*if (swipeCtrl.allowInput) {
+			float displacementY = Mathf.Round(swipeCtrl.smoothValue.y);
+			float swipeOffset = swipeCtrl.smoothValue.y - displacementY;
+			float offset = (Screen.height - 104) - (swipeOffset * 108);
+
+			// if surpassing threshold then move the gamepad object and keep it disabled
+			if (Mathf.Abs(displacementY) >= 0 && displacementY < swipeCtrl.maxValue.y) {
+				Debug.Log(displacementY + " - " + swipeOffset + " - " + offset);
+				readInput = false;
+				Vector3 thePos = transform.position;
+				thePos.y += offset;
+				transform.position = thePos;
+			}
+			// only active if at original position
+			else if (startPosY == transform.position.y)
+				readInput = true;
+		}*/
 	}
 	
-	/**
-	 * LateUpdate is called after all Update functions have been called.
-	 * Dependant objects might have moved during Update.
-	 */
-	void LateUpdate () {
-		updateHardPressed();
-		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
-		resetButtonState();
+	public Effect[] getEffects () {
+		return GetComponentsInChildren<Effect>();
+	}
+	
+	public void onLastEffectEnd () {
+		startPosY = transform.position.y;
+		// setup the swipe control once all the gamepad elements effects finish
+		swipeCtrl.allowInput = true;
+		swipeCtrl.activeArea = new Rect(Screen.width / 2 - 100, Screen.height - 80, 200f, 80f);
+		swipeCtrl.Setup();
 	}
 	
 	/// <summary>

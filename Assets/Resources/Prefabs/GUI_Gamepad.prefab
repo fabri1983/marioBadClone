@@ -75,6 +75,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400006}
+  - 114: {fileID: 11400032}
   m_Layer: 0
   m_Name: GUI_Gamepad
   m_TagString: Untagged
@@ -141,7 +142,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -159,7 +160,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -177,7 +178,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 11568383d4e25ed4899edca6622dde97, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -303,8 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
   priority: 0
-  startDelaySecs: 0
-  startOffsetTransform: {x: 0, y: -10}
+  startDelaySecs: .300000012
+  startOffsetTransform: {x: 0, y: -20}
   _transition: 0
   direction: 0
   steps: 10
@@ -322,8 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
   m_Name: 
   priority: 0
-  startDelaySecs: .300000012
-  startOffsetTransform: {x: 0, y: -10}
+  startDelaySecs: .5
+  startOffsetTransform: {x: 0, y: -20}
   _transition: 0
   direction: 0
   steps: 10
@@ -342,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
-  startOffsetTransform: {x: 0, y: -10}
+  startOffsetTransform: {x: 0, y: -20}
   _transition: 0
   direction: 0
   steps: 10
@@ -433,6 +434,63 @@ MonoBehaviour:
   virtualSize: {x: 0, y: 0}
   sizeAsPixels: 1
   newMaterialInstance: 1
+--- !u!114 &11400032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b47fddfc04f5f4287d12b4a2c53b2c, type: 1}
+  m_Name: 
+  controlEnabled: 1
+  skipAutoSetup: 1
+  allowInput: 1
+  clickEdgeToSwitch: 1
+  pxDistBetweenValues: {x: 200, y: 50}
+  startValue: {x: 0, y: 0}
+  currentValue: {x: 0, y: 0}
+  maxValue: {x: 10, y: 10}
+  activeArea:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  leftEdgeRectForClickSwitch:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  rightEdgeRectForClickSwitch:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  matrix:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  smoothValue: {x: 0, y: 0}
+  maxSpeed: {x: 20, y: 20}
+  selected: 0
+  debug: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -7,7 +7,7 @@ using System;
 /// and want to prioritize and chain all of them. So is applicable when the game object has more than one 
 /// Effect.
 /// </summary>
-public class EffectPrioritizer : MonoBehaviour {
+public class EffectPrioritizerChain : MonoBehaviour {
 
 	private Effect[] chain;
 	

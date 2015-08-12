@@ -15,6 +15,7 @@ using System.Collections;
 /// </summary>
 public class FPSHud : MonoBehaviour
 {
+	public bool		onlyInDebugMode = false;
 	public bool 	useCoroutine = false; // Use coroutines for PC targets. For mobile targets WaitForSeconds doesn't work.
 	public Rect		startRect = new Rect( 1, 1, 36, 58); // The rect the GUI text is initially displayed at.
 	public bool		updateColor = true; // Do you want the color to change if the FPS gets low
@@ -30,12 +31,12 @@ public class FPSHud : MonoBehaviour
 	
 	void Awake () {
 		// only keep this object if in debug build
-		if (Debug.isDebugBuild) {
+		if (!onlyInDebugMode || Debug.isDebugBuild) {
 			DontDestroyOnLoad(gameObject);
 		}
 		// else destroy it
 		else {
-			enabled = false;
+			this.enabled = false;
 			Destroy(gameObject);
 		}
 	}
