@@ -51,6 +51,7 @@ public class SwipeControlXY : MonoBehaviour {
 	private Vector2 mStartPos;
 	private Vector3 pos; //Touch/Mouse Position turned into a Vector3
 	private Vector2 tPos; //transformed Position
+	private Vector2 dragging = Vector2.zero; // Para saber si se esta moviendo
 	
 	public bool selected = false; //true if selected by touch (click/touch instead of swipe)
 	
@@ -135,9 +136,18 @@ public class SwipeControlXY : MonoBehaviour {
 		
 	}
 	
+	public bool isDraggingX () {
+		return dragging.x != 0f;
+	}
+	
+	public bool isDraggingY () {
+		return dragging.y != 0f;
+	}
 	
 	
 	void Update () {
+		dragging.x = 0f;
+		dragging.y = 0f;
 		
 		if(controlEnabled) {
 			
@@ -169,10 +179,10 @@ public class SwipeControlXY : MonoBehaviour {
 						//DRAGGING
 						smoothValue.x = smoothStartPos.x - tPos.x * partFactor.x;
 						smoothValue.y = smoothStartPos.y - tPos.y * partFactor.y;
-						if(smoothValue.x < -0.12f) { smoothValue.x = -0.12f; }
-						else if(smoothValue.x > maxValue.x + 0.12f) { smoothValue.x = maxValue.x + 0.12f; }
-						if(smoothValue.y < -0.12f) { smoothValue.y = -0.12f; }
-						else if(smoothValue.y > maxValue.y + 0.12f) { smoothValue.y = maxValue.y + 0.12f; }
+						if(smoothValue.x < -0.12f) { smoothValue.x = -0.12f; dragging.x = 1f;}
+						else if(smoothValue.x > maxValue.x + 0.12f) { smoothValue.x = maxValue.x + 0.12f; dragging.x = 1f;}
+						if(smoothValue.y < -0.12f) { smoothValue.y = -0.12f; dragging.y = 1f;}
+						else if(smoothValue.y > maxValue.y + 0.12f) { smoothValue.y = maxValue.y + 0.12f; dragging.y = 1f;}
 
 						//END
 						if(Input.GetMouseButtonUp(0)) {
@@ -240,10 +250,10 @@ public class SwipeControlXY : MonoBehaviour {
 						if((tPos - fingerStartPos[touch.fingerId]).sqrMagnitude > 15f*15f) { //only count once the finger has moved at least 15px on screen
 							smoothValue.x = smoothStartPos.x - tPos.x * partFactor.x; //print("smoothValue : " + smoothValue);
 							smoothValue.y = smoothStartPos.y - tPos.y * partFactor.y; //print("smoothValue : " + smoothValue);
-							if(smoothValue.x < -0.12f) { smoothValue.x = -0.12f; }
-							else if(smoothValue.x > maxValue.x + 0.12f) { smoothValue.x = maxValue.x + 0.12f; }
-							if(smoothValue.y < -0.12f) { smoothValue.y = -0.12f; }
-							else if(smoothValue.y > maxValue.y + 0.12f) { smoothValue.y = maxValue.y + 0.12f; }
+							if(smoothValue.x < -0.12f) { smoothValue.x = -0.12f; dragging.x = 1f;}
+							else if(smoothValue.x > maxValue.x + 0.12f) { smoothValue.x = maxValue.x + 0.12f; dragging.x = 1f;}
+							if(smoothValue.y < -0.12f) { smoothValue.y = -0.12f; dragging.y = 1f;}
+							else if(smoothValue.y > maxValue.y + 0.12f) { smoothValue.y = maxValue.y + 0.12f; dragging.y = 1f;}
 						}
 						//END
 						if(touch.phase == TouchPhase.Ended) {

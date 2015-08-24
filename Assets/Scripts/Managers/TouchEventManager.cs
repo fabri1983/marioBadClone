@@ -111,10 +111,10 @@ public class TouchEventManager {
 			return;
 
 #if UNITY_EDITOR
-		for (int i=0; i < Input.touchCount; ++i) {
+		/*for (int i=0; i < Input.touchCount; ++i) {
 			Touch tch = Input.touches[i];
 			Debug.Log(Input.touchCount + ": " + tch.phase + " -> finger " + tch.fingerId);
-		}
+		}*/
 #endif
 		// send events to listeners
 		for (int i=0,c=Input.touchCount; i < c; ++i) {
