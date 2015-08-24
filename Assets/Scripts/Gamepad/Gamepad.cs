@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class Gamepad : MonoBehaviour, IEffectListener {
+public class Gamepad : MonoBehaviour {
 	
 	// 5 is ok for mobile 30 fps, 9 for 60 fps
 	public const short HARD_PRESSED_MIN_COUNT = 9;
@@ -15,12 +15,7 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 	private static Gamepad instance = null;
 	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
-	private SwipeGesture swipeCtrl;
-	private float screenLimitPosYup, screenLimitPosYdown;
 	private bool touchEnabled = true;
-	private bool swipeDown = false;
-	private bool swipeUp = false;
-	private Vector3 screenPos;
 	
 	public static Gamepad Instance {
         get {
@@ -46,9 +41,6 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 	
 	private void initialize () {
 		resetButtonState();
-		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
-		swipeCtrl = GetComponent<SwipeGesture>();
-		swipeCtrl.enabled = false;
 	}
 	
 	void OnDestroy () {
@@ -58,6 +50,10 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 			return;
 		}
 		instance = null;
+	}
+	
+	public void setTouchEnabled (bool value) {
+		touchEnabled = value;
 	}
 	
 	/// <summary>
@@ -81,65 +77,10 @@ public class Gamepad : MonoBehaviour, IEffectListener {
 		}
 	}
 	
-	public Effect[] getEffects () {
-		return GetComponentsInChildren<Effect>();
-	}
-	
-	public void onLastEffectEnd () {
-		// cache for the screen position
-		screenPos = Camera.main.WorldToScreenPoint(transform.position);
-		// limit the Y axis screen displacement of the game object
-		screenLimitPosYup = screenPos.y;
-		screenLimitPosYdown = screenPos.y + 80f;
-		// setup the swipe gesture control once all the gamepad elements effects finish
-		setupSwipeControl();
-	}
-	
-	private void setupSwipeControl () {
-		// only setting up the active area
-		Rect areaRect = new Rect((Screen.width / 2) - 90, Screen.height - 80, 180f, 80f);
-		swipeCtrl.settings.activeArea = areaRect;
-		
-		swipeCtrl.enabled = true;
-		swipeCtrl.setup();
-		swipeCtrl.EventOnDownSwipe += () => { swipeUp = true; };
-		swipeCtrl.EventOnUpSwipe += () => { swipeDown = true; };
-	}
-	
-	void Update () {
-		applyGesture();
-	}
-	
 	void LateUpdate () {
 		updateHardPressed();
 		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
 		resetButtonState();
-	}
-	
-	private void applyGesture () {
-		if (!swipeUp && !swipeDown)
-			return;
-		
-		Vector3 thePos = transform.position;
-		
-		if (swipeUp)
-			screenPos.y -= 8;
-		else if (swipeDown)
-			screenPos.y += 8;
-		
-		if (screenPos.y < screenLimitPosYup) {
-			touchEnabled = true;
-			swipeUp = false;
-			screenPos.y = screenLimitPosYup;
-		}
-		else if (screenPos.y > screenLimitPosYdown) {
-			touchEnabled = false;
-			swipeDown = false;
-			screenPos.y = screenLimitPosYdown;
-		}
-		
-		thePos.y = Camera.main.ScreenToWorldPoint(screenPos).y;
-		transform.position = thePos;
 	}
 	
 	/// <summary>

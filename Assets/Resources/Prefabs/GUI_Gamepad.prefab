@@ -76,6 +76,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400032}
+  - 114: {fileID: 11400034}
   m_Layer: 0
   m_Name: GUI_Gamepad
   m_TagString: Untagged
@@ -445,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66731b18cf26da249b78c38957a84b01, type: 1}
   m_Name: 
   settings:
-    minSwipeDist: 30
+    minSwipeDist: 20
     maxSwipeTime: 10
     activeArea:
       serializedVersion: 2
@@ -454,6 +455,16 @@ MonoBehaviour:
       width: 0
       height: 0
   debug: 0
+--- !u!114 &11400034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02bf0c60b58647c458af7ca755937b5e, type: 1}
+  m_Name: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -3666,8 +3666,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
   m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1001 &832975907
 Prefab:
   m_ObjectHideFlags: 0
@@ -6646,8 +6644,8 @@ MonoBehaviour:
   _collisionType: Goal
   _collisionGroup: 
   MonoBehaviourName: Goal
-  _radius: .300000012
-  _center: {x: -.800000012, y: 0}
+  _radius: .400000006
+  _center: {x: -.899999976, y: 0}
 --- !u!114 &1535395993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6677,8 +6675,8 @@ MonoBehaviour:
   _collisionType: Goal
   _collisionGroup: 
   MonoBehaviourName: Goal
-  _radius: .300000012
-  _center: {x: .800000012, y: 0}
+  _radius: .400000006
+  _center: {x: .899999976, y: 0}
 --- !u!1 &1561468556
 GameObject:
   m_ObjectHideFlags: 0

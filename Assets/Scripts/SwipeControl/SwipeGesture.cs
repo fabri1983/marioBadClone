@@ -126,7 +126,7 @@ public class SwipeGesture : MonoBehaviour, IGUIScreenLayout {
 					break;
 					
 				case TouchPhase.Stationary: //Is the touch stationary? --> No swipe then!
-					if (isContinouslyStationary(12))
+					if (isContinouslyStationary(15))
 						couldBeSwipe = false;
 					break;
 					
