@@ -1,61 +1,15 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class SwipeGesture : MonoBehaviour, IGUIScreenLayout {
-
-	[System.Serializable]
-	public class SwipeGestureSettings
-	{
-		public float minSwipeDist = 20f; // minimum pixel displacement to consider a swipe
-		public float maxSwipeTime = 10f; // time the touch stayed at the screen from begining till now.
-		public Rect activeArea; // where you can touch to start the swipe detection
-		
-		private bool areaSetOriginallyByUser = false;
-		private float leftProportion, topProportion;
-		private bool setupReady = false;
-			
-		private static Rect EMPTY_AREA = new Rect(0f, 0f, 0f, 0f);
-		
-		public void setup () {
-			if (EMPTY_AREA.Equals(activeArea)) {
-				fillAreaToCurrentScreen();
-				areaSetOriginallyByUser = false;
-			} else {
-				areaSetOriginallyByUser = true;
-				// calculate left and top proportions
-				leftProportion = (activeArea.x + 1f) / Screen.width;
-				topProportion = (activeArea.y + 1f) / Screen.height;
-			}
-			setupReady = true;
-		}
-		
-		private void fillAreaToCurrentScreen () {
-			activeArea = new Rect(0f ,0f, Screen.width, Screen.height);
-		}
-		
-		public void recalculateArea () {
-			if (!setupReady)
-				return;
-			
-			if (!areaSetOriginallyByUser)
-				fillAreaToCurrentScreen();
-			else {
-				// given the proportion values calculate left and top values
-				activeArea.x = Screen.width * leftProportion;
-				activeArea.y = Screen.height * topProportion;
-			}
-		}
-	}
 	
 	public SwipeGestureSettings settings;
 	public bool debug;
-	
-	public delegate void DelegateContainer ();
-	public event DelegateContainer EventOnRightSwipe;
-	public event DelegateContainer EventOnLeftSwipe;
-	public event DelegateContainer EventOnUpSwipe;
-	public event DelegateContainer EventOnDownSwipe;
-	
+
+	private List<SwipeGestureListener> onRightSwipeListeners;
+	private List<SwipeGestureListener> onLeftSwipeListeners;
+	private List<SwipeGestureListener> onUpSwipeListeners;
+	private List<SwipeGestureListener> onDownSwipeListeners;
 	private float swipeStartTime;
 	private bool couldBeSwipe;
 	private Vector2 startPos;
@@ -66,19 +20,18 @@ public class SwipeGesture : MonoBehaviour, IGUIScreenLayout {
 	void Awake () {
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
-		
-		// initialize with empty delegates to avoid null pointer exception
-		EventOnRightSwipe += () => { };
-		EventOnLeftSwipe += () => { };
-		EventOnUpSwipe += () => { };
-		EventOnDownSwipe += () => { };
+
+		onRightSwipeListeners = new List<SwipeGestureListener>(2);
+		onLeftSwipeListeners = new List<SwipeGestureListener>(2);
+		onUpSwipeListeners = new List<SwipeGestureListener>(2);
+		onDownSwipeListeners = new List<SwipeGestureListener>(2);
 	}
 	
 	void OnDestroy () {
-		EventOnRightSwipe = null;
-		EventOnLeftSwipe = null;
-		EventOnUpSwipe = null;
-		EventOnDownSwipe = null;
+		onRightSwipeListeners = null;
+		onLeftSwipeListeners = null;
+		onUpSwipeListeners = null;
+		onDownSwipeListeners = null;
 		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 	
@@ -137,17 +90,21 @@ public class SwipeGesture : MonoBehaviour, IGUIScreenLayout {
 						couldBeSwipe = false; //<-- Otherwise this part would be called over and over again.
 						if (Mathf.Abs(touch.position.x - startPos.x) > settings.minSwipeDist) {
 							if (Mathf.Sign(touch.position.x - startPos.x) == 1f) {
-								EventOnRightSwipe();
+								for (int i=0, c=onRightSwipeListeners.Count; i < c; ++i)
+									onRightSwipeListeners[i].notifyRight();
 							} else {
-								EventOnLeftSwipe();
+								for (int i=0, c=onLeftSwipeListeners.Count; i < c; ++i)
+									onLeftSwipeListeners[i].notifyLeft();
 							}
 						}
 						
 						if (Mathf.Abs(touch.position.y - startPos.y) > settings.minSwipeDist) {
 							if (Mathf.Sign(touch.position.y - startPos.y) == 1f) {
-								EventOnUpSwipe();
+								for (int i=0, c=onUpSwipeListeners.Count; i < c; ++i)
+									onUpSwipeListeners[i].notifyUp();
 							} else {
-								EventOnDownSwipe();
+								for (int i=0, c=onDownSwipeListeners.Count; i < c; ++i)
+									onDownSwipeListeners[i].notifyDown();
 							}
 						}
 					}
@@ -174,4 +131,19 @@ public class SwipeGesture : MonoBehaviour, IGUIScreenLayout {
 		return couldBeSwipe && swipeTime < settings.maxSwipeTime && swipeDist > settings.minSwipeDist;
 	}
 
+	public void registerOnRightSwipe (SwipeGestureListener listener) {
+		onRightSwipeListeners.Add(listener);
+	}
+	
+	public void registerOnLeftSwipe (SwipeGestureListener listener) {
+		onLeftSwipeListeners.Add(listener);
+	}
+	
+	public void registerOnUpSwipe (SwipeGestureListener listener) {
+		onUpSwipeListeners.Add(listener);
+	}
+	
+	public void registerOnDownSwipe (SwipeGestureListener listener) {
+		onDownSwipeListeners.Add(listener);
+	}
 }
