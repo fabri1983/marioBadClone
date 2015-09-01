@@ -7,6 +7,7 @@ using UnityEngine;
 public class OptionSelecter : MonoBehaviour, IEffectListener {
 
 	public OptionLoadLevel optionLoadLevel;
+	public GUICustomElement textOption;
 	public bool beginSelected = false;
 	public OptionSelecter aboveSelecter, belowSelecter, leftSelecter, rightSelecter;
 	
@@ -43,7 +44,7 @@ public class OptionSelecter : MonoBehaviour, IEffectListener {
 	}
 	
 	public Effect[] getEffects () {
-		return optionLoadLevel.GetComponents<Effect>();
+		return textOption.GetComponents<Effect>();
 	}
 	
 	public void onLastEffectEnd () {

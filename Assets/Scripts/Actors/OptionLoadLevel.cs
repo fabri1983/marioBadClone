@@ -3,13 +3,21 @@ using UnityEngine;
 public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	public int sceneIndex; // index of the scene to be loaded
+	public GUICustomElement actionGuiElem;
 	
 	private bool selected = false;
 	private Rect _screenBounds; // cache for the screen bounds this game object covers
+	private BeforeLoadNextScene beforeNextScene;
 	
 	void Awake () {
-		_screenBounds.x = -1f; // initialize the screen bounds cache
+		// initialize the screen bounds cache
+		_screenBounds.x = -1f;
+		// do some setup after finishes all gameobject effects
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
+		// setup the effects chain
+		beforeNextScene = GetComponent<BeforeLoadNextScene>();
+		if (beforeNextScene != null)
+			beforeNextScene.setSceneIndex(sceneIndex);
 	}
 	
 	void OnDestroy () {
@@ -32,7 +40,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	public Rect getScreenBoundsAA () {
 		// checks if the cached size has changed
 		if (_screenBounds.x == -1f)
-			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(actionGuiElem);
 		return _screenBounds;
 	}
 	
@@ -56,11 +64,15 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	private void doAction () {
 		if (PauseGameManager.Instance.isPaused())
 			return;
-		LevelManager.Instance.loadLevel(sceneIndex);
+		this.enabled = false;
+		if (beforeNextScene != null)
+			beforeNextScene.execute();
+		else
+			LevelManager.Instance.loadLevel(sceneIndex);
 	}
 	
 	public Effect[] getEffects () {
-		return GetComponents<Effect>();
+		return GetComponentsInChildren<Effect>();
 	}
 	
 	public void onLastEffectEnd () {
@@ -75,7 +87,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		// is caught, so we need to manually check for the event and fire it here
 		Event e = Event.current;
 		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
-			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
+			if (GameObjectTools.testHitFromMousePos(actionGuiElem.transform, e.mousePosition))
 				doAction();
 		}
 	}

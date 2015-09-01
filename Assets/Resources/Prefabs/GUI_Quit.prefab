@@ -94,8 +94,9 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
+  beforeLoadNextScene: 0
   startOffsetTransform: {x: -50, y: 0}
-  _transition: 0
+  _transition: 1
   direction: 1
   steps: 8
   acceleration: 1

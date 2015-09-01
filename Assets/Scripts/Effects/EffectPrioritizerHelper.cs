@@ -23,10 +23,29 @@ public static class EffectPrioritizerHelper {
 	
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
-	public static void sortAndChain (Effect[] arr) {
+	public static int sortAndChain (Effect[] arr) {
 		Array.Sort(arr, priorityComp);
-		for (int i=0,c=arr.Length; i < (c-1) && c > 1; ++i)
-			arr[i].setNextEffect(arr[i+1]);
+		for (int i=0, c=arr.Length; i < (c-1); ) {
+			// skip if current effect has set beforeLoadNextScene + true
+			if (arr[i].beforeLoadNextScene) {
+				++i;
+				continue;
+			}
+			// look for the next effect with beforeLoadNextScene = false
+			for (int j=i+1; j < c; ++j) {
+				if (arr[j].beforeLoadNextScene)
+					continue;
+				arr[i].setNextEffect(arr[j]);
+				i = j;
+				break;
+			}
+		}
+		// traverse again and get the index of the first effect with beforeLoadNextScene = false
+		for (int i=0, c=arr.Length; i < c; ++i) {
+			if (!arr[i].beforeLoadNextScene)
+				return i;
+		}
+		return -1; // no effect with eforeLoadNextScene = false
 	}
 	
 	/// <summary>
@@ -37,11 +56,11 @@ public static class EffectPrioritizerHelper {
 		Effect[] arr = listener.getEffects();
 		if (arr == null)
 			return;
-		// get the Effect with less priority
+		// get the Effect with less priority. It may happens all of them have same priority
 		int priority = -1;
 		Effect last = null;
 		for (int i=0,c=arr.Length; i<c; ++i) {
-			if (priority < arr[i].priority) {
+			if (priority < arr[i].priority && !arr[i].beforeLoadNextScene) {
 				priority = arr[i].priority;
 				last = arr[i];
 			}

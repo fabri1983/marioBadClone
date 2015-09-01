@@ -306,8 +306,9 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: .300000012
+  beforeLoadNextScene: 0
   startOffsetTransform: {x: 0, y: -20}
-  _transition: 0
+  _transition: 1
   direction: 0
   steps: 10
   acceleration: 1
@@ -325,8 +326,9 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: .5
+  beforeLoadNextScene: 0
   startOffsetTransform: {x: 0, y: -20}
-  _transition: 0
+  _transition: 1
   direction: 0
   steps: 10
   acceleration: 1
@@ -344,8 +346,9 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
+  beforeLoadNextScene: 0
   startOffsetTransform: {x: 0, y: -20}
-  _transition: 0
+  _transition: 1
   direction: 0
   steps: 10
   acceleration: 1

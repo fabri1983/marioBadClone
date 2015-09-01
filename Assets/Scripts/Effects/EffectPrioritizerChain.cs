@@ -10,17 +10,17 @@ using System;
 public class EffectPrioritizerChain : MonoBehaviour {
 
 	private Effect[] chain;
+	private int startEffect = 0;
 	
 	void Awake () {
-		// take all the Effects
-		chain = gameObject.GetComponents<Effect>();
-		// sort and chain
-		EffectPrioritizerHelper.sortAndChain(chain);
+		chain = GetComponents<Effect>();
+		startEffect = EffectPrioritizerHelper.sortAndChain(chain);
 	}
 	
 	void Start () {
-		// execute first thus propagating the chain effect
-		chain[0].startEffect();
+		// execute the chain effect
+		if (startEffect > 0)
+			chain[startEffect].startEffect();
 		// then disable this script
 		this.enabled = false;
 	}
