@@ -64,7 +64,9 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	private void doAction () {
 		if (PauseGameManager.Instance.isPaused())
 			return;
+		
 		this.enabled = false;
+		
 		if (beforeNextScene != null)
 			beforeNextScene.execute();
 		else

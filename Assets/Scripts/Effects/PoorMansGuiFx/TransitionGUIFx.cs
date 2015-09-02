@@ -53,26 +53,27 @@ public class TransitionGUIFx : Effect {
 		else if (guiText != null)
 			elem = Element.GUI_TEXT;*/
 
-		prepareTransition();
+		if (!base.beforeLoadNextScene)
+			prepareTransition();
 	}
 	
 	protected override void ownOnDestroy () {
 	}
 
 	protected override void ownStartEffect () {
+		if (base.beforeLoadNextScene)
+			prepareTransition();
+
 		currentStep = 0;
-		
+		this.enabled = true;
 		if (useCoroutine)
-			StartCoroutine("DoCoroutine");
-		else
-			this.enabled = true;
+			StartCoroutine("DoCoroutine");	
 	}
 
 	protected override void ownEndEffect () {
 		if (useCoroutine)
 			StopCoroutine("DoCoroutine");
-		else
-			this.enabled = false;
+		this.enabled = false;
 	}
 	
 	void Update () {

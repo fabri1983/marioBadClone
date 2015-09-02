@@ -16,8 +16,12 @@ public class RendererOnOffEffect : Effect {
 	
 	protected override void ownStartEffect () {
 		renderer.enabled = invertBehaviour ? false : true;
+		
 		// once the component did the effect reset the delay property so it is not delayed when coming back to same option.
 		base.startDelaySecs = 0f;
+
+		if (beforeLoadNextScene)
+			endEffect();
 	}
 	
 	protected override void ownEndEffect () {

@@ -19,7 +19,7 @@ public class EffectPrioritizerChain : MonoBehaviour {
 	
 	void Start () {
 		// execute the chain effect
-		if (startEffect > 0)
+		if (startEffect >= 0)
 			chain[startEffect].startEffect();
 		// then disable this script
 		this.enabled = false;
