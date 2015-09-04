@@ -44,7 +44,9 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
             // create the new material and assing it to the renderer
 			if (renderer.sharedMaterial == null) {
 				renderer.sharedMaterial = new Material(renderer.material);
+				#if DEBUG
 				Debug.LogWarning("No material. A Default one will is created. Verify your prefab or gameobject config. " + gameObject.name);
+				#endif
 			}
 			else
             	renderer.sharedMaterial = new Material(renderer.sharedMaterial);

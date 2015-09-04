@@ -60,9 +60,9 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	private void optionSelected() {
 		if (PauseGameManager.Instance.isPaused())
 			return;
-#if UNITY_EDITOR
+		#if DEBUG_GAMEPAD
 		Debug.Log(buttonId.ToString());
-#endif
+		#endif
 		// set the pressed button on GamepadInput manager
 		if (buttonId == EnumButton.A)
 			Gamepad.Instance.fireButton(EnumButton.A);

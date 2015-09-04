@@ -134,67 +134,67 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		if (PauseGameManager.Instance.isPaused())
 			return;
 		
-#if UNITY_EDITOR
+		#if DEBUG_GAMEPAD
 		//Debug.Log(pos + " -- " + guiPos);
-#endif
+		#endif
 		
 		// up?
 		if (arrowRects[0].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("up");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.UP);
 		}
 		// right?
 		else if (arrowRects[1].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("right");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.RIGHT);
 		}
 		// down?
 		else if (arrowRects[2].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("down");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.DOWN);
 		}
 		// left?
 		else if (arrowRects[3].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("left");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.LEFT);
 		}
 		// up-right?
 		else if (arrowRects[4].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("up-right");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.UP);
 			Gamepad.Instance.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
 		else if (arrowRects[5].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("up-left");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.UP);
 			Gamepad.Instance.fireButton(EnumButton.LEFT);
 		}
 		// up-left?
 		else if (arrowRects[6].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("down-right");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.DOWN);
 			Gamepad.Instance.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
 		else if (arrowRects[7].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+			#if DEBUG_GAMEPAD
 			Debug.Log("down-left");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.DOWN);
 			Gamepad.Instance.fireButton(EnumButton.LEFT);
 		}

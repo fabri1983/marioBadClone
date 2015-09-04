@@ -14,7 +14,7 @@ public class PauseGameUnityListener : MonoBehaviour {
 			created = true;
 		}
 		else {
-			Destroy(gameObject); // duplicate will be destroyed if 'first' scene is reloaded
+			Destroy(gameObject); // duplicate will be destroyed if scene is reloaded
 		}
 	}
 
