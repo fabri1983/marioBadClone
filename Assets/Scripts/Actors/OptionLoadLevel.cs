@@ -23,9 +23,10 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	void OnDestroy () {
 		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
-	
+
 	void Update () {
-		optionSelected();
+		if (selected && Gamepad.Instance.isA())
+			doAction();
 	}
 	
 	public bool isScreenStatic () {
@@ -56,16 +57,11 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		selected = value;
 	}
 	
-	private void optionSelected() {
-		if (selected && Gamepad.Instance.isA())
-			doAction();
-	}
-	
 	private void doAction () {
 		if (PauseGameManager.Instance.isPaused())
 			return;
-		
-		this.enabled = false;
+
+		this.enabled = false; // avoid repetead execution when on touching
 		
 		if (beforeNextScene != null)
 			beforeNextScene.execute();

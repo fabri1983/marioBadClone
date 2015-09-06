@@ -15,7 +15,7 @@ public class Gamepad : MonoBehaviour {
 	private static Gamepad instance = null;
 	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
-	private bool touchEnabled = true;
+	private bool triggerEnabled = true;
 	
 	public static Gamepad Instance {
         get {
@@ -53,7 +53,7 @@ public class Gamepad : MonoBehaviour {
 	}
 	
 	public void setTouchEnabled (bool value) {
-		touchEnabled = value;
+		triggerEnabled = value;
 	}
 	
 	/// <summary>
@@ -62,6 +62,12 @@ public class Gamepad : MonoBehaviour {
 	public void resetButtonState () {
 		for (int i=0; i < buttonsState.Length; ++i)
 			buttonsState[i] = false;
+	}
+	
+	void LateUpdate () {
+		updateHardPressed();
+		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
+		resetButtonState();
 	}
 	
 	/// <summary>
@@ -77,12 +83,6 @@ public class Gamepad : MonoBehaviour {
 		}
 	}
 	
-	void LateUpdate () {
-		updateHardPressed();
-		// IMPORTANT: this should be invoked after all the listeners has executed their callbacks.
-		resetButtonState();
-	}
-	
 	/// <summary>
 	/// Set the button's state to true (on). If the button does pass the hard pressed test, 
 	/// the Gamepad manager keeps track of the situation.
@@ -95,37 +95,33 @@ public class Gamepad : MonoBehaviour {
 	/// Returns true if the buttons has being pressed for a threshold time enough to 
 	/// be considered as hard pressed. Eitherway false.
 	/// </summary>
-	/// <returns>
-	/// bool
-	/// </returns>
-	/// <param name='button'>
-	/// The button enum value
-	/// </param>
+	/// <returns>bool</returns>
+	/// <param name='button'>The button enum value</param>
 	public bool isHardPressed (EnumButton button) {
-		return touchEnabled && hardPressedCount[(int)button] >= HARD_PRESSED_MIN_COUNT;
+		return triggerEnabled && hardPressedCount[(int)button] >= HARD_PRESSED_MIN_COUNT;
 	}
 	
 	public bool isUp() {
-		return (touchEnabled && buttonsState[(int)EnumButton.UP]) || Input.GetAxis("Vertical") > 0.1f;
+		return (triggerEnabled && buttonsState[(int)EnumButton.UP]) || Input.GetAxis("Vertical") > 0.1f;
 	}
 	
 	public bool isDown() {
-		return (touchEnabled && buttonsState[(int)EnumButton.DOWN]) || Input.GetAxis("Vertical") < -0.1f;
+		return (triggerEnabled && buttonsState[(int)EnumButton.DOWN]) || Input.GetAxis("Vertical") < -0.1f;
 	}
 	
 	public bool isLeft() {
-		return (touchEnabled && buttonsState[(int)EnumButton.LEFT]) || Input.GetAxis("Horizontal") < -0.1f;
+		return (triggerEnabled && buttonsState[(int)EnumButton.LEFT]) || Input.GetAxis("Horizontal") < -0.1f;
 	}
 	
 	public bool isRight() {
-		return (touchEnabled && buttonsState[(int)EnumButton.RIGHT]) || Input.GetAxis("Horizontal") > 0.1f;
+		return (triggerEnabled && buttonsState[(int)EnumButton.RIGHT]) || Input.GetAxis("Horizontal") > 0.1f;
 	}
 	
 	public bool isA() {
-		return (touchEnabled && buttonsState[(int)EnumButton.A]) || Input.GetButton("Button A");
+		return (triggerEnabled && buttonsState[(int)EnumButton.A]) || Input.GetButton("Button A");
 	}
 	
 	public bool isB() {
-		return (touchEnabled && buttonsState[(int)EnumButton.B]) || (Input.GetButton("Button B") && Input.touchCount == 0);
+		return (triggerEnabled && buttonsState[(int)EnumButton.B]) || (Input.GetButton("Button B") && Input.touchCount == 0);
 	}
 }

@@ -96,6 +96,9 @@ public abstract class Effect : MonoBehaviour, IPausable {
 		if (listeners != null) {
 			for (int i=0, c=listeners.Count; i < c; ++i)
 				listeners[i].onLastEffectEnd();
+			
+			// execute the listeners of this effect just once
+			listeners.Clear();
 		}
 	}
 	

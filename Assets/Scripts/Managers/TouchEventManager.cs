@@ -132,7 +132,7 @@ public class TouchEventManager {
 		}
 	}
 	
-	private bool sendEvent (Touch t, ListenerLists ll) {
+	private bool sendEvent (Touch tch, ListenerLists ll) {
 		if (ll == null)
 			return false;
 		
@@ -142,7 +142,7 @@ public class TouchEventManager {
 		List<ITouchListener> list = null;
 		
 		// which lists to traverse? according to touch phase
-		switch (t.phase) {
+		switch (tch.phase) {
 			case TouchPhase.Began:
 				list = ll.beganListeners;
 				break;
@@ -173,36 +173,39 @@ public class TouchEventManager {
 			bool hitInner = false;
 			
 			// check for GUI Texture
-			if (go.guiTexture != null)
+			/*if (go.guiTexture != null) {
 				hitInner = go.guiTexture.HitTest(t.position);
+			}
 			// check for GUI Text
-			else if (go.guiText != null)
+			else if (go.guiText != null) {
 				hitInner = go.guiText.HitTest(t.position);
+			}
 			// check for game object
-			else
+			else*/ {
 				// use detection as in chipmunk platformer, since here I don't use physx colliders
 				// or use cpShapeQuerySegment (see online documentation from release, cpShape class)
-				hitInner = GameObjectTools.testHitFromScreenPos(go.transform, t.position);
+				hitInner = GameObjectTools.testHitFromScreenPos(go.transform, tch.position);
+			}
 			
 			if (!hitInner)
 				continue;
 			
 			// invoke callback
-			switch (t.phase) {
+			switch (tch.phase) {
 				case TouchPhase.Began:
-					list[i].OnBeganTouch(t);
+					list[i].OnBeganTouch(tch);
 					break;
 				case TouchPhase.Stationary:
 				case TouchPhase.Moved:
-					list[i].OnStationaryTouch(t);
+					list[i].OnStationaryTouch(tch);
 					break;
 				// Ended and Canceled
 				default:
-					list[i].OnEndedTouch(t);
+					list[i].OnEndedTouch(tch);
 					break;
 				// add here if else for other methods depending on touch phases
 			}
-			
+
 			if (!ALLOW_TOUCH_HITS_OVERLAPPED_OBJECTS)
 				return true;
 			atLeastOneHit = true;
