@@ -129,7 +129,10 @@ public class LoggingConsole : MonoBehaviour {
 			}
 			
 			GUI.contentColor = logTypeColors[log.type];
-			GUILayout.Label(log.message + "\n" + log.stackTrace);
+			if (LogType.Error == log.type)
+				GUILayout.Label(log.message + "\n" + log.stackTrace);
+			else
+				GUILayout.Label(log.message);
 		}
 		
 		GUILayout.EndScrollView();
