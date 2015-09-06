@@ -43,6 +43,7 @@ public class LoggingConsole : MonoBehaviour {
 	const string windowTitle = "Console";
 	static readonly GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
 	static readonly GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
+	static GUIStyle currentStyle = null;
 	
 	Rect titleBarRect;
 	Rect windowRect;
@@ -85,21 +86,19 @@ public class LoggingConsole : MonoBehaviour {
 		if (EventType.Repaint == Event.current.type) {
 			// if screen is resized then need to notice all listeners
 			if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight) {
-
 				titleBarRect = new Rect(0, 0, Screen.width - 20*2, 20);
-				windowRect = new Rect(20, 20, Screen.width - 20*2, Screen.height - 128);
-				
+				windowRect = new Rect(20, 20, Screen.width - 20*2, Screen.height - 60);
 				// update screen dimension
 				lastScreenWidth = Screen.width;
 				lastScreenHeight = Screen.height;
 			}
 		}
 		
-		if (!visible) {
+		if (!visible)
 			return;
-		}
 		
-		windowRect = GUILayout.Window(123456, windowRect, ConsoleWindow, windowTitle);
+		InitStyles();
+		windowRect = GUILayout.Window(123456, windowRect, ConsoleWindow, windowTitle, currentStyle);
 	}
 	
 	/// <summary>
@@ -107,12 +106,10 @@ public class LoggingConsole : MonoBehaviour {
 	/// </summary>
 	/// <param name="windowID">Window ID.</param>
 	void ConsoleWindow (int windowID) {
-		
 		GUILayout.BeginHorizontal();
 		
-		if (GUILayout.Button(clearLabel)) {
+		if (GUILayout.Button(clearLabel))
 			logs.Clear();
-		}
 		
 		collapse = GUILayout.Toggle(collapse, collapseLabel, GUILayout.ExpandWidth(false));
 		
@@ -122,19 +119,17 @@ public class LoggingConsole : MonoBehaviour {
 		
 		// Iterate through the recorded logs.
 		for (int i = 0; i < logs.Count; i++) {
-			var log = logs[i];
+			Log log = logs[i];
 			
 			// Combine identical messages if collapse option is chosen.
 			if (collapse) {
-				var messageSameAsPrevious = i > 0 && log.message == logs[i - 1].message;
-				
-				if (messageSameAsPrevious) {
+				bool messageSameAsPrevious = i > 0 && log.message == logs[i - 1].message;
+				if (messageSameAsPrevious)
 					continue;
-				}
 			}
 			
 			GUI.contentColor = logTypeColors[log.type];
-			GUILayout.Label(log.message);
+			GUILayout.Label(log.message + "\n" + log.stackTrace);
 		}
 		
 		GUILayout.EndScrollView();
@@ -159,5 +154,22 @@ public class LoggingConsole : MonoBehaviour {
 		});
 	}
 	
+	private void InitStyles() {
+		if (currentStyle == null) {
+			currentStyle = new GUIStyle(GUI.skin.window);
+			currentStyle.normal.background = MakeTex(2, 2, new Color(0f, 0f, 0f, 0.6f));
+		}
+	}
+	
+	private Texture2D MakeTex( int width, int height, Color col ) {
+		Color[] pix = new Color[width * height];
+		for( int i = 0; i < pix.Length; ++i ) {
+			pix[ i ] = col;
+		}
+		Texture2D result = new Texture2D( width, height );
+		result.SetPixels( pix );
+		result.Apply();
+		return result;
+	}
 #endif
 }
