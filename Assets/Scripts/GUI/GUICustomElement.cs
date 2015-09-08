@@ -64,8 +64,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 
 	void OnDestroy () {
 #if UNITY_EDITOR
-		// this is in case this script is used in editor mode
-		if (!texture)
+		if (texture != null)
 			renderer.sharedMaterial.mainTexture = texture;
 		
 		// Note: scripts with [ExecuteInEditMode] should not call managers that also runs in editor mode.
@@ -106,8 +105,10 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	/// </returns>
 	public Vector2 getSizeInGUI () {
 		// if size was not caluclated yet then proceed and cache it
-		if (casheSizeInGUI.x == -1f)
-			casheSizeInGUI = GUIScreenLayoutManager.sizeInGUI(getSizeInPixels());
+		if (casheSizeInGUI.x == -1f) {
+			Vector2 sizeInPixels = getSizeInPixels();
+			casheSizeInGUI = GUIScreenLayoutManager.sizeInGUI(sizeInPixels);
+		}
 		return casheSizeInGUI;
 	}
 	
@@ -122,4 +123,5 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		result.y = sizeAsPixels? size.y : Screen.height * size.y;
 		return result;
 	}
+	
 }
