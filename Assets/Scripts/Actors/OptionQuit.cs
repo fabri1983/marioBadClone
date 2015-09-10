@@ -5,6 +5,8 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
 	private bool showingOptions = false;
 	private Rect rectQuit, rectBack, rectLevelSel;
 	private IFadeable fader;
+	private Rect _screenBounds; // cache for the screen bounds the GUI element covers
+	private GUICustomElement guiElem;
 	
 	private static OptionQuit instance = null;
 	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
@@ -33,6 +35,8 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	private void initialize () {
+		guiElem = GetComponent<GUICustomElement>();
+		_screenBounds.x = -1f; // initialize the screen bounds cache
 		setupButtons(); // locate the buttons
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
@@ -57,17 +61,11 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
 		return true;
 	}
 	
-	public GameObject getGameObject () {
-		return gameObject;
-	}
-	
 	public Rect getScreenBoundsAA () {
-		// if used with a Unity's GUITexture
-		if (guiTexture != null)
-			return guiTexture.GetScreenRect(Camera.main);
-		// here I suppose this game object has attached a GUICustomElement
-		else
-			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+		// checks if the cached size has changed
+		if (_screenBounds.x == -1f)
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(guiElem);
+		return _screenBounds;
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -83,6 +81,8 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public void onLastEffectEnd () {
+		_screenBounds.x = -1f; // reset the cache variable
+		
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
 		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);
@@ -131,7 +131,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
 			return;
 
 		// update Unity GUI matrix to allow automatic resizing (only works for Unity GUI elems)
-		// NOTE: this transformation has effect per game loop
+		// NOTE: this transformation has effect per game loop and per monobehaviour script
 		GUI.matrix = GUIScreenLayoutManager.unityGUIMatrix;
 
 		if (GUI.Button(rectQuit, "Quit"))

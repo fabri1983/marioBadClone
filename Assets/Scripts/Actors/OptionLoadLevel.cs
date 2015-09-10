@@ -6,7 +6,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	public GUICustomElement actionGuiElem;
 	
 	private bool selected = false;
-	private Rect _screenBounds; // cache for the screen bounds this game object covers
+	private Rect _screenBounds; // cache for the screen bounds the GUI element covers
 	private BeforeLoadNextScene beforeNextScene;
 	
 	void Awake () {
@@ -32,10 +32,6 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	public bool isScreenStatic () {
 		// for event touch listener
 		return true;
-	}
-	
-	public GameObject getGameObject () {
-		return gameObject;
 	}
 	
 	public Rect getScreenBoundsAA () {
@@ -74,6 +70,8 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public void onLastEffectEnd () {
+		_screenBounds.x = -1f; // reset the cache variable
+		
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
 		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);

@@ -84,7 +84,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	/// The size in GUI space
 	/// </returns>
 	public Vector2 getSizeInGUI () {
-		// if size was not caluclated yet then proceed and cache it
+		// if size was not calculated yet then proceed and cache it
 		if (casheSizeInGUI.x == -1f) {
 			Vector2 sizeInPixels = getSizeInPixels();
 			casheSizeInGUI = GUIScreenLayoutManager.sizeInGUI(sizeInPixels);

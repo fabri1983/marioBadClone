@@ -61,19 +61,24 @@ public class TouchEventManager {
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
 		
 		#if TOUCH_EVENT_MANAGER_NO_QUADTREE
-		dynamicListeners.add(listener, touchPhases);
+		for (int i=0, c=touchPhases.Length; i < c; ++i)
+			dynamicListeners.add(listener, touchPhases[i]);
 		#else
-		if (!listener.isScreenStatic())
-			dynamicListeners.add(listener, touchPhases);
+		if (!listener.isScreenStatic()) {
+			for (int i=0, c=touchPhases.Length; i < c; ++i)
+				dynamicListeners.add(listener, touchPhases[i]);
+		}
 		else {
 			/// adding the listener's screen rect into the quad tree will return a list of 
 			/// as much as 4 ListenerLists elems, since the listener can fall in more than one quadrant
-			ListenerLists[] leaves = staticQuadTree.add(listener.getScreenBoundsAA());
+			Rect screenBounds = listener.getScreenBoundsAA();
+			ListenerLists[] leaves = staticQuadTree.add(screenBounds);
 			for (int i=0, c=leaves.Length; i < c; ++i) {
 				// first listenerList element being not valid means next ones are also invalid
 				if (leaves[i] == null)
 					break;
-				leaves[i].add(listener, touchPhases);
+				for (int j=0, d=touchPhases.Length; j < d; ++j)
+					leaves[i].add(listener, touchPhases[j]);
 			}
 		}
 		#endif
@@ -136,72 +141,58 @@ public class TouchEventManager {
 		if (ll == null)
 			return false;
 		
-		// NOTE: traverse the lists and ask if something hitten in the correct order: 
+		// NOTE: traverse the arrays and ask if something hitten in the correct order: 
 		//    Began, Stationary/Move, Ended, Canceled
 		
-		List<ITouchListener> list = null;
+		ITouchListener[] arrays = null;
 		
 		// which lists to traverse? according to touch phase
 		switch (tch.phase) {
 			case TouchPhase.Began:
-				list = ll.beganListeners;
+				arrays = ll.beganListeners;
 				break;
 			case TouchPhase.Stationary:
 			case TouchPhase.Moved:
-				list = ll.stationaryListeners;
+				arrays = ll.stationaryListeners;
 				break;
 			default:
 				// Ended and Canceled
-				list = ll.endedListeners;
+				arrays = ll.endedListeners;
 				break;
 			// add here if else for other touch phases
 		}
 		
-		if (list == null)
-			return false;
-		
 		// one loop for scene only, another loop for global
 		bool atLeastOneHit = false;
 			
-		for (int i=0,c=list.Count; i < c; ++i) {
+		for (int i=0,c=arrays.Length; i < c; ++i) {
 			
-			ITouchListener listener = list[i];
-			/*if (listener == null)
-				continue;*/
+			ITouchListener listener = arrays[i];
+			if (listener == null)
+				continue;
 			
-			GameObject go = listener.getGameObject();
 			bool hitInner = false;
 			
-			// check for GUI Texture
-			/*if (go.guiTexture != null) {
-				hitInner = go.guiTexture.HitTest(t.position);
-			}
-			// check for GUI Text
-			else if (go.guiText != null) {
-				hitInner = go.guiText.HitTest(t.position);
-			}
-			// check for game object
-			else*/ {
-				// use detection as in chipmunk platformer, since here I don't use physx colliders
-				// or use cpShapeQuerySegment (see online documentation from release, cpShape class)
-				hitInner = GameObjectTools.testHitFromScreenPos(go.transform, tch.position);
-			}
+			// Use detection as in chipmunk platformer, since here I don't use physx colliders
+			// (Or use cpShapeQuerySegment (see online documentation from release, cpShape class))
+			// Now testing AABB using the screen rect of the GUI element
+			hitInner = listener.getScreenBoundsAA().Contains(tch.position);
 			
 			if (!hitInner)
 				continue;
-			
+
 			// invoke callback
 			switch (tch.phase) {
 				case TouchPhase.Began:
-					list[i].OnBeganTouch(tch);
+					listener.OnBeganTouch(tch);
 					break;
 				case TouchPhase.Stationary:
 				case TouchPhase.Moved:
-					list[i].OnStationaryTouch(tch);
+					listener.OnStationaryTouch(tch);
 					break;
 				// Ended and Canceled
 				default:
-					list[i].OnEndedTouch(tch);
+					listener.OnEndedTouch(tch);
 					break;
 				// add here if else for other methods depending on touch phases
 			}
