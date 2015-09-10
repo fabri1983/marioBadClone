@@ -3,7 +3,6 @@
 
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public enum Transition
 {
@@ -52,26 +51,28 @@ public class TransitionGUIFx : Effect {
 			elem = Element.GUI_TEXTURE;
 		else if (guiText != null)
 			elem = Element.GUI_TEXT;*/
-		
-		prepareTransition();
+
+		if (!base.beforeLoadNextScene)
+			prepareTransition();
 	}
 	
 	protected override void ownOnDestroy () {
 	}
 
 	protected override void ownStartEffect () {
+		if (base.beforeLoadNextScene)
+			prepareTransition();
+
 		currentStep = 0;
+		this.enabled = true;
 		if (useCoroutine)
-			StartCoroutine("DoCoroutine");
-		else
-			this.enabled = true;
+			StartCoroutine("DoCoroutine");	
 	}
 
 	protected override void ownEndEffect () {
 		if (useCoroutine)
 			StopCoroutine("DoCoroutine");
-		else
-			this.enabled = false;
+		this.enabled = false;
 	}
 	
 	void Update () {
@@ -84,16 +85,30 @@ public class TransitionGUIFx : Effect {
 		if (steps < 2)
 			steps = 2;
 		
-		// the final position is the current one
-		finalPos.Set(transform.localPosition.x, transform.localPosition.y);
+		if (Transition.ToCurrentPosition == _transition) {
+			// the final position is the current one
+			finalPos.Set(transform.localPosition.x, transform.localPosition.y);
+		} else if (Transition.FromCurrentPosition == _transition) {
+			// the final position is the current one plus the offset 
+			finalPos.Set(transform.localPosition.x + startOffsetTransform.x, transform.localPosition.y + startOffsetTransform.y);
+		}
 		
-		if (elem == Element.TRANSFORM)
-			startPos.Set(transform.localPosition.x + startOffsetTransform.x, transform.localPosition.y + startOffsetTransform.y);
-		/*else if (elem == Element.GUI_TEXT)
-			startPos.Set(guiText.pixelOffset.x + startOffsetTransform.x, guiText.pixelOffset.y + startOffsetTransform.y);
-		else if (elem == Element.GUI_TEXTURE)
-			startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);*/
-
+		if (Transition.ToCurrentPosition == _transition) {
+			if (elem == Element.TRANSFORM)
+				startPos.Set(transform.localPosition.x + startOffsetTransform.x, transform.localPosition.y + startOffsetTransform.y);
+			/*else if (elem == Element.GUI_TEXT)
+				startPos.Set(guiText.pixelOffset.x + startOffsetTransform.x, guiText.pixelOffset.y + startOffsetTransform.y);
+			else if (elem == Element.GUI_TEXTURE)
+				startPos.Set(guiTexture.pixelInset.x + startOffsetTransform.x, guiTexture.pixelInset.y + startOffsetTransform.y);*/
+		} else if (Transition.FromCurrentPosition == _transition) {
+			if (elem == Element.TRANSFORM)
+				startPos.Set(transform.localPosition.x, transform.localPosition.y);
+			/*else if (elem == Element.GUI_TEXT)
+				startPos.Set(guiText.pixelOffset.x, guiText.pixelOffset.y);
+			else if (elem == Element.GUI_TEXTURE)
+				startPos.Set(guiTexture.pixelInset.x , guiTexture.pixelInset.y );*/
+		}
+		
 		// set initial object position
 		switch (elem) {
 			case Element.TRANSFORM: {

@@ -16,6 +16,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400010}
+  - 114: {fileID: 11400012}
   m_Layer: 0
   m_Name: GUI_SplashImage
   m_TagString: Untagged
@@ -30,8 +31,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.81999969, z: .309999466}
-  m_LocalScale: {x: 27, y: 16.2000008, z: 0}
+  m_LocalPosition: {x: 0, y: 8.81999969, z: -29.6900005}
+  m_LocalScale: {x: 1382.40002, y: 16.2000008, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &2300000
@@ -87,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   priority: 1
   startDelaySecs: .300000012
+  beforeLoadNextScene: 0
   shakeDecayStep: .5
   shakeIntensity: 8
   allowRotation: 0
@@ -103,8 +105,9 @@ MonoBehaviour:
   m_Name: 
   priority: 0
   startDelaySecs: 0
+  beforeLoadNextScene: 0
   startOffsetTransform: {x: 0, y: 50}
-  _transition: 0
+  _transition: 1
   direction: 2
   steps: 10
   acceleration: 1
@@ -146,6 +149,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4764824e5a1369479cfcffcd2910e57, type: 1}
   m_Name: 
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a2c995bb03216488eaf7907fb4320b, type: 1}
+  m_Name: 
+  priority: 0
+  startDelaySecs: 0
+  beforeLoadNextScene: 1
+  startOffsetTransform: {x: 0, y: 25}
+  _transition: 0
+  direction: 0
+  steps: 10
+  acceleration: 1
+  easingType: 4
+  useCoroutine: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

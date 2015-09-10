@@ -8,6 +8,8 @@ using System.Collections.Generic;
 /// 						|    |
 /// 						 ----
 /// Not porperly handled screen bound:   /\
+///                                     /  \
+///                                     \  /
 /// 									 \/
 /// (because is not axis alligned)
 /// 
@@ -43,7 +45,6 @@ public class QuadTreeTouchEvent {
 	}
 	
 	private void addRecursive (QuadNode n, Rect screenBounds, ListenerLists[] arr, float x0, float y0, float x1, float y1) {
-		
 		// reached max level?
 		if (n.level == DEEP_LEVEL_THRESHOLD) {
 			if (n.leafContent == null)
@@ -96,28 +97,31 @@ public class QuadTreeTouchEvent {
 		/// Executes the test for each 4 points of screen bound element.
 		/// This way we ensure the bound lement falls in as many quadrants it can
 		
+		float halfY = y1/2f;
+		float halfX = x1/2f;
+		
 		// minX is on left side?
-		if (bounds.xMin < x1/2f) {
-			if (bounds.yMin > y1/2f)
+		if (bounds.xMin < halfX) {
+			if (bounds.yMin > halfY)
 				t |= 1; // quad topLeft
 			else t |= 8; // quad botLeft
 			
-			if (bounds.yMax > y1/2f)
+			if (bounds.yMax > halfY)
 				t |= 1; // quad topLeft
 			// other case processed above because it means minY also was <= y1/2f
 			
 			// whenever maxX is on left, means minX is on side too
-			if (bounds.xMax < x1/2f)
+			if (bounds.xMax < halfX)
 				return t;
 			// the other case is processed outside
 		}
 		// minX is on right
 		else {
-			if (bounds.yMin > y1/2f)
+			if (bounds.yMin > halfY)
 				t |= 2; // quad topRight
 			else t |= 4; // quad botRight
 			
-			if (bounds.yMax > y1/2f)
+			if (bounds.yMax > halfY)
 				t |= 2; // quad topRight
 			// other case processed above because it means minY also was <= y1/2f
 			
@@ -126,10 +130,10 @@ public class QuadTreeTouchEvent {
 		}
 		
 		// last case: maxX is on right
-		if (bounds.yMin > y1/2f)
+		if (bounds.yMin > halfY)
 			t |= 2; // quad topRight
 		else t |= 4; // quad botRight
-		if (bounds.yMax > y1/2f)
+		if (bounds.yMax > halfY)
 			t |= 2; // quad topRight
 		// other case processed above because it means minY also was <= y1/2f
 		
@@ -184,17 +188,20 @@ public class QuadTreeTouchEvent {
 		
 		// search in quad tree a leaf containing the screen position
 		
-		if (p.x < x1/2f) {
-			if (p.y > y1/2f)
-				return n.topLeft==null? null : traverseRecursive(n.topLeft, p, x0,y1/2f, x1/2f,y1);
+		float halfY = y1/2f;
+		float halfX = x1/2f;
+		
+		if (p.x < halfX) {
+			if (p.y > halfY)
+				return n.topLeft==null? null : traverseRecursive(n.topLeft, p, x0, halfY, halfX, y1);
 			else
-				return n.botLeft==null? null : traverseRecursive(n.botLeft, p, x0,y0, x1/2f,y1/2f);
+				return n.botLeft==null? null : traverseRecursive(n.botLeft, p, x0, y0, halfX, halfY);
 		}
 		else {
-			if (p.y > y1/2f)
-				return n.topRight==null? null : traverseRecursive(n.topRight, p, x1/2f,y1/2f, x1,y1);
+			if (p.y > halfY)
+				return n.topRight==null? null : traverseRecursive(n.topRight, p, halfX, halfY, x1, y1);
 			else
-				return n.botRight==null? null : traverseRecursive(n.botRight, p, x1/2f,y0, x1,y1/2f);
+				return n.botRight==null? null : traverseRecursive(n.botRight, p, halfX, y0, x1, halfY);
 		}
 	}
 	

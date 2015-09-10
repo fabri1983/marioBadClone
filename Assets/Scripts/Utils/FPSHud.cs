@@ -13,9 +13,8 @@ using System.Collections;
 /// corstartRect overall FPS even if the interval renders something like
 /// 5.5 frames.
 /// </summary>
-public class FPSHud : MonoBehaviour
-{
-	public bool		onlyInDebugMode = false;
+public class FPSHud : MonoBehaviour {
+#if DEBUG
 	public bool 	useCoroutine = false; // Use coroutines for PC targets. For mobile targets WaitForSeconds doesn't work.
 	public Rect		startRect = new Rect( 1, 1, 36, 58); // The rect the GUI text is initially displayed at.
 	public bool		updateColor = true; // Do you want the color to change if the FPS gets low
@@ -26,18 +25,18 @@ public class FPSHud : MonoBehaviour
 	private int		frames  = 0; // Frames drawn over the interval
 	private Color	color = Color.white; // The color of the GUI, depending of the FPS ( R < 10, Y < 30, G >= 30 )
 	private string	sFPS = ""; // The fps formatted into a string.
-	private float updateTime = 0f;
-	private Rect targetRect;
+	private float	updateTime = 0f;
+	private Rect	targetRect;
+	
+	private static bool created;
 	
 	void Awake () {
-		// only keep this object if in debug build
-		if (!onlyInDebugMode || Debug.isDebugBuild) {
+		if (!created) {
 			DontDestroyOnLoad(gameObject);
+			created = true;
 		}
-		// else destroy it
 		else {
-			this.enabled = false;
-			Destroy(gameObject);
+			Destroy(gameObject); // duplicate will be destroyed if scene is reloaded
 		}
 	}
 	
@@ -98,4 +97,5 @@ public class FPSHud : MonoBehaviour
 			GUI.color = origColor;
 		}
 	}
+#endif	
 }

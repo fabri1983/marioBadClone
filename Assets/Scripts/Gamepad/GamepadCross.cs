@@ -20,7 +20,9 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		new Rect(0f, 0f, 16f, 16f) // DOWN-LEFT
 	};
 	
-	private Vector2 guiPosCache; // absolute screen position of gui
+	private Vector2 _guiPosAux; // absolute screen position of gui
+	private Rect _screenBounds; // cache for the screen bounds the GUI element covers
+	private GUICustomElement guiElem;
 	
 	void Awake () {
 		initialize();
@@ -31,24 +33,19 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		// the array of arrows were defined in a 64x64 basis
 		float scaleW = 1f;
 		float scaleH = 1f;
-		// support Unity's gui elements
-		if (guiTexture != null) {
-			scaleW = guiTexture.pixelInset.width / 64f;
-			scaleH = guiTexture.pixelInset.height / 64f;
-		}
-		// assuming it has a GUICustomElement
-		else {
-			GUICustomElement guiElem = GetComponent<GUICustomElement>();
-			Vector2 guiElemSize = guiElem.getSizeInPixels();
-			scaleW = guiElemSize.x / 64f;
-			scaleH = guiElemSize.y / 64f;
-		}
+
+		guiElem = GetComponent<GUICustomElement>();
+		Vector2 guiElemSize = guiElem.getSizeInPixels();
+		scaleW = guiElemSize.x / 64f;
+		scaleH = guiElemSize.y / 64f;
 		
 		// apply the scale
 		for (int i=0; i < arrowRects.Length ; ++i) {
 			Rect r = arrowRects[i];
 			arrowRects[i].Set(r.x * scaleW, r.y * scaleH, r.width * scaleW, r.height * scaleH);
 		}
+		
+		_screenBounds.x = -1f; // initialize the screen bounds cache
 		
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
@@ -88,17 +85,11 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		return isStaticRuntime;
 	}
 	
-	public GameObject getGameObject () {
-		return gameObject;
-	}
-	
 	public Rect getScreenBoundsAA () {
-		// if used with a Unity's GUITexture
-		if (guiTexture != null)
-			return guiTexture.GetScreenRect(Camera.main);
-		// here I suppose this game object has attached a GUICustomElement
-		else
-			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+		// checks if the cached size has changed
+		if (_screenBounds.x == -1f)
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(guiElem);
+		return _screenBounds;
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -116,13 +107,8 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public void onLastEffectEnd () {
-		// update current gui position cache
-		if (guiTexture != null)
-			guiPosCache.Set(guiTexture.pixelInset.x, guiTexture.pixelInset.y);
-		else {
-			Rect screenBounds = getScreenBoundsAA();
-			guiPosCache.Set(screenBounds.x, screenBounds.y);
-		}
+		_screenBounds.x = -1f; // reset the cache variable
+		getScreenBoundsAA(); // force the recalculation because is used 
 		
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
@@ -134,67 +120,70 @@ public class GamepadCross : MonoBehaviour, ITouchListener, IEffectListener {
 		if (PauseGameManager.Instance.isPaused())
 			return;
 		
-#if UNITY_EDITOR
-		//Debug.Log(pos + " -- " + guiPos);
-#endif
+		_guiPosAux.x = pos.x - _screenBounds.x;
+		_guiPosAux.y = pos.y - _screenBounds.y;
+		
+		#if DEBUG_GAMEPAD
+		//Debug.Log(pos + " -- " + _guiPosAux);
+		#endif
 		
 		// up?
-		if (arrowRects[0].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		if (arrowRects[0].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("up");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.UP);
 		}
 		// right?
-		else if (arrowRects[1].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[1].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("right");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.RIGHT);
 		}
 		// down?
-		else if (arrowRects[2].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[2].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("down");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.DOWN);
 		}
 		// left?
-		else if (arrowRects[3].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[3].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("left");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.LEFT);
 		}
 		// up-right?
-		else if (arrowRects[4].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[4].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("up-right");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.UP);
 			Gamepad.Instance.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
-		else if (arrowRects[5].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[5].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("up-left");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.UP);
 			Gamepad.Instance.fireButton(EnumButton.LEFT);
 		}
 		// up-left?
-		else if (arrowRects[6].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[6].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("down-right");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.DOWN);
 			Gamepad.Instance.fireButton(EnumButton.RIGHT);
 		}
 		// up-left?
-		else if (arrowRects[7].Contains(pos - guiPosCache)) {
-#if UNITY_EDITOR
+		else if (arrowRects[7].Contains(_guiPosAux)) {
+			#if DEBUG_GAMEPAD
 			Debug.Log("down-left");
-#endif
+			#endif
 			Gamepad.Instance.fireButton(EnumButton.DOWN);
 			Gamepad.Instance.fireButton(EnumButton.LEFT);
 		}

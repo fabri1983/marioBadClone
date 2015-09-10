@@ -3,21 +3,30 @@ using UnityEngine;
 public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
 	public int sceneIndex; // index of the scene to be loaded
+	public GUICustomElement actionGuiElem;
 	
 	private bool selected = false;
-	private Rect _screenBounds; // cache for the screen bounds this game object covers
+	private Rect _screenBounds; // cache for the screen bounds the GUI element covers
+	private BeforeLoadNextScene beforeNextScene;
 	
 	void Awake () {
-		_screenBounds.x = -1f; // initialize the screen bounds cache
+		// initialize the screen bounds cache
+		_screenBounds.x = -1f;
+		// do some setup after finishes all gameobject effects
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
+		// setup the effects chain
+		beforeNextScene = GetComponent<BeforeLoadNextScene>();
+		if (beforeNextScene != null)
+			beforeNextScene.setSceneIndex(sceneIndex);
 	}
 	
 	void OnDestroy () {
 		TouchEventManager.Instance.removeListener(this as ITouchListener);
 	}
-	
+
 	void Update () {
-		optionSelected();
+		if (selected && Gamepad.Instance.isA())
+			doAction();
 	}
 	
 	public bool isScreenStatic () {
@@ -25,14 +34,10 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		return true;
 	}
 	
-	public GameObject getGameObject () {
-		return gameObject;
-	}
-	
 	public Rect getScreenBoundsAA () {
 		// checks if the cached size has changed
 		if (_screenBounds.x == -1f)
-			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(actionGuiElem);
 		return _screenBounds;
 	}
 	
@@ -48,22 +53,25 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		selected = value;
 	}
 	
-	private void optionSelected() {
-		if (selected && Gamepad.Instance.isA())
-			doAction();
-	}
-	
 	private void doAction () {
 		if (PauseGameManager.Instance.isPaused())
 			return;
-		LevelManager.Instance.loadLevel(sceneIndex);
+
+		this.enabled = false; // avoid repetead execution when on touching
+		
+		if (beforeNextScene != null)
+			beforeNextScene.execute();
+		else
+			LevelManager.Instance.loadLevel(sceneIndex);
 	}
 	
 	public Effect[] getEffects () {
-		return GetComponents<Effect>();
+		return GetComponentsInChildren<Effect>();
 	}
 	
 	public void onLastEffectEnd () {
+		_screenBounds.x = -1f; // reset the cache variable
+		
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
 		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);
@@ -75,7 +83,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		// is caught, so we need to manually check for the event and fire it here
 		Event e = Event.current;
 		if (e != null && e.isMouse && e.button == 0 && e.type == EventType.MouseUp) {
-			if (GameObjectTools.testHitFromMousePos(transform, e.mousePosition))
+			if (GameObjectTools.testHitFromMousePos(actionGuiElem.transform, e.mousePosition))
 				doAction();
 		}
 	}

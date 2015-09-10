@@ -3,34 +3,58 @@ using System.Collections.Generic;
 
 public abstract class Effect : MonoBehaviour, IPausable {
 	
+	private static int idGen = 0;
 	public int priority = 0;
 	public float startDelaySecs = 0f;
+	public bool beforeLoadNextScene = false;
 	
+	private int _id;
 	private Effect nextEffect = null;
 	private List<IEffectListener> listeners = null;
 	private bool isPriorizable = false;
 	private bool doNotResume; // used by the pause manager
 	
 	void Awake () {
+		_id = idGen++;
+		
 		// if this game object has the EffectPrioritizerChain component it means it will be part of 
 		// an execution chain so start it as disabled
-		if (GetComponent<EffectPrioritizerChain>() != null) {
-			this.enabled = false;
+		if (GetComponent<EffectPrioritizerChain>() != null)
 			isPriorizable = true;
-		}
+
+		// if effect is marked as execute before load next scene then register it in the correct listener
+		if (beforeLoadNextScene)
+			BeforeLoadNextSceneManager.Instance.register(this);
+		
 		PauseGameManager.Instance.register(this as IPausable, this as MonoBehaviour);
 		ownAwake();
 	}
 	
 	void Start () {
-		// if the effect is not priorizable then it starts immediatly
-		if (!isPriorizable)
+		if (isPriorizable || beforeLoadNextScene) {
+			this.enabled = false;
+		} else {
+			// effect is not priorizable and not executed before load next scene then it starts immediatly
 			startEffect();
+		}
 	}
 	
 	void OnDestroy () {
+		if (beforeLoadNextScene)
+			BeforeLoadNextSceneManager.Instance.remove(this);
 		PauseGameManager.Instance.remove(this as IPausable);
 		ownOnDestroy();
+	}
+	
+	public override bool Equals (object obj) {
+		if (obj == null)
+			return false;
+		Effect other = obj as Effect;
+		return other._id == this._id;
+	}
+	
+	public override int GetHashCode() {
+		return 17 * 23 + _id;
 	}
 	
 	protected abstract void ownAwake ();
@@ -72,6 +96,9 @@ public abstract class Effect : MonoBehaviour, IPausable {
 		if (listeners != null) {
 			for (int i=0, c=listeners.Count; i < c; ++i)
 				listeners[i].onLastEffectEnd();
+			
+			// execute the listeners of this effect just once
+			listeners.Clear();
 		}
 	}
 	

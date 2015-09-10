@@ -7,11 +7,16 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	public EnumButton buttonId = EnumButton.A;
 	public bool isStaticRuntime = true;
 	
+	private GUICustomElement guiElem;
+	private Rect _screenBounds; // cache for the screen bounds the GUI element covers
+	
 	void Awake () {
 		initialize();
 	}
 	
 	private void initialize () {
+		_screenBounds.x = -1f; // initialize the screen bounds cache
+		guiElem = GetComponent<GUICustomElement>();
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
@@ -24,17 +29,11 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 		return isStaticRuntime;
 	}
 	
-	public GameObject getGameObject () {
-		return gameObject;
-	}
-	
 	public Rect getScreenBoundsAA () {
-		// if used with a Unity's GUITexture
-		if (guiTexture != null)
-			return guiTexture.GetScreenRect(Camera.main);
-		// here I suppose this game object has attached a GUICustomElement
-		else
-			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+		// checks if the cached size has changed
+		if (_screenBounds.x == -1f)
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(guiElem);
+		return _screenBounds;
 	}
 	
 	public Effect[] getEffects () {
@@ -42,6 +41,8 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	}
 	
 	public void onLastEffectEnd () {
+		_screenBounds.x = -1f; // reset the cache variable
+		
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
 		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began, TouchPhase.Stationary);
@@ -60,9 +61,9 @@ public class GamepadButton : MonoBehaviour, ITouchListener, IEffectListener {
 	private void optionSelected() {
 		if (PauseGameManager.Instance.isPaused())
 			return;
-#if UNITY_EDITOR
+		#if DEBUG_GAMEPAD
 		Debug.Log(buttonId.ToString());
-#endif
+		#endif
 		// set the pressed button on GamepadInput manager
 		if (buttonId == EnumButton.A)
 			Gamepad.Instance.fireButton(EnumButton.A);

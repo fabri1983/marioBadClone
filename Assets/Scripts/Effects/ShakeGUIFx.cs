@@ -19,8 +19,12 @@ public class ShakeGUIFx : Effect, ITouchListener, IEffectListener
 	private Quaternion origRotation;
 	private Quaternion quatTemp;
 	private bool allowShake = false;
+	private GUICustomElement guiElem;
+	private Rect _screenBounds; // cache for the screen bounds the GUI element covers
 	
 	protected override void ownAwake () {
+		_screenBounds.x = -1f; // initialize the screen bounds cache
+		guiElem = GetComponent<GUICustomElement>();
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
 	}
 	
@@ -86,17 +90,11 @@ public class ShakeGUIFx : Effect, ITouchListener, IEffectListener
 		return true;
 	}
 	
-	public GameObject getGameObject () {
-		return gameObject;
-	}
-	
 	public Rect getScreenBoundsAA () {		
-		// if used with a Unity's GUITexture
-		if (guiTexture != null)
-			return guiTexture.GetScreenRect(Camera.main);
-		// here I suppose this game object has attached a GUICustomElement
-		else
-			return GUIScreenLayoutManager.getPositionInScreen(GetComponent<GUICustomElement>());
+		// checks if the cached size has changed
+		if (_screenBounds.x == -1f)
+			_screenBounds = GUIScreenLayoutManager.getPositionInScreen(guiElem);
+		return _screenBounds;
 	}
 	
 	public void OnBeganTouch (Touch t) {
@@ -118,6 +116,8 @@ public class ShakeGUIFx : Effect, ITouchListener, IEffectListener
 	}
 	
 	public void onLastEffectEnd () {
+		_screenBounds.x = -1f; // reset the cache variable
+		
 		// register with touch event manager once the effect finishes since the touch
 		// event depends on final element's position
 		TouchEventManager.Instance.register(this as ITouchListener, TouchPhase.Began);

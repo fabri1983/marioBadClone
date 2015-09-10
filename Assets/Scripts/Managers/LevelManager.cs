@@ -149,9 +149,11 @@ public class LevelManager : MonoBehaviour {
 		// set Mario spawn position for this level
 		setPlayerSpawnPosition(level);
 		
+		#if DEBUG
 		if (LevelManager.getGUIContainerSceneOnly() == null)
 			Debug.LogError("Missing " + GUI_CONTAINER_SO_NAME + " game object. Please create it.");
-	
+		#endif
+		
 		// if GUI_container_nd doesn't exist then create it and add minimum required game objects
 		setupGUIContainerNonDestroyable();
 		// configure the parallax properties for a correct scrolling of background and foreground images
@@ -178,7 +180,9 @@ public class LevelManager : MonoBehaviour {
 	private void setupGUIContainerNonDestroyable () {
 		// if GUI_container_nd game object exists then continue normally
 		if (LevelManager.getGUIContainerNonDestroyable() == null) {
+			#if DEBUG
 			Debug.LogWarning("Missing " + GUI_CONTAINER_ND_NAME + " game object. Will be created and populated with minimum elements.");
+			#endif
 			// create the GUI_container_nd game object
 			guiContainer_nd = new GameObject(GUI_CONTAINER_ND_NAME, typeof(NonDestroyable));
 		}

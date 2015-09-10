@@ -102,8 +102,10 @@ public class AnimateTiledTexture : MonoBehaviour
         // If events are enabled, add the callback function to the event list
         if (_enableEvents)
             _voidEventCallbackList.Add(cbFunction);
+		#if DEBUG
         else
             Debug.LogWarning("AnimateTiledTexture: You are attempting to register a callback but the events of this object are not enabled!");
+		#endif
     }
  
     // Use this function to unregister a callback function with this script
@@ -112,8 +114,10 @@ public class AnimateTiledTexture : MonoBehaviour
         // If events are enabled, unregister the callback function from the event list
         if (_enableEvents)
             _voidEventCallbackList.Remove(cbFunction);
+		#if DEBUG
         else
             Debug.LogWarning("AnimateTiledTexture: You are attempting to un-register a callback but the events of this object are not enabled!");
+		#endif
     }
  
 	// Handles all event triggers to callback functions

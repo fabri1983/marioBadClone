@@ -44,6 +44,8 @@ public class PauseGameManager {
 	~PauseGameManager () {
 		sceneOnly.Clear();
 		durables.Clear();
+		sceneOnly = null;
+		durables = null;
 		instance = null;
 	}
 	

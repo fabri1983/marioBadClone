@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamepadToggleHid : MonoBehaviour, IEffectListener {
+public class GamepadToggleShow : MonoBehaviour, IEffectListener, SwipeGestureListener {
 
 	private Gamepad gamepad;
 	private SwipeGesture swipeCtrl;
@@ -41,12 +41,28 @@ public class GamepadToggleHid : MonoBehaviour, IEffectListener {
 		
 		swipeCtrl.enabled = true;
 		swipeCtrl.setup();
-		swipeCtrl.EventOnUpSwipe += () => { swipeUp = true; swipeDown = false; };
-		swipeCtrl.EventOnDownSwipe += () => { swipeUp = false; swipeDown = true; };
+		swipeCtrl.registerOnUpSwipe(this as SwipeGestureListener);
+		swipeCtrl.registerOnDownSwipe(this as SwipeGestureListener);
 	}
 	
 	void Update () {
 		applyGesture();
+	}
+	
+	public void notifyRight () {
+	}
+	
+	public void notifyLeft () {
+	}
+	
+	public void notifyUp () {
+		swipeUp = true;
+		swipeDown = false;
+	}
+	
+	public void notifyDown () {
+		swipeUp = false;
+		swipeDown = true;
 	}
 	
 	private void applyGesture () {

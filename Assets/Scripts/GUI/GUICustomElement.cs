@@ -15,43 +15,30 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	public Vector2 size = Vector2.one; // pixels or screen proportion
 	public Vector2 virtualSize = Vector2.zero; // this emulates a GUI size for correct screen location in situations where elem position is relative to another one
 	public bool sizeAsPixels = false;
-	public bool newMaterialInstance = false; // currently no atlas usage, so every game object instance has its own material instance
+	public bool newMaterialInstance = true;
 
 	private Vector2 casheSizeInGUI = -1f * Vector2.one;
 
 	void Awake () {
-		// deactivate the game object if no texture
-		if (!texture) {
-#if UNITY_4_AND_LATER
-			gameObject.SetActive(false);
-#else
-			gameObject.SetActiveRecursively(false);
-#endif
-			return;
-		}
-		else {
-#if UNITY_4_AND_LATER
-			gameObject.SetActive(true);
-#else
-			gameObject.SetActiveRecursively(true);
-#endif
-		}
-
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 		
+		// currently no atlas usage, so every game object instance has its own material instance
 		if (newMaterialInstance) {
-            // create the new material and assing it to the renderer
+            // create the new material and assign it to the renderer
 			if (renderer.sharedMaterial == null) {
 				renderer.sharedMaterial = new Material(renderer.material);
+				#if DEBUG
 				Debug.LogWarning("No material. A Default one will is created. Verify your prefab or gameobject config. " + gameObject.name);
+				#endif
 			}
 			else
             	renderer.sharedMaterial = new Material(renderer.sharedMaterial);
         }
 		
 		renderer.sharedMaterial.mainTexture = texture;
-		renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
+		if (texture != null)
+			renderer.sharedMaterial.mainTexture.wrapMode = wrapMode;
 	}
 	
 	/*void Start () {
@@ -62,14 +49,9 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 
 	void OnDestroy () {
 #if UNITY_EDITOR
-		// this is in case this script is used in editor mode
-		if (!texture)
-			renderer.sharedMaterial.mainTexture = texture;
-		
 		// Note: scripts with [ExecuteInEditMode] should not call managers that also runs in editor mode.
 		// That is to avoid a NullPointerException since the managers instance has been destroyed just before entering Play mode
 		
-		// only call the manager if is playing
 		if (Application.isPlaying)
 			GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 #else
@@ -80,8 +62,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 #if UNITY_EDITOR
 	void Update () {
 		// in case we change the texture this will update the material
-		if (texture != null && renderer.sharedMaterial != null && !texture.name.Equals(renderer.sharedMaterial.mainTexture.name))
-			renderer.sharedMaterial.mainTexture = texture;
+		renderer.sharedMaterial.mainTexture = texture;
 		
 		// when not in Editor Play Mode: update in case any change happens from Inspector or IDE
 		if (!Application.isPlaying)
@@ -103,9 +84,11 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 	/// The size in GUI space
 	/// </returns>
 	public Vector2 getSizeInGUI () {
-		// if size was not caluclated yet then proceed and cache it
-		if (casheSizeInGUI.x == -1f)
-			casheSizeInGUI = GUIScreenLayoutManager.sizeInGUI(getSizeInPixels());
+		// if size was not calculated yet then proceed and cache it
+		if (casheSizeInGUI.x == -1f) {
+			Vector2 sizeInPixels = getSizeInPixels();
+			casheSizeInGUI = GUIScreenLayoutManager.sizeInGUI(sizeInPixels);
+		}
 		return casheSizeInGUI;
 	}
 	
@@ -120,4 +103,5 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		result.y = sizeAsPixels? size.y : Screen.height * size.y;
 		return result;
 	}
+	
 }
