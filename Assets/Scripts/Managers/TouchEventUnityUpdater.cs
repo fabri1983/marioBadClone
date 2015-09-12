@@ -6,8 +6,9 @@ using System.Collections;
 /// </summary>
 public class TouchEventUnityUpdater : MonoBehaviour {
 	
-	static bool created = false;
-	TouchEventManager tm;
+	private static bool created = false;
+	
+	private TouchEventManager tm;
 	
 	void Awake () {
 		if (!created) {

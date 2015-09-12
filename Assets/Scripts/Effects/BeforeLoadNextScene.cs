@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class BeforeLoadNextScene : MonoBehaviour {
 
-	private int sceneIndex = 0;
+	private SceneNameWithIndex targetScene;
 	private List<Effect> effects;
 	
 	void Awake () {
@@ -14,7 +14,7 @@ public class BeforeLoadNextScene : MonoBehaviour {
 		if (allEffectsFinish()) {
 			this.enabled = false;
 			effects = null;
-			LevelManager.Instance.loadLevel(sceneIndex);
+			LevelManager.Instance.loadLevel(targetScene);
 		}
 	}
 	
@@ -33,8 +33,8 @@ public class BeforeLoadNextScene : MonoBehaviour {
 		return allFinish;
 	}
 	
-	public void setSceneIndex (int value) {
-		sceneIndex = value;
+	public void setScene (SceneNameWithIndex value) {
+		targetScene = value;
 	}
 	
 	public void execute () {

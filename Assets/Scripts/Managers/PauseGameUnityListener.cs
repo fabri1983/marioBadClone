@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PauseGameUnityListener : MonoBehaviour {
 
-	static bool created;
+	private static bool created;
 	
 	void Awake () {
 		if (!created) {

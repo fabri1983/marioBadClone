@@ -1,9 +1,9 @@
 marioBadClone
 =============
 
-This is a personal project as proof of several concepts for a 2.5D platform game created in Unity 3.5 targeting ARMv6 Android platforms.
-Currently it uses a lot of Super Mario I sprites, only for testing purpose.
-The game is in heavy development phase, only one very small level playable by the moment.
+This is a personal project as proof of several concepts for a 2D platform game created in Unity 3.5 targeting ARMv6 Android platforms.
+Currently it uses a lot of Super Mario I sprites, only for testing purposes.
+The game is in heavy development phase, only four very small levels playable so far.
 See the section TODO list at the end of this document.
 
 Features implemented:
@@ -24,7 +24,7 @@ Features implemented:
 	Visit the project's page: http://chipmunk-physics.net/
 	
 - Pause Manager:
-	Script components that extend the interface IPausable are attached to the Pause manager component.
+	Script components who extend the interface IPausable are attached to the Pause manager component.
 	Any component registers itself against the Pause manager to receive the notification for pause/resume action.
 	The pause action set the MonoBehavior as enabled=false hence no Update() neither FixedUpdate() function is invoked during game loop.
 
@@ -62,21 +62,23 @@ Features implemented:
 
 Build and Deployment:
 ---------------------
-Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the one it was built.
+Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the default used in editor.
 So for example if you want to build and deploy for an Android device with resolution 480x320 you need to set the same resolution in Unity Editor under Window -> Set Custom Game Window option.
 
 
 TODO list:
 ----------
 - Atlas Texture. Integration with current sprite animation solution.
-- Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Unite 2013 - Optimizing Unity Games for Mobile Platforms.
+- Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Reference: Unite 2013 - Optimizing Unity Games for Mobile Platforms.
 - Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
 - Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching.
-- 2-channel textures. Interesting article in texture compression form GPU Pro 5 book.
-- Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts.
+- 2-channel textures. Interesting article in texture compression from GPU Pro 5 book.
+- Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts. I'm aware I'm executing some new instructions every time the scene is reloaded.
 - Environment effects: rain, lightings, snow accumulation.
 
 
 Contact:
 --------
 fabri1983@gmail.com
+pablo.lettieri@etermax.com
+

@@ -19,8 +19,8 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
-	public const int SCENE_MAIN_INDEX = 0;
-	public const int SCENE_SELECTION_INDEX = 1;
+	public const int SCENE_MAIN_INDEX = 1;
+	public const int SCENE_SELECTION_INDEX = 2;
 	public const float ENDING_DIE_ANIM_Y_POS = -40f; // world y coordinate
 	public const float STOP_CAM_FOLLOW_POS_Y = -2f; // y world position for stopping camera follower
 	public const int INVALID_PRIORITY = -1;
@@ -92,25 +92,22 @@ public class LevelManager : MonoBehaviour {
 		instance = null;
     }
 	
-    public int getLevel() {
-        return activeLevel;
-    }
-	
-	public int getNextLevel () {
-		// if exceeds max level then return scene index 0
-		return activeLevel + 1 >= Application.levelCount ? SCENE_MAIN_INDEX : activeLevel + 1;
-	}
-	
 	public void loadNextLevel() {
 		resetSpawnPos(activeLevel);
-		loadLevel(getNextLevel());
+		int nextLevel = getNextLevel();
+		loadLevel(nextLevel);
 	}
 	
 	public void loadLevelSelection () {
 		loadLevel(SCENE_SELECTION_INDEX);
 	}
 	
-	public void loadLevel (int level) {
+	public void loadLevel (SceneNameWithIndex scene) {
+		int sceneIndex = (int) scene;
+		loadLevel(sceneIndex);
+	}
+	
+	private void loadLevel (int level) {
 		// fix level index if invalid
 		if (level < SCENE_MAIN_INDEX || level >= Application.levelCount)
 			activeLevel = SCENE_MAIN_INDEX; // splash scree
@@ -124,20 +121,32 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel(activeLevel); // load scene
 	}
 	
+	private int getNextLevel () {
+		// if exceeds max level then return main scene
+		return activeLevel + 1 >= Application.levelCount ? SCENE_MAIN_INDEX : activeLevel + 1;
+	}
+	
 	/// <summary>
-	/// This invoked from StartLevel object which has the number of the level.
+	/// This invoked from StartLevel script which gives the curretn level index.
 	/// It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
+	/// Warm ups some managers, etc.
 	/// </summary>
 	/// <param name='level'>
-	/// Number of scene according Unity's indexing
+	/// Index of scene according Unity's indexing.
 	/// </param>
 	/// <param name='playerEnabled'>
-	/// True if player starts being enabled. False if not
+	/// True if player starts being enabled. False if not.
 	/// </param>
 	/// <param name='levelExtent'>
-	/// Level dimension in world coordinates
+	/// Level dimensions in world coordinates.
 	/// </param>
-	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
+	public void setupLevel (int level, bool playerEnabled, Rect levelExtent) {
+		if (level == 0) {
+			warmUp();
+			loadLevel(getNextLevel());
+			return;
+		}
+			
 		activeLevel = level;
 		// move camera instantaneously to where player spawns
 		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime();
@@ -162,12 +171,19 @@ public class LevelManager : MonoBehaviour {
 		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
 		if (lockYscript)
 			lockYscript.enableCorrection();
+		
+		// warmUp some managers
+		warmUp();
+		
+		// find IFadeable component since main camera instance changes during scenes
+		OptionQuit.Instance.setFaderFromMainCamera();
+	}
+	
+	private void warmUp () {
 		// warm up no GUI dependant elements in case they don't exist yet
 		TouchEventManager.warm();
 		// warm up Pause manager
 		PauseGameManager.warm();
-		// find IFadeable component since main camera instance changes during scenes
-		OptionQuit.Instance.setFaderFromMainCamera();
 	}
 	
 	public Player getPlayer () {
