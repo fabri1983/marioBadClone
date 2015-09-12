@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
 /// Manager singleton which sends update events for GUI elements.
@@ -12,7 +11,8 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	public static Vector2 MIN_RESOLUTION = new Vector2(480f, 320f);
 	public static Matrix4x4 unityGUIMatrix = Matrix4x4.identity; // initialized with identity to allow earlier calls of OnGUI() that use this matrix
 
-	private List<IGUIScreenLayout> listeners = new List<IGUIScreenLayout>();
+	private IGUIScreenLayout[] listeners = new IGUIScreenLayout[27]; // size controlled experimentally
+	private int indexFirstEmpty = 0;
 	
 	private const float GUI_NEAR_PLANE_OFFSET = 0.01f;
 	private const float DEG_2_RAD_0_5 = Mathf.Deg2Rad * 0.5f;
@@ -71,7 +71,10 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 	}
 	
 	void OnDestroy() {		
-		listeners.Clear();
+		for (int i=0, c=listeners.Length; i < c; ++i)
+			listeners[i] = null;
+		listeners = null;
+		
 		// this is to avoid nullifying or destroying static variables. Instance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
@@ -87,12 +90,32 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 		unityGUIMatrix = Matrix4x4.TRS(zero, identity, scale);
 	}
 	
-	public void register (IGUIScreenLayout sl) {
-		listeners.Add(sl);
+	public void register (IGUIScreenLayout listener) {
+		bool inserted = false;
+		for (int i=indexFirstEmpty, c=listeners.Length; i < c; ++i) {
+			if (listeners[i] == null) {
+				listeners[i] = listener;
+				inserted = true;
+				indexFirstEmpty = i + 1; // I guess next cell is empty
+				break;
+			}
+		}
+		if (!inserted)
+			Debug.LogError("listeners array out of space. Increment in one.");
 	}
 	
-	public void remove (IGUIScreenLayout sl) {
-		listeners.Remove(sl);
+	public void remove (IGUIScreenLayout listener) {
+		int id = listener.GetHashCode();
+		for (int i=0, c=listeners.Length; i < c; ++i) {
+			if (listeners[i] == null)
+				continue;
+			else if (id == listeners[i].GetHashCode()){
+				listeners[i] = null;
+				if (i < indexFirstEmpty)
+					indexFirstEmpty = i;
+				break;
+			}
+		}
 	}
 
 	void OnGUI () {
@@ -104,8 +127,10 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 				setupUnityGUIMatrixForResizing();
 
 				// notify to all listeners
-				for (int i=0, c=listeners.Count; i<c; ++i)
-					listeners[i].updateForGUI();
+				for (int i=0, c=listeners.Length; i<c; ++i) {
+					if (listeners[i] != null)
+						listeners[i].updateForGUI();
+				}
 
 				// update screen dimension
 				lastScreenWidth = Screen.width;
