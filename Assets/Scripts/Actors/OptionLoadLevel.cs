@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
-	public int sceneIndex; // index of the scene to be loaded
+	public SceneNameWithIndex targetScene;
 	public GUICustomElement actionGuiElem;
 	
 	private bool selected = false;
@@ -17,7 +17,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		// setup the effects chain
 		beforeNextScene = GetComponent<BeforeLoadNextScene>();
 		if (beforeNextScene != null)
-			beforeNextScene.setSceneIndex(sceneIndex);
+			beforeNextScene.setScene(targetScene);
 	}
 	
 	void OnDestroy () {
@@ -62,7 +62,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		if (beforeNextScene != null)
 			beforeNextScene.execute();
 		else
-			LevelManager.Instance.loadLevel(sceneIndex);
+			LevelManager.Instance.loadLevel(targetScene);
 	}
 	
 	public Effect[] getEffects () {

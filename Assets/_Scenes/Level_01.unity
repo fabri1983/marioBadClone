@@ -151,8 +151,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
   m_Name: 
-  lastScreenWidth: 480
-  lastScreenHeight: 320
 --- !u!1 &26674468
 GameObject:
   m_ObjectHideFlags: 0
@@ -6014,6 +6012,10 @@ Prefab:
       propertyPath: enablePlayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
+      propertyPath: sceneIndex
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0915154de109104e8f68b7c1d5f71d8, type: 2}
   m_RootGameObject: {fileID: 1978660287}
@@ -6774,7 +6776,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf10de5e767aca3419fd81dd2489a6c0, type: 1}
   m_Name: 
-  sceneIndex: 2
+  sceneIndex: 3
   enablePlayer: 1
   min: {fileID: 157166555}
   max: {fileID: 1238963384}
