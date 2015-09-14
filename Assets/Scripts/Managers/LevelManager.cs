@@ -30,6 +30,8 @@ public class LevelManager : MonoBehaviour {
 	public const float ASPECT_W = 16f;
 	public const float ASPECT_H = 10.5f;
 	
+	private static SceneNameWithIndex[] sceneNameWithIndex = (SceneNameWithIndex[]) Enum.GetValues(typeof(SceneNameWithIndex));
+	
 	/// spawn positions for player. They are set automatically when a level is loaded and 
 	/// also when player fires a spawn position trigger
 	private static SpawnPositionSpot[] spawnPosArray = new SpawnPositionSpot[Application.levelCount];
@@ -107,7 +109,7 @@ public class LevelManager : MonoBehaviour {
 		loadLevel(sceneIndex);
 	}
 	
-	private void loadLevel (int level) {
+	public void loadLevel (int level) {
 		// fix level index if invalid
 		if (level < SCENE_MAIN_INDEX || level >= Application.levelCount)
 			activeLevel = SCENE_MAIN_INDEX; // splash scree
@@ -119,6 +121,15 @@ public class LevelManager : MonoBehaviour {
 		guiContainer_so = null; // reset the references of scene only GUI elements container
 		
 		Application.LoadLevel(activeLevel); // load scene
+	}
+	
+	public SceneNameWithIndex getNextLevelName () {
+		int nextLevel = getNextLevel();
+		for (int i=0, c=sceneNameWithIndex.Length; i < c; ++i) {
+			if (nextLevel == (int)sceneNameWithIndex[i])
+				return sceneNameWithIndex[i];
+		}
+		return SceneNameWithIndex.SplashScreen;
 	}
 	
 	private int getNextLevel () {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class BeforeLoadNextSceneManager {
 
-	private List<Effect> listeners = new List<Effect>();
+	private Effect[] listeners = new Effect[10]; // set size experimentally
+	private int indexFirstEmpty = 0;
 	
 	private static BeforeLoadNextSceneManager instance = null;
 	
@@ -26,25 +27,47 @@ public class BeforeLoadNextSceneManager {
 	}
 	
 	~BeforeLoadNextSceneManager () {
-		listeners.Clear();
+		for (int i=0, c=listeners.Length; i < c; ++i)
+			listeners[i] = null;
+		listeners = null;
 		listeners = null;
 		instance = null;
 	}
 	
 	public void register(Effect effect) {
-		listeners.Add(effect);
+		bool inserted = false;
+		for (int i=indexFirstEmpty, c=listeners.Length; i < c; ++i) {
+			if (listeners[i] == null) {
+				listeners[i] = effect;
+				inserted = true;
+				indexFirstEmpty = i + 1; // I guess next cell is empty
+				break;
+			}
+		}
+		if (!inserted)
+			Debug.LogError("listeners array out of space. Increment size one unit more.");
 	}
 	
 	public void remove(Effect effect) {
-		for (int i=0, c=listeners.Count; i < c; ++i) {
+		for (int i=0, c=listeners.Length; i < c; ++i) {
 			if (effect.Equals(listeners[i])) {
 				listeners[i] = null;
+				if (i < indexFirstEmpty)
+					indexFirstEmpty = i;
 				break;
 			}
 		}
 	}
 	
-	public List<Effect> getEffects () {
+	public Effect[] getEffects () {
 		return listeners;
+	}
+	
+	public void executeEffects () {
+		for (int i=0,c=listeners.Length; i < c; ++i) {
+			if (listeners[i] != null/* && listeners[i].beforeLoadNextScene*/) {
+				listeners[i].startEffect();
+			}
+		}
 	}
 }

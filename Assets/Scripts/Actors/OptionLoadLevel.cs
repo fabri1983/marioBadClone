@@ -14,7 +14,7 @@ public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 		_screenBounds.x = -1f;
 		// do some setup after finishes all gameobject effects
 		EffectPrioritizerHelper.registerAsEndEffect(this as IEffectListener);
-		// setup the effects chain
+		// setup the effects chain triggered before load next scene
 		beforeNextScene = GetComponent<BeforeLoadNextScene>();
 		if (beforeNextScene != null)
 			beforeNextScene.setScene(targetScene);

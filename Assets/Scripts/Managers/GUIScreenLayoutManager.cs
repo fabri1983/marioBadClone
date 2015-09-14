@@ -101,7 +101,7 @@ public class GUIScreenLayoutManager : MonoBehaviour {
 			}
 		}
 		if (!inserted)
-			Debug.LogError("listeners array out of space. Increment in one.");
+			Debug.LogError("listeners array out of space. Increment size one unit more.");
 	}
 	
 	public void remove (IGUIScreenLayout listener) {
