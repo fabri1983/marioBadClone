@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class ListenerLists {
 
-	public ITouchListener[] beganListeners = new ITouchListener[8];
-	public ITouchListener[] stationaryListeners = new ITouchListener[3];
-	public ITouchListener[] endedListeners = new ITouchListener[2];
+	public ITouchListener[] beganListeners = new ITouchListener[8]; // size set experimentally
+	public ITouchListener[] stationaryListeners = new ITouchListener[3]; // size set experimentally
+	public ITouchListener[] endedListeners = new ITouchListener[2]; // size set experimentally
 	
 	public void add (ITouchListener listener, TouchPhase phase) {
 		if (TouchPhase.Began == phase) {
@@ -17,7 +17,7 @@ public class ListenerLists {
 				}
 			}
 			if (!inserted)
-				Debug.LogError("Limit of began touch listeners reached!");
+				Debug.LogError("Limit of began touch listeners reached! Increment size in one unit more");
 		}
 		else if (TouchPhase.Stationary == phase || TouchPhase.Moved == phase) {
 			bool inserted = false;
@@ -29,7 +29,7 @@ public class ListenerLists {
 				}
 			}
 			if (!inserted)
-				Debug.LogError("Limit of stationary touch listeners reached!");
+				Debug.LogError("Limit of stationary touch listeners reached! Increment size in one unit more");
 		}
 		else if (TouchPhase.Ended == phase || TouchPhase.Canceled == phase) {
 			bool inserted = false;
@@ -41,7 +41,7 @@ public class ListenerLists {
 				}
 			}
 			if (!inserted)
-				Debug.LogError("Limit of ended touch listeners reached!");
+				Debug.LogError("Limit of ended touch listeners reached! Increment size in one unit more");
 		}
 	}
 	

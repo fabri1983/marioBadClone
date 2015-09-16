@@ -63,7 +63,7 @@ public class PowerUpFireBall : PowerUp {
 			fireball.setBouncing(true);
 			fireball.setDir(player.getFireDir());
 			fireball.setSpeed(getPower());
-			fireball.addTargetLayer(LayerMask.NameToLayer(Layers.POWER_UP));
+			fireball.addTargetLayer(KLayers.POWER_UP);
 			newGO.transform.parent = null;
 #if UNITY_4_AND_LATER
 			newGO.SetActive(true);

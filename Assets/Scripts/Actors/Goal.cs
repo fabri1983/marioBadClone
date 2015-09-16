@@ -5,15 +5,25 @@ public class Goal : MonoBehaviour {
 	public EnumGoalActivation activation = EnumGoalActivation.ACTIVATION_UP;
 	
 	private int triggerA, triggerB;
+	private BeforeLoadNextScene beforeNextScene;
 	
 	void Awake() {
 		flagTargetOutside(triggerA);
 		flagTargetOutside(triggerB);
+		
+		// setup the effects chain triggered before load next scene
+		beforeNextScene = GetComponent<BeforeLoadNextScene>();
 	}
 	
 	void Update () {
 		if (isActivationValid()) {
-			LevelManager.Instance.loadNextLevel();
+			if (beforeNextScene != null) {
+				this.enabled = false; // avoid re execution of the before next scene effect
+				beforeNextScene.setScene(LevelManager.Instance.getNextLevelEnum());
+				beforeNextScene.execute();
+			}
+			else
+				LevelManager.Instance.loadNextLevel();
 		}
 	}
 	

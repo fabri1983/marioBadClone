@@ -8,7 +8,7 @@ public abstract class Effect : MonoBehaviour, IPausable {
 	public float startDelaySecs = 0f;
 	public bool beforeLoadNextScene = false;
 	
-	private int _id;
+	private int _id; // internal identificacion for Equals() and GetHashCode()
 	private Effect nextEffect = null;
 	private List<IEffectListener> listeners = null;
 	private bool isPriorizable = false;

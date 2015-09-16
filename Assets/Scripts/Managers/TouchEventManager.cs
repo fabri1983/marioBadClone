@@ -40,7 +40,7 @@ public class TouchEventManager {
 	
 	private TouchEventManager () {
 		// instantiates the game object which will do the updating of Unity touch events
-		GameObject.Instantiate(Resources.Load("Prefabs/TouchEventUnityUpdater"));
+		GameObject.Instantiate(Resources.Load(KResources.TOUCH_EVENT_UNITY_UPDATER));
 	}
 
 	~TouchEventManager () {

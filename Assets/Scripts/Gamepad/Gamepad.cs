@@ -22,7 +22,7 @@ public class Gamepad : MonoBehaviour {
             if (instance == null)
 				// Instantiate the entire prefab because it has a herarchy. 
 				// Don't assign to the instance variable because it is then assigned in Awake()
-				GameObject.Instantiate(Resources.Load("Prefabs/GUI_Gamepad"));
+				GameObject.Instantiate(Resources.Load(KResources.GUI_GAMEPAD));
             return instance;
         }
     }

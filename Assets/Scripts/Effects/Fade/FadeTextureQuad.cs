@@ -21,7 +21,7 @@ public class FadeTextureQuad : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	void Awake () {
 		// create the texture manually
 		tex = new Texture2D(1, 1, TextureFormat.Alpha8, false);
-		tex.SetPixel(1,1, fadeColor);
+		tex.SetPixel(1, 1, fadeColor);
 		// create the rectangle where the texture will fill in
 		rectTex = new Rect(0, 0, Screen.width, Screen.height);
 		
