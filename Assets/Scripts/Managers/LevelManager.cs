@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour {
 	public const float ASPECT_W = 16f;
 	public const float ASPECT_H = 10.5f;
 	
-	private static SceneNameWithIndex[] sceneNameWithIndex = (SceneNameWithIndex[]) Enum.GetValues(typeof(SceneNameWithIndex));
+	private static KScenes[] sceneNameWithIndex = (KScenes[]) Enum.GetValues(typeof(KScenes));
 	
 	/// spawn positions for player. They are set automatically when a level is loaded and 
 	/// also when player fires a spawn position trigger
@@ -104,7 +104,7 @@ public class LevelManager : MonoBehaviour {
 		loadLevel(SCENE_SELECTION_INDEX);
 	}
 	
-	public void loadLevel (SceneNameWithIndex scene) {
+	public void loadLevel (KScenes scene) {
 		int sceneIndex = (int) scene;
 		loadLevel(sceneIndex);
 	}
@@ -123,13 +123,13 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel(activeLevel); // load scene
 	}
 	
-	public SceneNameWithIndex getNextLevelName () {
+	public KScenes getNextLevelEnum () {
 		int nextLevel = getNextLevel();
 		for (int i=0, c=sceneNameWithIndex.Length; i < c; ++i) {
 			if (nextLevel == (int)sceneNameWithIndex[i])
 				return sceneNameWithIndex[i];
 		}
-		return SceneNameWithIndex.SplashScreen;
+		return KScenes.SplashScreen;
 	}
 	
 	private int getNextLevel () {

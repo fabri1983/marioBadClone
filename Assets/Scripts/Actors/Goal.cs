@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour {
 		if (isActivationValid()) {
 			if (beforeNextScene != null) {
 				this.enabled = false; // avoid re execution of the before next scene effect
-				beforeNextScene.setScene(LevelManager.Instance.getNextLevelName());
+				beforeNextScene.setScene(LevelManager.Instance.getNextLevelEnum());
 				beforeNextScene.execute();
 			}
 			else

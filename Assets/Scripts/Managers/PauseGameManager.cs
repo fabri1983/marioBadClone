@@ -38,7 +38,7 @@ public class PauseGameManager {
 	private PauseGameManager () {
 		paused = false;
 		// instantiates the game object which will catch OnApplicationPause() event and communicates to this manager
-		GameObject.Instantiate(Resources.Load("Prefabs/PauseGameUnityListener"));
+		GameObject.Instantiate(Resources.Load(KResources.PAUSE_GAME_UNITY_LISTENER));
 	}
 
 	~PauseGameManager () {

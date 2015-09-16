@@ -9,7 +9,7 @@ using System.Collections.Generic;
 /// </summary>
 public class BeforeLoadNextScene : MonoBehaviour {
 
-	private SceneNameWithIndex targetScene;
+	private KScenes targetScene;
 	private Effect[] effects;
 	
 	void Awake () {
@@ -40,7 +40,7 @@ public class BeforeLoadNextScene : MonoBehaviour {
 		return allFinish;
 	}
 	
-	public void setScene (SceneNameWithIndex value) {
+	public void setScene (KScenes value) {
 		targetScene = value;
 	}
 	

@@ -16,7 +16,7 @@ public class OptionQuit : MonoBehaviour, ITouchListener, IEffectListener {
             if (instance == null) {
 				// Instantiate the entire prefab. 
 				// Don't assign to the instance variable because it is then assigned in Awake()
-				GameObject.Instantiate(Resources.Load("Prefabs/GUI_Quit"));
+				GameObject.Instantiate(Resources.Load(KResources.GUI_QUIT));
 			}
             return instance;
         }

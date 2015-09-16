@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OptionLoadLevel : MonoBehaviour, ITouchListener, IEffectListener {
 	
-	public SceneNameWithIndex targetScene;
+	public KScenes targetScene;
 	public GUICustomElement actionGuiElem;
 	
 	private bool selected = false;

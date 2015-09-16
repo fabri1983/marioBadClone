@@ -39,7 +39,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 				instance = GameObject.FindObjectOfType(typeof(Player)) as Player;
 				if (instance == null) {
 					// instantiate the entire prefab. Don't assign to the instance variable because it is then assigned in Awake()
-					GameObject.Instantiate(Resources.Load("Prefabs/Mario"));
+					GameObject.Instantiate(Resources.Load(KResources.MARIO));
 				}
 			}
             return instance;
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		
 		collisionGroupSkip = GetComponent<ChipmunkShape>().collisionGroup;
 		// not sure if ok: all layers except Player's layer
-		collisionLayersSkip = unchecked((uint)(1 << LayerMask.NameToLayer(Layers.PLAYER)));
+		collisionLayersSkip = unchecked((uint)(1 << KLayers.PLAYER));
 		//collisionLayers = 0;
 	}
 	
