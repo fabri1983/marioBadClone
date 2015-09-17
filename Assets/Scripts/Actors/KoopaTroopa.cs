@@ -1,6 +1,3 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
 public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
@@ -23,6 +20,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		chase = GetComponent<Chase>();
 		_hide = GetComponent<Hide>();
 		shape = GetComponent<ChipmunkShape>();
+		
+		patrol.setDir(1f);
 	}
 
 	void Start () {
@@ -44,14 +43,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	 * a performance hit in android for Chipmunk component.
 	 */
 	private void destroy () {
-		shape.enabled = false; // makes the shape to be removed from the space
-		GameObjectTools.ChipmunkBodyDestroy(GetComponent<ChipmunkBody>());
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(false);
-#else
-		gameObject.SetActiveRecursively(false);
-#endif
-		PauseGameManager.Instance.remove(this as IPausable);
+		GameObjectTools.ChipmunkBodyDestroy(shape.body, shape);
+		GameObjectTools.setActive(gameObject, false);
 	}
 	
 	public bool DoNotResume {

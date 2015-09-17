@@ -62,14 +62,11 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 		}
 		
 		if (lookAtTarget.position.y < LevelManager.STOP_CAM_FOLLOW_POS_Y)
-			setEnabled(false);
+			enabled = false;
 	}
 
-	public void doInstantMoveOneTime () {
+	public void enableInstantMoveOneTime () {
 		instantlyOneTime = true;
 	}
-	
-	public void setEnabled (bool val) {
-		enabled = val;
-	}
+
 }

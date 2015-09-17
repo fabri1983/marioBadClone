@@ -18,10 +18,10 @@ public class Jump : MonoBehaviour {
 		crouch = GetComponent<Crouch>();
 		jumpAC = AnimateTiledConfig.getByName(gameObject, EnumAnimateTiledName.Jump, true);
 		body = GetComponent<ChipmunkBody>();
-		resetStatus();
+		reset();
 	}
 
-	public void resetStatus () {
+	public void reset () {
 		_isJumping = true; // initialized as true in case the object is spawned in the air
 		gainApplied = true;
 	}

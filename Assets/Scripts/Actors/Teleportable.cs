@@ -38,7 +38,7 @@ public class Teleportable : MonoBehaviour, ITeleportable {
 		}
 	}
 	
-	public void teleportReset () {
+	public void reset () {
 		setReadyForTeleport(false);
 		toogleTargetState(true);
 		setTeleporting(false);
@@ -89,7 +89,7 @@ public class Teleportable : MonoBehaviour, ITeleportable {
 		if (val) {
 			Jump jump = GetComponent<Jump>();
 			if (jump != null)
-				jump.resetStatus();
+				jump.reset();
 		}
 	}
 	

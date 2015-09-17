@@ -32,7 +32,7 @@ public class Teleporter : MonoBehaviour, ITeleporter {
 				// translate
 				targetTemp.position = endingPos.position;
 				// instantly move the camera avoiding lerp
-				camFollower.doInstantMoveOneTime();
+				camFollower.enableInstantMoveOneTime();
 			}	
 		}
 		else {

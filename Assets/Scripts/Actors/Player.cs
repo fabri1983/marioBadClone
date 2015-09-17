@@ -1,9 +1,6 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
+public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IReloadable {
 	
 	private static Player instance = null;
 	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
@@ -59,8 +56,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	}
 	
 	void Start () {
-		//resetPlayer(); // invoke after getting action components
 		PauseGameManager.Instance.register(this as IPausable, gameObject);
+		ReloadableManager.Instance.register(this as IReloadable, transform.position);
 	}
 	
 	private void initialize () {
@@ -87,7 +84,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	}
 	
 	void OnDestroy () {
-		GameObjectTools.ChipmunkBodyDestroy(body);
+		GameObjectTools.ChipmunkBodyDestroy(body, GetComponent<ChipmunkShape>());
 		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
 		if (duplicated) {
 			duplicated = false; // reset the flag for next time
@@ -97,12 +94,12 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		instance = null;
 	}
 	
-	public void resetPlayer () {
-		this.enabled = true; // enable Update() and OnGUI()
+	public void onReloadLevel (Vector3 pos) {
+		enabled = true; // enable Update() and OnGUI()
 		if (teleportable != null)
-			teleportable.teleportReset();
+			teleportable.reset();
 		setPowerUp(null);
-		jump.resetStatus();
+		jump.reset();
 		if (walk.isLookingRight())
 			fireDir = rightFireDir;
 		else
@@ -138,7 +135,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 			Chipmunk.SegmentQueryFirst(body.position, end, collisionLayersSkip, collisionGroupSkip, out qinfo);
 			// if no handler it means no hit
 			if (System.IntPtr.Zero == qinfo._shapeHandle) {
-				jump.resetStatus(); // set state as if were jumping
+				jump.reset(); // set state as if were jumping
 			}
 		}
 		
@@ -204,14 +201,6 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		LevelManager.Instance.loseGame(false);
 	}
 	
-	public void toogleEnabled (bool val) {
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(val);
-#else
-		gameObject.SetActiveRecursively(val);
-#endif
-	}
-	
 	public void die () {
 		// disable this componenet
 		this.enabled = false;
@@ -247,7 +236,8 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 	}
 
 	public void locateAt (Vector2 pos) {
-		body.position = transform.position = pos;
+		transform.position = pos;
+		body._UpdatedTransform(); // update the body position
 	}
 
 	public static bool beginCollisionWithScenery (ChipmunkArbiter arbiter) {
@@ -318,7 +308,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall {
 		Player player = shape1.getOwnComponent<Player>();
 		// if player wants to climb down (once it is over the platform) then disable the collision to start free fall
 		if (player.GetComponent<ClimbDownFromPlatform>().isClimbingDown()) {
-			player.jump.resetStatus(); // set state as if were jumping
+			player.jump.reset(); // set state as if were jumping
 			arbiter.Ignore();
 			return false;
 		}

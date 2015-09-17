@@ -28,7 +28,7 @@ public class Chase : MonoBehaviour {
 		// calculate sign direction
 		signDir = Mathf.Sign(target.position.x - transform.position.x);
 		if (patrol != null)
-			patrol.setNewDir(signDir);
+			patrol.setDir(signDir);
 		else
 			walk.walk(signDir * speed);
 	}

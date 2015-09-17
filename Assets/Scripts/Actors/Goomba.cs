@@ -1,9 +1,6 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
-public class Goomba : MonoBehaviour, IPausable, IMortalFall {
+public class Goomba : MonoBehaviour, IPausable, IMortalFall, IReloadable {
 
 	private const float TIMING_DIE = 0.3f;
 	
@@ -20,28 +17,26 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
 		shape = GetComponent<ChipmunkShape>();
+		
+		patrol.setDir(1f);
 	}
 
 	void Start () {
+		ReloadableManager.Instance.register(this as IReloadable, transform.position);
 		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this as IPausable);
+		ReloadableManager.Instance.remove(this as IReloadable);
 	}
 	
 	/**
 	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */
 	private void destroy () {
-		shape.enabled = false; // makes the shape to be removed from the space
-		GameObjectTools.ChipmunkBodyDestroy(body);
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(false);
-#else
-		gameObject.SetActiveRecursively(false);
-#endif
-		PauseGameManager.Instance.remove(this as IPausable);
+		//GameObjectTools.ChipmunkBodyDestroy(body, shape);
+		GameObjectTools.setActive(gameObject, false);
 	}
 	
 	public bool DoNotResume {
@@ -67,6 +62,17 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 	
 	public void dieWhenFalling () {
 		die();
+	}
+	
+	public void onReloadLevel (Vector3 pos) {
+		GameObjectTools.setActive(gameObject, true);
+		
+		patrol.enablePatrol();
+		patrol.setDir(1f);
+		idle.setIdle(false);
+		
+		transform.position = pos;
+		body._UpdatedTransform(); // update the body position
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {
@@ -112,7 +118,7 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall {
 		else {
 			goomba.patrol.stopPatrol();
 			arbiter.Ignore(); // avoid the collision to continue since this frame
-			LevelManager.Instance.loseGame(true); // force die animation
+			LevelManager.Instance.loseGame(true);
 		}
 		
 		// Returning false from a begin callback means to ignore the collision response for these two colliding shapes 

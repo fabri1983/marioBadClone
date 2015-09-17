@@ -1,6 +1,3 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
 /**
@@ -52,11 +49,8 @@ public class PowerUpFireBall : PowerUp {
 			
 			GameObject newGO = GameObject.Instantiate(getArtifact(), player.getFirePivot().position, Quaternion.identity) as GameObject;
 			// deactivate it so it doesn't interact with current game object creator
-#if UNITY_4_AND_LATER
-			newGO.SetActive(false);
-#else
-			newGO.active = false; 
-#endif
+			GameObjectTools.setActive(newGO, false);
+			
 			newGO.tag = "PowerUp";
 			FireBall fireball = newGO.GetComponent<FireBall>();
 			fireball.setDestroyTime(getDestroyTime());
@@ -65,11 +59,8 @@ public class PowerUpFireBall : PowerUp {
 			fireball.setSpeed(getPower());
 			fireball.addTargetLayer(KLayers.POWER_UP);
 			newGO.transform.parent = null;
-#if UNITY_4_AND_LATER
-			newGO.SetActive(true);
-#else
-			newGO.active = true;
-#endif
+			
+			GameObjectTools.setActive(newGO, true);
 			use();
 		}
 	}

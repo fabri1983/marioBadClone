@@ -15,9 +15,10 @@ public class PlayerWalk : WalkAbs {
 	}
 	
 	public override void reset () {
-		/*Vector2 v = base.body.velocity;
+		Vector2 v = base.body.velocity;
 		v.x = 0f;
-		base.body.velocity = v;*/
+		base.body.velocity = v;
+		
 		base.stop();
 	}
 	

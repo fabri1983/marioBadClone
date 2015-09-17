@@ -23,7 +23,7 @@ public class Bounce : MonoBehaviour {
 		// tell patrol to start moving like crazy
 		patrol.enablePatrol();
 		patrol.setMoveSpeed(kickedSpeed);
-		patrol.setNewDir(dir);
+		patrol.setDir(dir);
 	}
 	
 	public bool isBouncing () {

@@ -1,3 +1,7 @@
+#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
+#define UNITY_4_AND_LATER
+#endif
+
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +18,22 @@ static public class GameObjectTools
 		MonoBehaviour[] monos = go.GetComponents<MonoBehaviour>();
 		for (int i=0, c=monos.Length; i < c; ++i)
 			monos[i].enabled = enabled;
+	}
+	
+	public static bool isActive (GameObject go) {
+		#if UNITY_4_AND_LATER
+		return go.activeSelf;
+		#else
+		return go.active;
+		#endif
+	}
+	
+	public static void setActive (GameObject go, bool val) {
+		#if UNITY_4_AND_LATER
+		go.SetActive(val);
+		#else
+		go.SetActiveRecursively(val);
+		#endif
 	}
 	
 	public static bool isHitFromAbove (float sourceMaxY, ChipmunkBody target, ChipmunkArbiter arbiter) {
@@ -101,7 +121,10 @@ static public class GameObjectTools
 			shapes[i].layers = mask;
 	}
 	
-	public static void ChipmunkBodyDestroy (ChipmunkBody b) {
+	public static void ChipmunkBodyDestroy (ChipmunkBody b, ChipmunkShape s) {
+		if (s!= null)
+			s.enabled = false; // makes the shape to be removed from the space
+		
 		if (b != null) {
 			b.enabled = false;
 			// registering a disable body will remove it from the list
