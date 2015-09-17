@@ -2,8 +2,8 @@ using UnityEngine;
 
 public sealed class ReloadableManager {
 
-	private static IReloadable[] reloadables = new IReloadable[14]; // set size experimentally
-	private static Vector3[] reloadablesSpawnPos = new Vector3[14]; // same size than reseteables structure
+	private static IReloadable[] reloadables = new IReloadable[20]; // set size experimentally
+	private static Vector3[] reloadablesSpawnPos = new Vector3[20]; // same size than reseteables structure
 	
 	private static ReloadableManager instance = null;
 	

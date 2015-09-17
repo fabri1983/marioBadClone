@@ -8,7 +8,6 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall, IReloadable {
 	private Patrol patrol;
 	private Idle idle;
 	private ChipmunkBody body;
-	private ChipmunkShape shape;
 	private bool doNotResume;
 	
 	void Awake () {
@@ -16,9 +15,8 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall, IReloadable {
 		patrol = GetComponent<Patrol>();
 		idle = GetComponent<Idle>();
 		body = GetComponent<ChipmunkBody>();
-		shape = GetComponent<ChipmunkShape>();
 		
-		patrol.setDir(1f);
+		patrol.setDir(1f); // initialize patrol direction
 	}
 
 	void Start () {
@@ -64,14 +62,14 @@ public class Goomba : MonoBehaviour, IPausable, IMortalFall, IReloadable {
 		die();
 	}
 	
-	public void onReloadLevel (Vector3 pos) {
+	public void onReloadLevel (Vector3 spawnPos) {
 		GameObjectTools.setActive(gameObject, true);
 		
 		patrol.enablePatrol();
-		patrol.setDir(1f);
+		patrol.setDir(1f); // initialize patrol direction
 		idle.setIdle(false);
 		
-		transform.position = pos;
+		transform.position = spawnPos;
 		body._UpdatedTransform(); // update the body position
 	}
 	

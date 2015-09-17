@@ -94,7 +94,7 @@ public class Player : MonoBehaviour, IPausable, IPowerUpAble, IMortalFall, IRelo
 		instance = null;
 	}
 	
-	public void onReloadLevel (Vector3 pos) {
+	public void onReloadLevel (Vector3 spawnPos) {
 		enabled = true; // enable Update() and OnGUI()
 		if (teleportable != null)
 			teleportable.reset();
