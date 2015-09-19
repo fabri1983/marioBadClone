@@ -42,7 +42,7 @@ public class FadeByColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 		GUIScreenLayoutManager.Instance.remove(this as IGUIScreenLayout);
 	}
 	
-	void LateUpdate () {
+	void Update () {
 		// do fading?
 		if (fadeDir != EnumFadeDirection.FADE_NONE)
 			fade();

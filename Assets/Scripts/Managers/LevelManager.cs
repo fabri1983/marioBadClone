@@ -122,14 +122,15 @@ public class LevelManager {
 	}
 	
 	private void reloadLevel () {
-		// start camera fade out
-		//Camera.main.GetComponent<CameraFadeable>().getFader().startFading(EnumFadeDirection.FADE_OUT);
-		
 		// reset and re spawn every actor status
 		ReloadableManager.Instance.reloadActors();
 		
 		// setup the scene components for the current scene
 		setupSceneActors();
+		
+		// start camera fade out
+		IFadeable fader = Camera.main.GetComponent<CameraFadeable>().getFader();
+		fader.startFading(EnumFadeDirection.FADE_OUT);
 	}
 	
 	private void setupSceneActors () {
