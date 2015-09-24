@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: FadeColorMat
-  m_Shader: {fileID: 4800000, guid: 28981b346591ec448a9d0820d44490ab, type: 1}
+  m_Name: UnlitTranspGeom
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -15,16 +15,12 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
+          m_Texture: {fileID: 2800000, guid: 5e152172de8f6ed4c977d59aa5d9355d, type: 1}
+          m_Scale: {x: .200000003, y: 1.07000005}
           m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _Opacity
-        second: 0
+    m_Floats: {}
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: 0, g: 0, b: 0, a: .00688083423}
+        second: {r: 1, g: 1, b: 1, a: 1}

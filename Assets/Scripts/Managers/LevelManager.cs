@@ -93,6 +93,7 @@ public class LevelManager {
 	/// </param>
 	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
 		if (level == 0) {
+			Camera.main.cullingMask = 0; // avoid render anything
 			warmUp();
 			loadLevel(getNextLevel());
 			return;
