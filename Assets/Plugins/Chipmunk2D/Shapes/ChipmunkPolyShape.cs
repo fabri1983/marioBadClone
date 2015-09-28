@@ -12,7 +12,7 @@ public class ChipmunkPolyShape : ChipmunkShape {
 	protected static Vector2[] defaultVerts = new Vector2[]{
 		new Vector2( 0, 1),
 		new Vector2( 1, 0),
-		new Vector2(-1, 0),
+		new Vector2(-1, 0)
 	};
 	
 	[HideInInspector]
@@ -20,9 +20,13 @@ public class ChipmunkPolyShape : ChipmunkShape {
 	[HideInInspector]
 	public Vector2[] _hull = defaultVerts;
 	
+	#if UNITY_EDITOR
+	private bool skipHullOldValue;
+	#endif
+	
 	protected Vector2[] MakeVerts(){
 		int count = _hull.Length;
-		var verts = new Vector2[count];
+		Vector2[] verts = new Vector2[count];
 		Matrix4x4 bmatrix = BodyRelativeMatrix(body);
 		
 		for(int i=0; i<count; i++){
@@ -39,14 +43,14 @@ public class ChipmunkPolyShape : ChipmunkShape {
 		set {
 			_verts = (Vector2[])value.Clone();
 			
-			var hull = (Vector2[])verts.Clone();
-			int hullCount = CP.MakeConvexHull(verts.Length, hull, 0f);
+			Vector2[] hull = (Vector2[])verts.Clone();
+			int hullCount = CP.MakeConvexHull(verts.Length, hull, 0);
 			_hull = new Vector2[hullCount];
 			Array.Copy(hull, _hull, hullCount);
 			
 			// If the C side is already initialized, need to update the existing vertexes. 
 			if(_handle != IntPtr.Zero){
-				var transformed = MakeVerts();
+				Vector2[] transformed = MakeVerts();
 				CP.UpdateConvexPolyShapeWithVerts(_handle, transformed.Length, transformed);
 				CP.cpSpaceReindexShape(space._handle, _handle);
 				
@@ -73,19 +77,41 @@ public class ChipmunkPolyShape : ChipmunkShape {
 		}
 	}
 	
+	public void generateVertsAndHull () {
+
+		MeshFilter meshFilter = GetComponent<MeshFilter>();
+		if (meshFilter == null) {
+			
+		} else {
+			Mesh mesh = meshFilter.sharedMesh;
+			if (mesh == null) {
+				this.verts = _verts; // if no mesh then use default verts
+			} else {
+				// copy the current Mesh vertices
+				Vector3[] vertices3 = mesh.vertices;
+				Vector2[] vertices2 = new Vector2[vertices3.Length];
+				for (int i=0, c=vertices3.Length; i < c; ++i)
+					vertices2[i] = (Vector2)vertices3[i];
+				// this force the generation of the hull structure
+				this.verts = vertices2;
+				// we dont need it anymore since is cloned in the set property
+				vertices2 = null;
+			}
+		}
+	}
+	
 	protected override void Awake(){
 		if(_handle != IntPtr.Zero) return;
 		base.Awake();
 		
-		// Force generating the hull.
 		this.verts = _verts;
 		
-		var transformed = MakeVerts();
+		Vector2[] transformed = MakeVerts();
 		_handle = CP.NewConvexPolyShapeWithVerts(transformed.Length, transformed);
 		CP.cpPolyShapeSetRadius(_handle, _maxScale*_radius);
 		if(body != null) body._AddMassForShape(this);
 		
-		var gch = GCHandle.Alloc(this);
+		GCHandle gch = GCHandle.Alloc(this);
 		CP._cpShapeSetUserData(_handle, GCHandle.ToIntPtr(gch));
 	}
 	
@@ -99,6 +125,7 @@ public class ChipmunkPolyShape : ChipmunkShape {
 		return body;
 	}
 	
+#if UNITY_EDITOR
 	protected void OnDrawGizmosSelected(){
 		Gizmos.color = this.gizmoColor;
 		Gizmos.matrix = transform.localToWorldMatrix;
@@ -108,6 +135,7 @@ public class ChipmunkPolyShape : ChipmunkShape {
 			Gizmos.DrawLine(_hull[i], _hull[j]);
 		}
 	}	
+#endif
 	
 //	public int vertexCount {
 //		get { return CP.cpPolyShapeGetNumVerts(_handle); }

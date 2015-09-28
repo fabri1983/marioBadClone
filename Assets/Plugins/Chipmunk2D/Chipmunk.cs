@@ -163,16 +163,18 @@ public static class Chipmunk {
 	/// Unity doesn't provide notification events for when a transform is modified.
 	/// Unfortunately that means that you need to call this to let Chipmunk know when you modify a transform.
 	public static void UpdatedTransform(GameObject root){
-		HashSet<ChipmunkBody> bodies = new HashSet<ChipmunkBody>();
+//		HashSet<ChipmunkBody> bodies = new HashSet<ChipmunkBody>();
 		
 		foreach(ChipmunkBinding.Base component in root.GetComponentsInChildren<ChipmunkBinding.Base>()){
 			ChipmunkBody affectedBody = component._UpdatedTransform();
-			if(affectedBody != null) bodies.Add(affectedBody);
+			if (affectedBody != null)
+				affectedBody._RecalculateMass();
+//			if(affectedBody != null) bodies.Add(affectedBody);
 		}
 		
 		// Update the mass properties of the bodies.
-		foreach(ChipmunkBody body in bodies)
-			body._RecalculateMass();
+//		foreach(ChipmunkBody body in bodies)
+//			body._RecalculateMass();
 	}
 	
 	//MARK: Nearest Point Query

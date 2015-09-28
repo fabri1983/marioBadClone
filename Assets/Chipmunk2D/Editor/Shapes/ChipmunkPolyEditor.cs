@@ -28,7 +28,7 @@ public class ChipmunkPolyEditor : ChipmunkEditor
 			Transform t = poly.transform;
 			
 			bool dirty = false;
-			var verts = new List<Vector2>(poly.verts);
+			List<Vector2> verts = new List<Vector2>(poly.verts);
 			
 			switch(Event.current.type){
 				case EventType.mouseUp:

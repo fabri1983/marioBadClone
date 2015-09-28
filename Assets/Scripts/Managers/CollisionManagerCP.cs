@@ -153,10 +153,10 @@ public class CollisionManagerCP : ChipmunkCollisionManager {
 	}
 	
 	bool ChipmunkBegin_Goal_Player (ChipmunkArbiter arbiter) {
-		return Goal.beginCollisionWithPlayer(arbiter);
+		return GoalKeyAction.beginCollisionWithPlayer(arbiter);
 	}
 	
 	void ChipmunkSeparate_Goal_Player (ChipmunkArbiter arbiter) {
-		Goal.endCollisionWithPlayer(arbiter);
+		GoalKeyAction.endCollisionWithPlayer(arbiter);
 	}
 }
