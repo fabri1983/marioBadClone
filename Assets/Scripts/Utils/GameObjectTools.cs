@@ -14,7 +14,7 @@ static public class GameObjectTools
 	public static float COS_45 = Mathf.Cos(45f);
 	
 	public static void toogleEnableAllScripts (GameObject go, bool enabled) {
-		// gets all MonoBehaviour componenets attached to a game object and updates its enable property
+		// gets all MonoBehaviour components attached to a game object and updates its enable property
 		MonoBehaviour[] monos = go.GetComponents<MonoBehaviour>();
 		for (int i=0, c=monos.Length; i < c; ++i)
 			monos[i].enabled = enabled;
@@ -52,7 +52,7 @@ static public class GameObjectTools
 		}
 		return false;
 	}
-
+	
 	public static bool isHitFromBelow (ChipmunkArbiter arbiter) {
 		/// The collision normal is the direction of the surfaces where the two objects collided.
 		/// Keep in mind that the normal points out of the first object and into the second. 
@@ -63,7 +63,7 @@ static public class GameObjectTools
 			return true;
 		return false;
 	}
-
+	
 	public static bool isGrounded (ChipmunkArbiter arbiter) {
 		/// The collision normal is the direction of the surfaces where the two objects collided.
 		/// Keep in mind that the normal points out of the first object and into the second. 
@@ -84,7 +84,7 @@ static public class GameObjectTools
 			return true;
 		return false;
 	}
-
+	
 	public static bool isWallHit (ChipmunkArbiter arbiter) {
 		/// The collision normal is the direction of the surfaces where the two objects collided.
 		/// Keep in mind that the normal points out of the first object and into the second. 
@@ -138,13 +138,13 @@ static public class GameObjectTools
 	 * It uses the camera passed by argument for screen space conversion.
 	 */
 	public static Rect BoundsToScreenRectAA(Bounds bounds, Camera cam) {
-	    // Get mesh origin and farthest extent (this works best with simple convex meshes)
-	    Vector3 origin = cam.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.max.y, bounds.center.z)); // maybe use 0f in z
-	    Vector3 extent = cam.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, bounds.center.z)); // maybe use 0f in z
-	     
-	    // Create rect in screen space and return - does not account for camera perspective
-	    return new Rect(origin.x, Screen.height - origin.y, extent.x - origin.x, origin.y - extent.y);
-    }
+		// Get mesh origin and farthest extent (this works best with simple convex meshes)
+		Vector3 origin = cam.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.max.y, bounds.center.z)); // maybe use 0f in z
+		Vector3 extent = cam.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, bounds.center.z)); // maybe use 0f in z
+		
+		// Create rect in screen space and return - does not account for camera perspective
+		return new Rect(origin.x, Screen.height - origin.y, extent.x - origin.x, origin.y - extent.y);
+	}
 	
 	/**
 	 * Returns the Rect in screen space the bounds is covering.
@@ -159,30 +159,30 @@ static public class GameObjectTools
 			cam.WorldToScreenPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z-ext.z)),
 			cam.WorldToScreenPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z+ext.z)),
 			cam.WorldToScreenPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z+ext.z)),
-			 
+			
 			cam.WorldToScreenPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z-ext.z)),
 			cam.WorldToScreenPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z-ext.z)),
 			cam.WorldToScreenPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z+ext.z)),
 			cam.WorldToScreenPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z+ext.z))
 		};
-		 
+		
 		Vector2 min = extentPoints[0];
 		Vector2 max = extentPoints[0];
-		 
+		
 		foreach(Vector2 v in extentPoints) {
 			min = Vector2.Min(min, v);
 			max = Vector2.Max(max, v);
 		}
-		 
+		
 		return new Rect(min.x, min.y, max.x-min.x, max.y-min.y);
 	}
 	
 	public static void drawGUIBox (Bounds b, Camera cam) {
- 		float margin = 0;
+		float margin = 0;
 		
 		// is object behind us?
 		if (cam.WorldToScreenPoint (b.center).z < 0) return;
-		 
+		
 		//All 8 vertices of the bounds
 		Vector3[] pts = new Vector3[8];
 		pts[0] = cam.WorldToScreenPoint (new Vector3 (b.center.x + b.extents.x, b.center.y + b.extents.y, b.center.z + b.extents.z));
@@ -193,10 +193,10 @@ static public class GameObjectTools
 		pts[5] = cam.WorldToScreenPoint (new Vector3 (b.center.x - b.extents.x, b.center.y + b.extents.y, b.center.z - b.extents.z));
 		pts[6] = cam.WorldToScreenPoint (new Vector3 (b.center.x - b.extents.x, b.center.y - b.extents.y, b.center.z + b.extents.z));
 		pts[7] = cam.WorldToScreenPoint (new Vector3 (b.center.x - b.extents.x, b.center.y - b.extents.y, b.center.z - b.extents.z));
-		 
+		
 		//Get them in GUI space
 		for (int i=0;i<pts.Length;i++) pts[i].y = Screen.height-pts[i].y;
-		 
+		
 		//Calculate the min and max positions
 		Vector3 min = pts[0];
 		Vector3 max = pts[0];
@@ -204,14 +204,14 @@ static public class GameObjectTools
 			min = Vector3.Min (min, pts[i]);
 			max = Vector3.Max (max, pts[i]);
 		}
-		 
+		
 		//Construct a rect of the min and max positions and apply some margin
 		Rect r = Rect.MinMaxRect (min.x,min.y,max.x,max.y);
 		r.xMin -= margin;
 		r.xMax += margin;
 		r.yMin -= margin;
 		r.yMax += margin;
-		 
+		
 		//Render the box
 		GUI.Box (r,"");
 	}

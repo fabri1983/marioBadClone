@@ -1,3 +1,7 @@
+#if (UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_5 || UNITY_4_6)
+#define UNITY_3_AND_4
+#endif
+
 /**
  * Copyright (C) 2012 Fredrik Holmstrom
  * 
@@ -35,10 +39,10 @@ public class HairyPlotterAtlasCreator : EditorWindow
     static void Init()
     {
         HairyPlotterAtlasCreator window = (HairyPlotterAtlasCreator)EditorWindow.GetWindow(typeof(HairyPlotterAtlasCreator));
-		#if UNITY_5_0
-		window.titleContent = "Atlas Creator";
-		#else
+		#if UNITY_3_AND_4
 		window.title = "Atlas Creator";
+		#else
+		window.titleContent = "Atlas Creator";
 		#endif
     }
 

@@ -1,3 +1,7 @@
+#if (UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_5 || UNITY_4_6)
+#define UNITY_3_AND_4
+#endif
+
 // Copyright 2013 Howling Moon Software. All rights reserved.
 // See http://chipmunk2d.net/legal.php for more information.
 
@@ -53,17 +57,13 @@ public static class Chipmunk {
 	private static ChipmunkManager CreateManager(){
 		ChipmunkManager manager = GetManager();
 		
-//		Debug.Log("Configuring new space.");
+		//		Debug.Log("Configuring new space.");
 		if(manager._space != null) Debug.LogError("Space was already set?");
 		ChipmunkSpace space = manager._space = new ChipmunkSpace();
 		
 		space.gravity = Physics.gravity;
 		space.iterations = Physics.solverIterationCount;
-		#if UNITY_5_0
-		space.collisionSlop = Physics.defaultContactOffset;
-		#else
-		space.collisionSlop = Physics.minPenetrationForPenalty;
-		#endif
+		space.collisionSlop = getDefaultContactOffset();
 		space.sleepTimeThreshold = 0.5f;
 		
 		return manager;
@@ -74,12 +74,12 @@ public static class Chipmunk {
 		ChipmunkManager manager;
 		
 		if(go == null){
-//			Debug.Log("Creating new ChipmunkManager.");
+			//			Debug.Log("Creating new ChipmunkManager.");
 			
 			go = new GameObject("ChipmunkManager");
 			manager = go.AddComponent<ChipmunkManager>();
 		} else {
-//			Debug.Log("Found existing ChipmunkManager.");
+			//			Debug.Log("Found existing ChipmunkManager.");
 			
 			manager = go.GetComponent<ChipmunkManager>();
 			
@@ -126,14 +126,10 @@ public static class Chipmunk {
 	/// Amount of allowed overlap of physics shapes.
 	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
 	public static float minPenetrationForPenalty {
-		get { return Physics.minPenetrationForPenalty; }
+		get { return getDefaultContactOffset(); }
 		set {
 			manager._space.collisionSlop = value;
-			#if UNITY_5_0
-			Physics.defaultContactOffset = value;
-			#else
-			Physics.minPenetrationForPenalty = value;
-			#endif
+			setDefaultContactOffset(value);
 		}
 	}
 	
@@ -204,7 +200,7 @@ public static class Chipmunk {
 	}
 	
 	[DllImport(CP.IMPORT)] private static extern IntPtr
-	cpSpaceNearestPointQueryNearest(IntPtr handle, Vector2 point, float maxDistance, uint layers, int group, out ChipmunkNearestPointQueryInfo info);
+		cpSpaceNearestPointQueryNearest(IntPtr handle, Vector2 point, float maxDistance, uint layers, int group, out ChipmunkNearestPointQueryInfo info);
 	
 	/// Return only information about the nearest shape to the query point.
 	/// Shapes are filtered using the group and layers in the same way as collisions.
@@ -240,7 +236,7 @@ public static class Chipmunk {
 	}
 	
 	[DllImport(CP.IMPORT)] private static extern IntPtr
-	cpSpaceSegmentQueryFirst(IntPtr handle, Vector2 start, Vector2 end, uint layers, int group, out ChipmunkSegmentQueryInfo info);
+		cpSpaceSegmentQueryFirst(IntPtr handle, Vector2 start, Vector2 end, uint layers, int group, out ChipmunkSegmentQueryInfo info);
 	
 	/// Return only the first shape struck by the segment query as it goes from start to end.
 	/// Shapes are filtered using the group and layers in the same way as collisions.
@@ -252,5 +248,29 @@ public static class Chipmunk {
 	/// Calls SegmentQueryFirst() with all layers and no group.
 	public static ChipmunkShape SegmentQueryFirst(Vector2 start, Vector2 end, out ChipmunkSegmentQueryInfo info){
 		return SegmentQueryFirst(start, end, ~(uint)0, "", out info);
+	}
+	
+	/// <summary>
+	/// Gets the amount of allowed overlap of physics shapes.
+	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
+	/// </summary>
+	public static float getDefaultContactOffset () {
+		#if !UNITY_3_AND_4
+		return Physics.defaultContactOffset;
+		#else
+		return Physics.minPenetrationForPenalty; 
+		#endif
+	}
+	
+	/// <summary>
+	/// Sets the amount of allowed overlap of physics shapes.
+	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
+	/// </summary>
+	public static void setDefaultContactOffset (float value) {
+		#if !UNITY_3_AND_4
+		Physics.defaultContactOffset = value;
+		#else
+		Physics.minPenetrationForPenalty = value;
+		#endif
 	}
 }

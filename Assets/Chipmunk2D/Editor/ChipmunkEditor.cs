@@ -1,8 +1,12 @@
 // Copyright 2013 Howling Moon Software. All rights reserved.
 // See http://chipmunk2d.net/legal.php for more information.
 
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
+#if (UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
+#define IS_UNITY_3
+#endif
+
+#if (UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_5 || UNITY_4_6)
+#define IS_UNITY_4
 #endif
 
 using System.Collections.Generic;
@@ -14,7 +18,6 @@ using System.Linq;
 
 public class ChipmunkMenus : ScriptableObject
 {
-	
 	// Can be changed if you prefer your Chipmunk stuff in it's own top-level menu.
 	const string CHIPMUNK_ROOT_MENU = "Component/Chipmunk2D/";
 	
@@ -36,7 +39,7 @@ public class ChipmunkMenus : ScriptableObject
 	public static void AddBody() {
 		AddComponents<ChipmunkBody>();
 	}
-
+	
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Circle Shape", false, 1120)]
 	public static void AddCircleShape() {
 		AddComponents<ChipmunkCircleShape>();
@@ -96,11 +99,12 @@ public class ChipmunkMenus : ScriptableObject
 	}
 	
 	public static void AddComponents<T>() where T : Component{
-#if UNITY_4_AND_LATER
-		DestroyObjectImmediate();
-#else
+		#if IS_UNITY_3
 		Undo.RegisterSceneUndo("add " + typeof(T).Name);
-#endif
+		#else
+		DestroyObjectImmediate();
+		#endif
+		
 		foreach(GameObject go in Selection.gameObjects){
 			go.AddComponent<T>();
 		}
@@ -121,11 +125,11 @@ public class ChipmunkMenus : ScriptableObject
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Rotary Limit Joint", true, 1227)]
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Simple Motor", true, 1228)]
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Slide Joint", true, 1229)]
-//	[MenuItem (CHIPMUNK_ROOT_MENU + "Replace PhysX in selection with Chipmunk", true, 1210)]
-
+	//	[MenuItem (CHIPMUNK_ROOT_MENU + "Replace PhysX in selection with Chipmunk", true, 1210)]
+	
 	static bool ValidateAddChipmunkObjects() {
-			Object[] objs = Selection.GetFiltered(typeof(GameObject), SelectionMode.Deep | SelectionMode.Editable | SelectionMode.ExcludePrefab);
-			return (IS_SETUP && objs != null && objs.Length > 0);
+		Object[] objs = Selection.GetFiltered(typeof(GameObject), SelectionMode.Deep | SelectionMode.Editable | SelectionMode.ExcludePrefab);
+		return (IS_SETUP && objs != null && objs.Length > 0);
 	}
 	
 	public static void ReplaceComponent<T, N>(GameObject go) where T : Component where N : Component {
@@ -137,12 +141,12 @@ public class ChipmunkMenus : ScriptableObject
 		}
 	}
 	
-//	[MenuItem ("Chipmunk2D/Replace PhysX in selection with Chipmunk", false, 1210)]
-//	public static void ReplacePhysXEverywhere() {
-//		foreach(GameObject go in Selection.gameObjects){
-//			ReplaceComponent<BoxCollider, ChipmunkBoxShape>(go);
-//		}
-//	}
+	//	[MenuItem ("Chipmunk2D/Replace PhysX in selection with Chipmunk", false, 1210)]
+	//	public static void ReplacePhysXEverywhere() {
+	//		foreach(GameObject go in Selection.gameObjects){
+	//			ReplaceComponent<BoxCollider, ChipmunkBoxShape>(go);
+	//		}
+	//	}
 	
 	protected const string DLL = "Assets/Plugins/chipmunk.dll";
 	protected const string DYLIB = "Assets/Plugins/libChipmunk.dylib";
@@ -154,12 +158,12 @@ public class ChipmunkMenus : ScriptableObject
 		IS_SETUP = !(
 			!UnityEditorInternal.InternalEditorUtility.HasPro() &&
 			File.Exists(DLL) && File.Exists(DYLIB) && Directory.Exists(BUNDLE)
-		);
+			);
 		
 		Debug.LogError(
 			"You are running Unity Free and have not run the Chipmunk setup. " +
 			"Please run the " + CHIPMUNK_ROOT_MENU + "Setup Chipmunk2D for Unity Free " + "menu."
-		);
+			);
 	}
 	
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Setup Chipmunk2D for Unity Free", false, 10000)]
@@ -193,18 +197,18 @@ public class ChipmunkEditor : Editor {
 	}
 	
 	protected void SetupUndo(string message){
-#if UNITY_4_AND_LATER
-		Undo.RecordObject(target);
-		if(Input.GetMouseButtonDown(0)){
-			Undo.RecordObject(target);
-			Undo.RecordObject(target);
-		}
-#else
+		#if IS_UNITY_3
 		Undo.SetSnapshotTarget(target, message);
 		if(Input.GetMouseButtonDown(0)){
 			Undo.CreateSnapshot();
 			Undo.RegisterSnapshot();
 		}
-#endif
+		#else
+		Undo.RecordObject(target);
+		if(Input.GetMouseButtonDown(0)){
+			Undo.RecordObject(target);
+			Undo.RecordObject(target);
+		}
+		#endif
 	}
 }

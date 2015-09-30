@@ -1,3 +1,7 @@
+#if (UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_5 || UNITY_4_6)
+#define UNITY_3_AND_4
+#endif
+
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -109,10 +113,10 @@ public class Create2DMeshFromCollider : ScriptableWizard
 			GameObject _2d_mesh = new GameObject (gameObjectName);
 			MeshFilter meshFilter = (MeshFilter)_2d_mesh.AddComponent (typeof(MeshFilter));
 			_2d_mesh.AddComponent (typeof(MeshRenderer));
-			#if UNITY_5_0
-			_2d_mesh.GetComponent<MeshRenderer>().shadowCastingMode = Rendering.ShadowCastingMode.Off;
-			#else
+			#if UNITY_3_AND_4
 			_2d_mesh.GetComponent<MeshRenderer>().castShadows = false;
+			#else
+			_2d_mesh.GetComponent<MeshRenderer>().shadowCastingMode = Rendering.ShadowCastingMode.Off;
 			#endif
 			_2d_mesh.GetComponent<MeshRenderer>().receiveShadows = false;
 			_2d_mesh.GetComponent<MeshRenderer>().sharedMaterial = materialToUse;
