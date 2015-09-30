@@ -1,9 +1,6 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
-public class Ghost : MonoBehaviour, IPausable, IMortalFall {
+public class Ghost : MonoBehaviour, IPausable, IMortalFall, IReloadable {
 	
 	public float flySpeed = 6f;
 	public float flyRange = 6f;
@@ -12,7 +9,6 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 	private Fly fly;
 	private Chase chase;
 	private ChipmunkBody body;
-	private ChipmunkShape shape;
 	private WalkAbs targetWalkComp;
 	
 	// Use this for initialization
@@ -20,7 +16,6 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		fly = GetComponent<Fly>();
 		chase = GetComponent<Chase>();
 		body = GetComponent<ChipmunkBody>();
-		shape = GetComponent<ChipmunkShape>();
 	}
 	
 	void Start () {
@@ -28,25 +23,21 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		fly.setAutomaticFly(true, flyRange);
 		fly.setSpeed(flySpeed);
 
+		ReloadableManager.Instance.register(this as IReloadable, transform.position);
 		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 	
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this as IPausable);
+		ReloadableManager.Instance.remove(this as IReloadable);
 	}
 	
 	/**
 	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */
 	private void destroy () {
-		shape.enabled = false; // makes the shape to be removed from the space
-		GameObjectTools.ChipmunkBodyDestroy(body);
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(false);
-#else
-		gameObject.SetActiveRecursively(false);
-#endif
-		PauseGameManager.Instance.remove(this as IPausable);
+		//GameObjectTools.ChipmunkBodyDestroy(body, shape);
+		GameObjectTools.setActive(gameObject, false);
 	}
 	
 	public bool DoNotResume {
@@ -98,6 +89,15 @@ public class Ghost : MonoBehaviour, IPausable, IMortalFall {
 		if (targetWalkComp == null)
 			targetWalkComp = chase.getTarget().GetComponent<WalkAbs>();
 		return (targetWalkComp.getLookingDir().x * towardTarget.x) <= 2f; // give a little distant threshold
+	}
+	
+	public void onReloadLevel (Vector3 spawnPos) {
+		GameObjectTools.setActive(gameObject, true);
+		
+		chase.stop();
+		
+		transform.position = spawnPos;
+		body._UpdatedTransform(); // update the body position
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {

@@ -1,6 +1,3 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
 /// <summary>
@@ -36,11 +33,7 @@ public class PlayerFollowerYCorrection : MonoBehaviour, IGUICameraSyncable {
 		// check if the player's center screen position is above or below a threshold off the screen
 		bool outsideArea = (screenPos.y < (0.2f * Screen.height) || screenPos.y > (0.9f * Screen.height));
 		if (outsideArea) {
-#if UNITY_4_AND_LATER
-			bool isActive = player.gameObject.activeSelf;
-#else
-			bool isActive = player.gameObject.active;
-#endif
+			bool isActive = GameObjectTools.isActive(player.gameObject);
 			if (!applied && !player.isDying() && isActive) {
 				xyConfig.lockY = false;
 				camPosYCorrection.correctPosY();

@@ -40,10 +40,16 @@ Features implemented:
 	Extending the PoorsManGUIFX implementation for GUI elements transition, this own version handles transform component of custom GUI solution in addition to Unity's GUITexture and GUIText. 
 	Basic transition effects, extensible to new effects.
 	Visit the project's page: http://unitycoder.com/blog/2014/05/18/gui-transition-effects-open-source/
-	
+
 - Parallax motion for GUI components:
 	Added the possibility to apply a displacement operation onto a material so giving the impression of motion.
 	Background and foreground components with their respectively shaders. Highly customizable: size, speed, manual or automatic offset, mirroring (handled in the shader).
+	
+- Reload Scene transition:
+	When the scene needs to be re loaded its an in-scene transition.
+	Normally when player loses the scene is reloaded as per Application.LoadLevel(currentScene), which triggers an in-game destroying and re allocation of all the scene components.
+	Instead, it comes the ReloadableManager. Which lets components (listeners) be registered to receive a callback when player loses and scene is reloaded.
+	Each component attends the callback and know how to reset its attributes and locate its transform so the scene seems to be reloaded from scratch.
 	
 - CollisionGen 2D and Harry Plotter:
 	Using these two third party APIs you can generate a mesh from an alpha channel texture and use it as a collider, giving you the possibility to modify it directly from the Editor Scene View.
@@ -57,12 +63,13 @@ Features implemented:
 	You will provide more vertices/triangles to the pipeline, and less fragments to process.
 	
 - CG Shaders:
-	Every material has its own CG shader with specific optimizations targeting android platform. This allow to remove some assumptions that Unity adds when compiles a shader.
+	Every material has its own CG shader with specific optimizations targeting mobile platform. This allow to remove some assumptions that Unity adds when compiles a shader.
 
 
 Build and Deployment:
 ---------------------
-Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the default used in editor.
+Straight forward following Unity's build and run option.
+Note: Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the default used in editor.
 So for example if you want to build and deploy for an Android device with resolution 480x320 you need to set the same resolution in Unity Editor under Window -> Set Custom Game Window option.
 
 
@@ -71,7 +78,7 @@ TODO list:
 - Atlas Texture. Integration with current sprite animation solution.
 - Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Reference: Unite 2013 - Optimizing Unity Games for Mobile Platforms.
 - Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
-- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching.
+- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching since seems to be tricky under GLES 2.0.
 - 2-channel textures. Interesting article in texture compression from GPU Pro 5 book.
 - Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts. I'm aware I'm executing some new instructions every time the scene is reloaded.
 - Environment effects: rain, lightings, snow accumulation.

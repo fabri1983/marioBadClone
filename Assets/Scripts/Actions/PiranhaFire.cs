@@ -1,6 +1,3 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 	
 public class PiranhaFire : MonoBehaviour {
@@ -89,11 +86,8 @@ public class PiranhaFire : MonoBehaviour {
 		
 		GameObject newGO = GameObject.Instantiate(fireBall, firePos, Quaternion.identity) as GameObject;
 		// deactivae it so it doesn't interact with current game object creator
-#if UNITY_4_AND_LATER
-		newGO.SetActive(false);
-#else
-		newGO.active = false;
-#endif
+		GameObjectTools.setActive(newGO, false);
+		
 		FireBall fireball = newGO.GetComponent<FireBall>();
 		fireball.setDestroyTime(destroyTime);
 		fireball.setBouncing(false);
@@ -101,11 +95,8 @@ public class PiranhaFire : MonoBehaviour {
 		fireball.setSpeed(firePow);
 		fireball.addTargetLayer(KLayers.PLAYER);
 		newGO.transform.parent = null;
-#if UNITY_4_AND_LATER
-		newGO.SetActive(true);
-#else
-		newGO.active = true;
-#endif
+		
+		GameObjectTools.setActive(newGO, true);
 	}
 	
 	public void setQuad (int val) {

@@ -12,6 +12,6 @@ public class StartLevel : MonoBehaviour {
 		Rect levelExtent = new Rect(min.position.x, min.position.y, max.position.x, max.position.y);
 		
 		// setup current level
-		LevelManager.Instance.setupLevel(Application.loadedLevel, enablePlayer, levelExtent);
+		LevelManager.Instance.startLevel(Application.loadedLevel, enablePlayer, levelExtent);
 	}
 }

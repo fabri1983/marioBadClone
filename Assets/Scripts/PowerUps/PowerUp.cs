@@ -1,6 +1,3 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
 public abstract class PowerUp : MonoBehaviour, IPausable {
@@ -28,7 +25,7 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this as IPausable);
-		GameObjectTools.ChipmunkBodyDestroy(body);
+		GameObjectTools.ChipmunkBodyDestroy(body, shape);
 	}
 	
 	void Update () {
@@ -136,10 +133,6 @@ public abstract class PowerUp : MonoBehaviour, IPausable {
 	private void destroy () {
 		body.enabled = false; // makes the body to be removed from the space
 		shape.enabled = false; // makes the shape to be removed from the space
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(false);
-#else
-		gameObject.SetActiveRecursively(false);
-#endif
+		GameObjectTools.setActive(gameObject, false);
 	}
 }

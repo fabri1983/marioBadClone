@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager {
 
 	/**
  	* Used for sorting the spawn position triggers
@@ -49,55 +49,116 @@ public class LevelManager : MonoBehaviour {
 	private static PriorityComparator priorityComp = new PriorityComparator();
 	
 	private static LevelManager instance = null;
-	private static bool duplicated = false; // usefull to avoid onDestroy() execution on duplicated instances being destroyed
 	
 	public static LevelManager Instance {
         get {
             if (instance == null) {
-				// creates a game object with this script component
-				instance = new GameObject("LevelManager").AddComponent<LevelManager>();
+				instance = new LevelManager();
 			}
             return instance;
         }
     }
 	
-	void Awake () {
-		if (instance != null && instance != this) {
-			duplicated = true;
-			Destroy(gameObject);
-		}
-		else {
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-			initialize();
-		}
+	private LevelManager () {
+		initialize();
 	}
 	
 	private void initialize() {
 		// reset spawn positions array
-		for (int i=SCENE_MAIN_INDEX; i < Application.levelCount; ++i)
+		for (int i=SCENE_MAIN_INDEX, c=Application.levelCount; i < c; ++i)
 			spawnPosArray[i].priority = INVALID_PRIORITY;
 		
 		// get Mario's game object reference.
 		player = Player.Instance;
-		
-		// NOTE: here is the place where able to load a stored saved game: get latest level and spawn position, stats, powerups, etc
 	}
 	
-	void OnDestroy() {
+	~LevelManager () {
 		player = null;
-		// this is to avoid nullifying or destroying static variables. Intance variables can be destroyed before this check
-		if (duplicated) {
-			duplicated = false; // reset the flag for next time
-			return;
-		}
 		instance = null;
     }
 	
+	/// <summary>
+	/// This invoked from StartLevel script which gives the curretn level index.
+	/// It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
+	/// Warm ups some managers, etc.
+	/// </summary>
+	/// <param name='level'>
+	/// Index of scene according Unity's indexing.
+	/// </param>
+	/// <param name='playerEnabled'>
+	/// True if player starts being enabled. False if not.
+	/// </param>
+	/// <param name='levelExtent'>
+	/// Level dimensions in world coordinates.
+	/// </param>
+	public void startLevel (int level, bool playerEnabled, Rect levelExtent) {
+		if (level == 0) {
+			Camera.main.cullingMask = 0; // avoid render anything
+			warmUp();
+			loadLevel(getNextLevel());
+			return;
+		}
+			
+		activeLevel = level;
+		// activate/deactivate entire Player game object hierarchy
+		GameObjectTools.setActive(player.gameObject, playerEnabled);
+		// setup the scene components for the current scene
+		setupSceneActors();
+		
+		#if DEBUG
+		if (LevelManager.getGUIContainerSceneOnly() == null)
+			Debug.LogError("Missing " + GUI_CONTAINER_SO_NAME + " game object. Please create it.");
+		#endif
+		
+		// if GUI_container_nd doesn't exist then create it and add minimum required game objects
+		setupGUIContainerNonDestroyable();
+		// configure the parallax properties for a correct scrolling of background and foreground images
+		setParallaxProperties(spawnPosArray[activeLevel].position, levelExtent);
+		
+		// warmUp some managers
+		warmUp();
+		
+		// find IFadeable component since main camera instance changes during scenes
+		OptionQuit.Instance.setFaderFromMainCamera();
+	}
+	
+	private void reloadLevel () {
+		// reset and re spawn every actor status
+		ReloadableManager.Instance.reloadActors();
+		
+		// setup the scene components for the current scene
+		setupSceneActors();
+		
+		// start camera fade out
+		IFadeable fader = Camera.main.GetComponent<CameraFadeable>().getFader();
+		fader.startFading(EnumFadeDirection.FADE_OUT);
+	}
+	
+	private void setupSceneActors () {
+		// set Player spawn position for this level
+		player.locateAt(getPlayerSpawnPosition(activeLevel));
+		
+		// move camera instantaneously to where player spawns
+		Camera.main.GetComponent<PlayerFollowerXY>().enableInstantMoveOneTime();
+		
+		// setup those scripts dependant on LookUpwards
+		player.GetComponent<LookDirections>().setup();
+		// makes the camera to follow the player's Y axis until it lands. Then lock the camera's Y axis
+		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
+		if (lockYscript)
+			lockYscript.enableCorrection();
+	}
+	
+	private void warmUp () {
+		// warm up not GUI dependant elements in case they don't exist yet
+		TouchEventManager.warm();
+		// warm up Pause manager
+		PauseGameManager.warm();
+	}
+	
 	public void loadNextLevel() {
 		resetSpawnPos(activeLevel);
-		int nextLevel = getNextLevel();
-		loadLevel(nextLevel);
+		loadLevel(getNextLevel());
 	}
 	
 	public void loadLevelSelection () {
@@ -116,7 +177,7 @@ public class LevelManager : MonoBehaviour {
 		else
 			activeLevel = level; // update current level index
 		
-		player.toogleEnabled(false); // deactivate to avoid falling in empty scene, it will be restored with StartLevel script
+		GameObjectTools.setActive(player.gameObject, false); // deactivate to avoid falling in empty scene
 		OptionQuit.Instance.reset(); // remove option buttons if on screen
 		guiContainer_so = null; // reset the references of scene only GUI elements container
 		
@@ -135,66 +196,6 @@ public class LevelManager : MonoBehaviour {
 	private int getNextLevel () {
 		// if exceeds max level then return main scene
 		return activeLevel + 1 >= Application.levelCount ? SCENE_MAIN_INDEX : activeLevel + 1;
-	}
-	
-	/// <summary>
-	/// This invoked from StartLevel script which gives the curretn level index.
-	/// It enables the player's game object if playerEnabled is true, load the spawn positions, set the player's position.
-	/// Warm ups some managers, etc.
-	/// </summary>
-	/// <param name='level'>
-	/// Index of scene according Unity's indexing.
-	/// </param>
-	/// <param name='playerEnabled'>
-	/// True if player starts being enabled. False if not.
-	/// </param>
-	/// <param name='levelExtent'>
-	/// Level dimensions in world coordinates.
-	/// </param>
-	public void setupLevel (int level, bool playerEnabled, Rect levelExtent) {
-		if (level == 0) {
-			warmUp();
-			loadLevel(getNextLevel());
-			return;
-		}
-			
-		activeLevel = level;
-		// move camera instantaneously to where player spawns
-		Camera.main.GetComponent<PlayerFollowerXY>().doInstantMoveOneTime();
-		// reset and activate the player's game object
-		player.resetPlayer();
-		player.toogleEnabled(playerEnabled);
-		// setup some scene only scripts in LookUpwards
-		player.GetComponent<LookDirections>().setup();
-		// set Mario spawn position for this level
-		setPlayerSpawnPosition(level);
-		
-		#if DEBUG
-		if (LevelManager.getGUIContainerSceneOnly() == null)
-			Debug.LogError("Missing " + GUI_CONTAINER_SO_NAME + " game object. Please create it.");
-		#endif
-		
-		// if GUI_container_nd doesn't exist then create it and add minimum required game objects
-		setupGUIContainerNonDestroyable();
-		// configure the parallax properties for a correct scrolling of background and foreground images
-		setParallaxProperties(spawnPosArray[activeLevel].position, levelExtent);
-		// makes the camera to follow the player's Y axis until it lands. Then lock the camera's Y axis
-		LockYWhenPlayerLands lockYscript = Camera.main.GetComponent<LockYWhenPlayerLands>();
-		if (lockYscript)
-			lockYscript.enableCorrection();
-		
-		// warmUp some managers
-		warmUp();
-		
-		// find IFadeable component since main camera instance changes during scenes
-		OptionQuit.Instance.setFaderFromMainCamera();
-	}
-	
-	private void warmUp () {
-		// warm up no GUI dependant elements in case they don't exist yet
-		TouchEventManager.warm();
-		// warm up Pause manager
-		PauseGameManager.warm();
 	}
 	
 	public Player getPlayer () {
@@ -220,11 +221,11 @@ public class LevelManager : MonoBehaviour {
 		OptionQuit.Instance.transform.parent = guiContainer_nd.transform;
 	}
 	
-	private void setPlayerSpawnPosition (int level) {
+	private Vector2 getPlayerSpawnPosition (int level) {
 		// if spawn position for current level wasn't already set then set it
 		if (spawnPosArray[level].priority == INVALID_PRIORITY) {
 			// get all SpawnPositionTrigger game objects from the current scene
-			SpawnPositionTrigger[] arr = (SpawnPositionTrigger[])FindObjectsOfType(typeof(SpawnPositionTrigger));
+			SpawnPositionTrigger[] arr = (SpawnPositionTrigger[]) GameObject.FindObjectsOfType(typeof(SpawnPositionTrigger));
 			// no trigger game objects? then use default spawn position
 			if (arr == null || arr.Length == 0) {
 				spawnPosArray[level].priority = 0; // to avoid seeking again for all triggers
@@ -236,8 +237,8 @@ public class LevelManager : MonoBehaviour {
 				spawnPosArray[level] = arr[0].getSpawnPos();
 			}
 		}
-		// set player's spawn position
-		player.locateAt(spawnPosArray[level].position);
+
+		return spawnPosArray[level].position;
 	}
 	
 	/**
@@ -262,15 +263,13 @@ public class LevelManager : MonoBehaviour {
 		
 		if (dieAnim) {
 			// stop main camera animation
-			Camera.main.GetComponent<PlayerFollowerXY>().setEnabled(false);
+			Camera.main.GetComponent<PlayerFollowerXY>().enabled = false;
 			// execute Mario's die animation
 			player.die();
 		}
 		else {
-			// reset mario properties
-			player.resetPlayer();
 			// re load current level
-			loadLevel(activeLevel);
+			reloadLevel();
 		}
 	}
 	

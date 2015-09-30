@@ -1,9 +1,6 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
-public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
+public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall, IReloadable {
 	
 	public bool jumpInLoop = false;
 	public float jumpSpeed = 20f;
@@ -15,7 +12,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	private Jump jump;
 	private Hide _hide;
 	private ChipmunkShape shape;
-
+	private float initialPatrolSpeed;
+	
 	void Awake () {
 		jump = GetComponent<Jump>();
 		bounce = GetComponent<Bounce>();
@@ -23,6 +21,9 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		chase = GetComponent<Chase>();
 		_hide = GetComponent<Hide>();
 		shape = GetComponent<ChipmunkShape>();
+		
+		patrol.setDir(1f); // initialize patrol direction
+		initialPatrolSpeed = patrol.speed;
 	}
 
 	void Start () {
@@ -32,11 +33,13 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 			jump.setForeverJumpSpeed(jumpSpeed);
 		}
 
+		ReloadableManager.Instance.register(this as IReloadable, transform.position);
 		PauseGameManager.Instance.register(this as IPausable, gameObject);
 	}
 
 	void OnDestroy () {
 		PauseGameManager.Instance.remove(this as IPausable);
+		ReloadableManager.Instance.remove(this as IReloadable);
 	}
 	
 	/**
@@ -44,14 +47,8 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	 * a performance hit in android for Chipmunk component.
 	 */
 	private void destroy () {
-		shape.enabled = false; // makes the shape to be removed from the space
-		GameObjectTools.ChipmunkBodyDestroy(GetComponent<ChipmunkBody>());
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(false);
-#else
-		gameObject.SetActiveRecursively(false);
-#endif
-		PauseGameManager.Instance.remove(this as IPausable);
+		//GameObjectTools.ChipmunkBodyDestroy(shape.body, shape);
+		GameObjectTools.setActive(gameObject, false);
 	}
 	
 	public bool DoNotResume {
@@ -92,8 +89,26 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 	}
 	
 	private void stopJumping () {
-		jumpInLoop = false;
 		jump.setForeverJump(false);
+	}
+	
+	public void onReloadLevel (Vector3 spawnPos) {
+		GameObjectTools.setActive(gameObject, true);
+		
+		if (bounce.isBouncing())
+			bounce.stop();
+		patrol.enablePatrol();
+		patrol.setDir(1f); // initialize patrol direction
+		patrol.setMoveSpeed(initialPatrolSpeed);
+		if (_hide.isHidden())
+			_hide.unHide();
+		chase.stop();
+		chase.setOperable(true);
+		if (jump != null)
+			jump.setForeverJump(jumpInLoop);
+		
+		transform.position = spawnPos;
+		shape.body._UpdatedTransform(); // update the body position
 	}
 	
 	public static bool beginCollisionWithPowerUp (ChipmunkArbiter arbiter) {
@@ -133,7 +148,7 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		
 		if (collisionFromAbove) {
 			// if koopa was jumping then stop forever jumping
-			if (koopa.jumpInLoop)
+			if (koopa.jump.isJumping())
 				koopa.stopJumping();
 			// hide the koopa troopa or stop the bouncing of the hidden koopa
 			else if (!koopa._hide.isHidden() || koopa.bounce.isBouncing())
@@ -188,9 +203,9 @@ public class KoopaTroopa : MonoBehaviour, IPausable, IMortalFall {
 		
 		// is koopa1 above the koopa2?
 		if (GameObjectTools.isGrounded(arbiter)) {
-			if (!hidden1 && koopa1.jumpInLoop)
+			if (!hidden1 && koopa1.jump.isJumping())
 				koopa1.jump.forceJump(koopa1.jumpSpeed);
-			else if (hidden1 && koopa2.jumpInLoop)
+			else if (hidden1 && koopa2.jump.isJumping())
 				koopa2.jump.forceJump(koopa1.jumpSpeed);
 			return false; // avoid the collision since this frame
 		}

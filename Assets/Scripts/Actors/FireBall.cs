@@ -1,6 +1,3 @@
-#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-#define UNITY_4_AND_LATER
-#endif
 using UnityEngine;
 
 public class FireBall : MonoBehaviour, IPausable {
@@ -41,14 +38,8 @@ public class FireBall : MonoBehaviour, IPausable {
 	 * Self implementation for destroy since using GamObject.Destroy() has a performance hit in android.
 	 */
 	private void destroy () {
-		shape.enabled = false; // makes the shape to be removed from the space
-		GameObjectTools.ChipmunkBodyDestroy(body);
-#if UNITY_4_AND_LATER
-		gameObject.SetActive(false);
-#else
-		gameObject.SetActiveRecursively(false);
-#endif
-		PauseGameManager.Instance.remove(this as IPausable);
+		GameObjectTools.ChipmunkBodyDestroy(body, shape);
+		GameObjectTools.setActive(gameObject, false);
 	}
 	
 	public bool DoNotResume {
@@ -67,7 +58,7 @@ public class FireBall : MonoBehaviour, IPausable {
 	
 	public void setDir (Vector2 pDir) {
 		dir = pDir;
-		patrol.setNewDir(pDir.x);
+		patrol.setDir(pDir.x);
 	}
 	
 	public void setSpeed (float speed) {

@@ -5,28 +5,23 @@ public class Patrol : MonoBehaviour {
 	public float speed = 6f;
 	
 	private WalkAbs walk;
-	private float dir; // only for direction, must be normalized
-	private bool stop;
+	private float dir = 1f; // default value
 	
 	// Use this for initialization
 	void Awake () {
-		dir = 1f; // initial normalized direction 
 		walk = GetComponent<WalkAbs>();
-		stop = false; // patrolling is enabled
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (stop)
-			return;
 		// always in movement. The only opportunity to stop is when chase action takes place
 		walk.walk(dir * speed);
 	}
 	
 	/**
-	 * Set direction only (expected to be normalized)
+	 * Set direction only. 1f for right, -1f for left.
 	 */
-	public void setNewDir (float pDir) {
+	public void setDir (float pDir) {
 		dir = pDir;
 	}
 	
@@ -39,12 +34,12 @@ public class Patrol : MonoBehaviour {
 	}
 	
 	public void stopPatrol () {
-		stop = true;
+		enabled = false;
 		walk.enabled = false;
 	}
 	
 	public void enablePatrol () {
-		stop = false;
+		enabled = true;
 		walk.enabled = true;
 	}
 	
