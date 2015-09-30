@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
 public class ImmersiveModeEnabler : MonoBehaviour {
-
-	AndroidJavaObject unityActivity;
-	AndroidJavaObject javaObj;
-	AndroidJavaClass javaClass;
-	bool paused;
-	static bool created = false;
+#if UNITY_ANDROID
+	private AndroidJavaObject unityActivity;
+	private AndroidJavaObject javaObj;
+	private AndroidJavaClass javaClass;
+	private bool paused;
+	private static bool created = false;
 
 	void Awake () {
 		if (!Application.isEditor)
@@ -21,7 +21,6 @@ public class ImmersiveModeEnabler : MonoBehaviour {
 	}
 	
 	void HideNavigationBar () {
-		#if UNITY_ANDROID
 		lock(this)
 		{
 			using(javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
@@ -52,7 +51,6 @@ public class ImmersiveModeEnabler : MonoBehaviour {
 				}
 			}
 		}
-		#endif
 	}
 	
 	void OnApplicationPause (bool pausedState) {
@@ -88,5 +86,5 @@ public class ImmersiveModeEnabler : MonoBehaviour {
 			javaObj.CallStatic("DisableAppPin",unityActivity);
 		}
 	}
-
+#endif
 }

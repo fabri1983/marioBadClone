@@ -27,7 +27,11 @@ public class EditorScriptAlphaMeshColliderPreferencesWindow : EditorWindow {
 		
 		// Get existing open window or if none, make a new one:
 		EditorScriptAlphaMeshColliderPreferencesWindow window = EditorWindow.GetWindow<EditorScriptAlphaMeshColliderPreferencesWindow>();
+		#if UNITY_5_0
+		window.titleContent = "Default Values";
+		#else
 		window.title = "Default Values";
+		#endif
     }
 	
 	//-------------------------------------------------------------------------

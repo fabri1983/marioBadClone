@@ -1,6 +1,10 @@
 // Copyright 2013 Howling Moon Software. All rights reserved.
 // See http://chipmunk2d.net/legal.php for more information.
 
+#if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
+#define UNITY_4_AND_LATER
+#endif
+
 using System.Collections.Generic;
 using System.Collections;
 using System.IO;

@@ -59,7 +59,11 @@ public static class Chipmunk {
 		
 		space.gravity = Physics.gravity;
 		space.iterations = Physics.solverIterationCount;
+		#if UNITY_5_0
+		space.collisionSlop = Physics.defaultContactOffset;
+		#else
 		space.collisionSlop = Physics.minPenetrationForPenalty;
+		#endif
 		space.sleepTimeThreshold = 0.5f;
 		
 		return manager;
@@ -120,12 +124,16 @@ public static class Chipmunk {
 	}
 	
 	/// Amount of allowed overlap of physics shapes.
-	/// Is an alias for Physics.minPenetrationForPenalty.
+	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
 	public static float minPenetrationForPenalty {
 		get { return Physics.minPenetrationForPenalty; }
 		set {
 			manager._space.collisionSlop = value;
+			#if UNITY_5_0
+			Physics.defaultContactOffset = value;
+			#else
 			Physics.minPenetrationForPenalty = value;
+			#endif
 		}
 	}
 	

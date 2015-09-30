@@ -35,7 +35,11 @@ public class HairyPlotterAtlasCreator : EditorWindow
     static void Init()
     {
         HairyPlotterAtlasCreator window = (HairyPlotterAtlasCreator)EditorWindow.GetWindow(typeof(HairyPlotterAtlasCreator));
-        window.title = "Atlas Creator";
+		#if UNITY_5_0
+		window.titleContent = "Atlas Creator";
+		#else
+		window.title = "Atlas Creator";
+		#endif
     }
 
     void OnGUI()

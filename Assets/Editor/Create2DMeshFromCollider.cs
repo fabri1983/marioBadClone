@@ -109,7 +109,11 @@ public class Create2DMeshFromCollider : ScriptableWizard
 			GameObject _2d_mesh = new GameObject (gameObjectName);
 			MeshFilter meshFilter = (MeshFilter)_2d_mesh.AddComponent (typeof(MeshFilter));
 			_2d_mesh.AddComponent (typeof(MeshRenderer));
+			#if UNITY_5_0
+			_2d_mesh.GetComponent<MeshRenderer>().shadowCastingMode = Rendering.ShadowCastingMode.Off;
+			#else
 			_2d_mesh.GetComponent<MeshRenderer>().castShadows = false;
+			#endif
 			_2d_mesh.GetComponent<MeshRenderer>().receiveShadows = false;
 			_2d_mesh.GetComponent<MeshRenderer>().sharedMaterial = materialToUse;
 			meshFilter.sharedMesh = mesh;
