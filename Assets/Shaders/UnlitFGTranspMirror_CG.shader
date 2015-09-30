@@ -5,16 +5,19 @@ Properties {
 }
 	
 SubShader {
-    Tags { "IgnoreProjector"="True" "Queue"="Overlay" "RenderType"="Transparent" }
+    Tags { "IgnoreProjector"="True" "Queue"="Overlay" "RenderType"="Transparent" 
+        	"PreviewType"="Plane" "CanUseSpriteAtlas"="False" }
     ZWrite Off
 	Lighting Off
+	Fog { Mode Off }
 	Blend SrcAlpha OneMinusSrcAlpha // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 	
 	Pass {
 		Cull Off // here it solves an issue (donno which issue)
 		
 		CGPROGRAM
-	    #pragma exclude_renderers ps3 xbox360 flash glesdesktop opengl
+		#pragma target 2.0
+	    #pragma exclude_renderers ps3 xbox360 flash glesdesktop d3d11
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
