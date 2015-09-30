@@ -77,29 +77,6 @@ public class ChipmunkPolyShape : ChipmunkShape {
 		}
 	}
 	
-	public void generateVertsAndHull () {
-
-		MeshFilter meshFilter = GetComponent<MeshFilter>();
-		if (meshFilter == null) {
-			
-		} else {
-			Mesh mesh = meshFilter.sharedMesh;
-			if (mesh == null) {
-				this.verts = _verts; // if no mesh then use default verts
-			} else {
-				// copy the current Mesh vertices
-				Vector3[] vertices3 = mesh.vertices;
-				Vector2[] vertices2 = new Vector2[vertices3.Length];
-				for (int i=0, c=vertices3.Length; i < c; ++i)
-					vertices2[i] = (Vector2)vertices3[i];
-				// this force the generation of the hull structure
-				this.verts = vertices2;
-				// we dont need it anymore since is cloned in the set property
-				vertices2 = null;
-			}
-		}
-	}
-	
 	protected override void Awake(){
 		if(_handle != IntPtr.Zero) return;
 		base.Awake();

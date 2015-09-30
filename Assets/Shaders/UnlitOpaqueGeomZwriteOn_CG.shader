@@ -5,16 +5,19 @@ Properties {
 }
 
 SubShader {
-	Tags { "Queue"="Geometry" "IgnoreProjector"="True" "RenderType"="Opaque" }
+	Tags { "Queue"="Geometry" "IgnoreProjector"="True" "RenderType"="Opaque" 
+	    	"PreviewType"="Plane" "CanUseSpriteAtlas"="False" }
 	ZWrite On // is On because some scene game objects are in 3D, so avoiding overlapping with other materials which depends on RenderQueue
 	Lighting Off
+	Fog { Mode Off }
 	Blend Off // The generated color is multiplied by the SrcFactor. The color already on screen is multiplied by DstFactor and the two are added together.
 	
 	Pass {
 		Cull Back
 		
 		CGPROGRAM
-	    #pragma exclude_renderers ps3 xbox360 flash glesdesktop opengl
+		#pragma target 2.0
+	    #pragma exclude_renderers ps3 xbox360 flash glesdesktop d3d11
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag

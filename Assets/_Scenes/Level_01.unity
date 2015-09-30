@@ -74,6 +74,43 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
+--- !u!1 &19397830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 19397831}
+  - 114: {fileID: 19397832}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &19397831
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 19397830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &19397832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 19397830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
 --- !u!1 &42562824
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,43 +274,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1978660288}
---- !u!1 &162648328
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 162648329}
-  - 114: {fileID: 162648330}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &162648329
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 162648328}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &162648330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 162648328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
 --- !u!1 &187950861
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 489379332}
+  - {fileID: 2144975216}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -591,30 +591,6 @@ Mesh:
     m_Extent: {x: .5, y: .1015625, z: 0}
   m_MeshUsageFlags: 0
   m_MeshOptimized: 0
---- !u!21 &489379332
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: FGMirrorMat
-  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &760758876
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +886,7 @@ Transform:
   m_GameObject: {fileID: 1229479150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 155.399994, y: 0, z: 0}
-  m_LocalScale: {x: 364.869995, y: 35.8666992, z: 1}
+  m_LocalScale: {x: 364, y: 35.7999992, z: 1}
   m_Children: []
   m_Father: {fileID: 1492969988}
 --- !u!23 &1229479152
@@ -946,21 +922,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1229479150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53d3ef44e18cf47919936ca67cac8568, type: 1}
+  m_Script: {fileID: 11500000, guid: 345433c2c0cf746128c7f6e5467f88b4, type: 1}
   m_Name: 
   _friction: .699999988
   _elasticity: 0
   _isSensor: 0
   _collisionType: Scenery
-  _collisionGroup: 
+  _collisionGroup: Scenery
   MonoBehaviourName: 
-  _verts:
-  - {x: -.5, y: -.5}
-  - {x: .5, y: -.328125}
-  _hull:
-  - {x: -.5, y: -.5}
-  - {x: .5, y: -.328125}
-  skipHull: 1
+  _center: {x: 0, y: -.409999996}
+  _size: {x: 1, y: .170000002}
   _radius: 0
 --- !u!1 &1238963383
 GameObject:
@@ -1616,3 +1587,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b985018f91f04d34a9ae2ed10dc60e75, type: 1}
   m_Name: 
   priority: 10
+--- !u!21 &2144975216
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FGMirrorMat
+  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}

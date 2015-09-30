@@ -110,4 +110,5 @@ public static partial class ChipmunkBinding {
 	[DllImport(IMPORT)] public static extern IntPtr NewConvexPolyShapeWithVerts(int count, Vector2[] verts);
 	[DllImport(IMPORT)] public static extern void UpdateConvexPolyShapeWithVerts(IntPtr shape, int count, Vector2[] verts);
 	[DllImport(IMPORT)] public static extern void ConstraintSetBodies(IntPtr constraint, IntPtr a, IntPtr b);
+
 }

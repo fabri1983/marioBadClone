@@ -5,9 +5,11 @@ Properties {
 }
 	
 SubShader {
-    Tags { "IgnoreProjector"="True" "Queue"="Background" }
+    Tags { "IgnoreProjector"="True" "Queue"="Background" 
+    		"PreviewType"="Plane" "CanUseSpriteAtlas"="False" }
     ZWrite Off
 	Lighting Off
+	Fog { Mode Off }
 	Blend Off
 	
     Pass {
