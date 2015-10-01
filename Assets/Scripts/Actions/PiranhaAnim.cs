@@ -12,10 +12,10 @@ public class PiranhaAnim : MonoBehaviour {
 	void Start () {
 		
 		// piranha fire doesn't have renderer, so search down in his children
-		if (gameObject.renderer == null)
-			top = transform.FindChild("PiranhaFire00").renderer.bounds.size.y;
+		if (gameObject.GetComponent<Renderer>() == null)
+			top = transform.FindChild("PiranhaFire00").GetComponent<Renderer>().bounds.size.y;
 		else
-			top = renderer.bounds.size.y;
+			top = GetComponent<Renderer>().bounds.size.y;
 		bottom = 0f;
 		goingDown = true;
 		idle = false;

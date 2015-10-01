@@ -33,7 +33,7 @@ public class GUIParallax : MonoBehaviour {
 			return;
 		
 		// setup shader: correct tiling
-		renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
+		GetComponent<Renderer>().sharedMaterial.SetTextureScale("_MainTex", tiling);
 		
 		// set current camera position
 		Vector2 camPos = Camera.main.transform.position;
@@ -44,7 +44,7 @@ public class GUIParallax : MonoBehaviour {
 #if UNITY_EDITOR
 		// when not in Editor Play Mode: restore offset
 		if (!Application.isPlaying && guiElem.texture != null)
-			renderer.sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
+			GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", Vector2.zero);
 #endif
 	}
 	
@@ -52,7 +52,7 @@ public class GUIParallax : MonoBehaviour {
 #if UNITY_EDITOR
 		// when not in Editor Play Mode: update in case any change from Inspector
 		if (!Application.isPlaying && guiElem.texture != null)
-			renderer.sharedMaterial.SetTextureScale("_MainTex", tiling);
+			GetComponent<Renderer>().sharedMaterial.SetTextureScale("_MainTex", tiling);
 #endif
 		updateOffset();
 	}
@@ -85,7 +85,7 @@ public class GUIParallax : MonoBehaviour {
 				//accumOffset.y = (camPos.y / levelExtent.y);
 			}
 			
-			renderer.sharedMaterial.SetTextureOffset("_MainTex", accumOffset * speed);
+			GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", accumOffset * speed);
 		}
 		
 		oldCamPos.Set(camPos.x, camPos.y);

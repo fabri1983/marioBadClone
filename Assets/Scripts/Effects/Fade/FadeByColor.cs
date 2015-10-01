@@ -21,7 +21,7 @@ public class FadeByColor : MonoBehaviour, IFadeable, IGUIScreenLayout {
 	private Material fadeMat;
 	
 	void Awake () {
-		fadeMat = renderer.sharedMaterial;
+		fadeMat = GetComponent<Renderer>().sharedMaterial;
 		finishedTransition = false;
 		fadeDir = EnumFadeDirection.FADE_NONE;
 		

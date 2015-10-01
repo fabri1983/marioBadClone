@@ -11,11 +11,11 @@ public class RendererOnOffEffect : Effect {
 	public bool invertBehaviour = false;
 	
 	protected override void ownAwake () {
-		renderer.enabled = invertBehaviour ? true : false;
+		GetComponent<Renderer>().enabled = invertBehaviour ? true : false;
 	}
 	
 	protected override void ownStartEffect () {
-		renderer.enabled = invertBehaviour ? false : true;
+		GetComponent<Renderer>().enabled = invertBehaviour ? false : true;
 		
 		// once the component did the effect reset the delay property so it is not delayed when coming back to same option.
 		base.startDelaySecs = 0f;
@@ -25,7 +25,7 @@ public class RendererOnOffEffect : Effect {
 	}
 	
 	protected override void ownEndEffect () {
-		renderer.enabled = invertBehaviour ? true : false;
+		GetComponent<Renderer>().enabled = invertBehaviour ? true : false;
 	}
 	
 	protected override void ownOnDestroy () {
