@@ -830,14 +830,16 @@ public class HairyPlotterEditor : Editor
 
             GUI.color = Color.white;
 
-            if (plotter.renderer && plotter.renderer.sharedMaterial && plotter.renderer.sharedMaterial.mainTexture)
+            Renderer plotterRenderer = plotter.GetComponent<Renderer>();
+            
+            if (plotterRenderer && plotterRenderer.sharedMaterial && plotterRenderer.sharedMaterial.mainTexture)
             {
                 float ratio = (float)uvMarkerTexture.width / (float)uvMarkerTexture.height;
                 float w = 500f;
                 float h = w * (1f / ratio);
                 Rect r = GUILayoutUtility.GetRect(w, h);
 
-                GUI.DrawTexture(r, plotter.renderer.sharedMaterial.mainTexture);
+                GUI.DrawTexture(r, plotterRenderer.sharedMaterial.mainTexture);
 
                 Rect marker = new Rect(r);
 

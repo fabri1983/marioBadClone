@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour {
 			}
 			
 			int i = (int)walkFrame;
-			sprite.renderer.material.mainTexture = walkFrames[i%walkFrames.Length];
+			sprite.GetComponent<Renderer>().material.mainTexture = walkFrames[i%walkFrames.Length];
 		} else {
-			sprite.renderer.material.mainTexture = jumpFrame;
+			sprite.GetComponent<Renderer>().material.mainTexture = jumpFrame;
 		}
 		
 		float velocity = body.velocity.x;
@@ -112,13 +112,13 @@ public class PlayerController : MonoBehaviour {
 	{ 
 		GameObject newClip = new GameObject(clip.name + " Instantiation");
 		newClip.AddComponent(typeof(AudioSource));
-		newClip.audio.clip = clip;
+		newClip.GetComponent<AudioSource>().clip = clip;
 		newClip.transform.position = position;
-		newClip.audio.volume = volume;
-		newClip.audio.pitch = pitch;
-		newClip.audio.Play();
+		newClip.GetComponent<AudioSource>().volume = volume;
+		newClip.GetComponent<AudioSource>().pitch = pitch;
+		newClip.GetComponent<AudioSource>().Play();
 		Object.DontDestroyOnLoad(newClip);
 		Object.Destroy(newClip, clip.length / pitch + 0.2f);
-		return newClip.audio;
+		return newClip.GetComponent<AudioSource>();
 	}
 }

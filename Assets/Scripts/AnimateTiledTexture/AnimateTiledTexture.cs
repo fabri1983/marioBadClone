@@ -45,7 +45,7 @@ public class AnimateTiledTexture : MonoBehaviour
             _voidEventCallbackList = new List<VoidEvent>();
  
         //Create the material instance. Else, just use this function to recalc the texture size
-        ChangeMaterial(renderer.sharedMaterial, _newMaterialInstance);
+        ChangeMaterial(GetComponent<Renderer>().sharedMaterial, _newMaterialInstance);
 		
 		updateTime = Time.time;
 		
@@ -69,7 +69,7 @@ public class AnimateTiledTexture : MonoBehaviour
     private void OnDestroy() {
         // If we wanted new material instances, we need to destroy the material
         if (_hasMaterialInstance) {
-            Object.Destroy(renderer.sharedMaterial);
+            Object.Destroy(GetComponent<Renderer>().sharedMaterial);
             _hasMaterialInstance = false;
         }
     }
@@ -130,6 +130,8 @@ public class AnimateTiledTexture : MonoBehaviour
 
     public void ChangeMaterial(Material newMaterial, bool newInstance = false)
     {
+    	Renderer renderer = GetComponent<Renderer>();
+
         if (newInstance) {
             // First check our material instance, if we already have a material instance
             // and we want to create a new one, we need to clean up the old one
@@ -166,6 +168,7 @@ public class AnimateTiledTexture : MonoBehaviour
         _textureTiling -= _buffer;
 		
 		// Assign the new texture tiling
+		Renderer renderer = GetComponent<Renderer>();
         // old approach:
 		renderer.sharedMaterial.SetTextureScale("_MainTex", _textureTiling);
 		// new approach:
@@ -230,7 +233,7 @@ public class AnimateTiledTexture : MonoBehaviour
 	                HandleCallbacks(_voidEventCallbackList);
 	
 	            if (_disableUponCompletion)
-	                gameObject.renderer.enabled = false;
+	                GetComponent<Renderer>().enabled = false;
 	
 	            _isPlaying = false;
 	        }
@@ -272,9 +275,10 @@ public class AnimateTiledTexture : MonoBehaviour
         offsetTemp.y = y + _offset.y;
  
         // Update the material
-        //old approach:
+        Renderer renderer = GetComponent<Renderer>();
+        // old approach:
 		renderer.sharedMaterial.SetTextureOffset("_MainTex", offsetTemp);
-		//new approach:
+		// new approach:
 		/*renderer.sharedMaterial.SetFloat("_OffsetX", offsetTemp.x);
 		renderer.sharedMaterial.SetFloat("_OffsetY", offsetTemp.y);*/
 		

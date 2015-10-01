@@ -14,7 +14,7 @@ public class GoombaDieAnim : MonoBehaviour, IReloadable {
 	
 	void Start () {
 		ReloadableManager.Instance.register(this as IReloadable, transform.position);
-		sizeY = GetComponentInChildren<AnimateTiledTexture>().renderer.bounds.size.y;
+		sizeY = GetComponentInChildren<AnimateTiledTexture>().GetComponent<Renderer>().bounds.size.y;
 	}
 	
 	void OnDestroy () {

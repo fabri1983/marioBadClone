@@ -26,12 +26,12 @@ public class BrickExplodeAnim : MonoBehaviour {
 			if (rand < 0.3f)
 				rand = 0.3f;
 			if (child.tag.Equals("Left")) {
-		    	child.rigidbody.AddRelativeForce(-explosionPow * rand, explosionPow * rand, 0);
-				child.rigidbody.AddRelativeTorque(0f, -explosionPow, explosionPow);
+		    	child.GetComponent<Rigidbody>().AddRelativeForce(-explosionPow * rand, explosionPow * rand, 0);
+				child.GetComponent<Rigidbody>().AddRelativeTorque(0f, -explosionPow, explosionPow);
 			}
 			else {
-				child.rigidbody.AddRelativeForce(explosionPow * rand, explosionPow * rand, 0);
-				child.rigidbody.AddRelativeTorque(0f, explosionPow, -explosionPow);
+				child.GetComponent<Rigidbody>().AddRelativeForce(explosionPow * rand, explosionPow * rand, 0);
+				child.GetComponent<Rigidbody>().AddRelativeTorque(0f, explosionPow, -explosionPow);
 			}
 		}
 	}

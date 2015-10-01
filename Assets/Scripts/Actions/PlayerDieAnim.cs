@@ -28,7 +28,7 @@ public class PlayerDieAnim : MonoBehaviour {
 		
 		// get original render queue
 		animComp = GetComponentInChildren<AnimateTiledTexture>();
-		origShader = animComp.renderer.sharedMaterial.shader;
+		origShader = animComp.GetComponent<Renderer>().sharedMaterial.shader;
 	}
 	
 	void OnDestroy () {
@@ -60,7 +60,7 @@ public class PlayerDieAnim : MonoBehaviour {
 		
 		// set special shader which will render this game object in front of all layers
 		animComp = GetComponentInChildren<AnimateTiledTexture>();
-		animComp.renderer.sharedMaterial.shader = shaderForDie;
+		animComp.GetComponent<Renderer>().sharedMaterial.shader = shaderForDie;
 
 		// execute a little jump as dying animation
 		GetComponent<ChipmunkShape>().body.velocity = Vector2.zero;
@@ -81,6 +81,6 @@ public class PlayerDieAnim : MonoBehaviour {
 	
 	private void setBackOrigShader () {
 		if (animComp != null)
-			animComp.renderer.sharedMaterial.shader = origShader;
+			animComp.GetComponent<Renderer>().sharedMaterial.shader = origShader;
 	}
 }

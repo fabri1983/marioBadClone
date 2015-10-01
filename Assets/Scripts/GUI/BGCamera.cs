@@ -11,6 +11,7 @@ public class BGCamera : MonoBehaviour, IGUIScreenLayout {
 	}
 	
 	public void updateForGUI () {
+		GUITexture guiTexture = GetComponent<GUITexture>();
 		Rect theRect = guiTexture.pixelInset;
 		theRect.x = 0f;
 		theRect.y =	0f;
