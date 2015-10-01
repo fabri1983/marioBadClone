@@ -102,7 +102,7 @@ public class ChipmunkMenus : ScriptableObject
 		#if IS_UNITY_3
 		Undo.RegisterSceneUndo("add " + typeof(T).Name);
 		#else
-		DestroyObjectImmediate();
+		Undo.RecordObjects(Selection.gameObjects, "add " + typeof(T).Name);
 		#endif
 		
 		foreach(GameObject go in Selection.gameObjects){
@@ -204,10 +204,8 @@ public class ChipmunkEditor : Editor {
 			Undo.RegisterSnapshot();
 		}
 		#else
-		Undo.RecordObject(target);
 		if(Input.GetMouseButtonDown(0)){
-			Undo.RecordObject(target);
-			Undo.RecordObject(target);
+			Undo.RecordObject(target, message);
 		}
 		#endif
 	}

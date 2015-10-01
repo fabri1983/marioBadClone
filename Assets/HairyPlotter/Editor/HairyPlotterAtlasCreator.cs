@@ -42,7 +42,7 @@ public class HairyPlotterAtlasCreator : EditorWindow
 		#if UNITY_3_AND_4
 		window.title = "Atlas Creator";
 		#else
-		window.titleContent = "Atlas Creator";
+		window.titleContent.text = "Atlas Creator";
 		#endif
     }
 
