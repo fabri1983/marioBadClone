@@ -34,7 +34,7 @@ public class EditorScriptAlphaMeshColliderPreferencesWindow : EditorWindow {
 		#if UNITY_3_AND_4
 		window.title = "Default Values";
 		#else
-		window.titleContent = "Default Values";
+		window.titleContent.text = "Default Values";
 		#endif
     }
 	
