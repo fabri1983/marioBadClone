@@ -155,7 +155,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 88771878}
+  - {fileID: 1785061143}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   size: {x: 1, y: 1}
   virtualSize: {x: 0, y: 0}
   sizeAsPixels: 0
-  newMaterialInstance: 0
+  newMaterialInstance: 1
 --- !u!114 &42562831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   baseQueue: 2000
   offset: 1
---- !u!21 &88771878
+--- !u!21 &90546135
 Material:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -239,8 +239,8 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5e152172de8f6ed4c977d59aa5d9355d, type: 1}
-          m_Scale: {x: .129999995, y: 1}
+          m_Texture: {fileID: 2800000, guid: 14bdf1105bf56a5419a41570dd1e1449, type: 1}
+          m_Scale: {x: .460000008, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
     m_Colors:
@@ -317,7 +317,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2144975216}
+  - {fileID: 1237902974}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -635,7 +635,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1255495715}
+  - {fileID: 90546135}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -663,7 +663,7 @@ MonoBehaviour:
   size: {x: 1, y: .449999988}
   virtualSize: {x: 0, y: 0}
   sizeAsPixels: 0
-  newMaterialInstance: 0
+  newMaterialInstance: 1
 --- !u!114 &760758881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,6 +933,30 @@ MonoBehaviour:
   _center: {x: 0, y: -.409999996}
   _size: {x: 1, y: .170000002}
   _radius: 0
+--- !u!21 &1237902974
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FGMirrorMat
+  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1238963383
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,30 +983,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1978660288}
---- !u!21 &1255495715
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: UnlitTranspGeom
-  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 14bdf1105bf56a5419a41570dd1e1449, type: 1}
-          m_Scale: {x: .460000008, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1467958433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,6 +1097,30 @@ Transform:
   - {fileID: 977498190}
   - {fileID: 1492969988}
   m_Father: {fileID: 0}
+--- !u!21 &1785061143
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UnlitTranspGeom
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 5e152172de8f6ed4c977d59aa5d9355d, type: 1}
+          m_Scale: {x: .129999995, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1805898319
 Prefab:
   m_ObjectHideFlags: 0
@@ -1587,27 +1611,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b985018f91f04d34a9ae2ed10dc60e75, type: 1}
   m_Name: 
   priority: 10
---- !u!21 &2144975216
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: FGMirrorMat
-  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
