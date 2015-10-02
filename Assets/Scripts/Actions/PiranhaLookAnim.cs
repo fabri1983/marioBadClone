@@ -74,25 +74,25 @@ public class PiranhaLookAnim : MonoBehaviour {
 	}
 	
 	private static GameObject ActivatePiranhaImage (EnumQuadrant quad, Piranhas piranhas) {
-		piranhas.piranha00.renderer.enabled = false;
-		piranhas.piranha01.renderer.enabled = false;
-		piranhas.piranha11.renderer.enabled = false;
-		piranhas.piranha10.renderer.enabled = false;
+		piranhas.piranha00.GetComponent<Renderer>().enabled = false;
+		piranhas.piranha01.GetComponent<Renderer>().enabled = false;
+		piranhas.piranha11.GetComponent<Renderer>().enabled = false;
+		piranhas.piranha10.GetComponent<Renderer>().enabled = false;
 		
 		if (quad.Equals(EnumQuadrant.QUAD_00)) {
-			piranhas.piranha00.renderer.enabled = true;
+			piranhas.piranha00.GetComponent<Renderer>().enabled = true;
 			return piranhas.piranha00;
 		}
 		else if (quad.Equals(EnumQuadrant.QUAD_01)) {
-			piranhas.piranha01.renderer.enabled = true;
+			piranhas.piranha01.GetComponent<Renderer>().enabled = true;
 			return piranhas.piranha01;
 		}
 		else if (quad.Equals(EnumQuadrant.QUAD_11)) {
-			piranhas.piranha11.renderer.enabled = true;
+			piranhas.piranha11.GetComponent<Renderer>().enabled = true;
 			return piranhas.piranha11;
 		}
 		else if (quad.Equals(EnumQuadrant.QUAD_10)) {
-			piranhas.piranha10.renderer.enabled = true;
+			piranhas.piranha10.GetComponent<Renderer>().enabled = true;
 			return piranhas.piranha10;
 		}
 		

@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour {
 	
 	protected void Awake(){
 		color = Random.Range(0, colors.Length - 3);
-		this.renderer.material.color = colors[color];
+		this.GetComponent<Renderer>().material.color = colors[color];
 		GetComponent<ChipmunkShape>().collisionType = collisionTypes[color];
 	}
 	

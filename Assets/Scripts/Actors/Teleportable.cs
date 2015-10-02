@@ -83,8 +83,8 @@ public class Teleportable : MonoBehaviour, ITeleportable {
 	}
 	
 	public void toogleTargetState (bool val) {
-		if (rigidbody != null)
-			rigidbody.useGravity = val;
+		if (GetComponent<Rigidbody>() != null)
+			GetComponent<Rigidbody>().useGravity = val;
 		// reset jump state
 		if (val) {
 			Jump jump = GetComponent<Jump>();

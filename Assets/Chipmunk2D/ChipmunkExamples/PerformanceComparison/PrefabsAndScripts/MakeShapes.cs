@@ -18,8 +18,8 @@ public class MakeShapes : MonoBehaviour {
 	public BoxCollider spawnHere;
 	
 	private Vector2 RandomPos(){
-		Vector3 min = collider.bounds.min;
-		Vector3 max = collider.bounds.max;
+		Vector3 min = GetComponent<Collider>().bounds.min;
+		Vector3 max = GetComponent<Collider>().bounds.max;
 		return new Vector2(Mathf.Lerp(min.x, max.x, Random.value), Mathf.Lerp(min.y, max.y, Random.value));
 	}
 	

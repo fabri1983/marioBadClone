@@ -40,7 +40,7 @@ public class RuntimeAlphaMeshCollider : MonoBehaviour {
 		this.gameObject.AddComponent<MeshCollider>();
 		
 		if (mUsedTexture == null) {
-			mUsedTexture = (Texture2D) this.renderer.sharedMaterial.mainTexture;
+			mUsedTexture = (Texture2D) this.GetComponent<Renderer>().sharedMaterial.mainTexture;
 		}
 		
 		UpdateMeshCollider();
