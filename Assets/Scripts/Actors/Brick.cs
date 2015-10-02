@@ -14,9 +14,9 @@ public class Brick : MonoBehaviour {
 	void Start () {
 
 		hitCount = maxHits;
-		brickHalfSizeY = gameObject.renderer.bounds.size.y/2f + 1f;
+		brickHalfSizeY = gameObject.GetComponent<Renderer>().bounds.size.y/2f + 1f;
 		// used to check if Mario hit brick from below
-		brickBottomPoint = transform.position.y - (renderer.bounds.size.y / 2);
+		brickBottomPoint = transform.position.y - (GetComponent<Renderer>().bounds.size.y / 2);
 	}
 	
 	void OnCollisionEnter (Collision collision) {
@@ -58,7 +58,7 @@ public class Brick : MonoBehaviour {
 	 */
 	public bool hitFromBelow (Transform t) {
 		
-		float tTopPoint = (t.renderer.bounds.size.y / 2f) + t.transform.position.y;
+		float tTopPoint = (t.GetComponent<Renderer>().bounds.size.y / 2f) + t.transform.position.y;
 		
 		if ((tTopPoint - 0.2f) < brickBottomPoint)
 			return true;
@@ -67,13 +67,13 @@ public class Brick : MonoBehaviour {
 	}
 	
 	private void destroyBrickGracefully () {
-		gameObject.renderer.enabled = false;
+		gameObject.GetComponent<Renderer>().enabled = false;
 		// if no power up attached then destroy it
 		if (GetComponent<PowerUp>() == null)
 			Destroy(this.gameObject, 0.1f);
 		// don't destroy the object to avoid killing the PowerUp instance
 		else {
-			gameObject.collider.enabled = false;
+			gameObject.GetComponent<Collider>().enabled = false;
 			// disable the child ("top" game object)
 			GameObjectTools.setActive(transform.FindChild("BrickTop").gameObject, false);
 		}

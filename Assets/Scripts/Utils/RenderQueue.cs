@@ -14,7 +14,7 @@ public class RenderQueue : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		Material m = renderer.sharedMaterial;
+		Material m = GetComponent<Renderer>().sharedMaterial;
 		if (m)
 			m.renderQueue = (int)baseQueue + offset;
 #if UNITY_EDITOR

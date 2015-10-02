@@ -11,8 +11,8 @@ public class BrickInvisibleTrigger : MonoBehaviour {
 		
 		// when is invisible then needs to only activate bottom trigger
 		if (brickScript.isInvisible) {
-			brickScript.gameObject.collider.enabled = false;
-			brickScript.gameObject.renderer.enabled = false;
+			brickScript.gameObject.GetComponent<Collider>().enabled = false;
+			brickScript.gameObject.GetComponent<Renderer>().enabled = false;
 			GameObjectTools.setActive(transform.parent.FindChild("BrickTop").gameObject, false);
 		}
 		// if not then destroy the bottom trigger

@@ -116,7 +116,7 @@ public class Create2DMeshFromCollider : ScriptableWizard
 			#if UNITY_3_AND_4
 			_2d_mesh.GetComponent<MeshRenderer>().castShadows = false;
 			#else
-			_2d_mesh.GetComponent<MeshRenderer>().shadowCastingMode = Rendering.ShadowCastingMode.Off;
+			_2d_mesh.GetComponent<MeshRenderer>().shadowCastingMode = 0; // Rendering.ShadowCastingMode.Off;
 			#endif
 			_2d_mesh.GetComponent<MeshRenderer>().receiveShadows = false;
 			_2d_mesh.GetComponent<MeshRenderer>().sharedMaterial = materialToUse;

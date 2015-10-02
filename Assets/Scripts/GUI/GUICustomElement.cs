@@ -20,6 +20,8 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 		// register this class with ScreenLayoutManager for screen resize event
 		GUIScreenLayoutManager.Instance.register(this as IGUIScreenLayout);
 		
+		Renderer renderer = GetComponent<Renderer>();
+
 		// currently no atlas usage, so every game object instance has its own material instance
 		if (newMaterialInstance) {
             // create the new material and assign it to the renderer
@@ -59,7 +61,7 @@ public class GUICustomElement : MonoBehaviour, IGUIScreenLayout {
 #if UNITY_EDITOR
 	void Update () {
 		// in case we change the texture this will update the material
-		renderer.sharedMaterial.mainTexture = texture;
+		GetComponent<Renderer>().sharedMaterial.mainTexture = texture;
 		
 		// when not in Editor Play Mode: update in case any change happens from Inspector or IDE
 		if (!Application.isPlaying)
