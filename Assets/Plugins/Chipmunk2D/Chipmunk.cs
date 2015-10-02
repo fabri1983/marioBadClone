@@ -1,3 +1,7 @@
+#if (UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_5 || UNITY_4_6)
+#define UNITY_3_AND_4
+#endif
+
 // Copyright 2013 Howling Moon Software. All rights reserved.
 // See http://chipmunk2d.net/legal.php for more information.
 
@@ -59,7 +63,7 @@ public static class Chipmunk {
 		
 		space.gravity = Physics.gravity;
 		space.iterations = Physics.solverIterationCount;
-		space.collisionSlop = Physics.minPenetrationForPenalty;
+		space.collisionSlop = getDefaultContactOffset();
 		space.sleepTimeThreshold = 0.5f;
 		
 		return manager;
@@ -120,12 +124,12 @@ public static class Chipmunk {
 	}
 	
 	/// Amount of allowed overlap of physics shapes.
-	/// Is an alias for Physics.minPenetrationForPenalty.
+	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
 	public static float minPenetrationForPenalty {
-		get { return Physics.minPenetrationForPenalty; }
+		get { return getDefaultContactOffset(); }
 		set {
 			manager._space.collisionSlop = value;
-			Physics.minPenetrationForPenalty = value;
+			setDefaultContactOffset(value);
 		}
 	}
 	
@@ -163,18 +167,16 @@ public static class Chipmunk {
 	/// Unity doesn't provide notification events for when a transform is modified.
 	/// Unfortunately that means that you need to call this to let Chipmunk know when you modify a transform.
 	public static void UpdatedTransform(GameObject root){
-//		HashSet<ChipmunkBody> bodies = new HashSet<ChipmunkBody>();
+		HashSet<ChipmunkBody> bodies = new HashSet<ChipmunkBody>();
 		
 		foreach(ChipmunkBinding.Base component in root.GetComponentsInChildren<ChipmunkBinding.Base>()){
 			ChipmunkBody affectedBody = component._UpdatedTransform();
-			if (affectedBody != null)
-				affectedBody._RecalculateMass();
-//			if(affectedBody != null) bodies.Add(affectedBody);
+			if(affectedBody != null) bodies.Add(affectedBody);
 		}
 		
 		// Update the mass properties of the bodies.
-//		foreach(ChipmunkBody body in bodies)
-//			body._RecalculateMass();
+		foreach(ChipmunkBody body in bodies)
+			body._RecalculateMass();
 	}
 	
 	//MARK: Nearest Point Query
@@ -246,5 +248,29 @@ public static class Chipmunk {
 	/// Calls SegmentQueryFirst() with all layers and no group.
 	public static ChipmunkShape SegmentQueryFirst(Vector2 start, Vector2 end, out ChipmunkSegmentQueryInfo info){
 		return SegmentQueryFirst(start, end, ~(uint)0, "", out info);
+	}
+
+	/// <summary>
+	/// Gets the amount of allowed overlap of physics shapes.
+	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
+	/// </summary>
+	public static float getDefaultContactOffset () {
+		#if !UNITY_3_AND_4
+		return Physics.defaultContactOffset;
+		#else
+		return Physics.minPenetrationForPenalty; 
+		#endif
+	}
+
+	/// <summary>
+	/// Sets the amount of allowed overlap of physics shapes.
+	/// Is an alias for Physics.minPenetrationForPenalty (Physics.defaultContactOffset in Unity 5+).
+	/// </summary>
+	public static void setDefaultContactOffset (float value) {
+		#if !UNITY_3_AND_4
+		Physics.defaultContactOffset = value;
+		#else
+		Physics.minPenetrationForPenalty = value;
+		#endif
 	}
 }

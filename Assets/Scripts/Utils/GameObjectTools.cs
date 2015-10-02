@@ -14,7 +14,7 @@ static public class GameObjectTools
 	public static float COS_45 = Mathf.Cos(45f);
 	
 	public static void toogleEnableAllScripts (GameObject go, bool enabled) {
-		// gets all MonoBehaviour componenets attached to a game object and updates its enable property
+		// gets all MonoBehaviour components attached to a game object and updates its enable property
 		MonoBehaviour[] monos = go.GetComponents<MonoBehaviour>();
 		for (int i=0, c=monos.Length; i < c; ++i)
 			monos[i].enabled = enabled;
@@ -35,7 +35,7 @@ static public class GameObjectTools
 		go.SetActiveRecursively(val);
 		#endif
 	}
-	
+
 	public static bool isHitFromAbove (float sourceMaxY, ChipmunkBody target, ChipmunkArbiter arbiter) {
 		/// The collision normal is the direction of the surfaces where the two objects collided.
 		/// Keep in mind that the normal points out of the first object and into the second. 
