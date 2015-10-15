@@ -16,6 +16,10 @@ public class ChipmunkPolyShape : ChipmunkShape {
 		new Vector2(-1, 0)
 	};
 
+	#if UNITY_EDITOR
+	public Color gizmoColor = Color.cyan;
+	#endif
+
 	public Vector2[] _verts;
 	public Vector2[] _hull;
 	public float _radius = 0f;
