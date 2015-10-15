@@ -22,9 +22,7 @@ public class PlayerFollowerXY : PlayerFollowerXYConfig, IGUICameraSyncable {
 		// starting position is the Mario's XY position
 		Vector3 thePos = transform.position;
 		thePos.x = lookAtTarget.position.x;
-		thePos.y = lookAtTarget.position.y;
-		if (lockY)
-			 thePos.y += offsetY;
+		thePos.y = lookAtTarget.position.y + (lockY ? offsetY : 0f);
 		transform.position = thePos;
 	}
 

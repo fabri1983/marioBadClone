@@ -19,11 +19,7 @@ public class LockYWhenPlayerOnTarget : MonoBehaviour {
 		player = null;
 		origFollower = null;
 	}
-	
-	/**
-	 * LateUpdate is called after all Update functions have been called.
-	 * Dependant objects might have moved during Update.
-	 */
+
 	void LateUpdate () {
 		float screenPosY = Camera.main.WorldToScreenPoint(player.transform.position).y;
 		float diff = Mathf.Abs(screenPosY - (Screen.height / 2));

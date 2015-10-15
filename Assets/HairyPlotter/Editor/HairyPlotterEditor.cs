@@ -37,7 +37,7 @@ public class HairyPlotterEditor : Editor
     public static readonly Color UvEditedVertexColor = new Color(0, 0, 1, 1);
 
     public static readonly Color TriangleHoverColor = new Color(135f / 255f, 203f / 255f, 255f / 255f, 127f / 255f);
-    public static readonly Color TriangleSelectedColor = new Color(255f / 255f, 0f, 0f, 127f / 255f);
+    public static readonly Color TriangleSelectedColor = new Color(127f / 255f, 0f, 0f, 127f / 255f);
 	
 	public static float GizmoSize = 0.32f;
 	public static bool KeepUVOnVertsMove = true;
