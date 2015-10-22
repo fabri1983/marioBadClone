@@ -3,12 +3,15 @@
 # =============== #
 Temp/
 Library/
+Assembly-CSharp*.csproj
+Assembly-UnityScript*.unityproj
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
 ExportedObj/
 obj/
+bin/
 *.svd
 *.userprefs
 /*.csproj
@@ -33,5 +36,8 @@ Thumbs.db
 # ==== #
 # misc #
 # ==== #
-# ignore the android apk #
 *.apk
+*.orig
+*.sqlsuo
+*_ReSharper.*
+*.log
