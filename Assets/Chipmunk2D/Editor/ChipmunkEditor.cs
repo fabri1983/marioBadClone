@@ -106,10 +106,39 @@ public class ChipmunkMenus : ScriptableObject
 		#endif
 		
 		foreach(GameObject go in Selection.gameObjects){
-			go.AddComponent<T>();
+			if (typeof(T) == typeof(ChipmunkPolyShape))
+				setupPolyshapes(go);
+			else
+				go.AddComponent<T>();
 		}
 	}
-	
+
+	private static void setupPolyshapes (GameObject go) {
+		// take the mesh vertices
+		Vector3[] meshVertices = getMeshVertices(go);
+		// split in several convex polygons
+		List<Vector2[]> convexVects2 = BayazitPolygonDecomposer.ConvexPartition(meshVertices);
+		// add a new ChipmunkPolyShape for every convex polygon
+		for (int i=0,c=convexVects2.Count; i<c; ++i) {
+			Vector2[] vec2arr = convexVects2[i];
+			// for every poly shape component set its vertex[] attribute as the convex vertex[]
+			ChipmunkPolyShape polyShape = go.AddComponent<ChipmunkPolyShape>();
+			polyShape.verts = vec2arr;
+		}
+	}
+
+	private static Vector3[] emptyV3 = new Vector3[]{};
+
+	private static Vector3[] getMeshVertices (GameObject go) {
+		MeshFilter meshFilter = go.GetComponent<MeshFilter>();
+		if (meshFilter != null) {
+			Mesh mesh = meshFilter.sharedMesh;
+			if (mesh != null)
+				return mesh.vertices;
+		}
+		return emptyV3;
+	}
+
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Body", true, 1100)]
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Circle Shape", true, 1120)]
 	[MenuItem (CHIPMUNK_ROOT_MENU + "Add Segment Shape", true, 1121)]

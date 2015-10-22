@@ -11,18 +11,18 @@ public static class KLayers
 	public const int POWER_UP = 11;
 	public const int TELEPORTING = 12;
 	public const int FOR_ENEMY = 13;
-
-
+	
+	
 	public static int onlyIncluding( params int[] layers )
 	{
 		int mask = 0;
 		for( var i = 0; i < layers.Length; i++ )
 			mask |= ( 1 << layers[i] );
-
+		
 		return mask;
 	}
-
-
+	
+	
 	public static int everythingBut( params int[] layers )
 	{
 		return ~onlyIncluding( layers );
