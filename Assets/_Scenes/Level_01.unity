@@ -74,6 +74,30 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
+--- !u!21 &11922940
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UnlitTranspGeom
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 14bdf1105bf56a5419a41570dd1e1449, type: 1}
+          m_Scale: {x: .460000008, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &42562824
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +142,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 1673435111}
+  - {fileID: 1334448873}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -256,7 +280,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 963200435}
+  - {fileID: 1346247527}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -339,30 +363,43 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1698630139}
---- !u!21 &439543366
-Material:
-  serializedVersion: 3
+--- !u!1 &277652728
+GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: UnlitTranspGeom
-  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 14bdf1105bf56a5419a41570dd1e1449, type: 1}
-          m_Scale: {x: .460000008, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 277652729}
+  - 114: {fileID: 277652730}
+  m_Layer: 0
+  m_Name: GUIScreenLayoutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &277652729
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 277652728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &277652730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 277652728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
+  m_Name: 
 --- !u!1 &445703089
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +529,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 439543366}
+  - {fileID: 11922940}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -661,67 +698,6 @@ MonoBehaviour:
   xAsPixels: 0
   yAsPixels: 0
   layout: 2
---- !u!1 &875904479
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 875904480}
-  - 114: {fileID: 875904481}
-  m_Layer: 0
-  m_Name: GUIScreenLayoutManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &875904480
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 875904479}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &875904481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 875904479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd410a40a979c04eaff63f2bd315e64, type: 1}
-  m_Name: 
---- !u!21 &963200435
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: FGMirrorMat
-  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &977498189
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +843,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.356553733, y: -.5}
   - {x: -.355957001, y: -.4140625}
@@ -902,6 +879,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.403320312, y: -.390625}
   - {x: -.385742188, y: -.34375}
@@ -927,6 +905,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.409179688, y: -.3984375}
   - {x: -.409179688, y: -.390625}
@@ -954,6 +933,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.423339814, y: -.40625}
   - {x: -.419921905, y: -.3984375}
@@ -979,6 +959,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.5, y: -.5}
   - {x: -.434570312, y: -.4140625}
@@ -1010,6 +991,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.455078095, y: -.4140625}
   - {x: -.451660186, y: -.3671875}
@@ -1039,6 +1021,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.471191406, y: -.359375}
   - {x: -.466796905, y: -.34375}
@@ -1064,6 +1047,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.490234405, y: -.390625}
   - {x: -.478515595, y: -.359375}
@@ -1089,6 +1073,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.5, y: -.5}
   - {x: -.499904364, y: -.407186955}
@@ -1120,6 +1105,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.490234405, y: -.390625}
   - {x: -.482421905, y: -.3515625}
@@ -1145,6 +1131,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.423339814, y: -.40625}
   - {x: -.420410186, y: -.390625}
@@ -1170,6 +1157,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.333007812, y: -.359375}
   - {x: -.333007812, y: -.3515625}
@@ -1197,6 +1185,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.337402314, y: -.3671875}
   - {x: -.337402314, y: -.359375}
@@ -1224,6 +1213,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.355957001, y: -.4140625}
   - {x: -.353515595, y: -.390625}
@@ -1251,6 +1241,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.328613311, y: -.3515625}
   - {x: -.328613311, y: -.34375}
@@ -1276,6 +1267,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.32421881, y: -.34375}
   - {x: -.32421881, y: -.3359375}
@@ -1301,6 +1293,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: .195659354, y: -.328272313}
   - {x: .197753906, y: -.3203125}
@@ -1328,6 +1321,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: .184082001, y: -.3203125}
   - {x: .185546905, y: -.296875}
@@ -1359,6 +1353,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: .172851607, y: -.328125}
   - {x: .175781295, y: -.3046875}
@@ -1386,6 +1381,7 @@ MonoBehaviour:
   _collisionType: Scenery
   _collisionGroup: 
   MonoBehaviourName: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   _verts:
   - {x: -.319824189, y: -.3359375}
   - {x: -.319824189, y: -.328125}
@@ -1423,6 +1419,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1978660288}
+--- !u!21 &1334448873
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UnlitTranspGeom
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 5e152172de8f6ed4c977d59aa5d9355d, type: 1}
+          m_Scale: {x: .129999995, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+--- !u!21 &1346247527
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FGMirrorMat
+  m_Shader: {fileID: 4800000, guid: 132f52e6ab5833d4dbad4b78ca803307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3c6208a7a9d52344bb191099303d7380, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1467958433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,30 +1591,6 @@ Transform:
   m_Children:
   - {fileID: 2028569808}
   m_Father: {fileID: 1698630139}
---- !u!21 &1673435111
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: UnlitTranspGeom
-  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 5e152172de8f6ed4c977d59aa5d9355d, type: 1}
-          m_Scale: {x: .129999995, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1698630138
 GameObject:
   m_ObjectHideFlags: 0

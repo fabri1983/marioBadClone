@@ -17,7 +17,7 @@ public class ChipmunkPolyShape : ChipmunkShape {
 	};
 
 	#if UNITY_EDITOR
-	public Color gizmoColor = Color.cyan;
+	public Color _gizmoColor = Color.cyan;
 	#endif
 
 	public Vector2[] _verts;
@@ -112,7 +112,7 @@ public class ChipmunkPolyShape : ChipmunkShape {
 	
 #if UNITY_EDITOR
 	protected void OnDrawGizmosSelected(){
-		Gizmos.color = this.gizmoColor;
+		Gizmos.color = _gizmoColor;
 		Gizmos.matrix = transform.localToWorldMatrix;
 		
 		if (_handle == IntPtr.Zero)
