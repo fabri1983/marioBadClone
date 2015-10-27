@@ -1,0 +1,22 @@
+language: objective-c
+osx_image: xcode61
+rvm:
+- 2.1.2
+
+# whitelist branches
+branches:
+  only:
+    - master
+    - dev
+    - marioTheme
+    - metalSlugTheme
+
+install:
+- ./travis/install.sh
+script:
+- ./travis/build.sh
+env:
+  global:
+  - APP_NAME="marioBadClone"
+  - UNITY_PKG_URL="http://download.unity3d.com/download_unity/unity-3.5.7.dmg"
+  #- UNITY_PKG_URL="http://netstorage.unity3d.com/unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg"
