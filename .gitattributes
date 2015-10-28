@@ -1,50 +1,5 @@
-# Apply native OS line-endings on checkout of these files...
-*.boo              text
-*.c                text
-*.cginc            text
-*.config           text
-*.contentproj      text
-*.cpp              text
-*.cs               text
-*.css              text
-*.dae              text
-*.DAE              text
-*.dtd              text
-*.fx               text
-*.glsl             text
-*.h                text
-*.htm              text
-*.html             text
-*.inc              text
-*.ini              text
-*.js               text
-*.JSFL             text
-*.jsfl             text
-*.json             text
-*.log              text
-*.md               text
-*.mel              text
-*.php              text
-*.shader           text
-*.txt              text
-*.TXT              text
-*.xaml             text
-*.xml              text
-*.xsd              text
-.gitattributes     text
-.gitignore         text
-COPYING            text
-INSTALL*           text
-KEYS*              text
-LICENSE*           text
-NEWS*              text
-NOTICE*            text
-README*            text
-TODO*              text
-WHATSNEW*          text
-
 # Apply Unix-style LF line-endings on checkout of these files...
-*.meta             text eol=lf
+#*.meta             text eol=lf
 *.sh               text eol=lf
 *.vspscc           text eol=lf
 .htaccess          text eol=lf
