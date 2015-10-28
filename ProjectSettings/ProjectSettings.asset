@@ -59,8 +59,8 @@ PlayerSettings:
     16:9: 1
     Others: 1
   debugUnloadMode: 0
-  iPhoneBundleIdentifier: org.fabri1983.MarioBadClone
-  iPhoneBundleVersion: 1
+  iPhoneBundleIdentifier: com.Company.ProductName
+  iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 10
   AndroidPreferredInstallLocation: 1
@@ -73,7 +73,7 @@ PlayerSettings:
   CreateWallpaper: 0
   StripUnusedMeshComponents: 1
   iPhoneSdkVersion: 988
-  iPhoneTargetOSVersion: 4
+  iPhoneTargetOSVersion: 22
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
   uIStatusBarHidden: 1
@@ -86,7 +86,7 @@ PlayerSettings:
   iPadHighResPortraitSplashScreen: {fileID: 0}
   iPadLandscapeSplashScreen: {fileID: 0}
   iPadHighResLandscapeSplashScreen: {fileID: 0}
-  AndroidTargetDevice: 1
+  AndroidTargetDevice: 0
   AndroidTargetGraphics: 1
   AndroidSplashScreenScale: 1
   AndroidKeystoreName: 
