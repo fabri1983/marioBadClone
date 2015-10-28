@@ -7,10 +7,8 @@ echo "Attempting to build $project for OS X"
 $unity \
   -batchmode \
   -nographics \
-  -silent-crashes \
-  -logFile $(pwd)/unity.log \
   -projectPath $(pwd) \
-  -buildOSXUniversalPlayer "$(pwd)/build/osx/$project.app" \
+  -buildOSXPlayer "$(pwd)/build/osx/$project.app" \
   -quit
   
 echo "Attempting to build $project for Windows"
@@ -30,7 +28,7 @@ $unity \
   -silent-crashes \
   -logFile $(pwd)/unity.log \
   -projectPath $(pwd) \
-  -buildLinuxUniversalPlayer "$(pwd)/build/linux/$project.exe" \
+  -buildLinux32Player "$(pwd)/build/linux/$project.exe" \
   -quit
 
 echo 'Logs from build'
