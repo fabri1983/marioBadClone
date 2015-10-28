@@ -1,8 +1,8 @@
 #! /bin/sh
 
 echo "Step 1: Downloading from ${UNITY_PKG_URL}"
-# Unity 3.x only:
 unityhome=/Applications/Unity
+# Unity 3.x only:
 if [[ -d "$unityhome" ]]; then
     echo "ERROR: $unityhome already present"
     exit -1
@@ -10,7 +10,6 @@ fi
 curl -o unity.dmg $UNITY_PKG_URL
 # Unity 5.x only:
 #curl -o unity.pkg $UNITY_PKG_URL
-
 
 echo "Step 2: Installing Unity"
 # For Unity 3.x use next:
@@ -28,8 +27,8 @@ if [[ ! -d "$unityhome" ]]; then
     echo "ERROR: $unityhome not present after installation. Something went wrong"
     exit -1
 fi
-unityversion=`grep -A 1 CFBundleVersion "$unityhome"/Unity.app/Contents/Info.plist | grep string | sed -e 's/.*>\(.*\)<\/.*/\1/'`
-echo "Unity $unityversion installed at $unityhome"
-ls $unityhome
 # For Unity 5.x use only next:
 #sudo installer -dumplog -package unity.pkg -target /
+
+unityversion=`grep -A 1 CFBundleVersion "$unityhome"/Unity.app/Contents/Info.plist | grep string | sed -e 's/.*>\(.*\)<\/.*/\1/'`
+echo "Unity $unityversion installed at $unityhome"
