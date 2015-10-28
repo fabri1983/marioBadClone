@@ -11,10 +11,18 @@ branches:
     - marioTheme
     - metalSlugTheme
 
+before_install:
+- chmod +x ./travis/install.sh
+
 install:
 - ./travis/install.sh
+
+before_install:
+- chmod +x ./travis/build.sh
+
 script:
 - ./travis/build.sh
+
 env:
   global:
   - APP_NAME="marioBadClone"
