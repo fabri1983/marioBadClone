@@ -1,5 +1,6 @@
 marioBadClone
 =============
+![Travis](https://travis-ci.org/fabri1983/marioBadClone.svg?branch=dev)
 
 This is a personal project as proof of several concepts for a 2D platform game created in Unity 3.5 targeting ARMv6 Android platforms.
 Currently it uses a lot of Super Mario I sprites, only for testing purposes.
