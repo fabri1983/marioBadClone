@@ -2,12 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 3
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: FadeColorMat
-  m_Shader: {fileID: 4800000, guid: 28981b346591ec448a9d0820d44490ab, type: 1}
+  m_Shader: {fileID: 4800000, guid: 28981b346591ec448a9d0820d44490ab, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 4010
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
