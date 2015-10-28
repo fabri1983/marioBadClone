@@ -1,5 +1,7 @@
 language: objective-c
-osx_image: xcode61
+
+osx_image: xcode7.1
+
 rvm:
 - 2.1.2
 
@@ -26,5 +28,7 @@ script:
 env:
   global:
   - APP_NAME="marioBadClone"
+  # Unity 3.5.7
   - UNITY_PKG_URL="http://download.unity3d.com/download_unity/unity-3.5.7.dmg"
+  # Unity 5.x
   #- UNITY_PKG_URL="http://netstorage.unity3d.com/unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg"
