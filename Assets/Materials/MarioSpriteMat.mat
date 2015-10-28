@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MarioSpriteMat
+  m_Shader: {fileID: 4800000, guid: 540e7319dd52d0d4788ba861b904a307, type: 1}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 1f797b91531d50544b5f57e5072202f7, type: 1}
+          m_Scale: {x: .100000001, y: .25}
+          m_Offset: {x: -7.45058071e-10, y: .75}
+    m_Floats:
+      data:
+        first:
+          name: _TilingX
+        second: .100000001
+      data:
+        first:
+          name: _TilingY
+        second: .5
+      data:
+        first:
+          name: _OffsetX
+        second: -7.45058071e-10
+      data:
+        first:
+          name: _OffsetY
+        second: .5
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SetupVec1
+        second: {r: 0, g: 10, b: 2, a: .5}
+      data:
+        first:
+          name: _SetupVec2
+        second: {r: .100000001, g: .5, b: 0, a: 0}

@@ -1,0 +1,2 @@
+-unsafe+
+-define:TOUCH_EVENT_MANAGER_NO_QUADTREE,DEBUG
