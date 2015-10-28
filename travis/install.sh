@@ -1,6 +1,6 @@
 #! /bin/sh
 
-echo 'Downloading from $UNITY_PKG_URL'
+echo "Step 1: Downloading from ${UNITY_PKG_URL}"
 # Unity 3.x only:
 unityhome=/Applications/Unity
 if [[ -d "$unityhome" ]]; then
@@ -12,9 +12,9 @@ curl -o unity.dmg $UNITY_PKG_URL
 #curl -o unity.pkg $UNITY_PKG_URL
 
 
-echo 'Installing Unity.pkg'
+echo "Step 2: Installing Unity"
 # For Unity 3.x use next:
-# install Unity3d automatically from the command line given a dmg file. Resulting file is stored under /Applications/Unity
+# install Unity3d given a dmg file. Resulting file is stored under /Applications/Unity
 dmg=unity.dmg
 tempfoo=`basename $0`
 TMPFILE=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
@@ -29,7 +29,7 @@ if [[ ! -d "$unityhome" ]]; then
     exit -1
 fi
 unityversion=`grep -A 1 CFBundleVersion "$unityhome"/Unity.app/Contents/Info.plist | grep string | sed -e 's/.*>\(.*\)<\/.*/\1/'`
-sudo mv "$unityhome" "$unityhome$unityversion"
 echo "Unity $unityversion installed at $unityhome"
+ls $unityhome
 # For Unity 5.x use only next:
 #sudo installer -dumplog -package unity.pkg -target /
