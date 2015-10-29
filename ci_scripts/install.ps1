@@ -68,5 +68,3 @@ RemovePublicUnityProjects
 InstallUnity $InstallExe $InstallPath
 
 RemovePublicUnityProjects
-
-WaitKey
