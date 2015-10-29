@@ -3,9 +3,14 @@ marioBadClone
 ![Travis](https://travis-ci.org/fabri1983/marioBadClone.svg?branch=metalSlugTheme)
 
 This is a personal project as proof of several concepts for a 2D platform game created in Unity 3.5 targeting ARMv6 Android platforms.
-Currently it uses a lot of Super Mario I sprites, only for testing purposes.
-The game is in heavy development phase, only four very small levels playable so far.
+Currently it uses Super Mario I and Metal Slug sprites, only for testing purposes.
+The game is under development, only 1 level playable so far with no more than a background and a floor with proper physics.
+
+It's editable under Unity 3.5.x, Unity 4.x, and Unity 5.x. However, due to some external plugins I use in this project, only 32 bits version of Unity Editor runs the project correctly. So 64bits version of Unity 5.x won't run the game. This is a problem under Mac OS X systems since only 64bits Unity 5.x is available for that platform.
+To affront this, I'm considering migrating the external plugins to C# managed code.
+
 See the section TODO list at the end of this document.
+
 
 Features implemented:
 ---------------------
@@ -20,7 +25,7 @@ Features implemented:
 	It implements a screen Quadtree solution for fast touch event dispatch according the touch screen position.
 	
 - Chipmunk Physics 2D:
-	Using the Unity's binding for Chipmunk Physics API (Howling Moon Software © 2013). This physic API is implemented for many platforms (android, iOS, windows, linux) giving a great solution for future portability of the game.
+	Using the Unity's binding for Chipmunk Physics API (Howling Moon Software © 2013). This physic API is implemented for many platforms (android, iOS, windows, mac osx, linux) giving a great solution for future portability of the game.
 	Also implemented a custom solution for managing Unity's layers and Chipmunk layers.
 	Visit the project's page: http://chipmunk-physics.net/
 	
@@ -47,8 +52,8 @@ Features implemented:
 	Background and foreground components with their respectively shaders. Highly customizable: size, speed, manual or automatic offset, mirroring (handled in the shader).
 	
 - Reload Scene transition:
-	When the scene needs to be re loaded its an in-scene transition.
-	Normally when player loses the scene is reloaded as per Application.LoadLevel(currentScene), which triggers an in-game destroying and re allocation of all the scene components.
+	When the scene needs to be reloaded its an in-scene transition.
+	Normally when player loses, the scene is reloaded using Application.LoadLevel(currentScene), which triggers the destroy event to all game objects and further re allocation of all the scene components when scene is loaded.
 	Instead, it comes the ReloadableManager. Which lets components (listeners) be registered to receive a callback when player loses and scene is reloaded.
 	Each component attends the callback and know how to reset its attributes and locate its transform so the scene seems to be reloaded from scratch.
 	
@@ -69,9 +74,8 @@ Features implemented:
 
 Build and Deployment:
 ---------------------
-Straight forward following Unity's build and run option.
-Note: Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the default used in editor.
-So for example if you want to build and deploy for an Android device with resolution 480x320 you need to set the same resolution in Unity Editor under Window -> Set Custom Game Window option.
+Just do the Unity's build and run option. Select the platform you want to build for. I tested players created for Windows and android. I left iOS, mac osx, and linux.
+Note: Currently the custom GUI System implementation doesn't work correctly when the game is built and deployed in a device with a different resolution than the default used in editor. So for example if you want to build and deploy for an Android device with resolution 480x320 you need to set the same resolution in Unity Editor under Window -> Set Custom Game Window option. That's the kind of problems I found when using custom self implemented systems, in this case the GUI system.
 
 
 TODO list:
@@ -79,10 +83,9 @@ TODO list:
 - Atlas Texture. Integration with current sprite animation solution.
 - Mesh UV displacement instead of material UV. Better performance for batching and draw calls. Reference: Unite 2013 - Optimizing Unity Games for Mobile Platforms.
 - Pool of game objects. Using a pre warming phase to avoid mem allocation during gameplay.
-- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching since seems to be tricky under GLES 2.0.
+- Virtual Textures? will be a nice feature to allow a lot of unique textures. Under researching since seems to be tricky/unpossible under GLES 2.0.
 - 2-channel textures. Interesting article in texture compression from GPU Pro 5 book.
-- Zero mem allocation during gameplay. Has only sense if the game uses too many in-game artifacts. I'm aware I'm executing some new instructions every time the scene is reloaded.
-- Environment effects: rain, lightings, snow accumulation.
+- Zero mem allocation during gameplay.
 
 
 Contact:
