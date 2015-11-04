@@ -1,5 +1,7 @@
 #! /bin/sh
 
+echo $(pwd)
+
 project="$APP_NAME"
 unity=/Applications/Unity/Unity.app/Contents/MacOS/Unity
 
