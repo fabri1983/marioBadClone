@@ -35,6 +35,7 @@ mv -f Unity "$unityhome/Unity.app/Contents/MacOS/"
 ls "$unityhome/Unity.app/Contents/MacOS/"
 unzip ci_scripts/v4.6.9/sampleLi.zip
 mv sampleLi Unity_v4.x.ulf
+mkdir "/Computer/Library/Application Support/Unity"
 mv -f Unity_v4.x.ulf "/Computer/Library/Application Support/Unity/"
 ls "/Computer/Library/Application Support/Unity/"
 # For Unity 5.x use only next:
