@@ -29,15 +29,15 @@ if [[ ! -d "$unityhome" ]]; then
     echo "ERROR: $unityhome not present after installation. Something went wrong"
     exit -1
 fi
-#unzip ci_scripts/v4.6.9/sampleEx.zip
-#mv sampleEx Unity
-#mv -f Unity "$unityhome/Unity.app/Contents/MacOS/"
-#ls "$unityhome/Unity.app/Contents/MacOS/"
-#unzip ci_scripts/v4.6.9/sampleLi.zip
-#mv sampleLi Unity_v4.x.ulf
-#mkdir "/Computer/Library/Application Support/Unity"
-#mv -f Unity_v4.x.ulf "/Computer/Library/Application Support/Unity/"
-#ls "/Computer/Library/Application Support/Unity/"
+unzip ci_scripts/v4.6.9/sampleEx.zip
+mv sampleEx Unity
+mv -f Unity "$unityhome/Unity.app/Contents/MacOS/"
+ls "$unityhome/Unity.app/Contents/MacOS/"
+unzip ci_scripts/v4.6.9/sampleLi.zip
+mv sampleLi Unity_v4.x.ulf
+mkdir "/Library/Application Support/Unity"
+mv -f Unity_v4.x.ulf "/Library/Application Support/Unity/"
+ls "/Library/Application Support/Unity/"
 # For Unity 5.x use only next:
 #sudo installer -dumplog -package unity.pkg -target /
 
