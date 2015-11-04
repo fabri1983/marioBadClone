@@ -32,6 +32,7 @@ fi
 unzip ci_scripts/v4.6.3/sampleEx.zip
 mv sampleEx Unity
 mv -f Unity "$unityhome/Unity.app/Contents/MacOS/"
+chmod +x "$unityhome/Unity.app/Contents/MacOS/Unity"
 ls "$unityhome/Unity.app/Contents/MacOS/"
 unzip ci_scripts/v4.6.3/sampleLi.zip
 mv sampleLi Unity_v4.x.ulf
