@@ -28,7 +28,7 @@ script:
 env:
   global:
   - APP_NAME="marioBadClone"
-  # Unity 3.5.7 o 4.6.8
+  # Unity 3.5.7 o 4.6.9
   #- UNITY_PKG_URL="http://download.unity3d.com/download_unity/unity-3.5.7.dmg"
   - UNITY_PKG_URL="http://beta.unity3d.com/download/7083239589/unity-4.6.9.dmg"
   # Unity 5.x

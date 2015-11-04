@@ -1,5 +1,17 @@
 #! /bin/sh
 
+echo $(pwd)
+ls
+unzip ci_scripts/v4.6.9/sampleEx.zip
+ls
+mv sampleEx "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
+ls "/Applications/Unity/Unity.app/Contents/MacOS/"
+unzip ci_scripts/v4.6.9/sampleLi.zip
+ls
+mv sampleLi "/Computer/Library/Application Support/Unity/Unity_v4.x.ulf"
+ls "/Computer/Library/Application Support/Unity/"
+exit -1
+
 echo "Step 1: Downloading from ${UNITY_PKG_URL}"
 unityhome=/Applications/Unity
 # Unity 3.x or 4.x only:
