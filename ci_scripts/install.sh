@@ -2,8 +2,10 @@
 
 echo $(pwd)
 
-echo "Step 1: Downloading from ${UNITY_PKG_URL}"
 unityhome=/Applications/Unity
+
+##############################################################
+echo "Step 1: Downloading from ${UNITY_PKG_URL}"
 # Unity 3.x or 4.x only:
 if [[ -d "$unityhome" ]]; then
     echo "ERROR: $unityhome already present"
@@ -13,9 +15,10 @@ curl -o unity.dmg $UNITY_PKG_URL
 # Unity 5.x only:
 #curl -o unity.pkg $UNITY_PKG_URL
 
+##############################################################
 echo "Step 2: Installing Unity"
 # For Unity 3.x or 4.x use next:
-# install Unity3d given a dmg file. Resulting file is stored under /Applications/Unity
+# install Unity3d given a dmg file. Resulting file is stored under $unityhome
 dmg=unity.dmg
 tempfoo=`basename $0`
 TMPFILE=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
@@ -29,6 +32,7 @@ if [[ ! -d "$unityhome" ]]; then
     echo "ERROR: $unityhome not present after installation. Something went wrong"
     exit -1
 fi
+# using license only for Unity 3.x or 4.x
 unzip $FIX_U_PATH/sampleEx.zip
 mv sampleEx Unity
 mv -f Unity $unityhome/Unity.app/Contents/MacOS/
@@ -41,5 +45,6 @@ ls "/Library/Application Support/Unity/"
 # For Unity 5.x use only next:
 #sudo installer -dumplog -package unity.pkg -target /
 
+##############################################################
 unityversion=`grep -A 1 CFBundleVersion "$unityhome"/Unity.app/Contents/Info.plist | grep string | sed -e 's/.*>\(.*\)<\/.*/\1/'`
 echo "Unity $unityversion installed at $unityhome"
