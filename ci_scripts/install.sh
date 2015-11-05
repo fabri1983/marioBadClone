@@ -39,9 +39,9 @@ if [[ "$INSTALL_UNITY" == "3.x" ]] || [[ "$INSTALL_UNITY" == "4.x" ]]; then
 	    exit -1
 	fi
 	
-	if [[ "$INSTALL_UNITY" == "3.x" ]; then
+	if [[ "$INSTALL_UNITY" == "3.x" ]]; then
 		FIX_U_PATH=ci_scripts/v3.5.7
-	elif [[ "$INSTALL_UNITY" == "4.x" ]; then
+	elif [[ "$INSTALL_UNITY" == "4.x" ]]; then
 		FIX_U_PATH=ci_scripts/v4.6.9
 	fi
 	unzip $FIX_U_PATH/sampleEx.zip
