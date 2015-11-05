@@ -14,13 +14,13 @@ branches:
     - metalSlugTheme
 
 before_install:
-- chmod ugo+x ./ci_scripts/install.sh
+- chmod +x ./ci_scripts/install.sh
 
 install:
 - ./ci_scripts/install.sh
 
 before_script:
-- chmod ugo+x ./ci_scripts/build.sh
+- chmod +x ./ci_scripts/build.sh
 
 script:
 - ./ci_scripts/build.sh
