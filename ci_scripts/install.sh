@@ -1,9 +1,9 @@
-#! /bin/sh
+#! /bin/bash
 
 echo $(pwd)
 
 ##############################################################
-echo "Step 1: Downloading from ${UNITY_PKG_URL}"
+echo "Step 1: Downloading Unity"
 
 if [[ "$INSTALL_UNITY" == "3.x" ]]; then
 	if [[ -d "$UNITY_HOME" ]]; then
@@ -17,12 +17,13 @@ elif [[ "$INSTALL_UNITY" == "4.x" ]]; then
     	exit -1
 	fi
 	curl -o unity.dmg "http://beta.unity3d.com/download/7083239589/unity-4.6.9.dmg"
-elif [[ "$INSTALL_UNITY" == "5.x"]]; then
+elif [[ "$INSTALL_UNITY" == "5.x" ]]; then
 	curl -o unity.pkg "http://netstorage.unity3d.com/unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg"
 fi
 
 ##############################################################
 echo "Step 2: Installing Unity"
+
 if [[ "$INSTALL_UNITY" == "3.x" ]] || [[ "$INSTALL_UNITY" == "4.x" ]]; then
 	dmg=unity.dmg
 	tempfoo=`basename $0`
@@ -38,9 +39,9 @@ if [[ "$INSTALL_UNITY" == "3.x" ]] || [[ "$INSTALL_UNITY" == "4.x" ]]; then
 	    exit -1
 	fi
 	
-	if [[ "$INSTALL_UNITY" == "3.x" ]]; then
+	if [[ "$INSTALL_UNITY" == "3.x" ]; then
 		FIX_U_PATH=ci_scripts/v3.5.7
-	elif [[ "$INSTALL_UNITY" == "4.x" ]]; then
+	elif [[ "$INSTALL_UNITY" == "4.x" ]; then
 		FIX_U_PATH=ci_scripts/v4.6.9
 	fi
 	unzip $FIX_U_PATH/sampleEx.zip
