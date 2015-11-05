@@ -1,6 +1,6 @@
 language: objective-c
 
-osx_image: xcode7.1
+osx_image: xcode7
 
 rvm:
 - 2.1.2
@@ -14,21 +14,23 @@ branches:
     - metalSlugTheme
 
 before_install:
-- chmod +x ./travis/install.sh
+- chmod +x ./ci_scripts/install.sh
 
 install:
-- ./travis/install.sh
+- ./ci_scripts/install.sh
 
 before_script:
-- chmod +x ./travis/build.sh
+- chmod +x ./ci_scripts/build.sh
 
 script:
-- ./travis/build.sh
+- ./ci_scripts/build.sh
 
 env:
   global:
-  - APP_NAME="marioBadClone"
-  # Unity 3.5.7
-  #- UNITY_PKG_URL="http://download.unity3d.com/download_unity/unity-3.5.7.dmg"
-  # Unity 5.x
-  - UNITY_PKG_URL="http://netstorage.unity3d.com/unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg"
+    - APP_NAME="marioBadClone"
+    #- UNITY_PKG_URL="http://download.unity3d.com/download_unity/unity-3.5.7.dmg"
+    #- FIX_U_PATH=ci_scripts/v3.5.7
+    - UNITY_PKG_URL="http://beta.unity3d.com/download/7083239589/unity-4.6.9.dmg"
+    - FIX_U_PATH=ci_scripts/v4.6.9
+    #- UNITY_PKG_URL="http://netstorage.unity3d.com/unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg"
+    #- FIX_U_PATH=.
