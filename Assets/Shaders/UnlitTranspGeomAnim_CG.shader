@@ -22,7 +22,7 @@ Subshader {
 		
 		CGPROGRAM
 		#pragma target 2.0
-		#pragma exclude_renderers ps3 xbox360 flash glesdesktop d3d11
+		#pragma exclude_renderers ps3 xbox360 flash glesdesktop
 		#pragma fragmentoption ARB_precision_hint_fastest
 		#pragma vertex vert
 		#pragma fragment frag
