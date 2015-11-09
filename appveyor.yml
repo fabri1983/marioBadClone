@@ -20,22 +20,23 @@ install:
         $output = "C:\\unity.download.4.6.9\\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
 
-        (new-object System.Net.WebClient).DownloadFile($(url),$(output))
+        (new-object System.Net.WebClient).DownloadFile('$url','$output')
 
-        Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+        Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
       if ( !(Test-Path -Path "C:\\Applications\\Unity4.6.9") ) {
         Write-Output "Installing..."
         $installExec = Start-Process -FilePath .\ci_scripts\install.bat -ArgumentList ('C:\\UnitySetup-4.6.9.exe','C:\\Applications\\Unity4.6.9') -Wait -NoNewWindow -PassThru
         Write-Output "Install exit code: $(($installExec).ExitCode)"
       }
-  - ps: Write-Output "Finished download and installation step"
+      Write-Output "Finished download and installation step"
 
 build_script:
   - cmd: call ci_scripts\build.bat
 
 test_script:
-  - ps: Write-Output "No test scripts"
+  - ps: |
+      Write-Output "No test scripts"
 
 cache:
   - C:\unity.download.4.6.9
