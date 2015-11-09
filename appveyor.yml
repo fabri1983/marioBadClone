@@ -3,10 +3,10 @@ version: '{build}'
 os: Windows Server 2012 R2
 
 environment:
-  APP_NAME: "marioBadClone"
-  INSTALL_UNITY: "4.x"
-  UNITY_HOME: "C:\Applications\Unity"
-  UNITY_BIN_DIR: "C:\Applications\Unity\Editor"
+  APP_NAME:"marioBadClone"
+  INSTALL_UNITY:"4.x"
+  UNITY_HOME:"C:\\Applications\\Unity"
+  UNITY_BIN_DIR:"C:\\Applications\\Unity\Editor"
 
 platform:
   - x86
