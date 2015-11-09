@@ -5,13 +5,12 @@ osx_image: xcode7
 rvm:
 - 2.1.2
 
-# whitelist branches
-branches:
-  only:
-    - master
-    - dev
-    - marioTheme
-    - metalSlugTheme
+env:
+  global:
+    - APP_NAME="marioBadClone"
+    - INSTALL_UNITY="4.x"
+    - UNITY_HOME=/Applications/Unity
+    - UNITY_BIN_DIR=/Applications/Unity/Unity.app/Contents/MacOS
 
 before_install:
 - chmod +x ./ci_scripts/install.sh
@@ -24,10 +23,3 @@ before_script:
 
 script:
 - ./ci_scripts/build.sh
-
-env:
-  global:
-    - APP_NAME="marioBadClone"
-    - INSTALL_UNITY="4.x"
-    - UNITY_HOME=/Applications/Unity
-    - UNITY_BIN_DIR=/Applications/Unity/Unity.app/Contents/MacOS

@@ -4,7 +4,7 @@
 :: - install in standard directory
 ::     install.bat UnitySetup-3.5.7.exe
 :: - install in custom directory
-::     install.bat UnitySetup-3.5.7.exe C:\Apps\Unity3.5.7
+::     install.bat UnitySetup-3.5.7.exe C:\Applications\Unity3.5.7
 
 set installfile=%~f1
 set ipath=%2

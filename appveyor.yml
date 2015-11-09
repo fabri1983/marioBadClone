@@ -1,0 +1,48 @@
+version: '{build}'
+
+os: Windows Server 2012 R2
+
+environment:
+  APP_NAME: "marioBadClone"
+  INSTALL_UNITY: "4.x"
+  UNITY_HOME: "C:\Applications\Unity"
+  UNITY_BIN_DIR: "C:\Applications\Unity\Editor"
+
+platform:
+  - x86
+
+install:
+  - ps: |
+      Write-Output "Current directory is $(Get-Location)"
+      if ( !(Test-Path -Path "C:\\unity.download.4.6.9") ) {
+        Write-Output "Downloading..."
+        $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
+        $output = "C:\\unity.download.4.6.9\\UnitySetup-4.6.9.exe"
+        $start_time = Get-Date
+
+        Import-Module BitsTransfer  
+        Start-BitsTransfer -Source $url -Destination $output  
+        #Start-BitsTransfer -Source $url -Destination -Asynchronous
+
+        $total_time = $((Get-Date).Subtract($start_time).Seconds)
+        Write-Output "Time taken: $(total_time) second(s)"
+      }
+      if ( !(Test-Path -Path "C:\\Applications\\Unity4.6.9") ) {
+        Write-Output "Installing..."
+        $installExec = Start-Process -FilePath .\ci_scripts\install.bat -ArgumentList ('C:\\UnitySetup-4.6.9.exe','C:\\Applications\\Unity4.6.9') -Wait -WindowStyle
+        Write-Output "Install exit code: ($installExec.ExitCode)"
+      }
+  - cmd: echo "Finished download and installation step"
+
+build_script:
+  - cmd: call ci_scripts\build.bat
+
+test_script:
+  - cmd: echo "No test scripts"
+
+cache:
+  - C:\unity.download.4.6.9
+  - C:\Applications\Unity4.6.9
+
+notifications:
+  email: false
