@@ -13,7 +13,7 @@ platform:
 
 install:
   - ps: |
-      Write-Output "Current directory is $(Get-Location)""
+      Write-Output "Current directory is $(Get-Location)"
       if ( !(Test-Path -Path "C:\unity.download.4.6.9") ) {
         Write-Output "Downloading..."
         $start_time = Get-Date
