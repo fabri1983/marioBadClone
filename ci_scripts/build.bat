@@ -3,14 +3,14 @@
 :: USERPROFILE is user's hOME environment variable
 echo %USERPROFILE%
 
-set PROJECT_PATH="C:\projects\mariobadclone"
-set WIN32_PATH="%PROJECT_PATH%\build\win32\%APP_NAME%.exe"
-set OSX32_PATH="%PROJECT_PATH%\build\osx\%APP_NAME%.app"
-set LINUX32_PATH="%PROJECT_PATH%\build\linux\%APP_NAME%.app"
+set PROJECT_PATH=C:\projects\mariobadclone
+set WIN32_PATH=%PROJECT_PATH%\build\win32\%APP_NAME%.exe
+set OSX32_PATH=%PROJECT_PATH%\build\osx\%APP_NAME%.app
+set LINUX32_PATH=%PROJECT_PATH%\build\linux\%APP_NAME%.app
 
 :: Common options
 set PROJECT=-projectPath 
-set BUILD_PARAMS="-batchmode -quit -nographics -silent-crashes"
+set BUILD_PARAMS=-batchmode -quit -nographics -silent-crashes
 
 :: Builds:
 set WIN32=-buildWindowsPlayer %WIN32_PATH%
