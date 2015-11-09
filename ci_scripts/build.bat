@@ -3,10 +3,10 @@
 :: USERPROFILE is user's hOME environment variable
 echo %USERPROFILE%
 
-set PROJECT_PATH="%USERPROFILE%\Documents\Unity Projects\%APP_NAME%\build"
-set WIN32_PATH="%PROJECT_PATH%\win32\%APP_NAME%.exe"
-set OSX32_PATH="%PROJECT_PATH%\osx\%APP_NAME%.app"
-set LINUX32_PATH="%PROJECT_PATH%\linux\%APP_NAME%.app"
+set PROJECT_PATH="C:\projects\mariobadclone"
+set WIN32_PATH="%PROJECT_PATH%\build\win32\%APP_NAME%.exe"
+set OSX32_PATH="%PROJECT_PATH%\build\osx\%APP_NAME%.app"
+set LINUX32_PATH="%PROJECT_PATH%\build\linux\%APP_NAME%.app"
 
 :: Common options
 set PROJECT=-projectPath 
