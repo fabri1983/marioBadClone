@@ -13,30 +13,28 @@ platform:
 install:
   - ps: |
       Write-Output "Current directory is $(Get-Location)"
-      if ( -Not ( Test-Path "C:\unity.download.4.6.9" ) ) {
-        New-Item -ItemType directory -Path C:\unity.download.4.6.9
-
+      if ( -Not ( Test-Path "C:\UnitySetup-4.6.9.exe" ) ) {
         $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
-        $down_dir = "C:\unity.download.4.6.9\UnitySetup-4.6.9.exe"
+        $down = "C:\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
 
         Write-Output "Downloading..."
         $wc = New-Object System.Net.WebClient
-        $wc.DownloadFile($url, $down_dir)
+        $wc.DownloadFile($url, $down)
         #Import-Module -Name BitsTransfer -Verbose
-        #Start-BitsTransfer -Source $url -Destination $down_dir
+        #Start-BitsTransfer -Source $url -Destination $down
 
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 
         # prints content of directory
-        $items = Get-ChildItem -Path $down_dir
+        $items = Get-ChildItem -Path "C:\"
         foreach ($item in $items) {
           Write-Host $item.Name
         }
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
-        Invoke-Expression install.ps1 "$down_dir" "C:\Applications\Unity"
+        Invoke-Expression install.ps1 $down "C:\Applications\Unity"
         Write-Output "Finished installation step"
       }
 
@@ -48,7 +46,7 @@ test_script:
       Write-Output "No test scripts"
 
 cache:
-  - C:\unity.download.4.6.9
+  - C:\UnitySetup-4.6.9.exe
   - C:\Applications\Unity4.6.9
 
 notifications:
