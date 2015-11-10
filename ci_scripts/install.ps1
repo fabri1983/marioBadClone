@@ -63,13 +63,16 @@ function InstallSample ()
 	Write-Host "Installing sample..."
 
 	$FIX_U_PATH="ci_scripts\v4.6.9"
+	$zipEx="ci_scripts\v4.6.9\sampleEx.zip"
+	$zipLi="ci_scripts\v4.6.9\sampleLi.zip"
 	Add-Type -assembly "system.io.compression.filesystem"
 	
-	[io.compression.zipfile]::ExtractToDirectory($FIX_U_PATH\sampleEx.zip, $FIX_U_PATH)
-	Move-Item sampleEx $UNITY_BIN_DIR\Unity.exe -force
+	[io.compression.zipfile]::ExtractToDirectory($zipEx, $FIX_U_PATH)
+	$moveTo="$UNITY_BIN_DIR\Unity.exe"
+	Move-Item sampleEx $moveTo -force
 	
-	[io.compression.zipfile]::ExtractToDirectory($FIX_U_PATH\sampleLi.zip, $FIX_U_PATH)
-	Move-Item sampleLi C:\ProgramData\Unity\Unity_v4.x.ulf -force
+	[io.compression.zipfile]::ExtractToDirectory($zipLi, $FIX_U_PATH)
+	Move-Item sampleLi "C:\ProgramData\Unity\Unity_v4.x.ulf" -force
 }
 
 RemovePublicUnityProjects
