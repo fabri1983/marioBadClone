@@ -13,7 +13,7 @@ platform:
 install:
   - ps: |
       Write-Output "Current directory is $(Get-Location)"
-      if ( !(Test-Path -Path "C:\unity.download.4.6.9") ) {
+      if ( -Not ( Test-Path "C:\unity.download.4.6.9" ) ) {
         New-Item -ItemType directory -Path C:\unity.download.4.6.9
 
         $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
@@ -28,11 +28,11 @@ install:
 
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
-      if ( !(Test-Path -Path "C:\Applications\Unity4.6.9") ) {
+      if ( -Not ( Test-Path $UNITY_HOME ) ) {
         Write-Output "Installing..."
-        Start-Process -FilePath ".\ci_scripts\install.bat" -ArgumentList ($output,'C:\Applications\Unity4.6.9') -Wait -NoNewWindow
+        Start-Process -FilePath ci_scripts\install.bat -ArgumentList ($output,$UNITY_HOME) -Wait -NoNewWindow -Debug
+        Write-Output "Finished installation step"
       }
-      Write-Output "Finished download and installation step"
 
 build_script:
   - cmd: call ci_scripts\build.bat

@@ -1,5 +1,5 @@
 # A PowerShell script to automate the installation of the specified Unity in a standard location
-# If no parameter i spresent, then Unity will be installed under C:\Applications\Unity$UnityVersion location and $UnityVersion is auto-detected.
+# If no parameter is present, then Unity will be installed under C:\Applications\Unity$UnityVersion location and $UnityVersion is auto-detected.
 # The script also removes Public unity demo projects automatically as it can cause some issues and popup some dialogs, even in silent mode
 # The PowerShell script is wrapped by a BAT file for easy execution
 
@@ -27,8 +27,8 @@ function RemovePublicUnityProjects()
 
 function InstallUnity ([string]$Exe, [string]$UnityHome)
 {
-	# Write-Host "InstallExe: $Exe"
-	# Write-Host "UnityHome: $UnityHome"
+	Write-Host "InstallExe: $Exe"
+	Write-Host "UnityHome: $UnityHome"
 
 	# Arguments check
 	if ( -Not ( $Exe ) ) {
@@ -41,16 +41,12 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 		return
 	}
 
-	# try auto-detecting version from exe properties
+	# try auto-detecting version from exe properties, if no destination folder was provided
 	if ( -Not ( $UnityHome ) ) {
 		Write-Host "Auto-detecting version..."
 		$Version = get-command $Exe | format-list | out-string -stream | % { $null = $_ -match '.*Product:.*Unity (?<x>.*)'; $matches.x }  | sort | gu
 		$UnityHome = "$DEFAULT_APPS_ROOT\Unity$Version"
 	}
-
-	# Debug
-	Write-Host "InstallExe: $Exe"
-	Write-Host "UnityHome: $UnityHome"
 
 	if ( Test-Path $UnityHome ) {
 		Write-Host "$UnityHome directory already present"
@@ -63,17 +59,16 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 	Start-Process $Exe "$Arguments" -Wait
 }
 
-function InstallUnity ([string]$UnityHome)
+function InstallSample ([string]$SampleLi, [string]$SampleLi)
 {
+	Write-Host "Installing sample... $SampleEx  $SampleLi"
+	return
 }
-
-Write-Host "InstallExe: $Exe"
-Write-Host "UnityHome: $UnityHome"
 
 RemovePublicUnityProjects
 
 InstallUnity $InstallExe $InstallPath
 
-InstallFix $InstallPath
-
 RemovePublicUnityProjects
+
+InstallSample "sampleEx" "sampleLi"

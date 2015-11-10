@@ -9,6 +9,6 @@
 set installfile=%~f1
 set ipath=%2
 
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&'%~dpn0.ps1' -InstallExe '%installfile%' -InstallPath '%ipath%'"
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& 'install.ps1' -InstallExe '%installfile%' -InstallPath '%ipath%'"
 :: Note: when running in admin mode, empty arguments + 4 double quotes cause " to be passed instead of empty string ?!
 ::PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File """"%~dpn0.ps1"""" -InstallExe """"%installfile%"""" -InstallPath """"%ipath%"""" ' -Verb RunAs}"
