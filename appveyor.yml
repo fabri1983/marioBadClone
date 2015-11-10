@@ -30,7 +30,7 @@ install:
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
-        Start-Process -FilePath ci_scripts\install.bat -ArgumentList ($output,$UNITY_HOME) -Wait -NoNewWindow -Debug
+        Start-Process -FilePath ci_scripts\install.bat -ArgumentList ($output,'C:\Applications\Unity') -Wait -NoNewWindow -Debug
         Write-Output "Finished installation step"
       }
 
