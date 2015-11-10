@@ -28,12 +28,12 @@ install:
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
-        Invoke-Expression "install.ps1 $down C:\Applications\Unity"
+        Invoke-Expression "ci_scripts\install.ps1 $down C:\Applications\Unity"
         Write-Output "Finished installation step"
       }
 
 build_script:
-  - cmd: echo "call ci_scripts\build.bat"
+  - cmd: call ci_scripts\build.bat
 
 test_script:
   - ps: |
