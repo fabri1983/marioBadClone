@@ -72,3 +72,11 @@ InstallUnity $InstallExe $InstallPath
 RemovePublicUnityProjects
 
 InstallSample "sampleEx" "sampleLi"
+
+# prints content of directory
+$items = Get-ChildItem -Path $InstallPath
+foreach ($item in $items) {
+  if ($item.Attributes -eq "Directory") {
+    Write-Host $item.Name
+  }
+}

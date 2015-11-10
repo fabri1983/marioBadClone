@@ -17,20 +17,28 @@ install:
         New-Item -ItemType directory -Path C:\unity.download.4.6.9
 
         $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
-        $output = "C:\unity.download.4.6.9\UnitySetup-4.6.9.exe"
+        $down_dir = "C:\unity.download.4.6.9\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
 
         Write-Output "Downloading..."
         $wc = New-Object System.Net.WebClient
-        $wc.DownloadFile($url, $output)
+        $wc.DownloadFile($url, $down_dir)
         #Import-Module -Name BitsTransfer -Verbose
-        #Start-BitsTransfer -Source $url -Destination $output
+        #Start-BitsTransfer -Source $url -Destination $down_dir
 
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+
+        # prints content of directory
+        $items = Get-ChildItem -Path $down_dir
+        foreach ($item in $items) {
+          if ($item.Attributes -eq "Directory") {
+            Write-Host $item.Name
+          }
+        }
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
-        Start-Process -FilePath ci_scripts\install.bat -ArgumentList ($output,'C:\Applications\Unity') -Wait -NoNewWindow -Debug
+        invoke-expression install.ps1 $down_dir "C:\Applications\Unity"
         Write-Output "Finished installation step"
       }
 
