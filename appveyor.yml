@@ -23,8 +23,8 @@ install:
         #$wc = New-Object System.Net.WebClient
         #$wc.DownloadFile($url, $output)
 
-        Import-Module BitsTransfer
-        Start-BitsTransfer -Source $url -Destination $output -Asynchronous
+        Import-Module -Name BitsTransfer -MinimumVersion 1.0.0.0 -Verbose
+        Start-BitsTransfer -Source $url -Destination $output
 
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
