@@ -25,21 +25,15 @@ install:
         #Start-BitsTransfer -Source $url -Destination $down
 
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-
-        # prints content of directory
-        $items = Get-ChildItem -Path "C:\"
-        foreach ($item in $items) {
-          Write-Host $item.Name
-        }
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
-        Invoke-Expression install.ps1 $down "C:\Applications\Unity"
+        Invoke-Expression "install.ps1 $down C:\Applications\Unity"
         Write-Output "Finished installation step"
       }
 
 build_script:
-  - cmd: call ci_scripts\build.bat
+  - cmd: echo "call ci_scripts\build.bat"
 
 test_script:
   - ps: |
@@ -47,7 +41,7 @@ test_script:
 
 cache:
   - C:\UnitySetup-4.6.9.exe
-  - C:\Applications\Unity4.6.9
+  - C:\Applications\Unity
 
 notifications:
   email: false
