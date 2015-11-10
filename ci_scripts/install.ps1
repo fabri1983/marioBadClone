@@ -67,6 +67,9 @@ function InstallUnity ([string]$UnityHome)
 {
 }
 
+Write-Host "InstallExe: $Exe"
+Write-Host "UnityHome: $UnityHome"
+
 RemovePublicUnityProjects
 
 InstallUnity $InstallExe $InstallPath
