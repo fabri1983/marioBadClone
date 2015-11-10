@@ -17,13 +17,12 @@ install:
         $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
         $down = "C:\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
-
-        Write-Output "Downloading..."
+        Write-Output "Downloading $url ..."
         $wc = New-Object System.Net.WebClient
         $wc.DownloadFile($url, $down)
+        # Other better option with progress bar
         #Import-Module -Name BitsTransfer -Verbose
         #Start-BitsTransfer -Source $url -Destination $down
-
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {

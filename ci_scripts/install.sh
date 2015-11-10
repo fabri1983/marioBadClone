@@ -44,8 +44,8 @@ if [[ "$INSTALL_UNITY" == "3.x" ]] || [[ "$INSTALL_UNITY" == "4.x" ]]; then
 	elif [[ "$INSTALL_UNITY" == "4.x" ]]; then
 		FIX_U_PATH=ci_scripts/v4.6.9
 	fi
-	unzip $FIX_U_PATH/sampleEx.zip
-	mv sampleEx Unity
+	unzip $FIX_U_PATH/sampleAp.zip
+	mv sampleAp Unity
 	mv -f Unity $UNITY_BIN_DIR/
 	chmod +x $UNITY_BIN_DIR/Unity
 	unzip $FIX_U_PATH/sampleLi.zip

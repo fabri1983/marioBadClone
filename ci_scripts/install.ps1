@@ -58,21 +58,29 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 	}
 }
 
-function InstallSample ([string]$SampleEx, [string]$SampleLi)
+function InstallSample ()
 {
-	Write-Host "Installing sample... $SampleEx  $SampleLi"
-	return
+	Write-Host "Installing sample..."
+
+	$FIX_U_PATH="ci_scripts\v4.6.9"
+	Add-Type -assembly "system.io.compression.filesystem"
+	
+	[io.compression.zipfile]::ExtractToDirectory($FIX_U_PATH\sampleEx.zip, $FIX_U_PATH)
+	Move-Item sampleEx $UNITY_BIN_DIR\Unity.exe -force
+	
+	[io.compression.zipfile]::ExtractToDirectory($FIX_U_PATH\sampleLi.zip, $FIX_U_PATH)
+	Move-Item sampleLi C:\ProgramData\Unity\Unity_v4.x.ulf -force
 }
 
 RemovePublicUnityProjects
 
-InstallUnity $InstallExe $InstallPath
+#InstallUnity $InstallExe $InstallPath
 
 RemovePublicUnityProjects
 
-InstallSample "sampleEx" "sampleLi"
+InstallSample
 
-# prints content of directory
+# prints content of Unity install directory
 #$items = Get-ChildItem -Path $InstallPath
 #foreach ($item in $items) {
 #  Write-Host $item.Name
