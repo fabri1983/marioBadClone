@@ -1,7 +1,6 @@
 # A PowerShell script to automate the installation of the specified Unity in a standard location
-# If no parameter is present, then Unity will be installed under C:\Applications\Unity$UnityVersion location and $UnityVersion is auto-detected.
+# If no InstallPath parameter is present, then Unity will be installed under C:\Applications\Unity$UnityVersion location where $UnityVersion is auto-detected.
 # The script also removes Public unity demo projects automatically as it can cause some issues and popup some dialogs, even in silent mode
-# The PowerShell script is wrapped by a BAT file for easy execution
 
 param([string]$InstallExe, [string]$InstallPath="")
 
@@ -59,7 +58,7 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 	Start-Process $Exe "$Arguments" -Wait
 }
 
-function InstallSample ([string]$SampleLi, [string]$SampleLi)
+function InstallSample ([string]$SampleEx, [string]$SampleLi)
 {
 	Write-Host "Installing sample... $SampleEx  $SampleLi"
 	return
