@@ -16,10 +16,16 @@ install:
       Write-Output "Current directory is $(Get-Location)"
       if ( !(Test-Path -Path "C:\unity.download.4.6.9") ) {
         Write-Output "Downloading..."
+        $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
+        $output = "C:\unity.download.4.6.9\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
-        (new-object System.Net.WebClient).DownloadFile(
-          "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe",
-          "C:\unity.download.4.6.9\UnitySetup-4.6.9.exe")
+
+        #$wc = New-Object System.Net.WebClient
+        #$wc.DownloadFile($url, $output)
+
+        Import-Module BitsTransfer
+        Start-BitsTransfer -Source $url -Destination $output -Asynchronous
+
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
       if ( !(Test-Path -Path "C:\Applications\Unity4.6.9") ) {
