@@ -13,17 +13,16 @@ platform:
 
 install:
   - ps: |
-      Set-ExecutionPolicy Unrestricted
       Write-Output "Current directory is $(Get-Location)"
       if ( !(Test-Path -Path "C:\unity.download.4.6.9") ) {
         Write-Output "Downloading..."
         $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
-        $output = "C:\UnitySetup-4.6.9.exe"
+        $output = "C:\unity.download.4.6.9\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
 
+        New-Item -ItemType directory -Path C:\unity.download.4.6.9
         $wc = New-Object System.Net.WebClient
         $wc.DownloadFile($url, $output)
-
         #Import-Module -Name BitsTransfer -Verbose
         #Start-BitsTransfer -Source $url -Destination $output
 
