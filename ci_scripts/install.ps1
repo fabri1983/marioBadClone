@@ -40,22 +40,22 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 		return
 	}
 
-	# try auto-detecting version from exe properties, if no destination folder was provided
+	# try auto-detecting version from exe properties
+	$Version = get-command $Exe | format-list | out-string -stream | % { $null = $_ -match '.*Product:.*Unity (?<x>.*)'; $matches.x }  | sort | gu
+	Write-Host "version detected from exe is: $Version"
+
+	# if no destination folder was provided then set default one
 	if ( -Not ( $UnityHome ) ) {
-		Write-Host "Auto-detecting version..."
-		$Version = get-command $Exe | format-list | out-string -stream | % { $null = $_ -match '.*Product:.*Unity (?<x>.*)'; $matches.x }  | sort | gu
 		$UnityHome = "$DEFAULT_APPS_ROOT\Unity$Version"
 	}
 
 	if ( Test-Path $UnityHome ) {
 		Write-Host "$UnityHome directory already present"
-		return
 	} else {
 		Write-Host "Proceeding with installation of Unity $Version under $UnityHome"
+		$Arguments="/S /D=$UnityHome"
+		Start-Process $Exe "$Arguments" -Wait
 	}
-
-	$Arguments="/S /D=$UnityHome"
-	Start-Process $Exe "$Arguments" -Wait
 }
 
 function InstallSample ([string]$SampleEx, [string]$SampleLi)
@@ -73,7 +73,7 @@ RemovePublicUnityProjects
 InstallSample "sampleEx" "sampleLi"
 
 # prints content of directory
-$items = Get-ChildItem -Path $InstallPath
-foreach ($item in $items) {
-  Write-Host $item.Name
-}
+#$items = Get-ChildItem -Path $InstallPath
+#foreach ($item in $items) {
+#  Write-Host $item.Name
+#}
