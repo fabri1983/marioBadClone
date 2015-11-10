@@ -28,7 +28,7 @@ install:
 
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
-      if ( -Not ( Test-Path $UNITY_HOME ) ) {
+      if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
         Start-Process -FilePath ci_scripts\install.bat -ArgumentList ($output,$UNITY_HOME) -Wait -NoNewWindow -Debug
         Write-Output "Finished installation step"
