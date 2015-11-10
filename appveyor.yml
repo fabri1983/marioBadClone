@@ -31,14 +31,12 @@ install:
         # prints content of directory
         $items = Get-ChildItem -Path $down_dir
         foreach ($item in $items) {
-          if ($item.Attributes -eq "Directory") {
-            Write-Host $item.Name
-          }
+          Write-Host $item.Name
         }
       }
       if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
         Write-Output "Installing..."
-        invoke-expression install.ps1 $down_dir "C:\Applications\Unity"
+        Invoke-Expression install.ps1 "$down_dir" "C:\Applications\Unity"
         Write-Output "Finished installation step"
       }
 
