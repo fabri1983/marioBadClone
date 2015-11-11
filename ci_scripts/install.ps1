@@ -62,12 +62,17 @@ function InstallSample ()
 {
 	Write-Host "Installing sample..."
 
-	$ScriptPath = $MyInvocation.MyCommand.Path
+	$ScriptPath = $(Get-Location)
 	$FIX_U_PATH="$ScriptPath\v4.6.9"
 
 	$zipEx="$FIX_U_PATH\sampleEx.zip"
 	$zipLi="$FIX_U_PATH\sampleLi.zip"
-	
+
+Write-Host $ScriptPath
+Write-Host $FIX_U_PATH
+Write-Host $zipEx
+Write-Host $zipLib
+
 	Add-Type -assembly "system.io.compression.filesystem"
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipEx, $FIX_U_PATH)
