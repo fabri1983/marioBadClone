@@ -62,9 +62,11 @@ function InstallSample ()
 {
 	Write-Host "Installing sample..."
 
-	$FIX_U_PATH="ci_scripts\v4.6.9"
-	$zipEx="ci_scripts\v4.6.9\sampleEx.zip"
-	$zipLi="ci_scripts\v4.6.9\sampleLi.zip"
+	$ScriptPath = Split-Path $MyInvocation.InvocationName
+	$FIX_U_PATH="$ScriptPath\v4.6.9"
+	
+	$zipEx="$FIX_U_PATH\sampleEx.zip"
+	$zipLi="$FIX_U_PATH\sampleLi.zip"
 	Add-Type -assembly "system.io.compression.filesystem"
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipEx, $FIX_U_PATH)
