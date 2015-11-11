@@ -63,7 +63,7 @@ function InstallSample ()
 	Write-Host "Installing sample..."
 
 	$ScriptPath = $(Get-Location)
-	$FIX_U_PATH="$ScriptPath\v4.6.9"
+	$FIX_U_PATH="$ScriptPath\ci_scripts\v4.6.9"
 
 	$zipEx="$FIX_U_PATH\sampleEx.zip"
 	$zipLi="$FIX_U_PATH\sampleLi.zip"
@@ -85,7 +85,7 @@ Write-Host $zipLib
 
 RemovePublicUnityProjects
 
-#InstallUnity $InstallExe $InstallPath
+InstallUnity $InstallExe $InstallPath
 
 RemovePublicUnityProjects
 
