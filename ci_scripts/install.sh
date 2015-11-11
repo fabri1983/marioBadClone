@@ -49,7 +49,7 @@ if [[ "$INSTALL_UNITY" == "3.x" ]] || [[ "$INSTALL_UNITY" == "4.x" ]]; then
 	mv -f Unity $UNITY_BIN_DIR/
 	chmod +x $UNITY_BIN_DIR/Unity
 	unzip $FIX_U_PATH/sampleLi.zip
-	mv sampleLi Unity_v4.x.ulf
+	mv sampleLi.ulf Unity_v4.x.ulf
 	mv -f Unity_v4.x.ulf "/Library/Application Support/Unity/"
 elif [[ "$INSTALL_UNITY" == "5.x" ]]; then
 	sudo installer -dumplog -package unity.pkg -target /

@@ -66,8 +66,8 @@ function InstallSample ()
 	$FIX_U_PATH="$ScriptPath\ci_scripts\v4.6.9"
 	$zipEx="$FIX_U_PATH\sampleEx.zip"
 	$zipLi="$FIX_U_PATH\sampleLi.zip"
-	$fileEx="$FIX_U_PATH\sampleEx"
-	$fileLi="$FIX_U_PATH\sampleLi"
+	$fileEx="$FIX_U_PATH\sampleEx.exe"
+	$fileLi="$FIX_U_PATH\sampleLi.ulf"
 
 	Add-Type -assembly "system.io.compression.filesystem"
 	
