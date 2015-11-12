@@ -17,7 +17,7 @@
 *.ai               binary
 *.anim             binary
 *.apk              binary
-*.asset            binary
+#*.asset            binary
 *.bin              binary
 *.bmp              binary
 *.BMP              binary
