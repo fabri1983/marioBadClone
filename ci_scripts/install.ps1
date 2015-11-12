@@ -67,7 +67,7 @@ function InstallSample ()
 	$zipEx="$FIX_U_PATH\sampleEx.zip"
 	$zipLi="$FIX_U_PATH\sampleLi.zip"
 	$fileEx="$FIX_U_PATH\sampleEx.exe"
-	$fileLi="$FIX_U_PATH\sampleLi.ulf"
+	$fileLi="$FIX_U_PATH\sampleLi"
 
 	Add-Type -assembly "system.io.compression.filesystem"
 	
