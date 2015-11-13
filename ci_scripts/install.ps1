@@ -76,9 +76,11 @@ function InstallSample ()
 	Move-Item $fileEx $moveExTo -force
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipLi, $FIX_U_PATH)
-	#Win10, Win8, Win7, WinVista : create folder if not exist
+	#Win10, Win8, Win7, WinVista, Windows Server
+	New-Item -ItemType Directory -Force -Path C:\ProgramData\Unity
 	$moveLiTo="C:\ProgramData\Unity\Unity_v4.x.ulf"
-	#WinXP: create folder if not exist
+	#WinXP
+	#New-Item -ItemType Directory -Force -Path C:\Documents and Settings\All Users\Program Data\Unity
 	#$moveLiTo="C:\Documents and Settings\All Users\Program Data\Unity\Unity_v4.x.ulf"
 	Move-Item $fileLi $moveLiTo -force
 }
