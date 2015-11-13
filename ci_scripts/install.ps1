@@ -55,7 +55,7 @@ function InstallSample ()
 	Add-Type -assembly "system.io.compression.filesystem"
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipEx, $FIX_U_PATH)
-	$moveExTo="$UNITY_BIN_DIR\Unity.exe"
+	$moveExTo="$UNITY3D_BIN_DIR\Unity.exe"
 	Move-Item $fileEx $moveExTo -force
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipLi, $FIX_U_PATH)
@@ -85,10 +85,10 @@ if ( -Not ( Test-Path $InstallExe ) ) {
 	Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 }
 
-if ( -Not ( Test-Path $UNITY_HOME ) ) {
+if ( -Not ( Test-Path $UNITY3D_HOME ) ) {
 	Write-Output "Installing..."
 	RemovePublicUnityProjects
-	InstallUnity $InstallExe $UNITY_HOME
+	InstallUnity $InstallExe $UNITY3D_HOME
 	RemovePublicUnityProjects
 	InstallSample
 	Write-Output "Finished installation step"
