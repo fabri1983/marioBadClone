@@ -39,3 +39,6 @@ type %PROJECT_PATH%\unity.log
 ::echo Logs from Linux build
 ::type %PROJECT_PATH%\unity.log
 ::echo. > %PROJECT_PATH%\unity.log
+
+
+::"packages\FAKE.4.3.7\tools\FAKE.exe" build.fsx %1%

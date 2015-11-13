@@ -39,3 +39,6 @@ cat /dev/null >| $(pwd)/unity.log
 #  -projectPath $(pwd) \
 #  -buildLinux32Player "$(pwd)/build/linux/$APP_NAME.app" \
 #  -quit
+
+
+#mono --runtime=v4.0 packages/FAKE.4.3.7/tools/FAKE.exe build.fsx $@
