@@ -5,7 +5,7 @@ os: Windows Server 2012 R2
 environment:
   APP_NAME: 'marioBadClone'
   UNITY_HOME: 'C:\Applications\Unity'
-  UNITY_BIN_DIR: 'C:\Applications\Unity'
+  UNITY_BIN_DIR: 'C:\Applications\Unity\Editor'
 
 platform:
   - x86
@@ -13,9 +13,9 @@ platform:
 install:
   - ps: |
       Write-Output "Current directory is $(Get-Location)"
-      if ( -Not ( Test-Path "C:\UnitySetup-4.6.9.exe" ) ) {
+      $down = "C:\UnitySetup-4.6.9.exe"
+      if ( -Not ( Test-Path $down ) ) {
         $url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
-        $down = "C:\UnitySetup-4.6.9.exe"
         $start_time = Get-Date
         Write-Output "Downloading $url ..."
         $wc = New-Object System.Net.WebClient
@@ -25,9 +25,9 @@ install:
         #Start-BitsTransfer -Source $url -Destination $down
         Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
       }
-      if ( -Not ( Test-Path "C:\Applications\Unity" ) ) {
+      if ( -Not ( Test-Path "C:\Applications\Unity\Editor" ) ) {
         Write-Output "Installing..."
-        Invoke-Expression "ci_scripts\install.ps1 $down C:\Applications\Unity"
+        Invoke-Expression "ci_scripts\install.ps1 $down C:\Applications\Unity\Editor"
         Write-Output "Finished installation step"
       }
 
