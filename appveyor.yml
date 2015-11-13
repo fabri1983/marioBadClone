@@ -4,15 +4,16 @@ os: Windows Server 2012 R2
 
 environment:
   APP_NAME: "marioBadClone"
-  # commented because UNITY_HOME is always null
-  #UNITY_HOME: 'C:\Applications\Unity\Editor'
+  UNITY_HOME: 'C:\Applications\Unity\Editor'
   UNITY_BIN_DIR: 'C:\Applications\Unity\Editor'
 
 platform:
   - x86
 
 install:
-  - ps: Invoke-Expression "ci_scripts\install.ps1"
+  - ps: |
+    $env:UNITY_HOME="C:\Applications\Unity\Editor"
+    Invoke-Expression "ci_scripts\install.ps1"
 
 build_script:
   - cmd: call ci_scripts\build.bat
