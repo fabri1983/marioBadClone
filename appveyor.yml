@@ -23,9 +23,5 @@ test_script:
   - ps: |
       Write-Output "No test scripts"
 
-cache:
-  #- C:\UnitySetup-4.6.9.exe
-  #- C:\Applications\Unity
-
 notifications:
   email: false
