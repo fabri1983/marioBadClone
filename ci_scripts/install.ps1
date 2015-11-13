@@ -1,17 +1,5 @@
 # A PowerShell script to automate the installation of the specified Unity in a standard location
-# If no InstallPath parameter is present, then Unity will be installed under C:\Applications\Unity$UnityVersion location where $UnityVersion is auto-detected.
 # The script also removes Public unity demo projects automatically as it can cause some issues and popup some dialogs, even in silent mode
-
-param([string]$InstallExe, [string]$InstallPath="")
-
-$DEFAULT_APPS_ROOT='C:\Applications'
-
-function WaitKey () {
-	if ( $Host.Name -eq "ConsoleHost" ) {
-		Write-Host "Press any key to continue..."
-		$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
-	}
-}
 
 function RemovePublicUnityProjects()
 {
@@ -31,7 +19,7 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 
 	# Arguments check
 	if ( -Not ( $Exe ) ) {
-		Write-Host "ERROR: InstallExe argument missing"
+		Write-Host "ERROR: Exe argument missing"
 		return
 	}
 
@@ -43,11 +31,6 @@ function InstallUnity ([string]$Exe, [string]$UnityHome)
 	# try auto-detecting version from exe properties
 	$Version = get-command $Exe | format-list | out-string -stream | % { $null = $_ -match '.*Product:.*Unity (?<x>.*)'; $matches.x }  | sort | gu
 	Write-Host "version detected from exe is: $Version"
-
-	# if no destination folder was provided then set default one
-	if ( -Not ( $UnityHome ) ) {
-		$UnityHome = "$DEFAULT_APPS_ROOT\Unity$Version"
-	}
 
 	if ( Test-Path $UnityHome ) {
 		Write-Host "$UnityHome directory already present"
@@ -85,13 +68,31 @@ function InstallSample ()
 	Move-Item $fileLi $moveLiTo -force
 }
 
-RemovePublicUnityProjects
 
-InstallUnity $InstallExe $InstallPath
+Write-Output "Current directory is $(Get-Location)"
 
-RemovePublicUnityProjects
+$InstallExe = "C:\UnitySetup-4.6.9.exe"
 
-InstallSample
+if ( -Not ( Test-Path $InstallExe ) ) {
+	$url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
+	$start_time = Get-Date
+	Write-Output "Downloading $url ..."
+	$wc = New-Object System.Net.WebClient
+	$wc.DownloadFile($url, $InstallExe)
+	# Other better option with progress bar
+	#Import-Module -Name BitsTransfer -Verbose
+	#Start-BitsTransfer -Source $url -Destination $InstallExe
+	Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+}
+
+if ( -Not ( Test-Path $UNITY_HOME ) ) {
+	Write-Output "Installing..."
+	RemovePublicUnityProjects
+	InstallUnity $InstallExe $UNITY_HOME
+	RemovePublicUnityProjects
+	InstallSample
+	Write-Output "Finished installation step"
+}
 
 # prints content of Unity install directory
 #$items = Get-ChildItem -Path $InstallPath
