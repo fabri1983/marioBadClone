@@ -10,7 +10,7 @@ set LINUX32_PATH=%PROJECT_PATH%\build\linux\%APP_NAME%.app
 
 :: Common options
 set PROJECT=-projectPath 
-set BUILD_PARAMS=-batchmode -quit -nographics -silent-crashes
+set BUILD_PARAMS=-batchmode -quit -nographics -silent-crashes -logFile %PROJECT_PATH%\unity.log
 
 :: Builds:
 set WIN32=-buildWindowsPlayer %WIN32_PATH%
@@ -21,13 +21,21 @@ set LINUX32=-buildLinux32Player %LINUX32_PATH%
 echo Running Win Build
 echo %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %WIN32%
 %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %WIN32%
+echo "Logs from Win build"
+type %PROJECT_PATH%\unity.log
+echo. > %PROJECT_PATH%\unity.log
 
 :: OSX32 build
 echo Running OSX Build
 echo %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %OSX32%
 %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %OSX32%
+echo "Logs from OSX build"
+type %PROJECT_PATH%\unity.log
 
 :: Linux build
 ::echo Running Linux Build
 ::echo %UNITY_BIN_DIR%\Unity.exe" %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %LINUX32%
 ::%UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %LINUX32%
+::echo "Logs from Linux build"
+::type %PROJECT_PATH%\unity.log
+::echo. > %PROJECT_PATH%\unity.log
