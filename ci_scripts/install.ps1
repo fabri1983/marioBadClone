@@ -60,10 +60,10 @@ function InstallSample ()
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipLi, $FIX_U_PATH)
 	#Win10, Win8, Win7, WinVista, Windows Server
-	New-Item -ItemType Directory -Force -Path C:\ProgramData\Unity
+	New-Item -ItemType Directory -Force -Path C:\ProgramData\Unity | Out-Null
 	$moveLiTo="C:\ProgramData\Unity\Unity_v4.x.ulf"
 	#WinXP
-	#New-Item -ItemType Directory -Force -Path C:\Documents and Settings\All Users\Program Data\Unity
+	#New-Item -ItemType Directory -Force -Path C:\Documents and Settings\All Users\Program Data\Unity | Out-Null
 	#$moveLiTo="C:\Documents and Settings\All Users\Program Data\Unity\Unity_v4.x.ulf"
 	Move-Item $fileLi $moveLiTo -force
 }
@@ -72,8 +72,8 @@ function InstallSample ()
 Write-Output "Current directory is $(Get-Location)"
 
 $InstallExe = "C:\UnitySetup-4.6.9.exe"
-#$UnityHome=$UNITY_HOME
-$UnityHome="C:\Applications\Unity\Editor"
+$UnityHome=$UNITY_HOME
+#$UnityHome="C:\Applications\Unity\Editor"
 
 if ( -Not ( Test-Path $InstallExe ) ) {
 	$url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
