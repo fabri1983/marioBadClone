@@ -12,8 +12,8 @@ platform:
 
 install:
   - ps: |
-    $env:UNITY_HOME="C:\Applications\Unity\Editor"
-    Invoke-Expression "ci_scripts\install.ps1"
+      $UNITY_HOME="C:\Applications\Unity\Editor"
+      Invoke-Expression "ci_scripts\install.ps1"
 
 build_script:
   - cmd: call ci_scripts\build.bat
