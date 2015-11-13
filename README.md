@@ -1,6 +1,9 @@
 marioBadClone
 =============
-![Travis](https://travis-ci.org/fabri1983/marioBadClone.svg?branch=metalSlugTheme)
+| MacOS platform | Windows platform |
+| -------------- | ---------------- |
+| ![Travis](https://travis-ci.org/fabri1983/marioBadClone.svg?branch=metalSlugTheme) | [![Appveyor](https://ci.appveyor.com/api/projects/status/qw4eowgf89rrgk5v/branch/master?svg=true)](https://ci.appveyor.com/project/fabri1983/marioBadClone/branch/metalSlugTheme) |
+
 
 This is a personal project as proof of several concepts for a 2D platform game created in Unity 3.5 targeting ARMv6 Android platforms.
 Currently it uses Super Mario I and Metal Slug sprites, only for testing purposes.
