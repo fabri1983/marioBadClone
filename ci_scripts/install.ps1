@@ -55,7 +55,7 @@ function InstallSample ()
 	Add-Type -assembly "system.io.compression.filesystem"
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipEx, $FIX_U_PATH)
-	$moveExTo="$UNITY3D_BIN_DIR\Unity.exe"
+	$moveExTo="$UNITY_BIN_DIR\Unity.exe"
 	Move-Item $fileEx $moveExTo -force
 	
 	[io.compression.zipfile]::ExtractToDirectory($zipLi, $FIX_U_PATH)
@@ -72,6 +72,8 @@ function InstallSample ()
 Write-Output "Current directory is $(Get-Location)"
 
 $InstallExe = "C:\UnitySetup-4.6.9.exe"
+#$UnityHome=$UNITY_HOME
+$UnityHome="C:\Applications\Unity\Editor"
 
 if ( -Not ( Test-Path $InstallExe ) ) {
 	$url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
@@ -85,10 +87,10 @@ if ( -Not ( Test-Path $InstallExe ) ) {
 	Write-Output "Downloaded in: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 }
 
-if ( -Not ( Test-Path $UNITY3D_HOME ) ) {
+if ( -Not ( Test-Path $UnityHome ) ) {
 	Write-Output "Installing..."
 	RemovePublicUnityProjects
-	InstallUnity $InstallExe $UNITY3D_HOME
+	InstallUnity $InstallExe $UnityHome
 	RemovePublicUnityProjects
 	InstallSample
 	Write-Output "Finished installation step"
