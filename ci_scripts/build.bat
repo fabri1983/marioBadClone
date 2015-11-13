@@ -21,7 +21,7 @@ set LINUX32=-buildLinux32Player %LINUX32_PATH%
 echo Running Win Build
 echo %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %WIN32%
 %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %WIN32%
-echo "Logs from Win build"
+echo Logs from Win build
 type %PROJECT_PATH%\unity.log
 echo. > %PROJECT_PATH%\unity.log
 
@@ -29,13 +29,13 @@ echo. > %PROJECT_PATH%\unity.log
 echo Running OSX Build
 echo %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %OSX32%
 %UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %OSX32%
-echo "Logs from OSX build"
+echo Logs from OSX build
 type %PROJECT_PATH%\unity.log
 
 :: Linux build
 ::echo Running Linux Build
 ::echo %UNITY_BIN_DIR%\Unity.exe" %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %LINUX32%
 ::%UNITY_BIN_DIR%\Unity.exe %BUILD_PARAMS% %PROJECT% %PROJECT_PATH% %LINUX32%
-::echo "Logs from Linux build"
+::echo Logs from Linux build
 ::type %PROJECT_PATH%\unity.log
 ::echo. > %PROJECT_PATH%\unity.log

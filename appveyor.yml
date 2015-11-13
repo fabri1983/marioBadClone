@@ -12,6 +12,7 @@ platform:
 
 install:
   - ps: |
+      # re defined UNITY_HOME, otherway it is null
       $UNITY_HOME="C:\Applications\Unity\Editor"
       Invoke-Expression "ci_scripts\install.ps1"
 
@@ -23,8 +24,8 @@ test_script:
       Write-Output "No test scripts"
 
 cache:
-  - C:\UnitySetup-4.6.9.exe
-  - C:\Applications\Unity
+  #- C:\UnitySetup-4.6.9.exe
+  #- C:\Applications\Unity
 
 notifications:
   email: false

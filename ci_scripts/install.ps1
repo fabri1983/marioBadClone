@@ -48,7 +48,7 @@ function InstallSample ()
 	$ScriptPath = $(Get-Location)
 	$FIX_U_PATH="$ScriptPath\ci_scripts\v4.6.9"
 	$zipEx="$FIX_U_PATH\sampleEx.zip"
-	$zipLi="$FIX_U_PATH\sampleLi.zip"
+	$zipLi="$FIX_U_PATH\sampleExLi.zip"
 	$fileEx="$FIX_U_PATH\sampleEx"
 	$fileLi="$FIX_U_PATH\sampleLi"
 
