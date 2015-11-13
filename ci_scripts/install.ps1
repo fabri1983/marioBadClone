@@ -73,7 +73,6 @@ Write-Output "Current directory is $(Get-Location)"
 
 $InstallExe = "C:\UnitySetup-4.6.9.exe"
 $UnityHome = "$UNITY_HOME"
-Write-Output $UnityHome
 
 if ( -Not ( Test-Path $InstallExe ) ) {
 	$url = "http://beta.unity3d.com/download/7083239589/UnitySetup-4.6.9.exe"
