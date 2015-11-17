@@ -9,11 +9,10 @@ open System.Linq
 open System.Xml
 open System.Diagnostics
 
-let unity_bin = Environment.GetEnvironmentVariable "UNITY_BIN"
 
 let possibleUnityPaths = [
-    unity_bin
-    @unity_bin
+    "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
+    @"C:\Applications\Unity\Editor\Unity.exe"
 ]
 
 let Exec command args =
