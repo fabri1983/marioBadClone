@@ -14,10 +14,10 @@ assembly_info:
   patch: false
 
 install:
-  #- ps: |
-  #    # re defined UNITY_HOME, otherway it is null
-  #    $UNITY_HOME="C:\Applications\Unity\Editor"
-  #    Invoke-Expression "ci_scripts\install.ps1"
+  - ps: |
+      # re defined UNITY_HOME, otherway it is null
+      $UNITY_HOME="C:\Applications\Unity\Editor"
+      Invoke-Expression "ci_scripts\install.ps1"
   - cmd: |
       call ci_scripts\install_nugget.bat
 

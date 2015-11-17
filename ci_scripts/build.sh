@@ -42,8 +42,8 @@ cat /dev/null >| $(pwd)/unity.log
 
 
 #Exports an Xcode project to Scratch/Xcode
-#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios-player
+#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios-player -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
 #Builds the Xcode project, and exports the ipa file to build/
-#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios
+#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
 #Builds an Android apk to build/
-#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx android
+#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx android -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
