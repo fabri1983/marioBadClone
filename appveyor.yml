@@ -20,6 +20,8 @@ install:
       Invoke-Expression "ci_scripts\install.ps1"
   - cmd: |
       call ci_scripts\install_nugget.bat
+      tree /F Drive:\projects\mariobadclone\packages
+      tree /F Drive:\packages
 
 build_script:
   - cmd: call ci_scripts\build.bat
