@@ -1,5 +1,5 @@
 module BuildHelpers
-#r @"packages/FAKE/tools/FakeLib.dll"
+#r @"../packages/FAKE/tools/FakeLib.dll"
 
 open Fake
 open Fake.MSBuildHelper
@@ -9,17 +9,16 @@ open System.Linq
 open System.Xml
 open System.Diagnostics
 
-let possibleUnityPaths = [
-    "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
-    @"C:\Applications\Unity\Editor\Unity.exe"
-]
+let unity_bin = Environment.GetEnvironmentVariable UNITY_BIN
+
+let possibleUnityPaths = [ unity_bin ]
 
 let Exec command args =
     let result = Shell.Exec(command, args)
     if result <> 0 then failwithf "%s exited with error %d" command result
 
 let RestorePackages solutionFile =
-    Exec ".nuget/NuGet.exe" ("restore \"" + solutionFile + "\"")
+    Exec "NuGet.exe" ("restore \"" + solutionFile + "\"")
 
 let UnityPath =
     (Seq.where(fun p -> File.Exists(p)) possibleUnityPaths).First()
@@ -52,12 +51,3 @@ let ArchiveUnityLog path =
             TeamCityHelper.PublishArtifact path
         else
             Console.WriteLine("Could not find Unity log: " + unityLogPath)
-
-let HockeyPath =
-    if isUnix then "/usr/local/bin/puck" else @"C:\Program Files (x86)\HockeyApp\Hoch.exe"
-
-let HockeyArgs =
-    if isUnix then "-submit=auto -app_id={1} -api_token={2} {0}" else "\"{0}\" /app_id {1} /version {3} /notes \"\""
-
-let Hockey file appId apiToken version =
-    Exec HockeyPath (String.Format(HockeyArgs, file, appId, apiToken, version))
