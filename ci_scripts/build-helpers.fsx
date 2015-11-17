@@ -9,9 +9,12 @@ open System.Linq
 open System.Xml
 open System.Diagnostics
 
-let unity_bin = Environment.GetEnvironmentVariable "UNITY_BIN"
+let unity_bin = Environment.GetEnvironmentVariable UNITY_BIN
 
-let possibleUnityPaths = [ unity_bin ]
+let possibleUnityPaths = [
+    unity_bin
+    @unity_bin
+]
 
 let Exec command args =
     let result = Shell.Exec(command, args)
