@@ -9,11 +9,10 @@ open System.Linq
 open System.Xml
 open System.Diagnostics
 
-
-let possibleUnityPaths = [
-    "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
-    @"C:\Applications\Unity\Editor\Unity.exe"
-]
+let UnityPath = Environment.GetEnvironmentVariable "UNITY_BIN"
+let UnityPath2 = Environment.GetEnvironmentVariable "env.UNITY_BIN"
+Console.WriteLine(">>>>>>>>>>>>>>>>> UnityPath: " + UnityPath)
+Console.WriteLine(">>>>>>>>>>>>>>>>> UnityPath2: " + UnityPath2)
 
 let Exec command args =
     let result = Shell.Exec(command, args)
@@ -22,12 +21,9 @@ let Exec command args =
 let RestorePackages solutionFile =
     Exec "NuGet.exe" ("restore \"" + solutionFile + "\"")
 
-let UnityPath =
-    (Seq.where(fun p -> File.Exists(p)) possibleUnityPaths).First()
-
 let Unity args =
     let fullPath = Path.GetFullPath(".")
-    let result = Shell.Exec(UnityPath, "-quit -batchmode -logFile -projectPath \"" + fullPath + "\" " + args)
+    let result = Shell.Exec(UnityPath, "-batchmode -quit -nographics -silent-crashes -logFile -projectPath \"" + fullPath + "\" " + args)
     if result < 0 then failwithf "Unity exited with error %d" result
 
 let Xcode args =

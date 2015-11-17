@@ -41,5 +41,5 @@ type %PROJECT_PATH%\unity.log
 ::echo. > %PROJECT_PATH%\unity.log
 
 :: Android apk to build\
-"packages\FAKE\tools\Fake.exe" ci_scripts\build.fsx android
+"packages\FAKE\tools\Fake.exe" ci_scripts\build.fsx android -ev env.UNITY_BIN "%UNITY_BIN_DIR%\Unity.exe"
 exit /b %errorlevel%
