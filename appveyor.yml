@@ -18,8 +18,8 @@ install:
       # re defined UNITY_HOME, otherway it is null
       $UNITY_HOME="C:\Applications\Unity\Editor"
       Invoke-Expression "ci_scripts\install.ps1"
-  #- cmd: |
-  #    call ci_scripts\install_nugget.bat
+  - cmd: |
+      call ci_scripts\install_nugget.bat
 
 build_script:
   - cmd: call ci_scripts\build.bat

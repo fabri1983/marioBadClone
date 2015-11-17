@@ -41,4 +41,9 @@ cat /dev/null >| $(pwd)/unity.log
 #  -quit
 
 
-#mono --runtime=v4.0 packages/FAKE.4.3.7/tools/FAKE.exe build.fsx $@
+#Exports an Xcode project to Scratch/Xcode
+#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios-player
+#Builds the Xcode project, and exports the ipa file to build/
+#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios
+#Builds an Android apk to build/
+#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx android

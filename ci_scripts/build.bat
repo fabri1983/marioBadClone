@@ -40,5 +40,5 @@ type %PROJECT_PATH%\unity.log
 ::type %PROJECT_PATH%\unity.log
 ::echo. > %PROJECT_PATH%\unity.log
 
-
-::"packages\FAKE.4.3.7\tools\FAKE.exe" build.fsx %1%
+:: Android apk to build\
+"packages\FAKE\tools\Fake.exe" build.fsx android
