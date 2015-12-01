@@ -10,7 +10,7 @@ open System.Xml
 open System.Diagnostics
 
 let UnityPath = Environment.GetEnvironmentVariable "UNITY_BIN"
-Console.WriteLine(">>>>>>>> UnityPath: " + UnityPath)
+Console.WriteLine(">>>>> UnityPath: " + UnityPath)
 
 let Exec command args =
     let result = Shell.Exec(command, args)
@@ -44,6 +44,5 @@ let ArchiveUnityLog path =
         if File.Exists(unityLogPath) then
             CreateDir "build"
             File.Copy(unityLogPath, path, true)
-            TeamCityHelper.PublishArtifact path
         else
             Console.WriteLine("Could not find Unity log: " + unityLogPath)
