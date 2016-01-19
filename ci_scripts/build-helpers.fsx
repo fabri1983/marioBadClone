@@ -44,6 +44,6 @@ let ArchiveUnityLog path =
         if File.Exists(unityLogPath) then
             CreateDir "build"
             File.Copy(unityLogPath, path, true)
-            TeamCityHelper.PublishArtifact path
+            // TeamCityHelper.PublishArtifact path
         else
             Console.WriteLine("Could not find Unity log: " + unityLogPath)

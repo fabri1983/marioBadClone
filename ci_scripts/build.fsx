@@ -11,6 +11,7 @@ let versionNumber = (version + "." + build)
 setEnvironVar "VERSION_NUMBER" versionNumber
 
 //iOS stuff
+// Change this provision id by your own id
 let provisioningId = "eceff215-f35c-45a6-bed8-09bb562401e9"
 let provisioningName = "GenericInHouse"
 
