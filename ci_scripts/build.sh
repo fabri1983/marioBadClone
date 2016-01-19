@@ -40,10 +40,10 @@ cat /dev/null >| $(pwd)/unity.log
 #  -buildLinux32Player "$(pwd)/build/linux/$APP_NAME.app" \
 #  -quit
 
-
-#Exports an Xcode project to Scratch/Xcode
+echo "Attempting to build an Android apk to build/"
+mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx android -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
+#echo "Exports an Xcode project to ios/Xcode"
 #mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios-player -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
-#Builds the Xcode project, and exports the ipa file to build/
+#echo "Builds the Xcode project, and exports the ipa file to build/"
 #mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx ios -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
-#Builds an Android apk to build/
-#mono --runtime=v4.0 packages/FAKE/tools/Fake.exe build.fsx android -ev UNITY_BIN "$UNITY_BIN_DIR/Unity"
+

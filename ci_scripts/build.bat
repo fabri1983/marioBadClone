@@ -41,5 +41,11 @@ type %PROJECT_PATH%\unity.log
 ::echo. > %PROJECT_PATH%\unity.log
 
 :: Android apk to build\
+echo Attempting to build an Android apk to build/
 "packages\FAKE\tools\Fake.exe" ci_scripts\build.fsx android -ev UNITY_BIN "%UNITY_BIN_DIR%\Unity.exe"
+:: WinRT build solution to win\
+echo Attempting to build a WinRT solution to win/
+"packages\FAKE\tools\Fake.exe" ci_scripts\build.fsx winrt-player -ev UNITY_BIN "%UNITY_BIN_DIR%\Unity.exe"
+echo Attempting to build a WinRT solution to win/
+"packages\FAKE\tools\Fake.exe" ci_scripts\build.fsx winrt -ev UNITY_BIN "%UNITY_BIN_DIR%\Unity.exe"
 ::exit /b %errorlevel%

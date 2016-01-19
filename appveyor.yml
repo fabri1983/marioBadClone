@@ -15,7 +15,7 @@ assembly_info:
 
 install:
   - ps: |
-      # re defined UNITY_HOME, otherway it is null
+      # re define UNITY_HOME, otherway it is null
       $UNITY_HOME="C:\Applications\Unity\Editor"
       Invoke-Expression "ci_scripts\install.ps1"
   - cmd: |

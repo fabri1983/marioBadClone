@@ -10,7 +10,7 @@ open System.Xml
 open System.Diagnostics
 
 let UnityPath = Environment.GetEnvironmentVariable "UNITY_BIN"
-Console.WriteLine(">>>>>>>> UnityPath: " + UnityPath)
+Console.WriteLine(">>>>> UnityPath: " + UnityPath)
 
 let Exec command args =
     let result = Shell.Exec(command, args)

@@ -14,10 +14,11 @@ env:
 
 before_install:
 - chmod +x ./ci_scripts/install.sh
+- chmod +x ./ci_scripts/install_nugget.sh
 
 install:
 - ./ci_scripts/install.sh
-#- ./ci_scripts/install_nugget.sh
+- ./ci_scripts/install_nugget.sh
 
 before_script:
 - chmod +x ./ci_scripts/build.sh
