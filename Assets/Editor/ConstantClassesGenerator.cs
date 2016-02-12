@@ -349,8 +349,7 @@ public class ConstandsGeneratorPostProcessor : AssetPostprocessor
 	// when not necessary.
 	static DateTime? _lastTagsAndLayersBuildTime;
 	static DateTime? _lastScenesBuildTime;
-	
-	
+
 	static void OnPostprocessAllAssets( string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths )
 	{
 		var resourcesDidChange = importedAssets.Any( s => Regex.IsMatch( s, @"/Resources/.*", System.Text.RegularExpressions.RegexOptions.IgnoreCase ) );

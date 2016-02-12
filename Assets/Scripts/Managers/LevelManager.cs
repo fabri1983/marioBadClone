@@ -29,7 +29,7 @@ public class LevelManager {
 	public static bool keepAspectRatio = false;
 	public const float ASPECT_W = 16f;
 	public const float ASPECT_H = 10.5f;
-	
+
 	private static KScenes[] sceneNameWithIndex = (KScenes[]) Enum.GetValues(typeof(KScenes));
 	
 	/// spawn positions for player. They are set automatically when a level is loaded and 

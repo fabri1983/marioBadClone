@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
 /// Touch Event Manager.
@@ -59,7 +58,7 @@ public class TouchEventManager {
 	/// All the touch phases you want your gameobject be registered to.
 	/// </param>
 	public void register (ITouchListener listener, params TouchPhase[] touchPhases) {
-		
+
 		#if TOUCH_EVENT_MANAGER_NO_QUADTREE
 		for (int i=0, c=touchPhases.Length; i < c; ++i)
 			dynamicListeners.add(listener, touchPhases[i]);
@@ -83,7 +82,7 @@ public class TouchEventManager {
 		}
 		#endif
 	}
-	
+
 	/// <summary>
 	/// Invoke from OnDestroy() method in your per level game object.
 	/// Uses the hash code to identify the listener over the list of many listeners.
